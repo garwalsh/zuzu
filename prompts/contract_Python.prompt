@@ -1,0 +1,59 @@
+<pdd-reason>Every other module speaks this vocabulary. The ElevenLabs agent is configured against these exact field names, so they are a frozen external contract rather than an internal convenience.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+
+Write a Python module defining the Pydantic v2 models for the Zuzu orchestrator's
+HTTP contract. Zuzu is a voice-first assistant that fills USCIS immigration forms;
+an ElevenLabs conversational agent calls these endpoints during a live phone call.
+
+These field names are a frozen external contract. The ElevenLabs agent is
+configured against them by hand, so renaming any of them breaks a running voice
+agent that this codebase cannot see. Do not "improve" them.
+
+Requirements:
+
+1. Session initiation. `SessionInitRequest` has `caller_id: str`, `conversation_id: str`,
+   and optional `agent_id: str | None`. `DynamicVariables` has `applicant_name: str`,
+   `is_returning: bool`, `preferred_language: str`, `active_form: str`, and
+   `known_summary: str`. `SessionInitResponse` wraps exactly one field,
+   `dynamic_variables: DynamicVariables`.
+
+2. Next-question lookup. `GetMissingFieldsRequest` has `session_id: str` and
+   `form_id: str`. `NextField` has `id: str`, `question: str`, `type: str`, and
+   `sensitive: bool`. `GetMissingFieldsResponse` has `next_field: NextField | None`,
+   `remaining_count: int`, and `known_count: int`. A null `next_field` is how the
+   agent learns the interview is over.
+
+3. Field save. `SaveFieldRequest` has `session_id: str`, `field_id: str`,
+   `value: str`, `confidence: float` defaulting to 1.0, and `language: str`
+   defaulting to "en". `SaveFieldResponse` has `ok: bool`,
+   `needs_confirmation: bool`, and `remaining_count: int`.
+
+4. Form generation. `GenerateFormRequest` has `session_id: str`.
+   `GenerateFormResponse` has `status: str`, `pdf_url: str | None`, and
+   `missing: list[str]`. Status is `"complete"` or `"incomplete"`.
+
+5. Call completion. `SessionCompleteRequest` has `conversation_id: str`,
+   `transcript: list[dict]` defaulting to empty, and `collected: dict[str, str]`
+   defaulting to empty. `SessionCompleteResponse` has `ok: bool` and
+   `fields_reconciled: int`.
+
+6. Stored values carry provenance. `FieldValue` has `value: str`,
+   `confidence: float`, `source: str`, `language: str`, and
+   `saved_at: datetime`. In a high-stakes legal domain every stored answer must
+   be able to say where it came from and how sure we were.
+
+7. Realtime events. `SessionEvent` has `type: str`, `session_id: str`,
+   `at: datetime`, and `data: dict` defaulting to empty. Define the event type
+   names as module-level string constants: `session_started`, `field_saved`,
+   `form_ready`, `session_completed`.
+
+8. Every model forbids unknown fields via `model_config = ConfigDict(extra="forbid")`,
+   so a drifted agent configuration fails loudly at the boundary instead of
+   silently dropping an applicant's answer. `confidence` is constrained to 0.0-1.0.
+
+9. Provide a `sensitive_fields` module constant naming the field ids whose values
+   must never be written to logs in full: `ssn`, `a_number`, `passport_number`,
+   `i94_number`, `uscis_online_account_number`.
+
+10. Type hints on everything. No I/O, no framework imports beyond Pydantic, and
+    no business logic -- this module is vocabulary only.

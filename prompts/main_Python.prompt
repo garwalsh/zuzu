@@ -1,0 +1,74 @@
+<pdd-reason>The single process the ElevenLabs widget talks to. Read and write paths must stay in the tens of milliseconds because a human is waiting mid-sentence.</pdd-reason>
+<pdd-interface>{"type": "api"}</pdd-interface>
+<pdd-dependency>contract_Python.prompt</pdd-dependency>
+<pdd-dependency>security_Python.prompt</pdd-dependency>
+<pdd-dependency>form_registry_Python.prompt</pdd-dependency>
+<pdd-dependency>session_store_Python.prompt</pdd-dependency>
+<pdd-dependency>event_bus_Python.prompt</pdd-dependency>
+<pdd-dependency>pdf_engine_Python.prompt</pdd-dependency>
+
+<include>prompts/contract_Python.prompt</include>
+<include>prompts/session_store_Python.prompt</include>
+
+Write the FastAPI application for the Zuzu orchestrator. An ElevenLabs
+conversational agent calls these endpoints live while an applicant is on the
+phone, so the read and write paths must stay in the tens of milliseconds.
+
+Every endpoint except `/health` depends on `require_shared_secret`.
+
+Requirements:
+
+1. `GET /health` returns `{"status": "ok", "form_ids": [...]}` with no auth.
+
+2. `POST /session/init` takes a `SessionInitRequest`, creates a session keyed by
+   `conversation_id` (the session id everywhere in this system is the
+   ElevenLabs `conversation_id`), publishes a `session_started` event, and returns
+   a `SessionInitResponse`. In this milestone there is no persistent memory yet:
+   return `applicant_name` empty, `is_returning` false, `preferred_language` "en",
+   `active_form` the default form id, and a `known_summary` of "". The mem0
+   lookup replaces this body in a later milestone and must not change the shape.
+
+3. `POST /tools/get_missing_fields` resolves the form through the registry,
+   computes the next missing field and the counts, and returns a
+   `GetMissingFieldsResponse`. When nothing is missing, `next_field` is null --
+   that is the agent's signal to call generate_form. Return 404 for an unknown
+   form id and 404 for an unknown session id.
+
+4. `POST /tools/save_field` validates that `field_id` exists in the form schema,
+   stores the value, publishes a `field_saved` event, and returns immediately.
+   **This path must not call an LLM, touch the filesystem, or build a PDF.**
+   Set `needs_confirmation` true when the field is marked `sensitive` or the
+   supplied `confidence` is below 0.85. Reject an unknown `field_id` with 422
+   rather than storing it -- a value we cannot place on the form is a value we
+   must not pretend to have collected.
+
+5. `POST /tools/generate_form` computes missing required fields first. If any
+   remain, return `status="incomplete"` with the list and no pdf_url. Otherwise
+   fill the PDF, store the path on the session, publish a `form_ready` event, and
+   return `status="complete"` with a `pdf_url` pointing at the download route.
+   Run the fill in a worker thread so the event loop keeps serving the call.
+
+6. `GET /forms/{session_id}.pdf` streams the generated PDF for that session with
+   `application/pdf`, 404 when it does not exist yet.
+
+7. `POST /session/complete` reconciles any values in `collected` that are not
+   already stored, publishes `session_completed`, and returns the count of fields
+   reconciled.
+
+8. `GET /ws/{session_id}` is a WebSocket that subscribes to the event bus for
+   that session and forwards each event as JSON. Authenticate it from a
+   `secret` query parameter using `verify_secret`, closing with code 1008 when it
+   does not match. Handle client disconnect without logging a stack trace.
+
+9. `POST /demo/run` drives a full scripted call against this same contract using
+   a preloaded demo persona and returns the resulting session id and pdf_url.
+   This is the Demo Mode fallback: it must work with no microphone, no voice
+   widget, and no network egress.
+
+10. Configure permissive CORS for the dashboard origin. Add structured JSON
+    logging that always includes `session_id` and **never** logs a field value;
+    log field ids only. Log a duration in milliseconds for save_field and
+    get_missing_fields so the latency claim is measured rather than asserted.
+
+11. Type hints throughout. Keep route bodies thin -- orchestration only, with the
+    real work delegated to the store, bus, and PDF modules.

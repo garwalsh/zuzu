@@ -1,0 +1,46 @@
+<pdd-reason>This module is the product thesis: a form is data, not code. Adding a new USCIS form must mean adding a schema file, not writing a new module.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+
+Write a Python module that loads and validates the declarative I-765 form schema
+from `data/i765_form_schema.json` and exposes it as typed objects.
+
+The JSON file is the source of truth and is already written and verified against
+the real PDF. This module does not restate it; it loads it. That separation is
+the point: a new USCIS form is a new JSON file, not new Python.
+
+Requirements:
+
+1. Define a Pydantic v2 `FieldOption` model with `value: str`, `label: str`,
+   `pdf_field: str`, `pdf_value: str`.
+
+2. Define a Pydantic v2 `FormField` model with `id: str`, `question: str`,
+   `type: str`, `group: str`, `memory_key: str`, `sensitive: bool`,
+   `required: bool`, and these optionals: `read_back: bool` defaulting False,
+   `max_len: int | None`, `depends_on: str | None`, `help: str | None`,
+   `pdf_field: str | None`, `pdf_field_parts: list[str]` defaulting empty,
+   `options: list[FieldOption]` defaulting empty.
+
+3. Define a Pydantic v2 `FormSchema` model with `form_id: str`, `title: str`,
+   `agency: str`, `edition: str`, `pdf: str`, `notes: str | None`, and
+   `fields: list[FormField]`.
+
+4. Give `FormSchema` a `field_by_id` mapping built once after validation, plus
+   methods `get_field(field_id) -> FormField | None`, `field_ids() -> list[str]`,
+   and `groups() -> dict[str, list[FormField]]` keyed by the `group` attribute.
+   The group split is what lets the mapping stage fan out independent field
+   groups concurrently later.
+
+5. Reject a schema whose field ids are not unique, and reject a field that has
+   neither `pdf_field`, nor `pdf_field_parts`, nor `options`. A field with no
+   route onto the PDF is a question we would ask an applicant for nothing.
+
+6. Expose `load_form_schema(path: str | Path | None = None) -> FormSchema`.
+   Resolve the default path relative to the repository root derived from this
+   module's own location, not from the process working directory, so the app
+   behaves the same under uvicorn, pytest, and the worker.
+
+7. Cache the parsed schema module-level so repeated calls do not re-read the
+   file, and expose `get_i765_schema() -> FormSchema` as the cached accessor.
+
+8. Type hints throughout. No network, no PDF library imports, and no FastAPI
+   imports -- this module is pure data loading.

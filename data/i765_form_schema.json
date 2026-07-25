@@ -1,0 +1,379 @@
+{
+  "form_id": "I-765",
+  "title": "Application for Employment Authorization",
+  "agency": "USCIS",
+  "edition": "08/21/25",
+  "pdf": "assets/i-765.pdf",
+  "notes": "Logical field -> AcroForm field mapping. Every pdf_field below is verified against data/i765_acroform_fields.json by tests/test_schema_matches_pdf.py. Adding a new USCIS form means adding a file like this one, not writing new code.",
+  "fields": [
+    {
+      "id": "reason",
+      "question": "Are you applying for work permission for the first time, renewing a permit you already have, or replacing one that was lost, stolen, or printed with a mistake?",
+      "type": "choice",
+      "group": "reason",
+      "memory_key": "i765.reason",
+      "sensitive": false,
+      "required": true,
+      "options": [
+        {"value": "initial", "label": "First time applying", "pdf_field": "form1[0].Page1[0].Part1_Checkbox[0]", "pdf_value": "/1"},
+        {"value": "replacement", "label": "Replacing a lost, stolen, or incorrect card", "pdf_field": "form1[0].Page1[0].Part1_Checkbox[1]", "pdf_value": "/2"},
+        {"value": "renewal", "label": "Renewing an existing permit", "pdf_field": "form1[0].Page1[0].Part1_Checkbox[2]", "pdf_value": "/3"}
+      ]
+    },
+    {
+      "id": "family_name",
+      "question": "What is your family name, or last name, exactly as it is printed on your passport?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "personal.family_name",
+      "sensitive": false,
+      "required": true,
+      "read_back": true,
+      "pdf_field": "form1[0].Page1[0].Line1a_FamilyName[0]"
+    },
+    {
+      "id": "given_name",
+      "question": "And your given name, or first name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "personal.given_name",
+      "sensitive": false,
+      "required": true,
+      "read_back": true,
+      "pdf_field": "form1[0].Page1[0].Line1b_GivenName[0]"
+    },
+    {
+      "id": "middle_name",
+      "question": "Do you have a middle name? If you do not, just say skip.",
+      "type": "text",
+      "group": "name",
+      "memory_key": "personal.middle_name",
+      "sensitive": false,
+      "required": false,
+      "read_back": true,
+      "pdf_field": "form1[0].Page1[0].Line1c_MiddleName[0]"
+    },
+    {
+      "id": "mailing_street",
+      "question": "What is the street number and street name where you receive mail?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "contact.mailing.street",
+      "sensitive": false,
+      "required": true,
+      "max_len": 34,
+      "pdf_field": "form1[0].Page2[0].Line4b_StreetNumberName[0]"
+    },
+    {
+      "id": "mailing_unit_type",
+      "question": "Is that an apartment, a suite, or a floor? If it is none of those, say skip.",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "contact.mailing.unit_type",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {"value": "apt", "label": "Apartment", "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[2]", "pdf_value": "/ APT "},
+        {"value": "ste", "label": "Suite", "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[0]", "pdf_value": "/ STE "},
+        {"value": "flr", "label": "Floor", "pdf_field": "form1[0].Page2[0].Pt2Line5_Unit[1]", "pdf_value": "/ FLR "}
+      ]
+    },
+    {
+      "id": "mailing_unit_number",
+      "question": "What is the apartment, suite, or floor number?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "contact.mailing.unit",
+      "sensitive": false,
+      "required": false,
+      "max_len": 6,
+      "depends_on": "mailing_unit_type",
+      "pdf_field": "form1[0].Page2[0].Pt2Line5_AptSteFlrNumber[0]"
+    },
+    {
+      "id": "mailing_city",
+      "question": "Which city or town is that in?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "contact.mailing.city",
+      "sensitive": false,
+      "required": true,
+      "max_len": 20,
+      "pdf_field": "form1[0].Page2[0].Pt2Line5_CityOrTown[0]"
+    },
+    {
+      "id": "mailing_state",
+      "question": "And which state?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "contact.mailing.state",
+      "sensitive": false,
+      "required": true,
+      "pdf_field": "form1[0].Page2[0].Pt2Line5_State[0]"
+    },
+    {
+      "id": "mailing_zip",
+      "question": "What is the five digit ZIP code?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "contact.mailing.zip",
+      "sensitive": false,
+      "required": true,
+      "max_len": 5,
+      "read_back": true,
+      "pdf_field": "form1[0].Page2[0].Pt2Line5_ZipCode[0]"
+    },
+    {
+      "id": "physical_same_as_mailing",
+      "question": "Do you actually live at that same address?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "contact.physical_same_as_mailing",
+      "sensitive": false,
+      "required": true,
+      "options": [
+        {"value": "yes", "label": "Yes", "pdf_field": "form1[0].Page2[0].Part2Line5_Checkbox[1]", "pdf_value": "/Y"},
+        {"value": "no", "label": "No", "pdf_field": "form1[0].Page2[0].Part2Line5_Checkbox[0]", "pdf_value": "/N"}
+      ]
+    },
+    {
+      "id": "a_number",
+      "question": "Do you have an A-Number? It is on immigration paperwork and starts with the letter A. If you do not have one, say skip.",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "immigration.a_number",
+      "sensitive": true,
+      "required": false,
+      "max_len": 9,
+      "read_back": true,
+      "pdf_field": "form1[0].Page2[0].Line7_AlienNumber[0]"
+    },
+    {
+      "id": "uscis_online_account_number",
+      "question": "Do you have a USCIS online account number? Say skip if you have never made an online account.",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "immigration.uscis_online_account_number",
+      "sensitive": true,
+      "required": false,
+      "max_len": 12,
+      "read_back": true,
+      "pdf_field": "form1[0].Page2[0].Line8_ElisAccountNumber[0]"
+    },
+    {
+      "id": "sex",
+      "question": "What sex is listed on your immigration documents?",
+      "type": "choice",
+      "group": "identifiers",
+      "memory_key": "birth.gender",
+      "sensitive": false,
+      "required": true,
+      "options": [
+        {"value": "female", "label": "Female", "pdf_field": "form1[0].Page2[0].Line9_Checkbox[0]", "pdf_value": "/N"},
+        {"value": "male", "label": "Male", "pdf_field": "form1[0].Page2[0].Line9_Checkbox[1]", "pdf_value": "/Y"}
+      ]
+    },
+    {
+      "id": "marital_status",
+      "question": "What is your marital status?",
+      "type": "choice",
+      "group": "identifiers",
+      "memory_key": "personal.marital_status",
+      "sensitive": false,
+      "required": true,
+      "options": [
+        {"value": "single", "label": "Single", "pdf_field": "form1[0].Page2[0].Line10_Checkbox[2]", "pdf_value": "/Single"},
+        {"value": "married", "label": "Married", "pdf_field": "form1[0].Page2[0].Line10_Checkbox[3]", "pdf_value": "/Married"},
+        {"value": "divorced", "label": "Divorced", "pdf_field": "form1[0].Page2[0].Line10_Checkbox[1]", "pdf_value": "/Divorced"},
+        {"value": "widowed", "label": "Widowed", "pdf_field": "form1[0].Page2[0].Line10_Checkbox[0]", "pdf_value": "/Widowed"}
+      ]
+    },
+    {
+      "id": "ssn",
+      "question": "Do you already have a U.S. Social Security number? If you do not, say skip.",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "ssn.ssn",
+      "sensitive": true,
+      "required": false,
+      "max_len": 9,
+      "read_back": true,
+      "pdf_field": "form1[0].Page2[0].Line12b_SSN[0]"
+    },
+    {
+      "id": "country_of_citizenship",
+      "question": "Which country are you a citizen of?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "citizenship.0",
+      "sensitive": false,
+      "required": true,
+      "pdf_field": "form1[0].Page2[0].Line17a_CountryOfBirth[0]"
+    },
+    {
+      "id": "city_of_birth",
+      "question": "Which city or town were you born in?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth.city",
+      "sensitive": false,
+      "required": true,
+      "pdf_field": "form1[0].Page3[0].Line18a_CityTownOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth",
+      "question": "And which country were you born in?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth.country",
+      "sensitive": false,
+      "required": true,
+      "pdf_field": "form1[0].Page3[0].Line18c_CountryOfBirth[0]"
+    },
+    {
+      "id": "date_of_birth",
+      "question": "What is your date of birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth.dob",
+      "sensitive": false,
+      "required": true,
+      "read_back": true,
+      "pdf_field": "form1[0].Page3[0].Line19_DOB[0]"
+    },
+    {
+      "id": "i94_number",
+      "question": "Do you have an I-94 arrival record number? Say skip if you do not have it in front of you.",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.i94_number",
+      "sensitive": true,
+      "required": false,
+      "max_len": 11,
+      "read_back": true,
+      "pdf_field": "form1[0].Page3[0].Line20a_I94Number[0]"
+    },
+    {
+      "id": "passport_number",
+      "question": "What is your passport number?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.passport_number",
+      "sensitive": true,
+      "required": false,
+      "read_back": true,
+      "pdf_field": "form1[0].Page3[0].Line20b_Passport[0]"
+    },
+    {
+      "id": "passport_country",
+      "question": "Which country issued that passport?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.passport_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].Page3[0].Line20d_CountryOfIssuance[0]"
+    },
+    {
+      "id": "passport_expiry",
+      "question": "When does that passport expire?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "immigration.passport_expiry",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].Page3[0].Line20e_ExpDate[0]"
+    },
+    {
+      "id": "date_of_last_entry",
+      "question": "What date did you last arrive in the United States?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "immigration.date_of_last_entry",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].Page3[0].Line21_DateOfLastEntry[0]"
+    },
+    {
+      "id": "place_of_last_entry",
+      "question": "Which city did you arrive in?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.place_of_last_entry",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].Page3[0].place_entry[0]"
+    },
+    {
+      "id": "status_at_last_entry",
+      "question": "What immigration status did you have when you arrived? For example, student, visitor, or parole.",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.status_at_last_entry",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].Page3[0].Line23_StatusLastEntry[0]"
+    },
+    {
+      "id": "current_status",
+      "question": "And what is your immigration status right now?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.current_status",
+      "sensitive": false,
+      "required": true,
+      "pdf_field": "form1[0].Page3[0].Line24_CurrentStatus[0]"
+    },
+    {
+      "id": "sevis_number",
+      "question": "If you are a student, what is your SEVIS number? It starts with the letter N. Say skip if you are not a student.",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "immigration.sevis_number",
+      "sensitive": true,
+      "required": false,
+      "max_len": 11,
+      "read_back": true,
+      "pdf_field": "form1[0].Page3[0].Line26_SEVISnumber[0]"
+    },
+    {
+      "id": "eligibility_category",
+      "question": "What is your eligibility category code? It looks like c 3 b or a 5. If you are not sure, say skip and we will work it out together.",
+      "type": "eligibility_category",
+      "group": "eligibility",
+      "memory_key": "i765.eligibility_category",
+      "sensitive": false,
+      "required": true,
+      "read_back": true,
+      "help": "The three boxes on the form are filled from one code such as (c)(3)(B): section_1 takes the letter, section_2 the number, section_3 the optional trailing letter.",
+      "pdf_field_parts": [
+        "form1[0].Page3[0].#area[1].section_1[0]",
+        "form1[0].Page3[0].#area[1].section_2[0]",
+        "form1[0].Page3[0].#area[1].section_3[0]"
+      ]
+    },
+    {
+      "id": "daytime_phone",
+      "question": "What is the best daytime phone number to reach you?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.daytime_phone",
+      "sensitive": false,
+      "required": true,
+      "max_len": 10,
+      "read_back": true,
+      "pdf_field": "form1[0].Page4[0].Pt3Line3_DaytimePhoneNumber1[0]"
+    },
+    {
+      "id": "email",
+      "question": "And what is your email address?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.email",
+      "sensitive": false,
+      "required": false,
+      "max_len": 38,
+      "pdf_field": "form1[0].Page4[0].Pt3Line5_Email[0]"
+    }
+  ]
+}
