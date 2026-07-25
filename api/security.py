@@ -6,7 +6,6 @@ import os
 
 from fastapi import Header, HTTPException, status
 
-
 _MISCONFIGURED_DETAIL = "server misconfigured: ZUZU_SHARED_SECRET is not set"
 _INVALID_SECRET_DETAIL = "invalid or missing X-Zuzu-Secret"
 
