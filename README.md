@@ -84,6 +84,11 @@ Run the tests:
 uv run pytest -q
 ```
 
+> **Run exactly one worker until Layer 2 lands.** Session state is in-process, so
+> two `uvicorn` workers means two independent stores: the call lands on one and
+> the PDF download 404s from the other. Do not set `--workers`, and keep Render's
+> instance count at 1 until the Redis store is wired up in Milestone 6.
+
 ## HTTP contract
 
 `session_id` is always the ElevenLabs `conversation_id`. Every endpoint except
