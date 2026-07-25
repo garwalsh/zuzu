@@ -1,0 +1,8 @@
+{
+  "byte_count": 26005,
+  "content_persisted": false,
+  "id": "round-1-fix-claude-for-claude",
+  "kind": "prompt",
+  "schema": "pdd.checkup.provider-evidence.v1",
+  "sha256": "2e77441ef7d0fa95f49676aa06fb7ca053f3cd504b9445ff0ed6df8b4cc7a112"
+}

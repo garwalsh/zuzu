@@ -8,9 +8,11 @@ USCIS form is an entry here plus a schema file.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Callable
+from functools import partial
 
-from api.i765_schema import FormSchema, get_i765_schema
+from api.i765_schema import REPO_ROOT, FormSchema, get_i765_schema, load_form_schema
 
 DEFAULT_FORM_ID = "I-765"
 
@@ -28,6 +30,26 @@ class UnknownFormError(LookupError):
 
 _loaders: dict[str, FormLoader] = {DEFAULT_FORM_ID: get_i765_schema}
 _cache: dict[str, FormSchema] = {}
+
+#: Schemas dropped in here are picked up with no code change. That is the whole
+#: "a form is data" claim, made literal: tools/onboard_form.py writes a file
+#: here and the service serves the form.
+FORMS_DIR = REPO_ROOT / "data" / "forms"
+
+
+def _discover() -> None:
+    """Register every schema file present under data/forms/."""
+    if not FORMS_DIR.is_dir():
+        return
+    for path in sorted(FORMS_DIR.glob("*.json")):
+        try:
+            form_id = json.loads(path.read_text(encoding="utf-8"))["form_id"]
+        except Exception:
+            continue
+        key = _normalize(form_id)
+        if key in _loaders:
+            continue
+        _loaders[key] = partial(load_form_schema, path)
 
 
 def _normalize(form_id: str) -> str:
@@ -51,6 +73,7 @@ def register_form(form_id: str, loader: FormLoader) -> None:
 
 def get_form(form_id: str) -> FormSchema:
     """Return a form's schema, parsing it on first use."""
+    _discover()
     key = _normalize(form_id)
     loader = _loaders.get(key)
     if loader is None:
@@ -61,4 +84,5 @@ def get_form(form_id: str) -> FormSchema:
 
 
 def list_forms() -> list[str]:
+    _discover()
     return sorted(_loaders)

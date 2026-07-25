@@ -99,8 +99,23 @@ def _decode_flags(flags: int) -> list[str]:
     return names
 
 
-def extract() -> dict[str, Any]:
-    reader = PdfReader(str(PDF_PATH))
+def _edition(reader: PdfReader) -> str | None:
+    """USCIS prints 'Edition MM/DD/YY' in every page footer."""
+    import re as _re
+
+    try:
+        text = (reader.pages[0].extract_text() or "") + (
+            reader.pages[-1].extract_text() or "" if len(reader.pages) > 1 else ""
+        )
+    except Exception:
+        return None
+    m = _re.search(r"Edition\s+(\d{2}/\d{2}/\d{2})", text)
+    return m.group(1) if m else None
+
+
+def extract_inventory(pdf_path: Path) -> dict[str, Any]:
+    """Inventory any AcroForm PDF. Used for I-765 and for onboarding new forms."""
+    reader = PdfReader(str(pdf_path))
     if reader.is_encrypted:
         # The published form is AES-128 encrypted with an EMPTY user password.
         reader.decrypt("")
@@ -164,10 +179,8 @@ def extract() -> dict[str, Any]:
 
     fields.sort(key=lambda f: (f["page"] or 0, f["name"]))
     return {
-        "source": "USCIS Form I-765, Application for Employment Authorization",
-        "edition": "08/21/25",
-        "omb": "1615-0040",
-        "expires": "08/31/2027",
+        "source": f"AcroForm inventory of {pdf_path.name}",
+        "edition": _edition(reader) or "unknown",
         "pages": len(reader.pages),
         "encrypted": "AES-128, empty user password",
         "xfa_present": "/XFA" in acroform,
@@ -175,6 +188,10 @@ def extract() -> dict[str, Any]:
         "field_count": len(fields),
         "fields": fields,
     }
+
+
+def extract() -> dict[str, Any]:
+    return extract_inventory(PDF_PATH)
 
 
 def main() -> None:

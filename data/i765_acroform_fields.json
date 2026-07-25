@@ -1,8 +1,6 @@
 {
-  "source": "USCIS Form I-765, Application for Employment Authorization",
+  "source": "AcroForm inventory of i-765.pdf",
   "edition": "08/21/25",
-  "omb": "1615-0040",
-  "expires": "08/31/2027",
   "pages": 7,
   "encrypted": "AES-128, empty user password",
   "xfa_present": true,

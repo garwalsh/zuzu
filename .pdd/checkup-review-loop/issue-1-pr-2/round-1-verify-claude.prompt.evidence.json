@@ -1,0 +1,8 @@
+{
+  "byte_count": 115499,
+  "content_persisted": false,
+  "id": "round-1-verify-claude",
+  "kind": "prompt",
+  "schema": "pdd.checkup.provider-evidence.v1",
+  "sha256": "38346fcdb6d2ee84e5cdb790f761af8f4576ef707f94d078b6b53aaf48bffd51"
+}
