@@ -13,12 +13,7 @@ contexts:
       target_coverage: 80.0
       budget: 10.0
       max_attempts: 3
-
-  # Scripted call drivers live outside the served package.
-  mocks:
-    paths: ["mock_*"]
-    defaults:
-      prompts_dir: "prompts"
-      generate_output_path: "mocks/"
-      test_output_path: "tests/"
-      default_language: "python"
+# Note: mocks/mock_voice_client.py is generated with an explicit
+# `--output mocks/mock_voice_client.py`. A second context keyed on a path
+# pattern was tried and matched every basename, silently redirecting unrelated
+# modules, so the explicit flag is the safer instruction.
