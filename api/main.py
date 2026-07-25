@@ -321,9 +321,7 @@ async def generate_form(
 
     pdf_url = f"{os.environ.get('PUBLIC_BASE_URL', '').rstrip('/')}/forms/{payload.session_id}.pdf"
     await _publish(FORM_READY, payload.session_id, {"pdf_url": pdf_url})
-    logger.info(
-        "form ready", extra={"session_id": payload.session_id, "form_id": schema.form_id}
-    )
+    logger.info("form ready", extra={"session_id": payload.session_id, "form_id": schema.form_id})
     return GenerateFormResponse(status="complete", pdf_url=pdf_url, missing=[])
 
 

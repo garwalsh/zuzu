@@ -151,9 +151,7 @@ class ApplicantMemory:
         if form_field is None:
             return False
         if form_field.sensitive and not _store_sensitive():
-            logger.info(
-                "mem0 skip sensitive field=%s caller=%s", field_id, _log_id(caller_id)
-            )
+            logger.info("mem0 skip sensitive field=%s caller=%s", field_id, _log_id(caller_id))
             return False
 
         # Keyed by the schema's memory_key so the stored shape survives the form
