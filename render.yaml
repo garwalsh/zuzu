@@ -1,0 +1,67 @@
+# Render blueprint: one file deploys the orchestrator.
+#
+# Layer 1 (now): a single web service, in-process session state.
+# Layer 2 (Milestone 6): uncomment the Redis instance and the worker, and flip
+# STORE_BACKEND to redis. Nothing in api/ changes -- SessionStore and EventBus
+# are protocols precisely so that swap is configuration.
+
+services:
+  - type: web
+    name: zuzu-orchestrator
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: pip install uv && uv sync --frozen --no-dev
+    # ONE worker until the Redis store lands. Session state is in-process, so a
+    # second worker means a caller's answers and their PDF live in different
+    # processes and the download 404s.
+    startCommand: uv run uvicorn api.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    autoDeploy: false
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: STORE_BACKEND
+        value: memory
+      - key: PUBLIC_BASE_URL
+        fromService:
+          type: web
+          name: zuzu-orchestrator
+          envVarKey: RENDER_EXTERNAL_URL
+      # Secrets are set in the Render dashboard, never in this file.
+      # sync:false means "prompt me, do not read from the blueprint".
+      - key: ZUZU_SHARED_SECRET
+        sync: false
+      - key: MEM0_API_KEY
+        sync: false
+      - key: CEREBRAS_API_KEY
+        sync: false
+      - key: CEREBRAS_BASE_URL
+        value: https://api.cerebras.ai/v1
+      - key: CEREBRAS_MODEL
+        value: zai-glm-4.7
+      - key: ELEVENLABS_API_KEY
+        sync: false
+
+# --- Layer 2, Milestone 6 ---
+# databases: []
+#
+# services:
+#   - type: redis
+#     name: zuzu-redis
+#     plan: free
+#     ipAllowList: []
+#
+#   - type: worker
+#     name: zuzu-worker
+#     runtime: python
+#     buildCommand: pip install uv && uv sync --frozen --extra distributed
+#     startCommand: uv run arq worker.worker.WorkerSettings
+#     envVars:
+#       - key: STORE_BACKEND
+#         value: redis
+#       - key: REDIS_URL
+#         fromService:
+#           type: redis
+#           name: zuzu-redis
+#           property: connectionString

@@ -1,62 +1,30 @@
 {
-  "c576216b48c6d7ec": {
-    "argv": [
-      "--local",
-      "--no-core-dump",
-      "--quiet",
-      "generate",
-      "prompts/contract_Python.prompt"
-    ],
-    "project_root": "/Users/bhargav/Desktop/zuzu",
-    "fingerprint": "dbe6326b6008230ebba5ede777da7dab7c4634edc119293750bc8d3cfc095d11",
-    "git_head": "fed2d4dd7a4f938fbb0ca5a5911ba919615c3cad",
-    "subcommand": "generate",
-    "timestamp": 1785013076.878179
-  },
-  "0d02739a6e79e49f": {
-    "argv": [
-      "--local",
-      "--no-core-dump",
-      "--quiet",
-      "generate",
-      "prompts/security_Python.prompt"
-    ],
-    "project_root": "/Users/bhargav/Desktop/zuzu",
-    "fingerprint": "dbe6326b6008230ebba5ede777da7dab7c4634edc119293750bc8d3cfc095d11",
-    "git_head": "fed2d4dd7a4f938fbb0ca5a5911ba919615c3cad",
-    "subcommand": "generate",
-    "timestamp": 1785013099.1054
-  },
-  "db5b3a52325faf48": {
+  "88abb4b37ac374c0": {
     "argv": [
       "--local",
       "--no-core-dump",
       "--force",
-      "--strength",
-      "0.5",
       "generate",
-      "prompts/contract_Python.prompt"
+      "prompts/i765_schema_Python.prompt"
     ],
     "project_root": "/Users/bhargav/Desktop/zuzu",
-    "fingerprint": "03675e610b273bc1dfd68bbf7b27402a6e9ad59681a3b050493557d48bfc829d",
-    "git_head": "fed2d4dd7a4f938fbb0ca5a5911ba919615c3cad",
+    "fingerprint": "e13fca9a71de4ede34c9bf18d6848dc81c25549fb3f6ffdaf3c6d4b2f90b43b4",
+    "git_head": "9fe9dc41927825992491e3aee01bf0a93b90fb8f",
     "subcommand": "generate",
-    "timestamp": 1785013259.918816
+    "timestamp": 1785017505.980125
   },
-  "7b778a2bb5deca8c": {
+  "ec2f4b0cc1e08fbd": {
     "argv": [
       "--local",
       "--no-core-dump",
       "--force",
-      "--strength",
-      "0.5",
       "generate",
-      "prompts/security_Python.prompt"
+      "prompts/event_bus_Python.prompt"
     ],
     "project_root": "/Users/bhargav/Desktop/zuzu",
-    "fingerprint": "03675e610b273bc1dfd68bbf7b27402a6e9ad59681a3b050493557d48bfc829d",
-    "git_head": "fed2d4dd7a4f938fbb0ca5a5911ba919615c3cad",
+    "fingerprint": "3356cb06668bf85464123006ad5add8c366539b898f0e96bfd68ecab07690da3",
+    "git_head": "9fe9dc41927825992491e3aee01bf0a93b90fb8f",
     "subcommand": "generate",
-    "timestamp": 1785013268.292865
+    "timestamp": 1785017696.302256
   }
 }

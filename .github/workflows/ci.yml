@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync --extra dev
+
+      - name: Lint
+        run: uv run ruff check api/ mocks/ tests/ tools/
+
+      - name: Format check
+        run: uv run ruff format --check api/ mocks/ tests/ tools/
+
+      - name: Tests
+        run: uv run pytest -q
+        env:
+          # Layer 1 runs with no third-party credentials at all. If a test ever
+          # needs a real key, that test belongs behind a marker, not in CI.
+          ZUZU_SHARED_SECRET: ci-test-secret
+          STORE_BACKEND: memory
+
+      - name: Schema still matches the vendored PDF
+        run: uv run pytest tests/test_schema_matches_pdf.py -q
+
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: No credentials in the diff
+        run: |
+          # Applicant PII and provider keys must never reach the repo.
+          # Patterns match the providers this project actually uses.
+          if git grep -nEI \
+            -e 'csk-[a-z0-9]{40,}' \
+            -e 'm0-[A-Za-z0-9]{30,}' \
+            -e 'sk_[a-f0-9]{40,}' \
+            -e 'rnd_[A-Za-z0-9]{20,}' \
+            -e 'rtrvr_[A-Za-z0-9_-]{30,}' \
+            -- . ':!.github/workflows/ci.yml'; then
+            echo "::error::credential-shaped string committed to the repo"
+            exit 1
+          fi
+          echo "no credentials found"

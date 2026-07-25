@@ -43,6 +43,7 @@ from api.contract import (
 from api.event_bus import get_event_bus
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT
+from api.memory import get_memory, summarize
 from api.pdf_engine import fill_i765, missing_required
 from api.security import require_shared_secret, verify_secret
 from api.session_store import (
@@ -107,6 +108,17 @@ async def _publish(event_type: str, session_id: str, data: dict[str, Any] | None
     )
 
 
+#: Strong refs to in-flight background tasks; without these the event loop can
+#: garbage-collect a task mid-write.
+_background: set[asyncio.Task[Any]] = set()
+
+
+def _spawn_background(coro: Any) -> None:
+    task = asyncio.create_task(coro)
+    _background.add(task)
+    task.add_done_callback(_background.discard)
+
+
 async def _load_session(session_id: str) -> Session:
     try:
         return await get_session_store().get(session_id)
@@ -131,26 +143,58 @@ async def session_init(
     payload: SessionInitRequest,
     _: None = Depends(require_shared_secret),
 ) -> SessionInitResponse:
-    """Create the session the whole call hangs off.
+    """Create the session the whole call hangs off, and load what we know.
 
-    Milestone 3 replaces this body with a mem0 lookup keyed by caller_id. The
-    response shape must not change when it does -- the agent greets from it.
+    A returning caller is greeted by name and never re-asked for anything we
+    already have. If the memory lookup fails, we greet them as new rather than
+    failing the call -- see api/memory.py.
     """
     session_id = payload.conversation_id
-    await get_session_store().create(
+    schema = get_form(DEFAULT_FORM_ID)
+    profile = await get_memory().load_profile(payload.caller_id, schema)
+
+    session = await get_session_store().create(
         session_id=session_id,
         caller_id=payload.caller_id,
         form_id=DEFAULT_FORM_ID,
+        preferred_language=profile.preferred_language,
+        is_returning=profile.is_returning,
     )
-    await _publish(SESSION_STARTED, session_id, {"caller_id": payload.caller_id})
-    logger.info("session started", extra={"session_id": session_id})
+
+    # Prefill from memory so the interview only covers what is genuinely new.
+    for field_id, value in profile.known_values.items():
+        await get_session_store().save_field(
+            session_id=session_id,
+            field_id=field_id,
+            value=value,
+            confidence=1.0,
+            language=profile.preferred_language,
+            source="memory",
+        )
+
+    remaining, known = counts(await get_session_store().get(session_id), schema)
+    await _publish(
+        SESSION_STARTED,
+        session_id,
+        {
+            "is_returning": profile.is_returning,
+            "prefilled_count": len(profile.known_values),
+            "remaining_count": remaining,
+            "known_count": known,
+        },
+    )
+    logger.info(
+        "session started",
+        extra={"session_id": session_id, "form_id": schema.form_id},
+    )
+    del session
     return SessionInitResponse(
         dynamic_variables=DynamicVariables(
-            applicant_name="",
-            is_returning=False,
-            preferred_language="en",
+            applicant_name=profile.display_name,
+            is_returning=profile.is_returning,
+            preferred_language=profile.preferred_language,
             active_form=DEFAULT_FORM_ID,
-            known_summary="",
+            known_summary=summarize(profile, schema),
         )
     )
 
@@ -212,6 +256,19 @@ async def save_field(
     )
     remaining, _known = counts(session, schema)
     needs_confirmation = form_field.sensitive or payload.confidence < CONFIDENCE_CONFIRM_THRESHOLD
+
+    # Persist to long-term memory off the critical path. This endpoint is on a
+    # live human's latency budget; mem0 writes are queued server-side anyway, so
+    # awaiting one would buy nothing but delay.
+    _spawn_background(
+        get_memory().save_field(
+            caller_id=session.caller_id,
+            field_id=payload.field_id,
+            value=payload.value,
+            schema=schema,
+            language=payload.language,
+        )
+    )
 
     await _publish(
         FIELD_SAVED,
@@ -373,6 +430,19 @@ async def demo_run(
         "pdf_url": result.pdf_url,
         "missing": result.missing,
     }
+
+
+@app.post("/session/forget")
+async def session_forget(
+    caller_id: str = Query(...),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Delete everything remembered about a caller.
+
+    The pitch promises an applicant can say "delete my data". This is that.
+    """
+    removed = await get_memory().forget(caller_id)
+    return {"ok": True, "entries_removed": removed}
 
 
 @app.get("/")
