@@ -6,8 +6,13 @@
     "priority": 1,
     "filename": "contract_Python.prompt",
     "filepath": "api/contract.py",
-    "tags": ["backend", "contract"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "contract"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "The orchestrator holds applicant PII and is reachable from the public internet so the voice agent can call it. An unauthenticated write path would let anyone inject field values into a live session.",
@@ -16,58 +21,98 @@
     "priority": 2,
     "filename": "security_Python.prompt",
     "filepath": "api/security.py",
-    "tags": ["backend", "security"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "security"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
-    "reason": "This file is the product thesis: a form is data, not code. Adding a new USCIS form must mean adding a schema, not writing a new module.",
+    "reason": "This module is the product thesis: a form is data, not code. Adding a new USCIS form must mean adding a schema file, not writing a new module.",
     "description": "Loader and validator for the declarative I-765 field schema in data/i765_form_schema.json, whose entries carry the field id, plain-language spoken question, value type, sensitivity flag, mapping group, memory key, and the exact AcroForm field name(s) it fills.",
     "dependencies": [],
     "priority": 3,
     "filename": "i765_schema_Python.prompt",
     "filepath": "api/i765_schema.py",
-    "tags": ["backend", "forms", "source-of-truth"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "forms",
+      "source-of-truth"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "Keeps the routes form-agnostic so a second form is a registry entry rather than a branch in the request handler.",
     "description": "Drop-in registry mapping a form_id such as I-765 to its schema, with lookup and listing helpers that raise a clear error for unknown forms.",
-    "dependencies": ["i765_schema_Python.prompt"],
+    "dependencies": [
+      "i765_schema_Python.prompt"
+    ],
     "priority": 4,
     "filename": "form_registry_Python.prompt",
     "filepath": "api/form_registry.py",
-    "tags": ["backend", "forms"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "forms"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "Session state must live behind an interface from day one. Layer 2 swaps in Redis for horizontal scale, and that has to be a config flip rather than a rewrite of every call site.",
     "description": "SessionStore protocol plus an in-memory implementation. Tracks per-session collected values with provenance and answers which schema fields are still missing.",
-    "dependencies": ["contract_Python.prompt", "form_registry_Python.prompt"],
+    "dependencies": [
+      "contract_Python.prompt",
+      "form_registry_Python.prompt"
+    ],
     "priority": 5,
     "filename": "session_store_Python.prompt",
     "filepath": "api/session_store.py",
-    "tags": ["backend", "state"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "state"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "The dashboard's live-fill effect is the demo's visual payload, and it must not add latency to the voice path. Publishing is fire-and-forget behind an interface that Redis pub/sub replaces in Layer 2.",
     "description": "EventBus protocol plus an in-memory asyncio implementation. Publishes per-session events and lets the WebSocket endpoint subscribe to a single session's stream.",
-    "dependencies": ["contract_Python.prompt"],
+    "dependencies": [
+      "contract_Python.prompt"
+    ],
     "priority": 6,
     "filename": "event_bus_Python.prompt",
     "filepath": "api/event_bus.py",
-    "tags": ["backend", "realtime"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "realtime"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "The completed PDF is the deliverable the applicant actually files. This form is encrypted, carries a stale XFA overlay that blanks the page in Acrobat, and uses irregular per-field checkbox export values -- a naive fill silently produces an empty form.",
     "description": "Fills the official I-765 AcroForm from collected session values and writes a completed PDF, handling decryption, XFA removal, checkbox export values, and appearance generation.",
-    "dependencies": ["i765_schema_Python.prompt"],
+    "dependencies": [
+      "i765_schema_Python.prompt"
+    ],
     "priority": 7,
     "filename": "pdf_engine_Python.prompt",
     "filepath": "api/pdf_engine.py",
-    "tags": ["backend", "pdf"],
-    "interface": { "type": "module" }
+    "tags": [
+      "backend",
+      "pdf"
+    ],
+    "interface": {
+      "type": "module"
+    }
   },
   {
     "reason": "The single process the ElevenLabs widget talks to. Read and write paths must stay in the tens of milliseconds because a human is waiting mid-sentence.",
@@ -83,17 +128,46 @@
     "priority": 8,
     "filename": "main_Python.prompt",
     "filepath": "api/main.py",
-    "tags": ["backend", "api"],
-    "interface": { "type": "api" }
+    "tags": [
+      "backend",
+      "api"
+    ],
+    "interface": {
+      "type": "api"
+    }
   },
   {
     "reason": "Decouples building the orchestrator from owning the voice agent, and doubles as the Demo Mode fallback so the demo survives a dead microphone or a flaky conference network.",
     "description": "Scripted client that drives a full call through the public HTTP contract exactly as the ElevenLabs agent would, from session init to a generated PDF.",
-    "dependencies": ["contract_Python.prompt"],
+    "dependencies": [
+      "contract_Python.prompt"
+    ],
     "priority": 9,
     "filename": "mock_voice_client_Python.prompt",
     "filepath": "mocks/mock_voice_client.py",
-    "tags": ["mocks", "demo"],
-    "interface": { "type": "cli" }
+    "tags": [
+      "mocks",
+      "demo"
+    ],
+    "interface": {
+      "type": "cli"
+    }
+  },
+  {
+    "reason": "The moat. A returning caller should never be asked for their date of birth twice. Memory is also the thing that makes a second form take seconds instead of an hour, which is the strongest moment in the demo.",
+    "description": "Async mem0 wrapper providing cross-session applicant memory keyed by a hashed caller id. Exact values ride in mem0 metadata, sensitive fields are not persisted by default, and every call degrades to an empty profile rather than raising.",
+    "dependencies": [
+      "i765_schema_Python.prompt"
+    ],
+    "priority": 10,
+    "filename": "memory_Python.prompt",
+    "filepath": "api/memory.py",
+    "tags": [
+      "backend",
+      "memory"
+    ],
+    "interface": {
+      "type": "module"
+    }
   }
 ]
