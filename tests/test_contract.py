@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from api import event_bus, session_store
+from api import event_bus, memory, session_store
 
 SECRET = "test-secret"
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -27,11 +27,17 @@ def _isolate(monkeypatch):
     monkeypatch.setenv("ZUZU_SHARED_SECRET", SECRET)
     monkeypatch.setenv("STORE_BACKEND", "memory")
     monkeypatch.setenv("PUBLIC_BASE_URL", "http://testserver")
+    # Keep the suite hermetic: a real MEM0_API_KEY in the developer's shell would
+    # otherwise send session_init to the live mem0 API and prefill fields,
+    # breaking the "fresh session" contract these tests assert.
+    monkeypatch.delenv("MEM0_API_KEY", raising=False)
     session_store.reset_session_store()
     event_bus.reset_event_bus()
+    memory.reset_memory()
     yield
     session_store.reset_session_store()
     event_bus.reset_event_bus()
+    memory.reset_memory()
 
 
 @pytest.fixture
