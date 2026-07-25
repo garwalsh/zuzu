@@ -30,9 +30,15 @@ Requirements:
    does not exist means the agent and orchestrator have diverged.
 
 5. Provide `next_missing_field(session, schema) -> FormField | None` returning the
-   first schema field, in schema order, that is required, has no stored value,
-   and whose `depends_on` field (if any) has a stored non-skipped value. Returning
-   None is what tells the agent to move to form generation.
+   first schema field, in schema order, that has no stored value and whose
+   `depends_on` field (if any) has a stored non-skipped value. Returning None is
+   what tells the agent to move to form generation.
+
+   Ask about optional fields too, not just required ones. Passport number, I-94
+   number, and SEVIS number are optional to *submit* but they have boxes on the
+   form, and an applicant who has them should not have to discover later that
+   Zuzu never asked. `required` governs what blocks generation, not what gets
+   asked; the applicant can always say skip.
 
 6. Provide `counts(session, schema) -> tuple[int, int]` returning
    `(remaining_count, known_count)`, where remaining counts unanswered required

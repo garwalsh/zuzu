@@ -1,34 +1,176 @@
 # Zuzu
 
-Voice-first immigration form assistant. Applicants call a phone number, speak in their native language, and the agent gathers their information to complete USCIS forms.
+**Call a number, speak your language, and Zuzu fills your USCIS forms for you.**
+
+USCIS forms are long, confusing, and high-stakes — one error costs months. They
+are hardest for exactly the people the system already fails: disabled, elderly,
+low-literacy, and non-English-speaking applicants. Zuzu turns the form into a
+conversation. If you can talk, you can file.
+
+MVP form: **I-765**, Application for Employment Authorization (Edition 08/21/25).
+
+---
 
 ## How it works
 
-1. Applicant connects using voice widget
-2. Agent detects their language and greets them (by name if they've called before)
-3. Agent ask which form they need to fill out
-4. Agent checks the fields of this specific form and if the applicant has called before cross references with memory
-5. Agent asks questions to collect missing information and updates memory where necessary
-7. A form-filling agent maps the stored profile to the correct USCIS form fields and generates a completed PDF
+```
+ Voice widget / phone
+        │  (speech, the caller's own language)
+        ▼
+ ElevenLabs Conversational AI ──► STT + language detection + TTS
+        │  (server tool calls)
+        ▼
+ Orchestrator (FastAPI)  ◄──► mem0     profile keyed by caller id
+        │                └──► Cerebras  next-question + parallel field mapping
+        ▼
+ Form engine ──► fills the official I-765 AcroForm ──► completed PDF
+        │
+        ▼
+ Live dashboard ──► transcript + fields populating in real time + Download
+```
 
-## Architecture
+The voice agent is a thin loop. The orchestrator decides the next question,
+stores answers, and drives the dashboard — so all the logic lives in one place
+and the agent's surface stays tiny and stable.
 
-- **Voice agent** — ElevenLabs conversational AI, handles the phone call and multilingual dialogue
-- **Memory layer** — mem0 stores applicant profiles across sessions
-- **Form engine** — Maps profile data to USCIS form fields and fills the PDF
-- **Live dashboard** — Web UI showing the transcript and form fields populating in real time
+## Design principles
+
+**A form is data, not code.** [`data/i765_form_schema.json`](data/i765_form_schema.json)
+declares every question, its plain-language phrasing, and the exact AcroForm
+field it fills. Adding a USCIS form means adding a file like it. Nothing in
+`api/` names a specific form.
+
+**The voice path stays fast.** `save_field` and `get_missing_fields` only touch
+session state and publish an event — no LLM call, no filesystem, no PDF work.
+A human is mid-sentence while they run.
+
+**Heavy work is offloaded.** PDF generation runs off the request path. Field
+mapping fans independent groups out concurrently — which is *why* Cerebras is
+the right choice there, not a logo on a slide.
+
+**State lives behind an interface.** `SessionStore` and `EventBus` are protocols
+with in-memory implementations today and Redis implementations in Layer 2, so
+horizontal scale is a config flip rather than a rewrite.
+
+**Never fabricate.** In a legal-filing context the dangerous failures are the
+quiet ones. A field the applicant did not answer stays blank; an unparseable
+eligibility category writes nothing; a value that cannot be placed on the form
+is rejected rather than stored. Every one of those has a test.
+
+## Quick start
+
+```bash
+uv sync --extra dev
+cp .env.example .env
+export ZUZU_SHARED_SECRET=demo-secret-local
+uv run uvicorn api.main:app --port 8000
+```
+
+In another shell, drive a complete call with no microphone:
+
+```bash
+uv run python mocks/mock_voice_client.py
+```
+
+Or trigger the same flow through the API — this is the Demo Mode button:
+
+```bash
+curl -X POST http://localhost:8000/demo/run -H "X-Zuzu-Secret: $ZUZU_SHARED_SECRET"
+```
+
+Run the tests:
+
+```bash
+uv run pytest -q
+```
+
+## HTTP contract
+
+`session_id` is always the ElevenLabs `conversation_id`. Every endpoint except
+`/health` requires the `X-Zuzu-Secret` header.
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /session/init` | Conversation-initiation webhook → greeting variables |
+| `POST /tools/get_missing_fields` | Next question to ask, or `null` when done |
+| `POST /tools/save_field` | Store one confirmed answer |
+| `POST /tools/generate_form` | Map + fill the PDF |
+| `POST /session/complete` | Post-call reconciliation |
+| `GET /forms/{session_id}.pdf` | Download the completed form |
+| `GET /ws/{session_id}` | Live event stream for the dashboard |
+| `POST /demo/run` | Scripted call — the no-voice fallback |
+| `GET /health` | Liveness |
+
+## Working on the I-765
+
+The form is hostile to assumptions. Before changing the schema, read
+[`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md). The short version:
+
+- It is AES-encrypted with an empty password, and a **hybrid AcroForm + static
+  XFA** — fill only the AcroForm and Acrobat shows a blank form.
+- Field names do not track printed item numbers. `Line7_AlienNumber` is item 8.
+- There are no radio groups. Every checkbox has its own irregular export value,
+  including unit selectors with leading *and* trailing spaces (`/ APT `).
+- Part 1 is Initial / **Replacement** / **Renewal**, in that order.
+- Parents' names and the SSA-card request are **not on this edition**.
+
+`tests/test_schema_matches_pdf.py` fails the build if the schema drifts from the
+real document. Regenerate the field inventory after replacing the PDF:
+
+```bash
+uv run python tools/extract_i765_fields.py
+```
+
+## How this was built
+
+Prompt Driven Development: `prompts/*.prompt` are the source of truth and
+[`architecture.json`](architecture.json) declares the module graph with its
+dependencies and build order. Code under `api/` is the output.
+
+**Provenance, stated plainly:**
+
+| Module | Origin |
+|---|---|
+| `api/contract.py`, `api/security.py` | Generated by `pdd --local generate` from their prompts |
+| Everything else in `api/`, `mocks/` | Hand-written **to** the prompt specs, after the ChatGPT/Codex session behind `pdd --local` expired mid-run |
+
+The prompts are complete, accurate specifications for every module either way —
+they were written first, and the hand-written modules follow them. But only the
+two above were machine-generated, and the README should say so. Restoring
+generation is a matter of re-authenticating and re-running `pdd --local generate`
+per prompt; see [`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md) §5 for the
+exact invocation and the model-catalog pitfall on this machine.
+
+## Roadmap
+
+| Milestone | Status |
+|---|---|
+| 1. Core slice: schema, contract, filled PDF, scripted call | **done** |
+| 2. Dashboard + realtime + Demo Mode button | next |
+| 3. mem0 returning-caller memory — the moat | |
+| 4. Cerebras parallel mapping + latency badge | |
+| 5. ElevenLabs widget — real voice end to end | |
+| 6. Layer 2: Redis, worker, 50-caller load test, Render deploy | |
+
+## Scope and safety
+
+Zuzu produces a completed form to the review step plus a document checklist. It
+does **not** submit, pay fees, or give legal advice. The signature fields on this
+form are read-only by design — the applicant reviews, signs in ink, and files.
+
+Sensitive values (SSN, A-Number, passport, I-94, USCIS account number) are
+flagged for spoken read-back confirmation and are never written to logs.
 
 ## Sponsor tools used
 
-- [ElevenLabs](https://elevenlabs.io) — Voice agent and multilingual speech
-- [mem0](https://mem0.ai) — Applicant profile memory
-- [Cerebras](https://cerebras.ai) — Fast inference for form mapping
-- [Render](https://render.com) — Deployment
+- [ElevenLabs](https://elevenlabs.io) — voice agent and multilingual speech
+- [mem0](https://mem0.ai) — applicant profile memory across calls
+- [Cerebras](https://cerebras.ai) — fast inference for parallel form mapping
+- [Render](https://render.com) — deployment
 
 ## Supported forms
 
-- I-765 (Application for Employment Authorization)
-
+- I-765 (Application for Employment Authorization), Edition 08/21/25
 
 ## Team
 

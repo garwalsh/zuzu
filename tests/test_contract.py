@@ -1,0 +1,383 @@
+"""Contract tests: the happy path, and every "must not" from Issue #1.
+
+The negative tests are the point. In a legal-filing context the dangerous
+failures are the quiet ones -- a fabricated value, a logged SSN, a form that
+reports success while dropping an answer.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+from pathlib import Path
+
+import pytest
+from fastapi.testclient import TestClient
+
+from api import event_bus, session_store
+
+SECRET = "test-secret"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+PERSONA = json.loads((REPO_ROOT / "data" / "demo_personas.json").read_text())["personas"]["maria"]
+
+
+@pytest.fixture(autouse=True)
+def _isolate(monkeypatch):
+    """Fresh singletons and a known secret for every test."""
+    monkeypatch.setenv("ZUZU_SHARED_SECRET", SECRET)
+    monkeypatch.setenv("STORE_BACKEND", "memory")
+    monkeypatch.setenv("PUBLIC_BASE_URL", "http://testserver")
+    session_store.reset_session_store()
+    event_bus.reset_event_bus()
+    yield
+    session_store.reset_session_store()
+    event_bus.reset_event_bus()
+
+
+@pytest.fixture
+def client():
+    from api.main import app
+
+    with TestClient(app) as test_client:
+        yield test_client
+
+
+def auth() -> dict[str, str]:
+    return {"X-Zuzu-Secret": SECRET}
+
+
+def start_session(client, conversation_id: str = "conv_test") -> str:
+    resp = client.post(
+        "/session/init",
+        json={"caller_id": "+15551234567", "conversation_id": conversation_id},
+        headers=auth(),
+    )
+    assert resp.status_code == 200
+    return conversation_id
+
+
+def run_full_call(client, conversation_id: str) -> dict:
+    """Drive the agent loop to completion, answering from the demo persona."""
+    answers = PERSONA["answers"]
+    for _ in range(200):
+        resp = client.post(
+            "/tools/get_missing_fields",
+            json={"session_id": conversation_id, "form_id": "I-765"},
+            headers=auth(),
+        )
+        assert resp.status_code == 200
+        field = resp.json()["next_field"]
+        if field is None:
+            break
+        client.post(
+            "/tools/save_field",
+            json={
+                "session_id": conversation_id,
+                "field_id": field["id"],
+                "value": answers.get(field["id"], "__skip__"),
+            },
+            headers=auth(),
+        ).raise_for_status()
+    else:
+        pytest.fail("interview did not terminate within 200 turns")
+
+    return client.post(
+        "/tools/generate_form", json={"session_id": conversation_id}, headers=auth()
+    ).json()
+
+
+# --------------------------------------------------------------------------
+# Happy path
+# --------------------------------------------------------------------------
+
+
+def test_health_needs_no_auth(client):
+    resp = client.get("/health")
+    assert resp.status_code == 200
+    assert resp.json() == {"status": "ok", "form_ids": ["I-765"]}
+
+
+def test_full_call_produces_a_downloadable_pdf(client):
+    conversation_id = start_session(client, "conv_happy")
+    result = run_full_call(client, conversation_id)
+
+    assert result["status"] == "complete", result
+    assert result["missing"] == []
+    assert result["pdf_url"].endswith(f"/forms/{conversation_id}.pdf")
+
+    download = client.get(f"/forms/{conversation_id}.pdf")
+    assert download.status_code == 200
+    assert download.headers["content-type"] == "application/pdf"
+    assert download.content[:5] == b"%PDF-"
+
+
+def test_interview_terminates_and_counts_go_down(client):
+    conversation_id = start_session(client, "conv_counts")
+    first = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": conversation_id, "form_id": "I-765"},
+        headers=auth(),
+    ).json()
+    assert first["known_count"] == 0
+    assert first["remaining_count"] > 0
+
+    client.post(
+        "/tools/save_field",
+        json={
+            "session_id": conversation_id,
+            "field_id": first["next_field"]["id"],
+            "value": "renewal",
+        },
+        headers=auth(),
+    )
+    second = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": conversation_id, "form_id": "I-765"},
+        headers=auth(),
+    ).json()
+    assert second["known_count"] == 1
+    assert second["next_field"]["id"] != first["next_field"]["id"]
+
+
+def test_form_id_spelling_variants_resolve(client):
+    conversation_id = start_session(client, "conv_variants")
+    for spelling in ("I-765", "i765", "i-765"):
+        resp = client.post(
+            "/tools/get_missing_fields",
+            json={"session_id": conversation_id, "form_id": spelling},
+            headers=auth(),
+        )
+        assert resp.status_code == 200, spelling
+
+
+def test_demo_mode_runs_without_voice(client):
+    resp = client.post("/demo/run", headers=auth())
+    assert resp.status_code == 200
+    body = resp.json()
+    assert body["status"] == "complete"
+    assert body["fields_asked"]
+
+
+# --------------------------------------------------------------------------
+# MUST NOT: authentication
+# --------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "path,payload",
+    [
+        ("/session/init", {"caller_id": "+1", "conversation_id": "c"}),
+        ("/tools/get_missing_fields", {"session_id": "c", "form_id": "I-765"}),
+        ("/tools/save_field", {"session_id": "c", "field_id": "given_name", "value": "x"}),
+        ("/tools/generate_form", {"session_id": "c"}),
+        ("/session/complete", {"conversation_id": "c"}),
+    ],
+)
+def test_every_tool_endpoint_rejects_a_missing_secret(client, path, payload):
+    assert client.post(path, json=payload).status_code == 401
+
+
+def test_wrong_secret_is_rejected(client):
+    resp = client.post(
+        "/session/init",
+        json={"caller_id": "+1", "conversation_id": "c"},
+        headers={"X-Zuzu-Secret": "not-the-secret"},
+    )
+    assert resp.status_code == 401
+
+
+def test_must_not_authorize_on_a_blank_configured_secret(client, monkeypatch):
+    """An unset secret must fail closed, not accept a blank header."""
+    monkeypatch.delenv("ZUZU_SHARED_SECRET", raising=False)
+    resp = client.post(
+        "/session/init",
+        json={"caller_id": "+1", "conversation_id": "c"},
+        headers={"X-Zuzu-Secret": ""},
+    )
+    assert resp.status_code == 500
+
+
+# --------------------------------------------------------------------------
+# MUST NOT: fabricate, or accept what it cannot place
+# --------------------------------------------------------------------------
+
+
+def test_must_not_accept_an_unknown_field_id(client):
+    conversation_id = start_session(client, "conv_unknown_field")
+    resp = client.post(
+        "/tools/save_field",
+        json={"session_id": conversation_id, "field_id": "favourite_colour", "value": "blue"},
+        headers=auth(),
+    )
+    assert resp.status_code == 422
+
+
+def test_must_not_fabricate_a_skipped_value(client):
+    """A skipped field must be blank on the PDF, not defaulted or inferred."""
+    from pypdf import PdfReader
+
+    conversation_id = start_session(client, "conv_skip")
+    run_full_call(client, conversation_id)
+
+    from api.i765_schema import get_i765_schema
+
+    schema = get_i765_schema()
+    # The persona explicitly skips these two.
+    skipped = [f for f in schema.fields if PERSONA["answers"].get(f.id) == "__skip__"]
+    assert skipped, "expected the demo persona to skip at least one field"
+
+    fields = PdfReader(str(REPO_ROOT / "out" / f"{conversation_id}.pdf")).get_fields() or {}
+    for form_field in skipped:
+        if not form_field.pdf_field:
+            continue
+        value = fields.get(form_field.pdf_field, {}).get("/V")
+        assert value in (None, ""), f"{form_field.id} was fabricated as {value!r}"
+
+
+def test_must_not_write_a_guessed_eligibility_category(tmp_path):
+    """An unparseable code leaves all three boxes blank rather than guessing."""
+    from pypdf import PdfReader
+
+    from api.i765_schema import get_i765_schema
+    from api.pdf_engine import fill_i765
+
+    schema = get_i765_schema()
+    values = dict(PERSONA["answers"])
+    values["eligibility_category"] = "I think I'm a student?"
+
+    out = fill_i765(values, tmp_path / "guess.pdf", schema)
+    fields = PdfReader(str(out)).get_fields() or {}
+    elig = schema.get_field("eligibility_category")
+    for part in elig.pdf_field_parts:
+        assert fields.get(part, {}).get("/V") in (None, ""), f"{part} got a guessed value"
+
+
+def test_must_not_write_an_invalid_state_code(tmp_path):
+    """State combos have no Edit flag; free text is silently dropped by the
+    viewer, so the engine must refuse it rather than appear to have written it."""
+    from pypdf import PdfReader
+
+    from api.pdf_engine import fill_i765
+
+    values = dict(PERSONA["answers"])
+    values["mailing_state"] = "California"
+
+    out = fill_i765(values, tmp_path / "state.pdf")
+    fields = PdfReader(str(out)).get_fields() or {}
+    assert fields.get("form1[0].Page2[0].Pt2Line5_State[0]", {}).get("/V") in (None, "")
+
+
+def test_incomplete_generation_writes_no_pdf(client):
+    conversation_id = start_session(client, "conv_incomplete")
+    result = client.post(
+        "/tools/generate_form", json={"session_id": conversation_id}, headers=auth()
+    ).json()
+
+    assert result["status"] == "incomplete"
+    assert result["pdf_url"] is None
+    assert result["missing"]
+    assert client.get(f"/forms/{conversation_id}.pdf").status_code == 404
+
+
+# --------------------------------------------------------------------------
+# MUST NOT: leak sensitive values into logs
+# --------------------------------------------------------------------------
+
+
+def test_must_not_log_sensitive_values(client, caplog):
+    conversation_id = start_session(client, "conv_logs")
+    secret_ssn = "123456789"
+    secret_anum = "987654321"
+
+    with caplog.at_level(logging.DEBUG):
+        for field_id, value in (("ssn", secret_ssn), ("a_number", secret_anum)):
+            client.post(
+                "/tools/save_field",
+                json={"session_id": conversation_id, "field_id": field_id, "value": value},
+                headers=auth(),
+            )
+
+    logged = "\n".join(record.getMessage() for record in caplog.records)
+    logged += "\n".join(str(record.__dict__) for record in caplog.records)
+    assert secret_ssn not in logged, "an SSN reached the logs"
+    assert secret_anum not in logged, "an A-Number reached the logs"
+    # Field ids are fine to log, and we want them there for debugging.
+    assert any(getattr(r, "field_id", None) == "ssn" for r in caplog.records)
+
+
+def test_sensitive_fields_are_flagged_for_read_back(client):
+    conversation_id = start_session(client, "conv_sensitive")
+    resp = client.post(
+        "/tools/save_field",
+        json={"session_id": conversation_id, "field_id": "a_number", "value": "123456789"},
+        headers=auth(),
+    ).json()
+    assert resp["needs_confirmation"] is True
+
+
+def test_low_confidence_is_flagged_for_read_back(client):
+    conversation_id = start_session(client, "conv_lowconf")
+    resp = client.post(
+        "/tools/save_field",
+        json={
+            "session_id": conversation_id,
+            "field_id": "given_name",
+            "value": "Maria",
+            "confidence": 0.4,
+        },
+        headers=auth(),
+    ).json()
+    assert resp["needs_confirmation"] is True
+
+
+# --------------------------------------------------------------------------
+# MUST NOT: invent sessions or forms
+# --------------------------------------------------------------------------
+
+
+def test_unknown_session_is_404_not_silently_created(client):
+    resp = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": "never-created", "form_id": "I-765"},
+        headers=auth(),
+    )
+    assert resp.status_code == 404
+
+
+def test_unknown_form_is_404(client):
+    conversation_id = start_session(client, "conv_badform")
+    resp = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": conversation_id, "form_id": "I-999"},
+        headers=auth(),
+    )
+    assert resp.status_code == 404
+
+
+def test_websocket_rejects_a_bad_secret(client):
+    """Closed with 1008 (policy violation), not merely dropped."""
+    from starlette.websockets import WebSocketDisconnect
+
+    with pytest.raises(WebSocketDisconnect) as excinfo:
+        with client.websocket_connect("/ws/conv_x?secret=wrong") as ws:
+            ws.receive_text()
+    assert excinfo.value.code == 1008
+
+
+def test_websocket_streams_events_with_a_good_secret(client):
+    conversation_id = start_session(client, "conv_ws")
+    with client.websocket_connect(f"/ws/{conversation_id}?secret={SECRET}") as ws:
+        first = json.loads(ws.receive_text())
+        assert first["type"] == "session_started"
+        assert first["session_id"] == conversation_id
+
+        client.post(
+            "/tools/save_field",
+            json={"session_id": conversation_id, "field_id": "given_name", "value": "Maria"},
+            headers=auth(),
+        )
+        event = json.loads(ws.receive_text())
+        assert event["type"] == "field_saved"
+        assert event["data"]["field_id"] == "given_name"
+        # The event carries the field id for the dashboard, never the value.
+        assert "Maria" not in ws.__class__.__name__ + json.dumps(event)

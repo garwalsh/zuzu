@@ -1,0 +1,45 @@
+{
+  "notes": "Fictional applicants used by Demo Mode and the mock voice client. Answers are keyed by schema field id and are internally consistent: a student persona carries a SEVIS number and a (c)(3)(B) eligibility category, and the arrival date precedes the passport expiry. No real person's data appears here.",
+  "personas": {
+    "maria": {
+      "display_name": "Maria Reyes",
+      "caller_id": "+14155550142",
+      "preferred_language": "es",
+      "story": "F-1 student renewing OPT employment authorization.",
+      "answers": {
+        "reason": "renewal",
+        "family_name": "Reyes",
+        "given_name": "Maria",
+        "middle_name": "__skip__",
+        "mailing_street": "1200 Mission St",
+        "mailing_unit_type": "apt",
+        "mailing_unit_number": "4B",
+        "mailing_city": "San Francisco",
+        "mailing_state": "CA",
+        "mailing_zip": "94103",
+        "physical_same_as_mailing": "yes",
+        "a_number": "A-123456789",
+        "uscis_online_account_number": "__skip__",
+        "sex": "female",
+        "marital_status": "single",
+        "ssn": "__skip__",
+        "country_of_citizenship": "Mexico",
+        "city_of_birth": "Guadalajara",
+        "country_of_birth": "Mexico",
+        "date_of_birth": "1998-04-12",
+        "i94_number": "12345678901",
+        "passport_number": "G12345678",
+        "passport_country": "Mexico",
+        "passport_expiry": "2030-06-30",
+        "date_of_last_entry": "2022-08-15",
+        "place_of_last_entry": "Los Angeles",
+        "status_at_last_entry": "F-1 Student",
+        "current_status": "F-1 Student",
+        "sevis_number": "N0012345678",
+        "eligibility_category": "(c)(3)(B)",
+        "daytime_phone": "(415) 555-0142",
+        "email": "maria.reyes@example.com"
+      }
+    }
+  }
+}
