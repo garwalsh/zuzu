@@ -6,128 +6,146 @@
 <title>Zuzu — live form fill</title>
 <style>
   :root{
-    --bg:#070a10; --panel:rgba(20,26,36,.72); --line:rgba(255,255,255,.075);
-    --ink:#e9eff7; --dim:#8794a6; --accent:#5aa2ff; --ok:#3fd77e; --mem:#b184ff;
-    --shadow:0 8px 28px rgba(0,0,0,.42);
+    --bg:#06080d; --panel:rgba(19,24,34,.66); --panel2:rgba(255,255,255,.028);
+    --line:rgba(255,255,255,.07); --ink:#eaf0f8; --dim:#8895a8; --faint:#4b5666;
+    --accent:#5aa2ff; --ok:#3ad884; --mem:#b184ff; --warn:#f5b544;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{
-    margin:0; color:var(--ink); background:var(--bg); overflow-x:hidden;
+  body{margin:0;color:var(--ink);background:var(--bg);overflow-x:hidden;
     font:14px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  /* Fallback gradient. Visible whenever WebGL is unavailable or blocked, so the
-     page never renders as a flat black rectangle. */
-  #bg-fallback{
-    position:fixed; inset:0; z-index:-2;
-    background:
-      radial-gradient(1100px 700px at 12% -10%, #16305c 0%, transparent 60%),
-      radial-gradient(900px 600px at 88% 8%, #3a1d5e 0%, transparent 55%),
-      radial-gradient(1000px 800px at 50% 110%, #0d3b46 0%, transparent 60%),
-      var(--bg);
-  }
-  #bg-canvas{position:fixed; inset:0; z-index:-1; display:block; opacity:0;
-             transition:opacity 1.1s ease}
+    -webkit-font-smoothing:antialiased}
+  #bg-fallback{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(1100px 700px at 10% -12%, #16305c 0%, transparent 60%),
+    radial-gradient(900px 600px at 90% 6%, #3a1d5e 0%, transparent 55%),
+    radial-gradient(1000px 800px at 50% 112%, #0d3b46 0%, transparent 60%), var(--bg)}
+  #bg-canvas{position:fixed;inset:0;z-index:-1;display:block;opacity:0;transition:opacity 1.1s}
   #bg-canvas.on{opacity:1}
 
-  header{
-    position:sticky; top:0; z-index:10;
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
-    padding:14px 24px; border-bottom:1px solid var(--line);
-    background:rgba(9,13,20,.62); backdrop-filter:blur(18px) saturate(1.4);
-  }
-  h1{font-size:17px;margin:0;font-weight:680;letter-spacing:-.3px}
-  h1 .sub{color:var(--dim);font-weight:400;margin-left:9px;font-size:12.5px;letter-spacing:0}
+  header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:11px;
+    flex-wrap:wrap;padding:13px 22px;border-bottom:1px solid var(--line);
+    background:rgba(7,10,16,.7);backdrop-filter:blur(20px) saturate(1.5)}
+  .brand{font-size:17px;font-weight:700;letter-spacing:-.4px;margin:0}
+  .brand em{font-style:normal;color:var(--dim);font-weight:400;font-size:12px;
+    margin-left:9px;letter-spacing:0}
   .spacer{flex:1}
-  button{
-    background:linear-gradient(180deg,#5aa2ff,#3d7fdd); color:#fff; border:0;
-    border-radius:9px; padding:9px 16px; font:inherit; font-size:13px; font-weight:600;
-    cursor:pointer; box-shadow:0 3px 14px rgba(61,127,221,.35);
-    transition:transform .16s cubic-bezier(.2,.8,.3,1), box-shadow .16s, filter .16s;
-  }
-  button:hover{transform:translateY(-1.5px);box-shadow:0 7px 22px rgba(61,127,221,.45)}
-  button:active{transform:translateY(0)}
+  button{background:linear-gradient(180deg,#5aa2ff,#3b7cd8);color:#fff;border:0;border-radius:9px;
+    padding:9px 16px;font:inherit;font-size:13px;font-weight:620;cursor:pointer;
+    box-shadow:0 3px 14px rgba(59,124,216,.36);
+    transition:transform .16s cubic-bezier(.2,.8,.3,1),box-shadow .16s}
+  button:hover{transform:translateY(-1.5px);box-shadow:0 7px 22px rgba(59,124,216,.46)}
   button:disabled{opacity:.45;cursor:default;transform:none;box-shadow:none}
   button.ghost{background:rgba(255,255,255,.05);border:1px solid var(--line);
-               box-shadow:none;color:var(--ink);backdrop-filter:blur(8px)}
-  button.ghost:hover{background:rgba(255,255,255,.09)}
-
-  .pill{
-    font-size:11.5px; padding:5px 12px; border-radius:999px; white-space:nowrap;
-    border:1px solid var(--line); color:var(--dim); font-variant-numeric:tabular-nums;
-    background:rgba(255,255,255,.035); backdrop-filter:blur(8px);
-  }
+    color:var(--ink);box-shadow:none}
+  button.ghost:hover{background:rgba(255,255,255,.1)}
+  .pill{font-size:11.5px;padding:5px 12px;border-radius:999px;white-space:nowrap;
+    border:1px solid var(--line);color:var(--dim);background:rgba(255,255,255,.035);
+    font-variant-numeric:tabular-nums}
   .pill b{color:var(--ink);font-weight:640}
-  .pill.live{border-color:rgba(63,215,126,.5);color:var(--ok);
-             box-shadow:0 0 16px rgba(63,215,126,.18)}
+  .pill.live{border-color:rgba(58,216,132,.5);color:var(--ok);
+    box-shadow:0 0 16px rgba(58,216,132,.18)}
   .pill.mem{border-color:rgba(177,132,255,.5);color:var(--mem)}
 
-  main{display:grid;grid-template-columns:1fr 375px;gap:20px;padding:20px 24px 40px;
-       align-items:start;max-width:1600px;margin:0 auto}
-  @media(max-width:1050px){main{grid-template-columns:1fr}}
+  main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;
+    padding:18px 22px 44px;align-items:start;max-width:1680px;margin:0 auto}
+  @media(max-width:1080px){main{grid-template-columns:1fr}}
 
-  .card{
-    background:var(--panel); border:1px solid var(--line); border-radius:16px;
-    overflow:hidden; box-shadow:var(--shadow); backdrop-filter:blur(16px) saturate(1.25);
-  }
-  .card h2{
-    font-size:11px;text-transform:uppercase;letter-spacing:.9px;color:var(--dim);
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.44);
+    backdrop-filter:blur(18px) saturate(1.3)}
+  .card + .card{margin-top:18px}
+  .card h2{font-size:11px;text-transform:uppercase;letter-spacing:.95px;color:var(--dim);
     margin:0;padding:13px 18px;border-bottom:1px solid var(--line);font-weight:650;
-  }
-  .grp{padding:4px 18px 16px}
-  .grp h3{font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--dim);
-          margin:16px 0 9px;font-weight:650;opacity:.85}
-  .fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:8px}
-  .f{
-    position:relative; border:1px solid var(--line); border-radius:11px;
-    padding:9px 12px; background:rgba(255,255,255,.022); overflow:hidden;
-    transition:border-color .4s ease, background .4s ease, transform .3s cubic-bezier(.2,.8,.3,1);
-  }
-  .f .k{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.55px;
-        display:flex;justify-content:space-between;gap:6px;font-weight:600}
-  .f .v{margin-top:4px;font-size:13.5px;min-height:20px;color:#3f4855;
-        word-break:break-word;font-variant-numeric:tabular-nums}
-  .f.set{border-color:rgba(63,215,126,.42);background:rgba(63,215,126,.055)}
-  .f.set .v{color:var(--ink)}
-  .f.frommem{border-color:rgba(177,132,255,.45);background:rgba(177,132,255,.06)}
-  .f.skipped{border-color:var(--line);background:rgba(255,255,255,.015)}
-  .f.skipped .v{color:var(--dim);font-style:italic;opacity:.75}
-  /* Sweep of light across a field the instant its value lands. */
-  .f.flash{animation:lift .75s cubic-bezier(.2,.8,.3,1)}
-  .f.flash::after{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:linear-gradient(105deg,transparent 30%,rgba(120,180,255,.32) 50%,transparent 70%);
-    transform:translateX(-100%);animation:sweep .75s ease-out;
-  }
-  @keyframes sweep{to{transform:translateX(100%)}}
-  @keyframes lift{
-    0%{transform:scale(1)}
-    35%{transform:scale(1.035);border-color:var(--accent)}
-    100%{transform:scale(1)}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .f.flash,.f.flash::after{animation:none}
-    button:hover{transform:none}
-  }
-  .tag{font-size:8.5px;padding:1.5px 5px;border-radius:4px;border:1px solid currentColor;
-       opacity:.6;letter-spacing:.3px}
+    display:flex;align-items:center;gap:9px}
+  .card h2 .count{margin-left:auto;font-size:11px;color:var(--faint);
+    font-variant-numeric:tabular-nums;text-transform:none;letter-spacing:0}
 
-  #log{height:280px;overflow-y:auto;padding:10px 16px;font-size:12px;
-       font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  #log div{padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);color:var(--dim);
-           white-space:pre-wrap;word-break:break-word;animation:slidein .3s ease}
-  @keyframes slidein{from{opacity:0;transform:translateY(-5px)}to{opacity:1}}
-  #log b{color:var(--ink);font-weight:560}
-  #widget{padding:14px 18px;min-height:60px}
-  .muted{color:var(--dim);font-size:12.5px;padding:0 18px 15px;margin:0}
-  a.dl{
-    display:inline-block;margin:2px 18px 18px;padding:10px 17px;
-    background:linear-gradient(180deg,#3fd77e,#28b464);color:#04170c;border-radius:9px;
-    text-decoration:none;font-weight:700;font-size:13px;
-    box-shadow:0 4px 18px rgba(63,215,126,.32);transition:transform .16s,box-shadow .16s;
-  }
-  a.dl:hover{transform:translateY(-1.5px);box-shadow:0 8px 26px rgba(63,215,126,.42)}
+  /* ---- progress ring ---- */
+  .hero{display:flex;align-items:center;gap:20px;padding:20px 18px}
+  .ring{position:relative;width:104px;height:104px;flex:none}
+  .ring svg{transform:rotate(-90deg)}
+  .ring .track{stroke:rgba(255,255,255,.08)}
+  .ring .fill{stroke:url(#g);stroke-linecap:round;
+    transition:stroke-dashoffset .7s cubic-bezier(.2,.8,.3,1)}
+  .ring .num{position:absolute;inset:0;display:grid;place-items:center;
+    font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+  .ring .num small{display:block;font-size:9.5px;font-weight:600;color:var(--dim);
+    letter-spacing:.7px;text-transform:uppercase;margin-top:1px}
+  .heroinfo{min-width:0}
+  .heroinfo .lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;
+    color:var(--dim);font-weight:650}
+  .heroinfo .q{font-size:15px;line-height:1.45;margin-top:6px;color:var(--ink)}
+  .heroinfo .meta{margin-top:9px;display:flex;gap:7px;flex-wrap:wrap}
+
+  /* ---- transcript ---- */
+  #convo{max-height:330px;overflow-y:auto;padding:14px 18px;display:flex;
+    flex-direction:column;gap:11px}
+  .turn{display:flex;flex-direction:column;gap:4px;animation:rise .34s cubic-bezier(.2,.8,.3,1)}
+  @keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1}}
+  .bubble{max-width:88%;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45}
+  .turn.ask .bubble{align-self:flex-start;background:rgba(255,255,255,.055);
+    border:1px solid var(--line);border-bottom-left-radius:5px}
+  .turn.ans .bubble{align-self:flex-end;background:linear-gradient(180deg,#2f6fc4,#255ba6);
+    border-bottom-right-radius:5px;color:#fff;font-weight:520}
+  .turn.ans.skip .bubble{background:rgba(255,255,255,.05);color:var(--dim);
+    font-style:italic;font-weight:400;border:1px solid var(--line)}
+  .turn .who{font-size:9.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--faint);
+    font-weight:650}
+  .turn.ans .who{align-self:flex-end}
+  .empty{padding:30px 18px;text-align:center;color:var(--dim);font-size:13px}
+  .empty .big{font-size:15px;color:var(--ink);font-weight:600;margin-bottom:6px}
+
+  /* ---- field groups ---- */
+  .grp{border-bottom:1px solid var(--line)}
+  .grp:last-child{border-bottom:0}
+  .grphead{display:flex;align-items:center;gap:10px;padding:11px 18px;cursor:default}
+  .grphead .name{font-size:11px;text-transform:uppercase;letter-spacing:.75px;
+    color:var(--dim);font-weight:650}
+  .grphead .bar{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.07);
+    overflow:hidden;max-width:190px}
+  .grphead .bar i{display:block;height:100%;width:0;border-radius:3px;
+    background:linear-gradient(90deg,#5aa2ff,#3ad884);transition:width .6s cubic-bezier(.2,.8,.3,1)}
+  .grphead .n{font-size:10.5px;color:var(--faint);font-variant-numeric:tabular-nums;
+    margin-left:auto;font-weight:600}
+  .fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));
+    gap:7px;padding:0 18px 14px}
+  .f{position:relative;border:1px solid var(--line);border-radius:10px;padding:8px 11px;
+    background:var(--panel2);overflow:hidden;
+    transition:border-color .4s,background .4s,transform .3s cubic-bezier(.2,.8,.3,1)}
+  .f .k{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;
+    display:flex;justify-content:space-between;gap:6px;font-weight:650}
+  .f .v{margin-top:3px;font-size:13px;min-height:19px;color:var(--faint);
+    word-break:break-word;font-variant-numeric:tabular-nums}
+  .f.set{border-color:rgba(58,216,132,.42);background:rgba(58,216,132,.06)}
+  .f.set .v{color:var(--ink)}
+  .f.frommem{border-color:rgba(177,132,255,.45);background:rgba(177,132,255,.07)}
+  .f.skipped .v{color:var(--dim);font-style:italic;opacity:.7}
+  .f.asking{border-color:var(--accent);background:rgba(90,162,255,.1);
+    box-shadow:0 0 0 3px rgba(90,162,255,.13)}
+  .f.asking::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2.5px;
+    background:var(--accent);animation:pulse 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+  .f.flash{animation:lift .75s cubic-bezier(.2,.8,.3,1)}
+  .f.flash::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(105deg,transparent 30%,rgba(130,190,255,.32) 50%,transparent 70%);
+    transform:translateX(-100%);animation:sweep .75s ease-out}
+  @keyframes sweep{to{transform:translateX(100%)}}
+  @keyframes lift{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
+  @media (prefers-reduced-motion:reduce){
+    .f.flash,.f.flash::after,.f.asking::before,.turn{animation:none}
+    button:hover{transform:none}}
+  .tag{font-size:8px;padding:1.5px 5px;border-radius:4px;border:1px solid currentColor;
+    opacity:.55;letter-spacing:.3px}
+
+  .voicerow{display:flex;align-items:center;gap:10px;padding:14px 18px 4px}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);
+    box-shadow:0 0 10px var(--ok);flex:none;animation:pulse 2s ease-in-out infinite}
+  .muted{color:var(--dim);font-size:12.5px;padding:6px 18px 15px;margin:0}
+  a.dl{display:block;margin:14px 18px 18px;padding:12px;text-align:center;
+    background:linear-gradient(180deg,#3ad884,#26b168);color:#04170c;border-radius:11px;
+    text-decoration:none;font-weight:720;font-size:13.5px;
+    box-shadow:0 5px 20px rgba(58,216,132,.32);transition:transform .16s,box-shadow .16s}
+  a.dl:hover{transform:translateY(-2px);box-shadow:0 9px 28px rgba(58,216,132,.44)}
   ::-webkit-scrollbar{width:9px;height:9px}
   ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.11);border-radius:9px}
   ::-webkit-scrollbar-track{background:transparent}
@@ -138,9 +156,8 @@
 <canvas id="bg-canvas"></canvas>
 
 <header>
-  <h1>Zuzu <span class="sub" id="formtitle">I-765</span></h1>
+  <h1 class="brand">Zuzu <em id="formtitle">I-765</em></h1>
   <span class="pill" id="p-session">no session</span>
-  <span class="pill" id="p-progress">0 / 0</span>
   <span class="pill" id="p-latency">— ms</span>
   <span class="pill mem" id="p-mem" style="display:none">returning caller</span>
   <span class="spacer"></span>
@@ -149,295 +166,319 @@
 </header>
 
 <main>
+  <!-- left: the form filling itself in -->
   <section class="card">
-    <h2>Form fields</h2>
-    <div class="grp" id="grid"></div>
-    <a class="dl" id="dl" style="display:none">Download completed PDF</a>
+    <h2>Form fields <span class="count" id="fieldcount"></span></h2>
+    <div id="grid"></div>
   </section>
 
+  <!-- right: progress, voice, conversation -->
   <div>
-    <section class="card" style="margin-bottom:20px">
-      <h2>Voice</h2>
-      <div id="widget"></div>
-      <p class="muted" id="widgethint">Loading voice agent…</p>
-    </section>
     <section class="card">
-      <h2>Activity</h2>
-      <div id="log"></div>
+      <div class="hero">
+        <div class="ring">
+          <svg width="104" height="104" viewBox="0 0 104 104">
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5aa2ff"/><stop offset="100%" stop-color="#3ad884"/>
+            </linearGradient></defs>
+            <circle class="track" cx="52" cy="52" r="45" fill="none" stroke-width="8"/>
+            <circle class="fill" id="ringfill" cx="52" cy="52" r="45" fill="none"
+                    stroke-width="8" stroke-dasharray="282.7" stroke-dashoffset="282.7"/>
+          </svg>
+          <div class="num"><span><span id="pct">0</span>%<small id="ratio">0 of 0</small></span></div>
+        </div>
+        <div class="heroinfo">
+          <div class="lbl" id="statuslbl">Waiting for a call</div>
+          <div class="q" id="statusq">Press <b>Start a call</b> and speak in any language,
+            or run <b>Demo Mode</b> to watch a full call with no microphone.</div>
+          <div class="meta" id="statusmeta"></div>
+        </div>
+      </div>
+      <a class="dl" id="dl" style="display:none">↓ Download completed I-765</a>
+    </section>
+
+    <section class="card">
+      <h2>Voice</h2>
+      <div class="voicerow"><span class="dot" id="vdot"></span>
+        <span id="vstate" style="font-size:13px">Connecting…</span></div>
+      <p class="muted" id="widgethint"></p>
+    </section>
+
+    <section class="card">
+      <h2>Conversation <span class="count" id="turncount"></span></h2>
+      <div id="convo">
+        <div class="empty"><div class="big">No call yet</div>
+          Every question Zuzu asks, and every answer given, appears here.</div>
+      </div>
     </section>
   </div>
 </main>
 
 <script type="module">
-// ---------------------------------------------------------------------------
-// Ambient WebGL background. Loaded from a CDN as an ES module so this page
-// still needs no build step. Every failure path -- no WebGL, blocked CDN,
-// offline conference wifi -- falls back to the CSS gradient underneath, so the
-// dashboard is never worse than it was without it.
-// ---------------------------------------------------------------------------
+// Ambient WebGL. Loaded from a CDN as an ES module so the page still needs no
+// build step, and every failure path falls back to the CSS gradient beneath it.
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 async function initBackground(){
   if (reduceMotion) return;
   const canvas = document.getElementById('bg-canvas');
   try{
     const THREE = await import('https://esm.sh/three@0.169.0');
     const renderer = new THREE.WebGLRenderer({canvas, antialias:false, alpha:true});
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5)); // cheap on laptops
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-    // Slow-drifting colour field. Deliberately low-frequency: it should read as
-    // atmosphere behind the data, never as something competing with it.
+    const camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
     const material = new THREE.ShaderMaterial({
-      uniforms:{ t:{value:0}, res:{value:new THREE.Vector2(1,1)} },
-      vertexShader:`void main(){ gl_Position = vec4(position, 1.0); }`,
+      uniforms:{t:{value:0}, res:{value:new THREE.Vector2(1,1)}},
+      vertexShader:`void main(){ gl_Position = vec4(position,1.0); }`,
       fragmentShader:`
-        precision mediump float;
-        uniform float t; uniform vec2 res;
-        float blob(vec2 p, vec2 c, float r){ return r / (length(p - c) + 0.0001); }
+        precision mediump float; uniform float t; uniform vec2 res;
+        float blob(vec2 p, vec2 c, float r){ return r/(length(p-c)+0.0001); }
         void main(){
-          vec2 uv = gl_FragCoord.xy / res;
-          vec2 p = (uv - 0.5) * vec2(res.x / res.y, 1.0);
-          float a = blob(p, vec2(sin(t*0.11)*0.55 - 0.45, cos(t*0.09)*0.30 + 0.42), 0.085);
-          float b = blob(p, vec2(cos(t*0.08)*0.50 + 0.52, sin(t*0.12)*0.26 + 0.30), 0.072);
-          float c = blob(p, vec2(sin(t*0.07)*0.42, cos(t*0.10)*0.34 - 0.50), 0.078);
-          vec3 col = vec3(0.055,0.078,0.125);
-          col += vec3(0.10,0.26,0.62) * a * 0.30;
-          col += vec3(0.36,0.16,0.62) * b * 0.26;
-          col += vec3(0.05,0.42,0.42) * c * 0.24;
-          // Vignette keeps the centre calm where the panels sit.
-          col *= 1.0 - 0.32 * length(uv - 0.5);
-          gl_FragColor = vec4(col, 1.0);
+          vec2 uv = gl_FragCoord.xy/res;
+          vec2 p = (uv-0.5)*vec2(res.x/res.y,1.0);
+          float a = blob(p, vec2(sin(t*0.11)*0.55-0.45, cos(t*0.09)*0.30+0.42), 0.082);
+          float b = blob(p, vec2(cos(t*0.08)*0.50+0.52, sin(t*0.12)*0.26+0.30), 0.070);
+          float c = blob(p, vec2(sin(t*0.07)*0.42, cos(t*0.10)*0.34-0.50), 0.075);
+          vec3 col = vec3(0.045,0.062,0.10);
+          col += vec3(0.10,0.26,0.62)*a*0.30;
+          col += vec3(0.36,0.16,0.62)*b*0.25;
+          col += vec3(0.05,0.42,0.42)*c*0.22;
+          col *= 1.0 - 0.34*length(uv-0.5);
+          gl_FragColor = vec4(col,1.0);
         }`
     });
     scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), material));
-
-    const resize = () => {
-      renderer.setSize(innerWidth, innerHeight, false);
-      material.uniforms.res.value.set(innerWidth, innerHeight);
-    };
-    resize();
-    addEventListener('resize', resize);
-
-    let raf = null;
-    const clock = new THREE.Clock();
-    const loop = () => {
-      material.uniforms.t.value += clock.getDelta();
-      renderer.render(scene, camera);
-      raf = requestAnimationFrame(loop);
-    };
-    loop();
-    canvas.classList.add('on');
-
-    // Stop burning GPU while the tab is hidden -- this runs for a whole demo.
+    const resize = () => { renderer.setSize(innerWidth, innerHeight, false);
+      material.uniforms.res.value.set(innerWidth, innerHeight); };
+    resize(); addEventListener('resize', resize);
+    let raf = null; const clock = new THREE.Clock();
+    const loop = () => { material.uniforms.t.value += clock.getDelta();
+      renderer.render(scene, camera); raf = requestAnimationFrame(loop); };
+    loop(); canvas.classList.add('on');
     document.addEventListener('visibilitychange', () => {
       if (document.hidden){ cancelAnimationFrame(raf); raf = null; }
       else if (!raf){ clock.getDelta(); loop(); }
     });
-  } catch (err){
-    // CSS gradient stays. Nothing to do, and nothing to apologise for.
-    console.info('ambient background unavailable, using gradient fallback:', err.message);
-  }
+  } catch(err){ console.info('ambient background unavailable:', err.message); }
 }
 initBackground();
 </script>
 
 <script>
 const qs = new URLSearchParams(location.search);
-// The secret stays in the URL the operator opens; it is never baked into the
-// served HTML, so the page itself is not a credential.
 const SECRET = qs.get('secret') || '';
 const FORM = qs.get('form') || 'I-765';
 const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json'};
 const SKIP = '__skip__';
+const RING = 2 * Math.PI * 45;
 
-let schema = null, ws = null, sessionId = null, saves = [];
+let schema = null, byId = {}, ws = null, sessionId = null, saves = [];
+let seen = {};      // field_id -> rendered value, so a turn is drawn once
+let turns = 0;
 
 const el = id => document.getElementById(id);
-const log = (msg, strong) => {
-  const d = document.createElement('div');
-  d.innerHTML = strong ? `<b>${msg}</b>` : msg;
-  el('log').prepend(d);
-};
+const pretty = s => s.replace(/_/g,' ');
 
 async function loadSchema(){
-  const r = await fetch(`/forms/${FORM}/schema`);
-  schema = await r.json();
-  el('formtitle').textContent = `${schema.form_id} — ${schema.title} (ed. ${schema.edition})`;
+  schema = await (await fetch(`/forms/${FORM}/schema`)).json();
+  byId = Object.fromEntries(schema.fields.map(f => [f.id, f]));
+  el('formtitle').textContent = `${schema.form_id} · ${schema.title} · ed. ${schema.edition}`;
+  el('fieldcount').textContent = `${schema.fields.length} fields`;
 
   const groups = {};
   schema.fields.forEach(f => (groups[f.group] ||= []).push(f));
   el('grid').innerHTML = Object.entries(groups).map(([g, fs]) => `
-    <h3>${g.replace(/_/g,' ')}</h3>
-    <div class="fields">${fs.map(f => `
-      <div class="f" id="f-${f.id}">
-        <div class="k"><span>${f.id.replace(/_/g,' ')}</span>${
-          f.sensitive ? '<span class="tag">sensitive</span>' : ''}</div>
-        <div class="v" id="v-${f.id}"></div>
-      </div>`).join('')}</div>`).join('');
-  el('p-progress').innerHTML = `<b>0</b> / ${schema.fields.length}`;
+    <div class="grp" data-g="${g}">
+      <div class="grphead">
+        <span class="name">${pretty(g)}</span>
+        <span class="bar"><i id="bar-${g}"></i></span>
+        <span class="n" id="n-${g}">0/${fs.length}</span>
+      </div>
+      <div class="fields">${fs.map(f => `
+        <div class="f" id="f-${f.id}">
+          <div class="k"><span>${pretty(f.id)}</span>${
+            f.sensitive ? '<span class="tag">sensitive</span>' : ''}</div>
+          <div class="v" id="v-${f.id}"></div>
+        </div>`).join('')}</div>
+    </div>`).join('');
+  render({});
 }
 
-function resetGrid(){
-  // Clear the previous call's values so two sessions never blur together on
-  // screen. Nothing is more confusing mid-demo than a stale field.
+function addTurn(field, value){
+  if (turns === 0) el('convo').innerHTML = '';
+  const skipped = value === SKIP;
+  const ask = document.createElement('div');
+  ask.className = 'turn ask';
+  ask.innerHTML = `<span class="who">Zuzu</span><div class="bubble">${field.question}</div>`;
+  const ans = document.createElement('div');
+  ans.className = 'turn ans' + (skipped ? ' skip' : '');
+  ans.innerHTML = `<span class="who">Applicant</span><div class="bubble">${
+    skipped ? 'skipped' : value}</div>`;
+  el('convo').append(ask, ans);
+  el('convo').scrollTop = el('convo').scrollHeight;
+  turns++;
+  el('turncount').textContent = `${turns} answered`;
+}
+
+function render(values, sources){
+  values = values || {}; sources = sources || {};
+  let known = 0;
+  const perGroup = {};
   schema.fields.forEach(f => {
+    perGroup[f.group] ||= {done:0, total:0};
+    perGroup[f.group].total++;
     const box = el(`f-${f.id}`), v = el(`v-${f.id}`);
-    if (!box) return;
-    box.classList.remove('set','frommem','skipped','flash');
-    v.textContent = '';
+    const val = values[f.id];
+    box.classList.remove('asking');
+    if (val === undefined){ return; }
+    known++; perGroup[f.group].done++;
+    if (val === SKIP){
+      v.textContent = 'not provided';
+      box.classList.add('skipped'); box.classList.remove('set','frommem');
+    } else {
+      v.textContent = val;
+      box.classList.add('set');
+      if (sources[f.id] === 'memory') box.classList.add('frommem');
+    }
   });
-  el('p-progress').innerHTML = `<b>0</b> / ${schema.fields.length}`;
+
+  Object.entries(perGroup).forEach(([g, {done, total}]) => {
+    const bar = el(`bar-${g}`), n = el(`n-${g}`);
+    if (bar) bar.style.width = `${(done/total)*100}%`;
+    if (n) n.textContent = `${done}/${total}`;
+  });
+
+  const total = schema.fields.length;
+  const pct = Math.round((known/total)*100);
+  el('pct').textContent = pct;
+  el('ratio').textContent = `${known} of ${total}`;
+  el('ringfill').style.strokeDashoffset = RING * (1 - known/total);
+
+  // Highlight whatever Zuzu is asking for right now: first unanswered field in
+  // schema order, which is exactly how the orchestrator picks it.
+  const nextField = schema.fields.find(f => values[f.id] === undefined);
+  if (nextField && sessionId){
+    el(`f-${nextField.id}`).classList.add('asking');
+    el('statuslbl').textContent = 'Now asking';
+    el('statusq').textContent = nextField.question;
+  } else if (sessionId){
+    el('statuslbl').textContent = 'Interview complete';
+    el('statusq').textContent = 'Every question answered. The form is ready to review and sign.';
+  }
+}
+
+function resetView(){
+  seen = {}; turns = 0; saves = [];
+  el('convo').innerHTML = `<div class="empty"><div class="big">Call starting…</div>
+    Questions and answers will appear here.</div>`;
+  el('turncount').textContent = '';
   el('p-latency').textContent = '— ms';
   el('p-mem').style.display = 'none';
   el('dl').style.display = 'none';
-  saves = [];
-}
-
-function paint(id, value, source){
-  const box = el(`f-${id}`), v = el(`v-${id}`);
-  if (!box) return;
-  if (value === SKIP){
-    // Asked, and the applicant had no answer. Showing a masked-looking value
-    // here would imply we collected something we did not.
-    v.textContent = 'not provided';
-    box.classList.add('skipped');
-    box.classList.remove('set','frommem');
-    return;
-  }
-  v.textContent = value ?? '✓';
-  box.classList.add('set','flash');
-  if (source === 'memory') box.classList.add('frommem');
-  setTimeout(() => box.classList.remove('flash'), 780);
+  schema.fields.forEach(f => {
+    const box = el(`f-${f.id}`);
+    box.classList.remove('set','frommem','skipped','flash','asking');
+    el(`v-${f.id}`).textContent = '';
+  });
+  render({});
 }
 
 async function hydrate(id){
   const r = await fetch(`/sessions/${id}/values`, {headers: H});
   if (!r.ok) return;
   const d = await r.json();
-  Object.entries(d.values).forEach(([k, v]) => paint(k, v, d.sources[k]));
-  el('p-progress').innerHTML = `<b>${d.known_count}</b> / ${schema.fields.length}`;
+  // Draw a conversation turn the first time each field resolves.
+  Object.entries(d.values).forEach(([k, v]) => {
+    if (seen[k] === undefined && byId[k]) addTurn(byId[k], v);
+    seen[k] = v;
+  });
+  render(d.values, d.sources);
   if (d.is_returning) el('p-mem').style.display = '';
   if (d.has_pdf) showPdf(id);
 }
 
 function showPdf(id){
-  const a = el('dl');
-  a.href = `/forms/${id}.pdf`;
-  a.style.display = 'inline-block';
+  const a = el('dl'); a.href = `/forms/${id}.pdf`; a.style.display = 'block';
 }
 
 function connect(id){
   if (ws) ws.close();
   sessionId = id;
-  saves = [];
-  el('p-session').textContent = id.slice(0, 26);
+  el('p-session').textContent = id.length > 26 ? id.slice(0,26) + '…' : id;
   ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`);
-  ws.onopen  = () => { el('p-session').classList.add('live'); log('connected to ' + id, true); };
+  ws.onopen = () => el('p-session').classList.add('live');
   ws.onclose = () => el('p-session').classList.remove('live');
   ws.onmessage = ev => {
     const e = JSON.parse(ev.data);
     if (e.type === 'session_started'){
-      if (e.data.is_returning){
-        el('p-mem').style.display = '';
-        log(`returning caller — ${e.data.prefilled_count} fields recalled from memory`, true);
-      }
+      if (e.data.is_returning) el('p-mem').style.display = '';
       hydrate(id);
     }
     if (e.type === 'field_saved'){
-      // Server-measured time for the save path, not client round-trip: this is
-      // the number the "voice path stays fast" claim rests on.
+      // Server-measured save latency, not client round-trip.
       if (typeof e.data.duration_ms === 'number'){
         saves.push(e.data.duration_ms);
         el('p-latency').innerHTML =
           `save <b>${e.data.duration_ms.toFixed(2)}</b> ms · max <b>${Math.max(...saves).toFixed(2)}</b>`;
       }
-      paint(e.data.field_id, null, e.data.source);
+      const box = el(`f-${e.data.field_id}`);
+      if (box){ box.classList.add('flash'); setTimeout(() => box.classList.remove('flash'), 780); }
       hydrate(id);
-      log(`saved ${e.data.field_id}${e.data.sensitive ? ' (read-back confirmed)' : ''}`);
     }
-    if (e.type === 'form_ready'){ showPdf(id); log('form ready — PDF generated', true); }
-    if (e.type === 'session_completed') log('call ended', true);
+    if (e.type === 'form_ready') showPdf(id);
   };
 }
 
 el('demo').onclick = async () => {
-  el('demo').disabled = true;
-  el('demo').textContent = 'running…';
-  log('starting Demo Mode (no microphone needed)', true);
+  el('demo').disabled = true; el('demo').textContent = 'running…';
   try{
-    const r = await fetch('/demo/run', {method:'POST', headers: H});
-    const d = await r.json();
-    connect(d.session_id);
-    setTimeout(() => hydrate(d.session_id), 300);
-    log(`demo complete — ${d.fields_asked.length} questions, status ${d.status}`, true);
-  } catch(e){ log('demo failed: ' + e.message); }
-  el('demo').disabled = false;
-  el('demo').textContent = '▶ Demo Mode';
+    const d = await (await fetch('/demo/run', {method:'POST', headers:H})).json();
+    resetView(); connect(d.session_id);
+    setTimeout(() => hydrate(d.session_id), 250);
+  } catch(e){ el('statusq').textContent = 'Demo failed: ' + e.message; }
+  el('demo').disabled = false; el('demo').textContent = '▶ Demo Mode';
 };
 
 el('attach').onclick = async () => {
-  const r = await fetch('/sessions/recent', {headers: H});
-  const d = await r.json();
-  if (!d.sessions.length){ log('no active sessions yet — start a call'); return; }
-  connect(d.sessions[0].session_id);
-  hydrate(d.sessions[0].session_id);
+  const d = await (await fetch('/sessions/recent', {headers:H})).json();
+  if (!d.sessions.length){ el('statusq').textContent = 'No active sessions yet — start a call.'; return; }
+  resetView(); connect(d.sessions[0].session_id); hydrate(d.sessions[0].session_id);
 };
 
 async function mountVoice(){
   const cfg = await (await fetch('/config')).json();
   if (!cfg.elevenlabs_agent_id){
+    el('vstate').textContent = 'Not configured';
+    el('vdot').style.background = 'var(--warn)';
     el('widgethint').textContent = 'Set ELEVENLABS_AGENT_ID to embed the voice widget.';
     return;
   }
-  // The agent id is public by design — it is what the browser connects with.
   // The widget positions itself as a floating launcher, so it goes on <body>
-  // rather than inside a card where it would overlap the card's own content.
+  // rather than inside a card where it would cover the card's own content.
   const w = document.createElement('elevenlabs-convai');
   w.setAttribute('agent-id', cfg.elevenlabs_agent_id);
   document.body.appendChild(w);
-
   const s = document.createElement('script');
-  s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
-  s.async = true;
+  s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed'; s.async = true;
   document.body.appendChild(s);
-
-  el('widget').innerHTML =
-    `<div style="display:flex;align-items:center;gap:10px">
-       <span style="width:9px;height:9px;border-radius:50%;background:var(--ok);
-                    box-shadow:0 0 10px var(--ok);flex:none"></span>
-       <span style="font-size:13px">Voice agent connected</span>
-     </div>`;
+  el('vstate').textContent = 'Voice agent connected';
   el('widgethint').textContent =
-    'Press "Start a call" at the bottom of the screen and speak in any language. ' +
-    'Fields fill in here as you talk.';
-  // A live call creates its own session; follow it so the grid tracks the call.
-  //
-  // This must switch even when a socket is already open. An earlier version
-  // bailed out while connected, which meant the dashboard latched onto whatever
-  // session existed first -- a leftover curl probe, or the previous demo -- and
-  // then sat there ignoring the actual call. /sessions/recent is newest-first,
-  // so always follow the head.
+    'Press "Start a call" at the bottom of the screen and speak in any language.';
+
+  // Follow the newest session. This must switch even while a socket is open, or
+  // the dashboard latches onto a stale session and ignores the real call.
   setInterval(async () => {
     try{
-      const d = await (await fetch('/sessions/recent', {headers: H})).json();
+      const d = await (await fetch('/sessions/recent', {headers:H})).json();
       const newest = d.sessions?.[0];
       if (newest && newest.session_id !== sessionId){
-        log(`following new session ${newest.session_id}`, true);
-        resetGrid();
-        connect(newest.session_id);
-        hydrate(newest.session_id);
+        resetView(); connect(newest.session_id); hydrate(newest.session_id);
       }
     } catch(e){}
   }, 2500);
 }
 
-loadSchema().then(() => {
-  log('dashboard ready', true);
-  if (!SECRET) log('no ?secret= in the URL — live updates will be refused');
-  mountVoice();
-});
+loadSchema().then(mountVoice);
 </script>
 </body>
 </html>
