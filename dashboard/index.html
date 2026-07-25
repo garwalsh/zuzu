@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zuzu — live form fill</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#262d36; --ink:#e6edf3; --dim:#8b949e;
+    --accent:#4493f8; --ok:#3fb950; --warn:#d29922; --mem:#a371f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+  header{display:flex;align-items:center;gap:16px;padding:14px 22px;
+         border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+  h1{font-size:17px;margin:0;font-weight:650;letter-spacing:-.2px}
+  h1 span{color:var(--dim);font-weight:400;margin-left:8px;font-size:13px}
+  .spacer{flex:1}
+  button{background:var(--accent);color:#fff;border:0;border-radius:6px;
+         padding:8px 15px;font-size:13px;font-weight:550;cursor:pointer;font-family:inherit}
+  button:hover{filter:brightness(1.12)}
+  button:disabled{opacity:.45;cursor:default}
+  button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .pill{font-size:11.5px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);
+        color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pill b{color:var(--ink);font-weight:600}
+  .pill.live{border-color:var(--ok);color:var(--ok)}
+  .pill.mem{border-color:var(--mem);color:var(--mem)}
+  main{display:grid;grid-template-columns:1fr 380px;gap:18px;padding:18px 22px;
+       align-items:start}
+  @media(max-width:1000px){main{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);
+           margin:0;padding:12px 16px;border-bottom:1px solid var(--line);font-weight:600}
+  .grp{padding:6px 16px 12px}
+  .grp h3{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);
+          margin:14px 0 8px;font-weight:600}
+  .fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:7px}
+  .f{border:1px solid var(--line);border-radius:7px;padding:8px 11px;background:#0f141a;
+     transition:border-color .25s,background .25s}
+  .f .k{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.4px;
+        display:flex;justify-content:space-between;gap:6px}
+  .f .v{margin-top:3px;font-size:13.5px;min-height:19px;color:#4a525c;
+        word-break:break-word;font-variant-numeric:tabular-nums}
+  .f.set{border-color:var(--ok);background:#0f1a12}
+  .f.set .v{color:var(--ink)}
+  .f.skipped{border-color:#33393f;background:#0f141a}
+  .f.skipped .v{color:var(--dim);font-style:italic}
+  .f.frommem{border-color:var(--mem);background:#150f1e}
+  .f.flash{animation:flash .8s ease-out}
+  @keyframes flash{0%{border-color:var(--accent);background:#0d2136;
+    box-shadow:0 0 0 3px rgba(68,147,248,.18)}100%{}}
+  .tag{font-size:9px;padding:1px 5px;border-radius:3px;border:1px solid currentColor;opacity:.75}
+  #log{height:290px;overflow-y:auto;padding:10px 14px;font-size:12.5px;
+       font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  #log div{padding:3px 0;border-bottom:1px solid #1c222b;color:var(--dim);
+           white-space:pre-wrap;word-break:break-word}
+  #log b{color:var(--ink);font-weight:500}
+  #widget{padding:14px 16px;min-height:70px}
+  .muted{color:var(--dim);font-size:12.5px;padding:0 16px 14px;margin:0}
+  a.dl{display:inline-block;margin:0 16px 14px;padding:8px 15px;background:var(--ok);
+       color:#04140a;border-radius:6px;text-decoration:none;font-weight:650;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Zuzu <span id="formtitle">I-765</span></h1>
+  <span class="pill" id="p-session">no session</span>
+  <span class="pill" id="p-progress">0 / 0</span>
+  <span class="pill" id="p-latency">— ms</span>
+  <span class="pill mem" id="p-mem" style="display:none">returning caller</span>
+  <span class="spacer"></span>
+  <button id="demo">▶ Demo Mode</button>
+  <button id="attach" class="ghost">Attach to live call</button>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Form fields</h2>
+    <div class="grp" id="grid"></div>
+    <a class="dl" id="dl" style="display:none">Download completed PDF</a>
+  </section>
+
+  <div>
+    <section class="card" style="margin-bottom:18px">
+      <h2>Voice</h2>
+      <div id="widget"></div>
+      <p class="muted" id="widgethint">Set ELEVENLABS_AGENT_ID to embed the voice widget.</p>
+    </section>
+    <section class="card">
+      <h2>Activity</h2>
+      <div id="log"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+const qs = new URLSearchParams(location.search);
+// The secret stays in the URL the operator opens; it is never baked into the
+// served HTML, so the page itself is not a credential.
+const SECRET = qs.get('secret') || '';
+const FORM = qs.get('form') || 'I-765';
+const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json'};
+
+let schema = null, ws = null, sessionId = null, saves = [];
+
+const el = id => document.getElementById(id);
+const log = (msg, strong) => {
+  const d = document.createElement('div');
+  d.innerHTML = strong ? `<b>${msg}</b>` : msg;
+  el('log').prepend(d);
+};
+
+async function loadSchema(){
+  const r = await fetch(`/forms/${FORM}/schema`);
+  schema = await r.json();
+  el('formtitle').textContent = `${schema.form_id} — ${schema.title} (ed. ${schema.edition})`;
+
+  const groups = {};
+  schema.fields.forEach(f => (groups[f.group] ||= []).push(f));
+  el('grid').innerHTML = Object.entries(groups).map(([g, fs]) => `
+    <h3>${g.replace(/_/g,' ')}</h3>
+    <div class="fields">${fs.map(f => `
+      <div class="f" id="f-${f.id}">
+        <div class="k"><span>${f.id.replace(/_/g,' ')}</span>${
+          f.sensitive ? '<span class="tag">sensitive</span>' : ''}</div>
+        <div class="v" id="v-${f.id}"></div>
+      </div>`).join('')}</div>`).join('');
+  el('p-progress').innerHTML = `<b>0</b> / ${schema.fields.length}`;
+}
+
+const SKIP = '__skip__';
+
+function paint(id, value, source){
+  const box = el(`f-${id}`), v = el(`v-${id}`);
+  if (!box) return;
+  if (value === SKIP){
+    // Asked, and the applicant had no answer. Showing a masked-looking value
+    // here would imply we collected something we did not.
+    v.textContent = 'not provided';
+    box.classList.add('skipped');
+    box.classList.remove('set', 'frommem');
+    return;
+  }
+  v.textContent = value ?? '✓';
+  box.classList.add('set', 'flash');
+  if (source === 'memory') box.classList.add('frommem');
+  setTimeout(() => box.classList.remove('flash'), 800);
+}
+
+async function hydrate(id){
+  const r = await fetch(`/sessions/${id}/values`, {headers: H});
+  if (!r.ok) return;
+  const d = await r.json();
+  Object.entries(d.values).forEach(([k, v]) => paint(k, v, d.sources[k]));
+  el('p-progress').innerHTML = `<b>${d.known_count}</b> / ${schema.fields.length}`;
+  if (d.is_returning){ el('p-mem').style.display = ''; }
+  if (d.has_pdf) showPdf(id);
+}
+
+function showPdf(id){
+  const a = el('dl');
+  a.href = `/forms/${id}.pdf`;
+  a.style.display = 'inline-block';
+}
+
+function connect(id){
+  if (ws) ws.close();
+  sessionId = id;
+  saves = [];
+  el('p-session').textContent = id.slice(0, 26);
+  ws = new WebSocket(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`);
+  ws.onopen  = () => { el('p-session').classList.add('live'); log('connected to ' + id, true); };
+  ws.onclose = () => el('p-session').classList.remove('live');
+  ws.onmessage = ev => {
+    const e = JSON.parse(ev.data);
+    if (e.type === 'session_started'){
+      if (e.data.is_returning){
+        el('p-mem').style.display = '';
+        log(`returning caller — ${e.data.prefilled_count} fields recalled from memory`, true);
+      }
+      hydrate(id);
+    }
+    if (e.type === 'field_saved'){
+      // Server-measured time for the save path, not client round-trip: this is
+      // the number the "voice path stays fast" claim rests on.
+      if (typeof e.data.duration_ms === 'number'){
+        saves.push(e.data.duration_ms);
+        const worst = Math.max(...saves);
+        el('p-latency').innerHTML =
+          `save <b>${e.data.duration_ms.toFixed(2)}</b> ms · max <b>${worst.toFixed(2)}</b>`;
+      }
+      paint(e.data.field_id, null, e.data.source);
+      hydrate(id);
+      log(`saved ${e.data.field_id}${e.data.sensitive ? ' (read-back confirmed)' : ''}`);
+    }
+    if (e.type === 'form_ready'){ showPdf(id); log('form ready — PDF generated', true); }
+    if (e.type === 'session_completed') log('call ended', true);
+  };
+}
+
+el('demo').onclick = async () => {
+  el('demo').disabled = true;
+  el('demo').textContent = 'running…';
+  log('starting Demo Mode (no microphone needed)', true);
+  try{
+    const r = await fetch('/demo/run', {method: 'POST', headers: H});
+    const d = await r.json();
+    connect(d.session_id);
+    setTimeout(() => hydrate(d.session_id), 300);
+    log(`demo complete — ${d.fields_asked.length} questions, status ${d.status}`, true);
+  } catch(e){ log('demo failed: ' + e.message); }
+  el('demo').disabled = false;
+  el('demo').textContent = '▶ Demo Mode';
+};
+
+el('attach').onclick = async () => {
+  const r = await fetch('/sessions/recent', {headers: H});
+  const d = await r.json();
+  if (!d.sessions.length){ log('no active sessions yet — start a call'); return; }
+  connect(d.sessions[0].session_id);
+  hydrate(d.sessions[0].session_id);
+};
+
+loadSchema().then(() => {
+  log('dashboard ready', true);
+  if (!SECRET) log('no ?secret= in the URL — live updates will be refused');
+});
+</script>
+</body>
+</html>

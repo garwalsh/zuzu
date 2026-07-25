@@ -42,7 +42,7 @@ from api.contract import (
 )
 from api.event_bus import get_event_bus
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
-from api.i765_schema import REPO_ROOT
+from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import get_memory, summarize
 from api.pdf_engine import fill_i765, missing_required
 from api.security import require_shared_secret, verify_secret
@@ -270,6 +270,7 @@ async def save_field(
         )
     )
 
+    duration_ms = round((time.perf_counter() - started) * 1000, 2)
     await _publish(
         FIELD_SAVED,
         payload.session_id,
@@ -279,6 +280,8 @@ async def save_field(
             "sensitive": form_field.sensitive,
             "confidence": payload.confidence,
             "remaining_count": remaining,
+            # Measured, not asserted -- the dashboard shows this number.
+            "duration_ms": duration_ms,
         },
     )
     logger.info(
@@ -286,7 +289,7 @@ async def save_field(
         extra={
             "session_id": payload.session_id,
             "field_id": payload.field_id,
-            "duration_ms": round((time.perf_counter() - started) * 1000, 2),
+            "duration_ms": duration_ms,
         },
     )
     return SaveFieldResponse(
@@ -406,18 +409,26 @@ async def demo_run(
         if field is None:
             break
         # Only ever answer from the persona. Never synthesize.
+        started = time.perf_counter()
         await store.save_field(
             session_id=session_id,
             field_id=field.id,
-            value=answers.get(field.id, "__skip__"),
+            value=answers.get(field.id, SKIP_SENTINEL),
             source="demo",
         )
+        duration_ms = round((time.perf_counter() - started) * 1000, 2)
         asked.append(field.id)
         remaining, _k = counts(await store.get(session_id), schema)
         await _publish(
             FIELD_SAVED,
             session_id,
-            {"field_id": field.id, "group": field.group, "remaining_count": remaining},
+            {
+                "field_id": field.id,
+                "group": field.group,
+                "sensitive": field.sensitive,
+                "remaining_count": remaining,
+                "duration_ms": duration_ms,
+            },
         )
         await asyncio.sleep(0.05)  # let the dashboard animate
 
@@ -430,6 +441,94 @@ async def demo_run(
         "pdf_url": result.pdf_url,
         "missing": result.missing,
     }
+
+
+def _display_value(field_id: str, value: str, schema: Any) -> str:
+    """What the dashboard may show. Never the full sensitive value."""
+    if value == SKIP_SENTINEL:
+        return SKIP_SENTINEL
+    form_field = schema.get_field(field_id)
+    if form_field is not None and form_field.sensitive and len(value) > 2:
+        return "*" * (len(value) - 2) + value[-2:]
+    return value
+
+
+@app.get("/forms/{form_id}/schema")
+async def form_schema(form_id: str) -> dict[str, Any]:
+    """The field list the dashboard renders. Public: it contains no applicant data."""
+    schema = _resolve_form(form_id)
+    return {
+        "form_id": schema.form_id,
+        "title": schema.title,
+        "edition": schema.edition,
+        "fields": [
+            {
+                "id": f.id,
+                "question": f.question,
+                "group": f.group,
+                "sensitive": f.sensitive,
+                "required": f.required,
+            }
+            for f in schema.fields
+        ],
+    }
+
+
+@app.get("/sessions/recent")
+async def sessions_recent(_: None = Depends(require_shared_secret)) -> dict[str, Any]:
+    """Most recent sessions, so the dashboard can attach to a live voice call
+    without anyone copying a conversation id by hand mid-demo."""
+    store = get_session_store()
+    sessions = getattr(store, "_sessions", {})
+    ordered = sorted(sessions.values(), key=lambda s: s.created_at, reverse=True)
+    return {
+        "sessions": [
+            {
+                "session_id": s.session_id,
+                "form_id": s.form_id,
+                "is_returning": s.is_returning,
+                "known_count": len(s.values),
+                "created_at": s.created_at.isoformat(),
+                "has_pdf": bool(s.pdf_path),
+            }
+            for s in ordered[:10]
+        ]
+    }
+
+
+@app.get("/sessions/{session_id}/values")
+async def session_values(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Current values for a session, so a dashboard opened mid-call can paint
+    the fields already collected instead of starting blank."""
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    remaining, known = counts(session, schema)
+    return {
+        "session_id": session_id,
+        "is_returning": session.is_returning,
+        "remaining_count": remaining,
+        "known_count": known,
+        "has_pdf": bool(session.pdf_path),
+        # Sensitive values are masked here too: this feeds a projected screen.
+        # The skip sentinel is passed through untouched so the dashboard can
+        # render "not provided" rather than a masked-looking fake value.
+        "values": {
+            fid: _display_value(fid, fv.value, schema) for fid, fv in session.values.items()
+        },
+        "sources": {fid: fv.source for fid, fv in session.values.items()},
+    }
+
+
+@app.get("/dashboard")
+async def dashboard() -> FileResponse:
+    """Single self-contained page: no build step, so nothing can fail to compile
+    on demo day."""
+    page = REPO_ROOT / "dashboard" / "index.html"
+    if not page.exists():
+        raise HTTPException(status_code=404, detail="dashboard not built")
+    return FileResponse(page, media_type="text/html")
 
 
 @app.post("/session/forget")
