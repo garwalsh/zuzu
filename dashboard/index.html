@@ -279,6 +279,22 @@ async function loadSchema(){
   el('p-progress').innerHTML = `<b>0</b> / ${schema.fields.length}`;
 }
 
+function resetGrid(){
+  // Clear the previous call's values so two sessions never blur together on
+  // screen. Nothing is more confusing mid-demo than a stale field.
+  schema.fields.forEach(f => {
+    const box = el(`f-${f.id}`), v = el(`v-${f.id}`);
+    if (!box) return;
+    box.classList.remove('set','frommem','skipped','flash');
+    v.textContent = '';
+  });
+  el('p-progress').innerHTML = `<b>0</b> / ${schema.fields.length}`;
+  el('p-latency').textContent = '— ms';
+  el('p-mem').style.display = 'none';
+  el('dl').style.display = 'none';
+  saves = [];
+}
+
 function paint(id, value, source){
   const box = el(`f-${id}`), v = el(`v-${id}`);
   if (!box) return;
@@ -396,17 +412,25 @@ async function mountVoice(){
   el('widgethint').textContent =
     'Press "Start a call" at the bottom of the screen and speak in any language. ' +
     'Fields fill in here as you talk.';
-  // A live call creates its own session; attach to it so the grid follows along.
+  // A live call creates its own session; follow it so the grid tracks the call.
+  //
+  // This must switch even when a socket is already open. An earlier version
+  // bailed out while connected, which meant the dashboard latched onto whatever
+  // session existed first -- a leftover curl probe, or the previous demo -- and
+  // then sat there ignoring the actual call. /sessions/recent is newest-first,
+  // so always follow the head.
   setInterval(async () => {
-    if (ws && ws.readyState === WebSocket.OPEN) return;
     try{
       const d = await (await fetch('/sessions/recent', {headers: H})).json();
-      if (d.sessions?.length && d.sessions[0].session_id !== sessionId){
-        connect(d.sessions[0].session_id);
-        hydrate(d.sessions[0].session_id);
+      const newest = d.sessions?.[0];
+      if (newest && newest.session_id !== sessionId){
+        log(`following new session ${newest.session_id}`, true);
+        resetGrid();
+        connect(newest.session_id);
+        hydrate(newest.session_id);
       }
     } catch(e){}
-  }, 3000);
+  }, 2500);
 }
 
 loadSchema().then(() => {
