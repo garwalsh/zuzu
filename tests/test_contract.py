@@ -335,13 +335,35 @@ def test_low_confidence_is_flagged_for_read_back(client):
 # --------------------------------------------------------------------------
 
 
-def test_unknown_session_is_404_not_silently_created(client):
+def test_tool_path_opens_a_session_when_the_init_webhook_never_fired(client):
+    """The conversation-initiation webhook is an optimisation, not a
+    precondition. It does not fire reliably for the embedded widget, and when it
+    does not, every tool call used to 404 and the agent told the applicant it
+    could not get the next question. The call must survive that."""
     resp = client.post(
         "/tools/get_missing_fields",
-        json={"session_id": "never-created", "form_id": "I-765"},
+        json={"session_id": "conv_no_init_webhook", "form_id": "I-765"},
         headers=auth(),
     )
-    assert resp.status_code == 404
+    assert resp.status_code == 200, resp.text
+    body = resp.json()
+    assert body["next_field"] is not None
+    assert body["known_count"] == 0
+
+
+def test_a_whole_call_works_without_session_init(client):
+    """End to end with no init webhook at all: interview, then a real PDF."""
+    conversation_id = "conv_widget_only"
+    result = run_full_call(client, conversation_id)
+    assert result["status"] == "complete", result
+    assert client.get(f"/forms/{conversation_id}.pdf").status_code == 200
+
+
+def test_read_paths_stay_strict_about_unknown_sessions(client):
+    """Opening a session on the write path is resilience. Inventing one on a
+    read path would be reporting data that does not exist."""
+    assert client.get("/sessions/never-created/values", headers=auth()).status_code == 404
+    assert client.get("/forms/never-created.pdf").status_code == 404
 
 
 def test_unknown_form_is_404(client):

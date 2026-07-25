@@ -120,10 +120,40 @@ def _spawn_background(coro: Any) -> None:
 
 
 async def _load_session(session_id: str) -> Session:
+    """Strict lookup, for read paths where inventing a session would be a lie."""
     try:
         return await get_session_store().get(session_id)
     except SessionNotFoundError as exc:
         raise HTTPException(status_code=404, detail=f"unknown session: {session_id}") from exc
+
+
+async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session:
+    """Lookup for the live tool path, creating the session if it is missing.
+
+    The conversation-initiation webhook is an optimisation, not a precondition.
+    It fires for telephony but not reliably for the embedded widget, and when it
+    does not fire every tool call 404s and the agent tells the applicant it
+    cannot get the next question -- which is exactly what happens on stage.
+
+    A session opened here has no caller_id, so there is no memory lookup and the
+    interview simply starts cold. Losing the returning-caller greeting is a far
+    better failure than losing the call.
+    """
+    store = get_session_store()
+    try:
+        return await store.get(session_id)
+    except SessionNotFoundError:
+        logger.warning(
+            "session opened lazily -- conversation-init webhook did not fire",
+            extra={"session_id": session_id},
+        )
+        session = await store.create(
+            session_id=session_id,
+            caller_id=caller_id,
+            form_id=DEFAULT_FORM_ID,
+        )
+        await _publish(SESSION_STARTED, session_id, {"is_returning": False, "lazy": True})
+        return session
 
 
 def _resolve_form(form_id: str):
@@ -213,7 +243,7 @@ async def get_missing_fields(
     _: None = Depends(require_shared_secret),
 ) -> GetMissingFieldsResponse:
     started = time.perf_counter()
-    session = await _load_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id)
     schema = _resolve_form(payload.form_id)
 
     field = next_missing_field(session, schema)
@@ -243,7 +273,7 @@ async def save_field(
 ) -> SaveFieldResponse:
     """Store one answer. No LLM, no filesystem, no PDF work happens here."""
     started = time.perf_counter()
-    session = await _load_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id)
     schema = _resolve_form(session.form_id)
 
     form_field = schema.get_field(payload.field_id)
@@ -310,7 +340,7 @@ async def generate_form(
     payload: GenerateFormRequest,
     _: None = Depends(require_shared_secret),
 ) -> GenerateFormResponse:
-    session = await _load_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id)
     schema = _resolve_form(session.form_id)
 
     plain = {fid: fv.value for fid, fv in session.values.items()}
@@ -350,7 +380,7 @@ async def session_complete(
     payload: SessionCompleteRequest,
     _: None = Depends(require_shared_secret),
 ) -> SessionCompleteResponse:
-    session = await _load_session(payload.conversation_id)
+    session = await _load_or_open_session(payload.conversation_id)
     schema = _resolve_form(session.form_id)
 
     reconciled = 0
