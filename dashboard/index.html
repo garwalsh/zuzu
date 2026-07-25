@@ -223,9 +223,41 @@ el('attach').onclick = async () => {
   hydrate(d.sessions[0].session_id);
 };
 
+async function mountVoice(){
+  const r = await fetch('/config');
+  const cfg = await r.json();
+  if (!cfg.elevenlabs_agent_id){
+    el('widgethint').textContent =
+      'Set ELEVENLABS_AGENT_ID to embed the voice widget.';
+    return;
+  }
+  // The agent id is public by design — it is what the browser connects with.
+  el('widget').innerHTML =
+    `<elevenlabs-convai agent-id="${cfg.elevenlabs_agent_id}"></elevenlabs-convai>`;
+  const s = document.createElement('script');
+  s.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+  s.async = true;
+  document.body.appendChild(s);
+  el('widgethint').textContent =
+    'Talk to Zuzu in any language. Fields fill in as you speak.';
+  // A live call creates its own session; attach to it so the grid follows along.
+  setInterval(async () => {
+    if (ws && ws.readyState === WebSocket.OPEN) return;
+    try{
+      const rr = await fetch('/sessions/recent', {headers: H});
+      const d = await rr.json();
+      if (d.sessions?.length && d.sessions[0].session_id !== sessionId){
+        connect(d.sessions[0].session_id);
+        hydrate(d.sessions[0].session_id);
+      }
+    } catch(e){}
+  }, 3000);
+}
+
 loadSchema().then(() => {
   log('dashboard ready', true);
   if (!SECRET) log('no ?secret= in the URL — live updates will be refused');
+  mountVoice();
 });
 </script>
 </body>

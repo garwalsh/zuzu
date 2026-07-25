@@ -519,6 +519,19 @@ async def session_values(
     }
 
 
+@app.get("/config")
+async def client_config() -> dict[str, Any]:
+    """Public front-end config. Contains no secret.
+
+    The ElevenLabs agent id is public by design -- it is what the browser widget
+    connects with. The shared secret is never served from here.
+    """
+    return {
+        "elevenlabs_agent_id": os.environ.get("ELEVENLABS_AGENT_ID", ""),
+        "default_form_id": DEFAULT_FORM_ID,
+    }
+
+
 @app.get("/dashboard")
 async def dashboard() -> FileResponse:
     """Single self-contained page: no build step, so nothing can fail to compile
