@@ -1,0 +1,94 @@
+{
+  "workflow": "checkup",
+  "issue_number": 1,
+  "issue_url": "https://github.com/garwalsh/zuzu/issues/1",
+  "last_completed_step": 5,
+  "step_outputs": {
+    "1": "Step 1 complete. Posted to [issue #1](https://github.com/garwalsh/zuzu/issues/1#issuecomment-5081005750).\n\n## Summary\n\n**Tech stack:** Python \u22653.11 project managed with **uv** (+ `uv.lock`), built via **hatchling**. Core framework is **FastAPI** (HTTP + WebSocket) on **Uvicorn**, with **Pydantic v2**, **pypdf[crypto]** for the encrypted I-765 AcroForm fill, and **httpx**. Optional extras (`redis`/`arq` distributed, `mem0ai` integrations) are kept out of the no-keys Layer-1 path. Quality gates: **ruff** (lint + format), **mypy**, **pytest** + pytest-asyncio. Source of truth is managed via **PDD** (`.pddrc`, `prompts/*.prompt`, `architecture.json`). Front end is a single self-contained `dashboard/index.html` \u2014 no build step.\n\n**Structure:** A 9-module `api/` orchestrator (contract, security, schema/registry, session/event stores, pdf_engine, memory, main), backed by `data/` schema+inventory assets, the AES-encrypted `assets/i-765.pdf`, a `mocks/` scripted voice client, and `tests/` covering endpoints + schema\u2194PDF machine-check. CI runs sync \u2192 ruff lint \u2192 format-check \u2192 pytest \u2192 schema-match, plus a separate credential secret-scan job.\n\n**Scope:** Full audit of the Milestone 1 vertical slice \u2014 HTTP contract end-to-end (incl. the sub-50 ms `save_field` budget), PDF correctness, the six \"must not\" safety invariants, schema\u2194PDF agreement, and CI gates.\n\nProceeding to Step 2 (Dependency Audit).",
+    "2": "Step 2 complete. Posted to [issue #1](https://github.com/garwalsh/zuzu/issues/1#issuecomment-5081008873).\n\n## Dependency Audit Summary\n\n**Scope:** Python only (`pyproject.toml` + `uv.lock`, via `uv`). The dashboard is a single self-contained HTML file with no `package.json` and no external `<script src>` \u2014 all `fetch()` calls are same-origin relative URLs.\n\n**Missing:** None. Every third-party import (`fastapi`, `pydantic`, `httpx`, `pypdf`, `pytest`, `uvicorn`) resolves to a declared dependency or the stdlib. One import \u2014 `starlette` in `tests/test_contract.py:359` \u2014 is satisfied only **transitively** through FastAPI; `api/main.py` already imports the re-exported `fastapi.WebSocketDisconnect`, so the test could use that instead.\n\n**Broken local refs:** None. All `api.*` intra-package imports map to existing modules. `api/` has no `__init__.py` but works as a PEP 420 namespace package (fine at runtime and for the hatchling build).\n\n**Unused / dead weight (all low):**\n- `pydantic-settings` and `python-dotenv` \u2014 declared **core** deps, zero usage (config is all `os.getenv`).\n- `mem0ai` (`integrations` extra) \u2014 `memory.py` calls mem0's REST API via raw `httpx`, never imports the SDK.\n- `redis`/`arq` (`distributed` extra) \u2014 forward-looking Layer-2, absent from Milestone 1.\n- `websockets` core pin \u2014 redundant with `uvicorn[standard]`.\n\n**Version conflicts:** None. All lower-bound pins reconciled by `uv.lock`; no known-vulnerable versions surfaced.\n\n**Net:** No blocking dependency problems for the Milestone 1 slice. Proceeding to Step 3 (Build Check).",
+    "3": "Build check complete and posted to [issue #1](https://github.com/garwalsh/zuzu/issues/1#issuecomment-5081011449).\n\n## Step 3/8: Build Check \u2014 Summary\n\nThe project is a **uv**-managed Python package with no classic compile step, so I ran the build as: dependency sync \u2192 byte-compile \u2192 import \u2192 CI compile gates \u2192 type check.\n\n**All build-blocking checks pass:**\n- `uv sync --extra dev` \u2014 OK (deps resolved; `zuzu==0.1.0` builds via hatchling)\n- `py_compile` on all 14 files \u2014 OK\n- Import of `api.main:app` + all 9 `api.*` modules in one process, no keys \u2014 OK\n- `ruff check` (CI gate) \u2014 OK\n- `ruff format --check` (CI gate) \u2014 OK\n\n**0 build-blocking errors (0 critical, 0 medium, 2 low).** The only findings are two low-severity **mypy** nits (not a CI gate):\n- `tools/extract_i765_fields.py:115` \u2014 pypdf type-stub gap (`.get` exists at runtime)\n- `api/main.py:404` \u2014 mypy inference quirk on a throwaway loop variable\n\nThese reproduce the previous iteration's results exactly. Nothing blocks the build. Proceeding to Step 4: Interface Check.",
+    "4": "Step 4 complete. Posted to [issue #1](https://github.com/garwalsh/zuzu/issues/1#issuecomment-5081016919).\n\n## Interface Check Summary\n\nI read all nine `api/*` modules plus every consumer (mock voice client, both test files, dashboard) and cross-checked each import, export, and integration point against `architecture.json`.\n\n**0 blocking interface issues.**\n\n- **All imports resolve** \u2014 every symbol imported by a consumer (`main` pulls 17 names from `contract` alone, plus symbols from all other modules) exists in its target module. No stubs, no placeholder imports, nothing that throws at runtime. Confirmed by a live single-process import with no keys set.\n- **No circular imports** \u2014 the dependency graph is a clean DAG (`contract`/`security`/`i765_schema` are leaves; `main` on top).\n- **Signatures compatible** \u2014 the `source=` kwarg on `save_field`, and the `(session, schema)` / `(values, out_path, schema)` call shapes for `next_missing_field`, `counts`, `fill_i765`, `missing_required`, and the `memory` methods all match their definitions.\n- **Integration points consistent** \u2014 all five mock-client HTTP calls and all seven dashboard calls match the contract shapes and the correct auth gating (public calls omit the secret, gated calls send `X-Zuzu-Secret`). Same-origin relative-URL pattern used uniformly, so nothing breaks across environments. Single self-contained dashboard page \u2014 no orphan routes.\n\n**One low-severity, non-functional note:** `architecture.json` dependency lists drift from actual imports in three places \u2014 `session_store` declares `form_registry` but imports `i765_schema`/`contract`; `main` also imports `i765_schema`/`memory` directly (undeclared); `mock_voice_client` declares `contract` but by design imports nothing from `api` (HTTP-only). All cosmetic \u2014 reconcile on the next `pdd sync-architecture`.\n\nProceeding to Step 5: Test Execution.",
+    "5": "## Step 5/8: Test Execution \u2014 Complete\n\n**Runner:** `env -u MEM0_API_KEY uv run pytest -q` (pytest 8.x, `asyncio_mode=auto`, `testpaths=[\"tests\"]`)\n\n**Result: 33 passed, 0 failed, 0 skipped, 0 errors \u2014 exit 0** on the PR head, full suite scope.\n\nTwo things worth flagging, both non-code:\n- The pre-step shell evidence's `pypdf` errors are an **environment artifact** \u2014 bare `python -m pytest` ran against the `pdd-cli` interpreter without project deps. Inside the synced `.venv` (`uv run`), `pypdf` is present and those tests pass.\n- This shell has a live `MEM0_API_KEY`; with it set, `test_interview_terminates_and_counts_go_down` fails (`assert 22 == 0`) because the optional memory layer hits the real mem0 API. Milestone 1 is defined as no-keys/no-egress and CI leaves the key empty, so this is inert in CI. Unsetting it \u2192 33/33.\n\nPosted to [issue #1](https://github.com/garwalsh/zuzu/issues/1#issuecomment-5081020457).\n\n```failure_signal\ncommand: env -u MEM0_API_KEY uv run pytest -q\nexit_code: 0\nstatus: pass\nfailing_ids:\nartifact_path: .pdd/checkup-pr-2/step5-iter1-pytest.log\noutput: |\n  33 passed, 1 warning in 2.63s\n  Full suite (tests/test_contract.py + tests/test_schema_matches_pdf.py) green under\n  the documented no-keys / CI-matching environment. Exit code 0.\n  Note: the pre-step shell evidence's pypdf ModuleNotFoundError errors were an\n  environment artifact (bare `python -m pytest` against the pdd-cli interpreter,\n  not the project .venv); inside `uv run` they all pass.\n  Note: with a stray MEM0_API_KEY exported, test_interview_terminates_and_counts_go_down\n  fails (assert 22 == 0) via the optional live memory layer; inert under CI/no-keys.\n```"
+  },
+  "total_cost": 3.6593064999999996,
+  "model_used": "anthropic",
+  "github_comment_id": 5081003481,
+  "changed_files": [],
+  "worktree_path": "/Users/bhargav/Desktop/zuzu/.pdd/worktrees/checkup-pr-2",
+  "fix_verify_iteration": 1,
+  "previous_fixes": "",
+  "mode": "pr",
+  "pr_number": 2,
+  "pr_owner": "garwalsh",
+  "pr_repo": "zuzu",
+  "pr_head_sha": "7ad89e5ec8fdfd85aaab3058359594e741285736",
+  "pr_test_scope": "full",
+  "defer_step5_to_github_checks": false,
+  "step_comments": [
+    10010,
+    10020,
+    10030,
+    10040,
+    10050
+  ],
+  "step_telemetry": [
+    {
+      "step_id": "discover",
+      "internal_step": 1,
+      "name": "Discovering project structure and tech stack",
+      "status": "completed",
+      "cost_usd": 0.5803975000000001,
+      "model": "anthropic",
+      "iteration": 1,
+      "started_at": "2026-07-25T23:20:42.166882+00:00",
+      "completed_at": "2026-07-25T23:21:30.712526+00:00"
+    },
+    {
+      "step_id": "deps",
+      "internal_step": 2,
+      "name": "Auditing dependencies",
+      "status": "completed",
+      "cost_usd": 0.6235215,
+      "model": "anthropic",
+      "iteration": 1,
+      "started_at": "2026-07-25T23:21:32.783728+00:00",
+      "completed_at": "2026-07-25T23:22:29.045038+00:00"
+    },
+    {
+      "step_id": "build",
+      "internal_step": 3,
+      "name": "Running build/compile checks",
+      "status": "completed",
+      "cost_usd": 0.536486,
+      "model": "anthropic",
+      "iteration": 1,
+      "started_at": "2026-07-25T23:22:30.929985+00:00",
+      "completed_at": "2026-07-25T23:23:16.599516+00:00"
+    },
+    {
+      "step_id": "interfaces",
+      "internal_step": 4,
+      "name": "Checking cross-module interfaces",
+      "status": "completed",
+      "cost_usd": 1.167521,
+      "model": "anthropic",
+      "iteration": 1,
+      "started_at": "2026-07-25T23:23:18.124801+00:00",
+      "completed_at": "2026-07-25T23:25:01.203423+00:00"
+    },
+    {
+      "step_id": "test",
+      "internal_step": 5,
+      "name": "Running tests",
+      "status": "completed",
+      "cost_usd": 0.7513805,
+      "model": "anthropic",
+      "iteration": 1,
+      "started_at": "2026-07-25T23:25:03.700813+00:00",
+      "completed_at": "2026-07-25T23:26:10.568979+00:00"
+    }
+  ],
+  "last_steered_comment_id": "5081017489",
+  "last_steer_at": "2026-07-25T23:25:02Z",
+  "steer_cursor_seeded": true
+}

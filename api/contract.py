@@ -20,12 +20,30 @@ sensitive_fields: set[str] = {
 
 
 class StrictModel(BaseModel):
-    """Base model that rejects unexpected fields at the API boundary."""
+    """Base for values we produce. Rejects unexpected fields."""
 
     model_config = ConfigDict(extra="forbid")
 
 
-class SessionInitRequest(StrictModel):
+class InboundModel(BaseModel):
+    """Base for payloads ElevenLabs sends us. Tolerates unexpected fields.
+
+    Be liberal in what you accept. The real conversation-initiation webhook
+    carries `called_number`, `call_sid`, and `source` alongside the three keys
+    the integration contract documents, and the post-call webhook carries far
+    more. Rejecting those is a 422 at `/session/init` -- the call dies before
+    the applicant says a word.
+
+    This is deliberately not laxness about correctness: an unknown `field_id`
+    is still rejected in the route, because a value with nowhere to go on the
+    form must never look collected. Refusing an unknown *envelope key* protects
+    nobody; refusing an unknown *form field* protects the applicant.
+    """
+
+    model_config = ConfigDict(extra="ignore")
+
+
+class SessionInitRequest(InboundModel):
     """Request payload used to initialize a new session."""
 
     caller_id: str
@@ -44,12 +62,21 @@ class DynamicVariables(StrictModel):
 
 
 class SessionInitResponse(StrictModel):
-    """Response payload for session initialization."""
+    """Response payload for session initialization.
 
+    ElevenLabs' conversation-initiation webhook expects a `type` discriminator
+    alongside the variables; the integration contract's example omits it, and it
+    costs nothing to send. `conversation_config_override` is how a returning
+    Spanish speaker gets greeted in Spanish without the agent having to detect
+    it first -- we already know their language from memory.
+    """
+
+    type: str = "conversation_initiation_client_data"
     dynamic_variables: DynamicVariables
+    conversation_config_override: dict[str, Any] | None = None
 
 
-class GetMissingFieldsRequest(StrictModel):
+class GetMissingFieldsRequest(InboundModel):
     """Request payload for fetching the next missing field."""
 
     session_id: str
@@ -73,7 +100,7 @@ class GetMissingFieldsResponse(StrictModel):
     known_count: int
 
 
-class SaveFieldRequest(StrictModel):
+class SaveFieldRequest(InboundModel):
     """Request payload used to persist a collected field value."""
 
     session_id: str
@@ -91,7 +118,7 @@ class SaveFieldResponse(StrictModel):
     remaining_count: int
 
 
-class GenerateFormRequest(StrictModel):
+class GenerateFormRequest(InboundModel):
     """Request payload used to trigger form generation."""
 
     session_id: str
@@ -105,7 +132,7 @@ class GenerateFormResponse(StrictModel):
     missing: list[str]
 
 
-class SessionCompleteRequest(StrictModel):
+class SessionCompleteRequest(InboundModel):
     """Request payload used to finalize a session."""
 
     conversation_id: str

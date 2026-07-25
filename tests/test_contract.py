@@ -354,6 +354,106 @@ def test_unknown_form_is_404(client):
     assert resp.status_code == 404
 
 
+# --------------------------------------------------------------------------
+# Real ElevenLabs payloads carry more than the integration contract's example
+# --------------------------------------------------------------------------
+
+
+def test_session_init_accepts_the_real_webhook_payload(client):
+    """The live conversation-initiation webhook sends called_number, call_sid
+    and source alongside the three documented keys. Rejecting those is a 422
+    before the applicant has said a word."""
+    resp = client.post(
+        "/session/init",
+        json={
+            "caller_id": "+15551234567",
+            "agent_id": "agent_xxx",
+            "conversation_id": "conv_extra",
+            "called_number": "+18005551212",
+            "call_sid": "CA123",
+            "source": "twilio",
+        },
+        headers=auth(),
+    )
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["type"] == "conversation_initiation_client_data"
+
+
+def test_session_complete_accepts_the_real_post_call_payload(client):
+    conversation_id = start_session(client, "conv_postcall")
+    resp = client.post(
+        "/session/complete",
+        json={
+            "conversation_id": conversation_id,
+            "transcript": [{"role": "agent", "message": "hello"}],
+            "collected": {},
+            "agent_id": "agent_xxx",
+            "status": "done",
+            "metadata": {"call_duration_secs": 42},
+            "analysis": {"call_successful": "success"},
+        },
+        headers=auth(),
+    )
+    assert resp.status_code == 200, resp.text
+
+
+def test_tool_calls_tolerate_extra_params(client):
+    """ElevenLabs may add fields to a tool call payload over time."""
+    conversation_id = start_session(client, "conv_toolextra")
+    resp = client.post(
+        "/tools/save_field",
+        json={
+            "session_id": conversation_id,
+            "field_id": "given_name",
+            "value": "Maria",
+            "confidence": 0.95,
+            "language": "es",
+            "tool_call_id": "tc_abc123",
+        },
+        headers=auth(),
+    )
+    assert resp.status_code == 200, resp.text
+
+
+def test_unknown_field_id_is_still_rejected_despite_lenient_envelope(client):
+    """Tolerating unknown envelope keys must not tolerate an unknown field_id:
+    a value with nowhere to go on the form must never look collected."""
+    conversation_id = start_session(client, "conv_strictfield")
+    resp = client.post(
+        "/tools/save_field",
+        json={"session_id": conversation_id, "field_id": "not_a_field", "value": "x"},
+        headers=auth(),
+    )
+    assert resp.status_code == 422
+
+
+def test_returning_caller_gets_a_language_override(client, monkeypatch):
+    """A caller we know speaks Spanish should be greeted in Spanish, rather than
+    having to speak first so the agent can detect it."""
+    from api import main as main_mod
+    from api.memory import ApplicantProfile
+
+    async def fake_profile(caller_id, schema=None):
+        return ApplicantProfile(
+            caller_id=caller_id,
+            display_name="Maria",
+            preferred_language="es",
+            known_values={"given_name": "Maria"},
+            is_returning=True,
+        )
+
+    monkeypatch.setattr(main_mod.get_memory(), "load_profile", fake_profile)
+    resp = client.post(
+        "/session/init",
+        json={"caller_id": "+15551234567", "conversation_id": "conv_es"},
+        headers=auth(),
+    )
+    body = resp.json()
+    assert body["dynamic_variables"]["applicant_name"] == "Maria"
+    assert body["dynamic_variables"]["is_returning"] is True
+    assert body["conversation_config_override"] == {"agent": {"language": "es"}}
+
+
 def test_websocket_rejects_a_bad_secret(client):
     """Closed with 1008 (policy violation), not merely dropped."""
     from starlette.websockets import WebSocketDisconnect

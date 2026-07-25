@@ -188,6 +188,13 @@ async def session_init(
         extra={"session_id": session_id, "form_id": schema.form_id},
     )
     del session
+
+    # We already know a returning caller's language, so tell the agent to open
+    # in it rather than making them speak first and hoping detection lands.
+    override: dict[str, Any] | None = None
+    if profile.is_returning and profile.preferred_language != "en":
+        override = {"agent": {"language": profile.preferred_language}}
+
     return SessionInitResponse(
         dynamic_variables=DynamicVariables(
             applicant_name=profile.display_name,
@@ -195,7 +202,8 @@ async def session_init(
             preferred_language=profile.preferred_language,
             active_form=DEFAULT_FORM_ID,
             known_summary=summarize(profile, schema),
-        )
+        ),
+        conversation_config_override=override,
     )
 
 

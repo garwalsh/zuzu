@@ -14,8 +14,11 @@ Requirements:
 1. Session initiation. `SessionInitRequest` has `caller_id: str`, `conversation_id: str`,
    and optional `agent_id: str | None`. `DynamicVariables` has `applicant_name: str`,
    `is_returning: bool`, `preferred_language: str`, `active_form: str`, and
-   `known_summary: str`. `SessionInitResponse` wraps exactly one field,
-   `dynamic_variables: DynamicVariables`.
+   `known_summary: str`. `SessionInitResponse` carries `dynamic_variables`, a
+   `type` field defaulting to `"conversation_initiation_client_data"` (ElevenLabs
+   expects that discriminator; the integration contract's example omits it), and
+   an optional `conversation_config_override: dict | None` used to open the call
+   in a returning caller's known language.
 
 2. Next-question lookup. `GetMissingFieldsRequest` has `session_id: str` and
    `form_id: str`. `NextField` has `id: str`, `question: str`, `type: str`, and
@@ -47,9 +50,17 @@ Requirements:
    names as module-level string constants: `session_started`, `field_saved`,
    `form_ready`, `session_completed`.
 
-8. Every model forbids unknown fields via `model_config = ConfigDict(extra="forbid")`,
-   so a drifted agent configuration fails loudly at the boundary instead of
-   silently dropping an applicant's answer. `confidence` is constrained to 0.0-1.0.
+8. Split strictness by direction. Payloads ElevenLabs sends us -- the five
+   request models -- must **tolerate unknown fields** (`extra="ignore"`): the
+   real conversation-initiation webhook carries `called_number`, `call_sid`, and
+   `source` beyond the three documented keys, and the post-call webhook carries
+   far more. Rejecting those is a 422 at `/session/init` and the call dies before
+   the applicant speaks. Everything we *emit* stays `extra="forbid"`.
+
+   This is not laxness about correctness: an unknown `field_id` is still rejected
+   by the route. Refusing an unknown envelope key protects nobody; refusing an
+   unknown form field protects the applicant. `confidence` stays constrained to
+   0.0-1.0.
 
 9. Provide a `sensitive_fields` module constant naming the field ids whose values
    must never be written to logs in full: `ssn`, `a_number`, `passport_number`,
