@@ -8,7 +8,8 @@
   "fields": [
     {
       "id": "u_s_c_i_s_online_acct_number",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
@@ -20,6 +21,7 @@
     {
       "id": "street_number",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number",
@@ -31,6 +33,7 @@
     {
       "id": "city_or_town",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town",
@@ -42,6 +45,7 @@
     {
       "id": "state",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "state",
       "group": "address",
       "memory_key": "address.state",
@@ -52,6 +56,7 @@
     {
       "id": "zip_code",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code",
@@ -63,6 +68,7 @@
     {
       "id": "province",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "text",
       "group": "address",
       "memory_key": "address.province",
@@ -74,6 +80,7 @@
     {
       "id": "postal_code",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code",
@@ -85,6 +92,7 @@
     {
       "id": "country",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "text",
       "group": "other",
       "memory_key": "other.country",
@@ -95,6 +103,7 @@
     {
       "id": "daytime_telephone_number",
       "question": "What is your contact Information of Attorney or Accredited Representative?",
+      "label": "Contact Information of Attorney or",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.daytime_telephone_number",
@@ -106,6 +115,7 @@
     {
       "id": "e_mail",
       "question": "What is your contact Information of Attorney or Accredited Representative?",
+      "label": "Contact Information of Attorney or",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.e_mail",
@@ -117,6 +127,7 @@
     {
       "id": "mobile_telephone_number",
       "question": "What is your contact Information of Attorney or Accredited Representative?",
+      "label": "Contact Information of Attorney or",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.mobile_telephone_number",
@@ -128,6 +139,7 @@
     {
       "id": "pt1_item_number7_fax_number",
       "question": "What is your contact Information of Attorney or Accredited Representative?",
+      "label": "Contact Information of Attorney or",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.pt1_item_number7_fax_number",
@@ -139,6 +151,7 @@
     {
       "id": "family_name",
       "question": "What is your name of Attorney or Accredited Representative?",
+      "label": "Name of Attorney or Accredited",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name",
@@ -149,6 +162,7 @@
     {
       "id": "given_name",
       "question": "What is your name of Attorney or Accredited Representative?",
+      "label": "Name of Attorney or Accredited",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name",
@@ -159,6 +173,7 @@
     {
       "id": "middle_name",
       "question": "What is your name of Attorney or Accredited Representative?",
+      "label": "Name of Attorney or Accredited",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name",
@@ -169,6 +184,7 @@
     {
       "id": "u_s_c_i_s_online_acct_number_2",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Client's",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number_2",
@@ -180,6 +196,7 @@
     {
       "id": "mobile_telephone_number_2",
       "question": "What is your client's Contact Information?",
+      "label": "Client's Contact Information. Enter Mobile",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.mobile_telephone_number_2",
@@ -191,6 +208,7 @@
     {
       "id": "e_mail_2",
       "question": "What is your client's Contact Information?",
+      "label": "Client's Contact Information. Enter Email",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.e_mail_2",
@@ -201,7 +219,8 @@
     },
     {
       "id": "street_number_name",
-      "question": "What is your nOTE: Provide the client's mailing address?",
+      "question": "What is your NOTE: Provide the client's mailing address?",
+      "label": "Mailing Address of Client. NOTE:",
       "type": "email",
       "group": "address",
       "memory_key": "address.street_number_name",
@@ -213,6 +232,7 @@
     {
       "id": "city_or_town_2",
       "question": "What is your city or Town?",
+      "label": "Mailing Address of Client. Enter",
       "type": "email",
       "group": "address",
       "memory_key": "address.city_or_town_2",
@@ -224,6 +244,7 @@
     {
       "id": "state_2",
       "question": "What is your state from List of States?",
+      "label": "Mailing Address of Client. Select",
       "type": "text",
       "group": "address",
       "memory_key": "address.state_2",
@@ -234,6 +255,7 @@
     {
       "id": "zip_code_2",
       "question": "What is your zip Code?",
+      "label": "Mailing Address of Client. Enter",
       "type": "email",
       "group": "address",
       "memory_key": "address.zip_code_2",
@@ -245,6 +267,7 @@
     {
       "id": "province_2",
       "question": "What is your province?",
+      "label": "Mailing Address of Client. Enter",
       "type": "email",
       "group": "address",
       "memory_key": "address.province_2",
@@ -256,6 +279,7 @@
     {
       "id": "postal_code_2",
       "question": "What is your postal Code?",
+      "label": "Mailing Address of Client. Enter",
       "type": "email",
       "group": "address",
       "memory_key": "address.postal_code_2",
@@ -267,6 +291,7 @@
     {
       "id": "country_2",
       "question": "What is your country?",
+      "label": "Mailing Address of Client. Enter",
       "type": "email",
       "group": "address",
       "memory_key": "address.country_2",
@@ -277,6 +302,7 @@
     {
       "id": "daytime_telephone_number_2",
       "question": "What is your client's Contact Information?",
+      "label": "Client's Contact Information. Enter Daytime",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.daytime_telephone_number_2",
@@ -288,6 +314,7 @@
     {
       "id": "receipt_number",
       "question": "What is your this appearance relates to immigration matters before?",
+      "label": "This appearance relates to immigration",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.receipt_number",
@@ -300,6 +327,7 @@
     {
       "id": "family_name_2",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Family",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_2",
@@ -310,6 +338,7 @@
     {
       "id": "given_name_2",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Given",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_2",
@@ -320,6 +349,7 @@
     {
       "id": "middle_name_2",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Middle",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_2",
@@ -330,6 +360,7 @@
     {
       "id": "name_of_entity",
       "question": "What is your information About Client Enter Name of Entity?",
+      "label": "Information About Client Enter Name",
       "type": "text",
       "group": "other",
       "memory_key": "other.name_of_entity",
@@ -341,6 +372,7 @@
     {
       "id": "titleof_entity",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Title",
       "type": "text",
       "group": "other",
       "memory_key": "other.titleof_entity",
@@ -351,6 +383,7 @@
     {
       "id": "a_number",
       "question": "What is your information About Client?",
+      "label": "Information About Client. Enter Client's",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.a_number",
@@ -363,6 +396,7 @@
     {
       "id": "date",
       "question": "What is your as 2-digit Month, 2-digit Day, and 4-digit Year?",
+      "label": "Date of Signature. Enter as",
       "type": "date",
       "group": "other",
       "memory_key": "other.date",
@@ -373,6 +407,7 @@
     {
       "id": "page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number",
@@ -384,6 +419,7 @@
     {
       "id": "part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number",
@@ -395,6 +431,7 @@
     {
       "id": "item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number",
@@ -406,6 +443,7 @@
     {
       "id": "additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info",
@@ -416,6 +454,7 @@
     {
       "id": "page_number_2",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_2",
@@ -427,6 +466,7 @@
     {
       "id": "part_number_2",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_2",
@@ -438,6 +478,7 @@
     {
       "id": "item_number_2",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_2",
@@ -449,6 +490,7 @@
     {
       "id": "additional_info_2",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_2",
@@ -459,6 +501,7 @@
     {
       "id": "page_number_3",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_3",
@@ -470,6 +513,7 @@
     {
       "id": "part_number_3",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_3",
@@ -481,6 +525,7 @@
     {
       "id": "item_number_3",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_3",
@@ -492,6 +537,7 @@
     {
       "id": "additional_info_3",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_3",
@@ -502,6 +548,7 @@
     {
       "id": "page_number_4",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_4",
@@ -513,6 +560,7 @@
     {
       "id": "page_number_5",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_5",
@@ -524,6 +572,7 @@
     {
       "id": "part_number_4",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_4",
@@ -535,6 +584,7 @@
     {
       "id": "part_number_5",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_5",
@@ -546,6 +596,7 @@
     {
       "id": "item_number_4",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_4",
@@ -557,6 +608,7 @@
     {
       "id": "item_number_5",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_5",
@@ -568,6 +620,7 @@
     {
       "id": "additional_info_4",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_4",
@@ -578,6 +631,7 @@
     {
       "id": "additional_info_5",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_5",
@@ -588,6 +642,7 @@
     {
       "id": "check_box1",
       "question": "What is your eligibility Information for Attorney or Accredited Representative?",
+      "label": "Eligibility Information for Attorney or",
       "type": "choice",
       "group": "address",
       "memory_key": "address.check_box1",
@@ -605,6 +660,7 @@
     {
       "id": "check_box2",
       "question": "What is your eligibility Information for Attorney or Accredited Representative?",
+      "label": "Eligibility Information for Attorney or",
       "type": "choice",
       "group": "address",
       "memory_key": "address.check_box2",
@@ -622,6 +678,7 @@
     {
       "id": "check_box3",
       "question": "What is your eligibility Information for Attorney or Accredited Representative?",
+      "label": "Eligibility Information for Attorney or",
       "type": "choice",
       "group": "eligibility",
       "memory_key": "eligibility.check_box3",
@@ -639,6 +696,7 @@
     {
       "id": "check_box4",
       "question": "What is your eligibility Information for Attorney or Accredited Representative?",
+      "label": "Eligibility Information for Attorney or",
       "type": "choice",
       "group": "eligibility",
       "memory_key": "eligibility.check_box4",
@@ -656,6 +714,7 @@
     {
       "id": "unit",
       "question": "What is your address of Attorney or Accredited Representative?",
+      "label": "Address of Attorney or Accredited",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit",
@@ -685,6 +744,7 @@
     {
       "id": "unit_2",
       "question": "What is your suite?",
+      "label": "Mailing Address of Client. Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_2",
@@ -714,6 +774,7 @@
     {
       "id": "u_s_c_i_s",
       "question": "What is your if you need extra space to complete this section, use the space provided in Part Additional?",
+      "label": "If you need extra space",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.u_s_c_i_s",
@@ -731,6 +792,7 @@
     {
       "id": "i_c_e",
       "question": "What is your this appearance relates to immigration matters before?",
+      "label": "This appearance relates to immigration",
       "type": "choice",
       "group": "other",
       "memory_key": "other.i_c_e",
@@ -748,6 +810,7 @@
     {
       "id": "c_b_p",
       "question": "What is your this appearance relates to immigration matters before?",
+      "label": "This appearance relates to immigration",
       "type": "choice",
       "group": "other",
       "memory_key": "other.c_b_p",
@@ -764,7 +827,8 @@
     },
     {
       "id": "checkbox",
-      "question": "What is your i enter my appearance as an attorney or accredited representative at the request of the,?",
+      "question": "What is your I enter my appearance as an attorney or accredited representative at the request of the,?",
+      "label": "I enter my appearance as",
       "type": "choice",
       "group": "other",
       "memory_key": "other.checkbox",
@@ -806,6 +870,7 @@
     {
       "id": "check_box2a",
       "question": "What is your options Regarding Receipt of U S C I S Notices and Documents?",
+      "label": "Options Regarding Receipt of U",
       "type": "choice",
       "group": "address",
       "memory_key": "address.check_box2a",
@@ -823,6 +888,7 @@
     {
       "id": "check_box2b",
       "question": "What is your options Regarding Receipt of U S C I S Notices and Documents?",
+      "label": "Options Regarding Receipt of U",
       "type": "choice",
       "group": "address",
       "memory_key": "address.check_box2b",
@@ -840,6 +906,7 @@
     {
       "id": "check_box2c",
       "question": "What is your options Regarding Receipt of U S C I S Notices and Documents?",
+      "label": "Options Regarding Receipt of U",
       "type": "choice",
       "group": "address",
       "memory_key": "address.check_box2c",

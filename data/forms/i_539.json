@@ -9,6 +9,7 @@
     {
       "id": "p1_line1a_family_name",
       "question": "What is your family Name, Last Name?",
+      "label": "Your Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line1a_family_name",
@@ -19,6 +20,7 @@
     {
       "id": "p1_line1b_given_name",
       "question": "What is your given Name, First Name?",
+      "label": "Your Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line1b_given_name",
@@ -29,6 +31,7 @@
     {
       "id": "p1_line1c_middle_name",
       "question": "What is your middle Name?",
+      "label": "Your Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line1c_middle_name",
@@ -38,7 +41,8 @@
     },
     {
       "id": "part1_item4_number",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "text",
       "group": "address",
       "memory_key": "address.part1_item4_number",
@@ -50,6 +54,7 @@
     {
       "id": "part1_item6_number",
       "question": "What is your if Apartment, Suite or Floor is Checked, Enter Apartment, Suite or Floor Number?",
+      "label": "Your Current Physical Address. If",
       "type": "text",
       "group": "address",
       "memory_key": "address.part1_item6_number",
@@ -60,7 +65,8 @@
     },
     {
       "id": "part2_item11_city",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_item11_city",
@@ -71,7 +77,8 @@
     },
     {
       "id": "part2_item11_in_care_of_name",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_item11_in_care_of_name",
@@ -82,7 +89,8 @@
     },
     {
       "id": "part2_item11_state",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "state",
       "group": "address",
       "memory_key": "address.part2_item11_state",
@@ -92,7 +100,8 @@
     },
     {
       "id": "part2_item11_street_name",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_item11_street_name",
@@ -103,7 +112,8 @@
     },
     {
       "id": "part2_item11_zip_code",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "zip",
       "group": "address",
       "memory_key": "address.part2_item11_zip_code",
@@ -115,6 +125,7 @@
     {
       "id": "alien_number",
       "question": "What is your alien Registration Number, A. Number?",
+      "label": "Alien Registration Number, A. Number,",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.alien_number",
@@ -126,7 +137,8 @@
     },
     {
       "id": "u_s_c_i_s_online_acct_number",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
@@ -138,6 +150,7 @@
     {
       "id": "u_s_c_i_s_online_acct_number_2",
       "question": "What is your to be completed by an Attorney or Accredited Representative (?",
+      "label": "To be completed by an",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number_2",
@@ -149,6 +162,7 @@
     {
       "id": "p1_line6_country_of_birth",
       "question": "What is your country of Birth?",
+      "label": "Other Information About You. Enter",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line6_country_of_birth",
@@ -159,6 +173,7 @@
     {
       "id": "p1_line7_country_of_citizenship",
       "question": "What is your country of Citizenship or Nationality?",
+      "label": "Other Information About You. Enter",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line7_country_of_citizenship",
@@ -169,6 +184,7 @@
     {
       "id": "p1_line8_date_of_birth",
       "question": "What is your date of Birth?",
+      "label": "Other Information About You. Enter",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line8_date_of_birth",
@@ -178,7 +194,8 @@
     },
     {
       "id": "p1_line9_s_s_n",
-      "question": "What is your u.S. Social Security Number?",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "Other Information About You. Enter",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.p1_line9_s_s_n",
@@ -190,7 +207,8 @@
     },
     {
       "id": "p3_line1a_date_extended",
-      "question": "What is your i / We request that my / our current or requested status be extended until?",
+      "question": "What is your I / We request that my / our current or requested status be extended until?",
+      "label": "I / We request that",
       "type": "date",
       "group": "address",
       "memory_key": "address.p3_line1a_date_extended",
@@ -201,6 +219,7 @@
     {
       "id": "new_status",
       "question": "What is your current Nonimmigrant Status?",
+      "label": "Other Information About You. Current",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.new_status",
@@ -211,6 +230,7 @@
     {
       "id": "sup_a_line1i_date_of_arrival",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "date",
       "group": "address",
       "memory_key": "address.sup_a_line1i_date_of_arrival",
@@ -221,6 +241,7 @@
     {
       "id": "sup_a_line1j_arrival_departure",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "state",
       "group": "address",
       "memory_key": "address.sup_a_line1j_arrival_departure",
@@ -232,6 +253,7 @@
     {
       "id": "sup_a_line1k_passport",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "state",
       "group": "address",
       "memory_key": "address.sup_a_line1k_passport",
@@ -244,6 +266,7 @@
     {
       "id": "sup_a_line1k_passport_2",
       "question": "What is your the name of the school you will attend?",
+      "label": "The name of the school",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.sup_a_line1k_passport_2",
@@ -255,6 +278,7 @@
     {
       "id": "sup_a_line1k_passport_3",
       "question": "What is your student and Exchange Visitor Information System S E V I S, I D Number?",
+      "label": "Your Student and Exchange Visitor",
       "type": "text",
       "group": "address",
       "memory_key": "address.sup_a_line1k_passport_3",
@@ -267,6 +291,7 @@
     {
       "id": "sup_a_line1l_travel_doc",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "state",
       "group": "address",
       "memory_key": "address.sup_a_line1l_travel_doc",
@@ -278,6 +303,7 @@
     {
       "id": "sup_a_line1m_country_of_issuance",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "state",
       "group": "address",
       "memory_key": "address.sup_a_line1m_country_of_issuance",
@@ -288,6 +314,7 @@
     {
       "id": "sup_a_line1n_exp_date",
       "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "label": "Other Information About You. Provide",
       "type": "date",
       "group": "address",
       "memory_key": "address.sup_a_line1n_exp_date",
@@ -298,6 +325,7 @@
     {
       "id": "sup_a_line1p_date_expires",
       "question": "What is your current Nonimmigrant Status?",
+      "label": "Other Information About You. Current",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.sup_a_line1p_date_expires",
@@ -308,6 +336,7 @@
     {
       "id": "p2_line10_city",
       "question": "What is your the City or Town?",
+      "label": "Physical Address Abroad. Enter the",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_city",
@@ -319,6 +348,7 @@
     {
       "id": "p2_line10_country",
       "question": "What is your for International address enter the Country?",
+      "label": "Physical Address Abroad. For International",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_country",
@@ -330,6 +360,7 @@
     {
       "id": "p2_line10_number",
       "question": "What is your the Apartment, Suite, or Floor Number?",
+      "label": "Physical Address Abroad. Enter the",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_number",
@@ -340,6 +371,7 @@
     {
       "id": "p2_line10_postal_code",
       "question": "What is your for International address enter the Postal Code?",
+      "label": "Physical Address Abroad. For International",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_postal_code",
@@ -351,6 +383,7 @@
     {
       "id": "p2_line10_province",
       "question": "What is your for International address enter the Province?",
+      "label": "Physical Address Abroad. For International",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_province",
@@ -362,6 +395,7 @@
     {
       "id": "p2_line10_street_name",
       "question": "What is your street Number and Name?",
+      "label": "Physical Address Abroad. Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line10_street_name",
@@ -373,6 +407,7 @@
     {
       "id": "p3_line4_nameof_petitioner",
       "question": "What is your if the petition or application is pending with U S C I S, also provide the following?",
+      "label": "If the petition or application",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line4_nameof_petitioner",
@@ -383,6 +418,7 @@
     {
       "id": "p3_line4_nameof_petitioner_2",
       "question": "What is your if the petition or application is pending with U S C I S, also provide the following?",
+      "label": "If the petition or application",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line4_nameof_petitioner_2",
@@ -393,6 +429,7 @@
     {
       "id": "p3_line5_date_filed",
       "question": "What is your as 2-digit Month, 2-digit Day, and 4-digit Year?",
+      "label": "Date Filed. Enter as 2-digit",
       "type": "date",
       "group": "other",
       "memory_key": "other.p3_line5_date_filed",
@@ -403,6 +440,7 @@
     {
       "id": "p4_line1a_country_of_issuance",
       "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "label": "Current Passport Information. If your",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line1a_country_of_issuance",
@@ -413,6 +451,7 @@
     {
       "id": "p4_line1a_country_of_issuance_2",
       "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "label": "Current Passport Information. If your",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line1a_country_of_issuance_2",
@@ -423,6 +462,7 @@
     {
       "id": "p4_line1b_expiration_date",
       "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "label": "Current Passport Information. If your",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line1b_expiration_date",
@@ -433,6 +473,7 @@
     {
       "id": "p5_line3_daytime_phone_number",
       "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Contact Information. Enter Applicant's",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p5_line3_daytime_phone_number",
@@ -444,6 +485,7 @@
     {
       "id": "p5_line4_mobile_phone_number",
       "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Contact Information. Enter Applicant's",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p5_line4_mobile_phone_number",
@@ -455,6 +497,7 @@
     {
       "id": "p5_line5_email_address",
       "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Contact Information. Enter Applicant's",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p5_line5_email_address",
@@ -466,6 +509,7 @@
     {
       "id": "p6_line4_daytime_phone_number",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p6_line4_daytime_phone_number",
@@ -477,6 +521,7 @@
     {
       "id": "p6_line4_daytime_phone_number_2",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p6_line4_daytime_phone_number_2",
@@ -488,6 +533,7 @@
     {
       "id": "p6_line5_email_address",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p6_line5_email_address",
@@ -498,6 +544,7 @@
     {
       "id": "p7_line6_language",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line6_language",
@@ -508,6 +555,7 @@
     {
       "id": "p7_line2_business_name",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "ssn",
       "group": "name",
       "memory_key": "name.p7_line2_business_name",
@@ -520,6 +568,7 @@
     {
       "id": "p7_line5_fax_phone_number",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p7_line5_fax_phone_number",
@@ -531,6 +580,7 @@
     {
       "id": "p7_line6_email_address",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p7_line6_email_address",
@@ -541,6 +591,7 @@
     {
       "id": "p8_line3_a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3_a_page_number",
@@ -552,6 +603,7 @@
     {
       "id": "p8_line3_b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3_b_part_number",
@@ -563,6 +615,7 @@
     {
       "id": "p8_line3_c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3_c_item_number",
@@ -574,6 +627,7 @@
     {
       "id": "p8_line3_d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3_d_additional_info",
@@ -584,6 +638,7 @@
     {
       "id": "p8_line4_a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4_a_page_number",
@@ -595,6 +650,7 @@
     {
       "id": "p8_line4_b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4_b_part_number",
@@ -606,6 +662,7 @@
     {
       "id": "p8_line4_c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4_c_item_number",
@@ -617,6 +674,7 @@
     {
       "id": "p8_line4_d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4_d_additional_info",
@@ -627,6 +685,7 @@
     {
       "id": "p8_line5_a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5_a_page_number",
@@ -638,6 +697,7 @@
     {
       "id": "p8_line5_b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5_b_part_number",
@@ -649,6 +709,7 @@
     {
       "id": "p8_line5_c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5_c_item_number",
@@ -660,6 +721,7 @@
     {
       "id": "p8_line5_d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5_d_additional_info",
@@ -670,6 +732,7 @@
     {
       "id": "p8_line6_a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line6_a_page_number",
@@ -681,6 +744,7 @@
     {
       "id": "p8_line6_b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line6_b_part_number",
@@ -692,6 +756,7 @@
     {
       "id": "p8_line6_c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line6_c_item_number",
@@ -703,6 +768,7 @@
     {
       "id": "p8_line6_d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line6_d_additional_info",
@@ -713,6 +779,7 @@
     {
       "id": "check_box1",
       "question": "What is your to be completed by an Attorney or Accredited Representative (?",
+      "label": "To be completed by an",
       "type": "choice",
       "group": "other",
       "memory_key": "other.check_box1",
@@ -730,6 +797,7 @@
     {
       "id": "p1_checkbox5",
       "question": "What is your is your mailing address the same as your physical address? Check this box for No?",
+      "label": "Is your mailing address the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p1_checkbox5",
@@ -752,7 +820,8 @@
     },
     {
       "id": "part1_item4_unit",
-      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "question": "What is your U.S. Mailing Address, Safe Address?",
+      "label": "Your U.S. Mailing Address, Safe",
       "type": "choice",
       "group": "address",
       "memory_key": "address.part1_item4_unit",
@@ -782,6 +851,7 @@
     {
       "id": "p1_checkbox12c",
       "question": "What is your current Nonimmigrant Status?",
+      "label": "Other Information About You. Current",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_checkbox12c",
@@ -799,6 +869,7 @@
     {
       "id": "p2_checkbox4",
       "question": "What is your number of people included in this application, select only one box?",
+      "label": "Number of people included in",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p2_checkbox4",
@@ -821,7 +892,8 @@
     },
     {
       "id": "p2_checkbox",
-      "question": "What is your i am applying for, select only one box?",
+      "question": "What is your I am applying for, select only one box?",
+      "label": "I am applying for, select",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_checkbox",
@@ -851,6 +923,7 @@
     {
       "id": "p3_checkbox2a",
       "question": "What is your is this application based on an extension or change of status already granted to your?",
+      "label": "Is this application based on",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_checkbox2a",
@@ -874,6 +947,7 @@
     {
       "id": "p2_line10_unit",
       "question": "What is your check this box for Apartment?",
+      "label": "Physical Address Abroad. Check this",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line10_unit",
@@ -903,6 +977,7 @@
     {
       "id": "p3_checkbox1",
       "question": "What is your is this application based on a separate petition or application to provide your spouse,?",
+      "label": "Is this application based on",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_checkbox1",
@@ -932,6 +1007,7 @@
     {
       "id": "p3_checkbox4",
       "question": "What is your if you answered \"Yes\" to Item Number or Item Number , select the Form type below?",
+      "label": "If you answered \"Yes\" to",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_checkbox4",
@@ -955,6 +1031,7 @@
     {
       "id": "p4_checkbox3_no",
       "question": "What is your are you an applicant for an immigrant visa? Check this box for No?",
+      "label": "Answer the following questions. Are",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_checkbox3_no",
@@ -972,6 +1049,7 @@
     {
       "id": "p4_checkbox3_yes",
       "question": "What is your if you answer \"Yes\" to any of the questions in Item Numbers - , use the space provided in?",
+      "label": "Answer the following questions. If",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_checkbox3_yes",
@@ -989,6 +1067,7 @@
     {
       "id": "p4_checkbox4_no",
       "question": "What is your has an immigrant petition EVER been filed for you? Check this box for No?",
+      "label": "Answer the following questions. Has",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox4_no",
@@ -1006,6 +1085,7 @@
     {
       "id": "p4_checkbox4_yes",
       "question": "What is your if you answer \"Yes\" to any of the questions in Item Numbers - , use the space provided in?",
+      "label": "Answer the following questions. If",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox4_yes",
@@ -1023,6 +1103,7 @@
     {
       "id": "p4_checkbox5_no",
       "question": "What is your have you EVER filed Form I-4 85, Application to Register Permanent Residence or Adjust?",
+      "label": "Answer the following questions. Have",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox5_no",
@@ -1040,6 +1121,7 @@
     {
       "id": "p4_checkbox5_yes",
       "question": "What is your answer the following questions?",
+      "label": "Answer the following questions. Answer",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox5_yes",
@@ -1057,6 +1139,7 @@
     {
       "id": "p4_checkbox10_no",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox10_no",
@@ -1074,6 +1157,7 @@
     {
       "id": "p4_checkbox10_yes",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox10_yes",
@@ -1091,6 +1175,7 @@
     {
       "id": "p4_checkbox11_no",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox11_no",
@@ -1108,6 +1193,7 @@
     {
       "id": "p4_checkbox11_yes",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox11_yes",
@@ -1125,6 +1211,7 @@
     {
       "id": "p4_checkbox12_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox12_no",
@@ -1142,6 +1229,7 @@
     {
       "id": "p4_checkbox12_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox12_yes",
@@ -1159,6 +1247,7 @@
     {
       "id": "p4_checkbox13_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox13_no",
@@ -1176,6 +1265,7 @@
     {
       "id": "p4_checkbox13_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox13_yes",
@@ -1193,6 +1283,7 @@
     {
       "id": "p4_checkbox14_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox14_no",
@@ -1210,6 +1301,7 @@
     {
       "id": "p4_checkbox14_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox14_yes",
@@ -1227,6 +1319,7 @@
     {
       "id": "p4_checkbox15_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox15_no",
@@ -1244,6 +1337,7 @@
     {
       "id": "p4_checkbox15_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox15_yes",
@@ -1261,6 +1355,7 @@
     {
       "id": "p4_checkbox16_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox16_no",
@@ -1278,6 +1373,7 @@
     {
       "id": "p4_checkbox16_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox16_yes",
@@ -1295,6 +1391,7 @@
     {
       "id": "p4_checkbox17_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_checkbox17_no",
@@ -1312,6 +1409,7 @@
     {
       "id": "p4_checkbox17_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_checkbox17_yes",
@@ -1329,6 +1427,7 @@
     {
       "id": "p4_checkbox18_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox18_no",
@@ -1346,6 +1445,7 @@
     {
       "id": "p4_checkbox18_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox18_yes",
@@ -1363,6 +1463,7 @@
     {
       "id": "p4_checkbox19_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox19_no",
@@ -1380,6 +1481,7 @@
     {
       "id": "p4_checkbox19_yes",
       "question": "What is your answer athe following questions?",
+      "label": "Have you EVER. Answer athe",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox19_yes",
@@ -1397,6 +1499,7 @@
     {
       "id": "p4_checkbox20_no",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_checkbox20_no",
@@ -1414,6 +1517,7 @@
     {
       "id": "p4_checkbox20_yes",
       "question": "What is your answer the following questions?",
+      "label": "Have you EVER. Answer the",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_checkbox20_yes",
@@ -1431,6 +1535,7 @@
     {
       "id": "p4_checkbox6_no",
       "question": "What is your have you been arrested or convicted of any criminal offense since last entering the United?",
+      "label": "Answer the following questions. Have",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox6_no",
@@ -1448,6 +1553,7 @@
     {
       "id": "p4_checkbox6_yes",
       "question": "What is your have you been arrested or convicted of any criminal offense since last entering the United?",
+      "label": "Answer the following questions. Have",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox6_yes",
@@ -1465,6 +1571,7 @@
     {
       "id": "p4_checkbox7_no",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox7_no",
@@ -1482,6 +1589,7 @@
     {
       "id": "p4_checkbox7_yes",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox7_yes",
@@ -1499,6 +1607,7 @@
     {
       "id": "p4_checkbox8_no",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox8_no",
@@ -1516,6 +1625,7 @@
     {
       "id": "p4_checkbox8_yes",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox8_yes",
@@ -1533,6 +1643,7 @@
     {
       "id": "p4_checkbox9_no",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox9_no",
@@ -1550,6 +1661,7 @@
     {
       "id": "p4_checkbox9_yes",
       "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_checkbox9_yes",

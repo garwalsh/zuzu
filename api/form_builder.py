@@ -405,6 +405,38 @@ def _classify(name: str, label: str) -> tuple[str, str]:
     return group, kind
 
 
+def _short_label(label: str, field_id: str) -> str:
+    """A few words a person can scan in a grid.
+
+    The field id is derived from the PDF's internal name and reads like
+    "p14_line1_interpreter_family_name" -- fine as a key, unusable as a caption.
+    """
+    text = _strip_navigation(label)
+    text = re.sub(r"\s*\([^)]*\)", "", text).strip(" .:;,-")
+    if not text:
+        text = field_id.replace("_", " ")
+    words = text.split()
+    if len(words) > 5:
+        text = " ".join(words[:5])
+    return text[:1].upper() + text[1:]
+
+
+def _strip_navigation(label: str) -> str:
+    """Remove the Part/Item scaffolding meant for someone holding the paper."""
+    text = re.sub(r"\s+", " ", label or "").strip()
+    text = re.sub(
+        r"^(part\s*\d+\.?\s*|item\s*numbers?\s*[\d.a-z\s-]*\.?\s*|\d+\.\s*[a-z]?\.?\s*)+",
+        "",
+        text,
+        flags=re.I,
+    )
+    text = re.sub(r"^[A-Z][^.]{4,60}\.\s+(?=[A-Z0-9])", "", text)
+    text = re.sub(r"\b\d{1,2}\.\s*(?:[A-Za-z]\.\s*)?", "", text)
+    text = re.sub(r"^[A-Za-z]\.\s+", "", text)
+    text = re.sub(r"^(enter|provide|select|type|please)\s+", "", text, flags=re.I)
+    return text.strip(" .:;,-")
+
+
 def _question_from_label(label: str, field_id: str) -> str:
     """Turn a USCIS tooltip into something a person can answer out loud.
 
@@ -502,6 +534,7 @@ def derive_schema(
         field: dict[str, Any] = {
             "id": field_id,
             "question": _question_from_label(label, field_id),
+            "label": _short_label(label, field_id),
             "type": kind,
             "group": group,
             "memory_key": f"{group}.{field_id}",
@@ -526,6 +559,7 @@ def derive_schema(
             {
                 "id": field_id,
                 "question": _question_from_label(label, field_id),
+                "label": _short_label(label, field_id),
                 "type": "choice",
                 "group": group,
                 "memory_key": f"{group}.{field_id}",

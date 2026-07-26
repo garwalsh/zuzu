@@ -736,6 +736,7 @@ async def form_schema(form_id: str) -> dict[str, Any]:
             {
                 "id": f.id,
                 "question": f.question,
+                "label": f.label or f.id.replace("_", " "),
                 "group": f.group,
                 "sensitive": f.sensitive,
                 "required": f.required,

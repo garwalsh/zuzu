@@ -9,6 +9,7 @@
     {
       "id": "alien_number",
       "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Alien Registration Number, if any",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.alien_number",
@@ -20,7 +21,8 @@
     },
     {
       "id": "u_s_c_i_s_online_act_number",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_act_number",
@@ -31,7 +33,8 @@
     },
     {
       "id": "s_s_n",
-      "question": "What is your u.S. Social Security Number?",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "U.S. Social Security Number, if",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.s_s_n",
@@ -44,6 +47,7 @@
     {
       "id": "family_name",
       "question": "What is your family Name (Last Name)?",
+      "label": "Your Full Name. Enter Family",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name",
@@ -54,6 +58,7 @@
     {
       "id": "given_name",
       "question": "What is your given Name (First Name)?",
+      "label": "Your Full Name. Enter Given",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name",
@@ -64,6 +69,7 @@
     {
       "id": "middle_name",
       "question": "What is your middle Name?",
+      "label": "Your Full Name. Enter Middle",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name",
@@ -74,6 +80,7 @@
     {
       "id": "u_s_c_i_s_online_acct_number",
       "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "To be completed by an",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
@@ -85,6 +92,7 @@
     {
       "id": "volag_number",
       "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "To be completed by an",
       "type": "text",
       "group": "other",
       "memory_key": "other.volag_number",
@@ -96,6 +104,7 @@
     {
       "id": "apt_ste_flr_number",
       "question": "What is your apartment, Suite or Floor Number?",
+      "label": "Mailing Address. Enter Apartment, Suite",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number",
@@ -107,6 +116,7 @@
     {
       "id": "city_or_town",
       "question": "What is your city or Town?",
+      "label": "Mailing Address. Enter City or",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town",
@@ -118,6 +128,7 @@
     {
       "id": "country",
       "question": "What is your country?",
+      "label": "Mailing Address. Enter Country",
       "type": "text",
       "group": "address",
       "memory_key": "address.country",
@@ -128,6 +139,7 @@
     {
       "id": "in_careof_name",
       "question": "What is your in Care Of Name?",
+      "label": "Mailing Address. Enter In Care",
       "type": "text",
       "group": "address",
       "memory_key": "address.in_careof_name",
@@ -139,6 +151,7 @@
     {
       "id": "postal_code",
       "question": "What is your postal Code?",
+      "label": "Mailing Address. Enter Postal Code",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code",
@@ -150,6 +163,7 @@
     {
       "id": "province",
       "question": "What is your province?",
+      "label": "Mailing Address. Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.province",
@@ -161,6 +175,7 @@
     {
       "id": "state",
       "question": "What is your state from List of States?",
+      "label": "Mailing Address. Select State from",
       "type": "state",
       "group": "address",
       "memory_key": "address.state",
@@ -171,6 +186,7 @@
     {
       "id": "street_number_name",
       "question": "What is your street Number and Name?",
+      "label": "Mailing Address. Enter Street Number",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name",
@@ -182,6 +198,7 @@
     {
       "id": "zip_code",
       "question": "What is your zip Code?",
+      "label": "Mailing Address. Enter Zip Code",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code",
@@ -193,6 +210,7 @@
     {
       "id": "apt_ste_flr_number_2",
       "question": "What is your physical Address Enter Apartment, Suite or Floor Number?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_2",
@@ -204,6 +222,7 @@
     {
       "id": "city_or_town_2",
       "question": "What is your physical Address Enter City or Town?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_2",
@@ -215,6 +234,7 @@
     {
       "id": "country_2",
       "question": "What is your physical Address Enter Country?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.country_2",
@@ -225,6 +245,7 @@
     {
       "id": "postal_code_2",
       "question": "What is your physical Address Enter Postal Code?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_2",
@@ -236,6 +257,7 @@
     {
       "id": "province_2",
       "question": "What is your physical Address Enter Province?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_2",
@@ -247,6 +269,7 @@
     {
       "id": "state_2",
       "question": "What is your physical Address Select State from List of States?",
+      "label": "Address History. Physical Address Select",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_2",
@@ -257,6 +280,7 @@
     {
       "id": "street_number_name_2",
       "question": "What is your physical addresses for the last five years, whether inside or outside the United States?",
+      "label": "Address History. Provide your physical",
       "type": "state",
       "group": "address",
       "memory_key": "address.street_number_name_2",
@@ -268,6 +292,7 @@
     {
       "id": "zip_code_2",
       "question": "What is your physical Address Enter Zip Code?",
+      "label": "Address History. Physical Address Enter",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_2",
@@ -279,6 +304,7 @@
     {
       "id": "date_from",
       "question": "What is your physical Address Enter Date From?",
+      "label": "Address History. Physical Address Enter",
       "type": "date",
       "group": "address",
       "memory_key": "address.date_from",
@@ -289,6 +315,7 @@
     {
       "id": "apt_ste_flr_number_3",
       "question": "What is your physical Address Enter Apartment, Suite or Floor Number?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_3",
@@ -300,6 +327,7 @@
     {
       "id": "city_or_town_3",
       "question": "What is your physical Address Enter City or Town?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_3",
@@ -311,6 +339,7 @@
     {
       "id": "country_3",
       "question": "What is your physical Address Enter Country?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.country_3",
@@ -321,6 +350,7 @@
     {
       "id": "postal_code_3",
       "question": "What is your physical Address Enter Postal Code?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_3",
@@ -332,6 +362,7 @@
     {
       "id": "province_3",
       "question": "What is your physical Address Enter Province?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_3",
@@ -343,6 +374,7 @@
     {
       "id": "state_3",
       "question": "What is your physical Address Select State from List of States?",
+      "label": "Address History. Physical Address Select",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_3",
@@ -353,6 +385,7 @@
     {
       "id": "street_number_name_3",
       "question": "What is your physical Address Enter Street Number and Name?",
+      "label": "Address History. Physical Address Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_3",
@@ -364,6 +397,7 @@
     {
       "id": "zip_code_3",
       "question": "What is your physical Address Enter Zip Code?",
+      "label": "Address History. Physical Address Enter",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_3",
@@ -375,6 +409,7 @@
     {
       "id": "date_from_2",
       "question": "What is your physical Address Enter Date From?",
+      "label": "Address History. Physical Address Enter",
       "type": "date",
       "group": "address",
       "memory_key": "address.date_from_2",
@@ -385,6 +420,7 @@
     {
       "id": "date_to",
       "question": "What is your physical Address Enter Date To?",
+      "label": "Address History. Physical Address Enter",
       "type": "date",
       "group": "address",
       "memory_key": "address.date_to",
@@ -395,6 +431,7 @@
     {
       "id": "numberof_marriages",
       "question": "What is your how many times have you been married? Enter Number of Times Married?",
+      "label": "Your Marital Information. How many",
       "type": "text",
       "group": "other",
       "memory_key": "other.numberof_marriages",
@@ -406,6 +443,7 @@
     {
       "id": "family_name_2",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_2",
@@ -416,6 +454,7 @@
     {
       "id": "given_name_2",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_2",
@@ -426,6 +465,7 @@
     {
       "id": "middle_name_2",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_2",
@@ -436,6 +476,7 @@
     {
       "id": "city_town_of_birth",
       "question": "What is your city / Town / Village of Birth?",
+      "label": "Other Information. Enter City /",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town_of_birth",
@@ -446,6 +487,7 @@
     {
       "id": "countryof_birth",
       "question": "What is your country of Birth?",
+      "label": "Other Information. Enter Country of",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.countryof_birth",
@@ -456,6 +498,7 @@
     {
       "id": "dateof_birth",
       "question": "What is your date of Birth?",
+      "label": "Other Information. Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.dateof_birth",
@@ -466,6 +509,7 @@
     {
       "id": "date_of_marriage",
       "question": "What is your date of Current Marriage?",
+      "label": "Your Marital Information. Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_of_marriage",
@@ -476,6 +520,7 @@
     {
       "id": "city_town",
       "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage,",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town",
@@ -487,6 +532,7 @@
     {
       "id": "state_4",
       "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage,",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_4",
@@ -497,6 +543,7 @@
     {
       "id": "province_4",
       "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage,",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_4",
@@ -508,6 +555,7 @@
     {
       "id": "country_4",
       "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage,",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_4",
@@ -518,6 +566,7 @@
     {
       "id": "given_name_3",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_3",
@@ -528,6 +577,7 @@
     {
       "id": "middle_name_3",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_3",
@@ -538,6 +588,7 @@
     {
       "id": "date_marriage_ended",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_marriage_ended",
@@ -548,6 +599,7 @@
     {
       "id": "family_name_3",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_3",
@@ -558,6 +610,7 @@
     {
       "id": "given_name_4",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_4",
@@ -568,6 +621,7 @@
     {
       "id": "middle_name_4",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_4",
@@ -578,6 +632,7 @@
     {
       "id": "date_marriage_ended_2",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_marriage_ended_2",
@@ -588,6 +643,7 @@
     {
       "id": "family_name_4",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_4",
@@ -598,6 +654,7 @@
     {
       "id": "given_name_5",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_5",
@@ -608,6 +665,7 @@
     {
       "id": "middle_name_5",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_5",
@@ -618,6 +676,7 @@
     {
       "id": "dateof_birth_2",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.dateof_birth_2",
@@ -628,6 +687,7 @@
     {
       "id": "countryof_birth_2",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.countryof_birth_2",
@@ -638,6 +698,7 @@
     {
       "id": "city_town_or_village_of_residence",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town_or_village_of_residence",
@@ -648,6 +709,7 @@
     {
       "id": "country_of_residence",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_of_residence",
@@ -658,6 +720,7 @@
     {
       "id": "family_name_5",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_5",
@@ -668,6 +731,7 @@
     {
       "id": "given_name_6",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_6",
@@ -678,6 +742,7 @@
     {
       "id": "middle_name_6",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_6",
@@ -688,6 +753,7 @@
     {
       "id": "dateof_birth_3",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.dateof_birth_3",
@@ -698,6 +764,7 @@
     {
       "id": "countryof_birth_3",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.countryof_birth_3",
@@ -708,6 +775,7 @@
     {
       "id": "city_town_or_village_of_residence_2",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town_or_village_of_residence_2",
@@ -718,6 +786,7 @@
     {
       "id": "country_of_residence_2",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_of_residence_2",
@@ -728,6 +797,7 @@
     {
       "id": "pt_line20a_family_name",
       "question": "What is your names of All Your Spouses?",
+      "label": "Names of All Your Spouses,",
       "type": "text",
       "group": "name",
       "memory_key": "name.pt_line20a_family_name",
@@ -738,6 +808,7 @@
     {
       "id": "employer_or_comp_name",
       "question": "What is your employment history for the last five years, whether inside or outside the United States?",
+      "label": "Employment History. Provide your employment",
       "type": "state",
       "group": "address",
       "memory_key": "address.employer_or_comp_name",
@@ -749,6 +820,7 @@
     {
       "id": "class_of_admission",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.class_of_admission",
@@ -759,6 +831,7 @@
     {
       "id": "date_of_admission",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.date_of_admission",
@@ -769,6 +842,7 @@
     {
       "id": "city_or_town_4",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_4",
@@ -779,6 +853,7 @@
     {
       "id": "state_5",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_5",
@@ -789,6 +864,7 @@
     {
       "id": "apt_ste_flr_number_4",
       "question": "What is your employer Enter Apartment, Suite or Floor Number?",
+      "label": "Employment History. Employer Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_4",
@@ -800,6 +876,7 @@
     {
       "id": "city_or_town_5",
       "question": "What is your employer Enter City or Town?",
+      "label": "Employment History. Employer Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_5",
@@ -811,6 +888,7 @@
     {
       "id": "country_5",
       "question": "What is your employer Enter Country?",
+      "label": "Employment History. Employer Enter Country",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_5",
@@ -822,6 +900,7 @@
     {
       "id": "postal_code_4",
       "question": "What is your employer Enter Postal Code?",
+      "label": "Employment History. Employer Enter Postal",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_4",
@@ -833,6 +912,7 @@
     {
       "id": "province_5",
       "question": "What is your employer Enter Province?",
+      "label": "Employment History. Employer Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_5",
@@ -844,6 +924,7 @@
     {
       "id": "state_6",
       "question": "What is your employer Select State from List of States?",
+      "label": "Employment History. Employer Select State",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_6",
@@ -854,6 +935,7 @@
     {
       "id": "street_number_name_4",
       "question": "What is your employer Enter Street Number and Name?",
+      "label": "Employment History. Employer Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_4",
@@ -865,6 +947,7 @@
     {
       "id": "zip_code_4",
       "question": "What is your employer Enter Zip Code?",
+      "label": "Employment History. Employer Enter Zip",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_4",
@@ -876,6 +959,7 @@
     {
       "id": "occupation",
       "question": "What is your employer Enter Your Occupation?",
+      "label": "Employment History. Employer Enter Your",
       "type": "text",
       "group": "other",
       "memory_key": "other.occupation",
@@ -886,6 +970,7 @@
     {
       "id": "date_from_3",
       "question": "What is your employer Enter Date From?",
+      "label": "Employment History. Employer Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_from_3",
@@ -896,6 +981,7 @@
     {
       "id": "employer_or_org_name",
       "question": "What is your employer Enter Name of Employer / Company?",
+      "label": "Employment History. Employer Enter Name",
       "type": "text",
       "group": "other",
       "memory_key": "other.employer_or_org_name",
@@ -907,6 +993,7 @@
     {
       "id": "apt_ste_flr_number_5",
       "question": "What is your employer Enter Apartment, Suite or Floor Number?",
+      "label": "Employment History. Employer Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_5",
@@ -918,6 +1005,7 @@
     {
       "id": "city_or_town_6",
       "question": "What is your employer Enter City or Town?",
+      "label": "Employment History. Employer Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_6",
@@ -929,6 +1017,7 @@
     {
       "id": "country_6",
       "question": "What is your employer Enter Country?",
+      "label": "Employment History. Employer Enter Country",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_6",
@@ -939,6 +1028,7 @@
     {
       "id": "postal_code_5",
       "question": "What is your employer Enter Postal Code?",
+      "label": "Employment History. Employer Enter Postal",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_5",
@@ -950,6 +1040,7 @@
     {
       "id": "province_6",
       "question": "What is your employer Enter Province?",
+      "label": "Employment History. Employer Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_6",
@@ -961,6 +1052,7 @@
     {
       "id": "state_7",
       "question": "What is your employer Select State from List of States?",
+      "label": "Employment History. Employer Select State",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_7",
@@ -971,6 +1063,7 @@
     {
       "id": "street_number_name_5",
       "question": "What is your employer Enter Street Number and Name?",
+      "label": "Employment History. Employer Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_5",
@@ -982,6 +1075,7 @@
     {
       "id": "zip_code_5",
       "question": "What is your employer Enter Zip Code?",
+      "label": "Employment History. Employer Enter Zip",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_5",
@@ -993,6 +1087,7 @@
     {
       "id": "occupation_2",
       "question": "What is your employer Enter Your Occupation?",
+      "label": "Employment History. Employer Enter Your",
       "type": "text",
       "group": "other",
       "memory_key": "other.occupation_2",
@@ -1003,6 +1098,7 @@
     {
       "id": "date_from_4",
       "question": "What is your employer Enter Date From?",
+      "label": "Employment History. Employer Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_from_4",
@@ -1013,6 +1109,7 @@
     {
       "id": "date_to_2",
       "question": "What is your employer Enter Date To?",
+      "label": "Employment History. Employer Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_to_2",
@@ -1023,6 +1120,7 @@
     {
       "id": "height_feet",
       "question": "What is your feet?",
+      "label": "Height. Enter Feet",
       "type": "text",
       "group": "other",
       "memory_key": "other.height_feet",
@@ -1033,6 +1131,7 @@
     {
       "id": "height_inches",
       "question": "What is your inches?",
+      "label": "Height. Enter Inches",
       "type": "text",
       "group": "other",
       "memory_key": "other.height_inches",
@@ -1043,6 +1142,7 @@
     {
       "id": "pound1",
       "question": "What is your pounds?",
+      "label": "Weight. Enter Pounds. Enter First",
       "type": "text",
       "group": "other",
       "memory_key": "other.pound1",
@@ -1054,6 +1154,7 @@
     {
       "id": "pound2",
       "question": "What is your pounds?",
+      "label": "Weight. Enter Pounds. Enter Second",
       "type": "text",
       "group": "other",
       "memory_key": "other.pound2",
@@ -1065,6 +1166,7 @@
     {
       "id": "pound3",
       "question": "What is your pounds?",
+      "label": "Weight. Enter Pounds. Enter Third",
       "type": "text",
       "group": "other",
       "memory_key": "other.pound3",
@@ -1076,6 +1178,7 @@
     {
       "id": "alien_number_2",
       "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Alien Registration Number, if any",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.alien_number_2",
@@ -1087,7 +1190,8 @@
     },
     {
       "id": "u_s_c_i_s_online_act_number_2",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_act_number_2",
@@ -1099,6 +1203,7 @@
     {
       "id": "p4_line5a_family_name",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p4_line5a_family_name",
@@ -1109,6 +1214,7 @@
     {
       "id": "apt_ste_flr_number_6",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_6",
@@ -1120,6 +1226,7 @@
     {
       "id": "city_or_town_7",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_7",
@@ -1131,6 +1238,7 @@
     {
       "id": "country_7",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter Country",
       "type": "text",
       "group": "address",
       "memory_key": "address.country_7",
@@ -1142,6 +1250,7 @@
     {
       "id": "postal_code_6",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter Postal",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_6",
@@ -1153,6 +1262,7 @@
     {
       "id": "province_7",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_7",
@@ -1164,6 +1274,7 @@
     {
       "id": "state_8",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Select State",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_8",
@@ -1174,6 +1285,7 @@
     {
       "id": "street_number_name_6",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. If the",
       "type": "state",
       "group": "address",
       "memory_key": "address.street_number_name_6",
@@ -1185,6 +1297,7 @@
     {
       "id": "zip_code_6",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Enter Zip",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_6",
@@ -1196,6 +1309,7 @@
     {
       "id": "street_number_name_7",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "state",
       "group": "address",
       "memory_key": "address.street_number_name_7",
@@ -1207,6 +1321,7 @@
     {
       "id": "apt_ste_flr_number_7",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_7",
@@ -1218,6 +1333,7 @@
     {
       "id": "city_or_town_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_8",
@@ -1229,6 +1345,7 @@
     {
       "id": "state_9",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_9",
@@ -1239,6 +1356,7 @@
     {
       "id": "zip_code_7",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_7",
@@ -1250,6 +1368,7 @@
     {
       "id": "apt_ste_flr_number_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_8",
@@ -1261,6 +1380,7 @@
     {
       "id": "city_or_town_9",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_9",
@@ -1272,6 +1392,7 @@
     {
       "id": "country_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_8",
@@ -1282,6 +1403,7 @@
     {
       "id": "postal_code_7",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_7",
@@ -1293,6 +1415,7 @@
     {
       "id": "province_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_8",
@@ -1304,6 +1427,7 @@
     {
       "id": "street_number_name_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "state",
       "group": "address",
       "memory_key": "address.street_number_name_8",
@@ -1315,6 +1439,7 @@
     {
       "id": "daytime_phone_number",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.daytime_phone_number",
@@ -1325,7 +1450,8 @@
     },
     {
       "id": "s_s_n_2",
-      "question": "What is your u.S. Social Security Number?",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "U.S. Social Security Number, if",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.s_s_n_2",
@@ -1338,6 +1464,7 @@
     {
       "id": "family_name_6",
       "question": "What is your beneficiary's Full Name?",
+      "label": "Beneficiary's Full Name. Enter Family",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_6",
@@ -1348,6 +1475,7 @@
     {
       "id": "given_name_7",
       "question": "What is your beneficiary's Full Name?",
+      "label": "Beneficiary's Full Name. Enter Given",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_7",
@@ -1358,6 +1486,7 @@
     {
       "id": "middle_name_7",
       "question": "What is your beneficiary's Full Name?",
+      "label": "Beneficiary's Full Name. Enter Middle",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_7",
@@ -1368,6 +1497,7 @@
     {
       "id": "given_name_8",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_8",
@@ -1378,6 +1508,7 @@
     {
       "id": "middle_name_8",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if any.",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_8",
@@ -1388,6 +1519,7 @@
     {
       "id": "city_town_of_birth_2",
       "question": "What is your city / Town / Village of Birth?",
+      "label": "Other Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town_of_birth_2",
@@ -1399,6 +1531,7 @@
     {
       "id": "country_of_birth",
       "question": "What is your country of Birth?",
+      "label": "Other Information About Beneficiary. Enter",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth",
@@ -1409,6 +1542,7 @@
     {
       "id": "date_of_birth",
       "question": "What is your date of Birth?",
+      "label": "Other Information About Beneficiary. Enter",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth",
@@ -1419,6 +1553,7 @@
     {
       "id": "mobile_phone_number",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.mobile_phone_number",
@@ -1430,6 +1565,7 @@
     {
       "id": "email_address",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.email_address",
@@ -1440,6 +1576,7 @@
     {
       "id": "family_name_7",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_7",
@@ -1450,6 +1587,7 @@
     {
       "id": "given_name_9",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_9",
@@ -1460,6 +1598,7 @@
     {
       "id": "middle_name_9",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_9",
@@ -1470,6 +1609,7 @@
     {
       "id": "date_marriage_ended_3",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_marriage_ended_3",
@@ -1480,6 +1620,7 @@
     {
       "id": "date_marriage_ended_4",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_marriage_ended_4",
@@ -1490,6 +1631,7 @@
     {
       "id": "numberof_marriages_2",
       "question": "What is your beneficiary's Marital Information?",
+      "label": "Beneficiary's Marital Information. How many",
       "type": "text",
       "group": "other",
       "memory_key": "other.numberof_marriages_2",
@@ -1501,6 +1643,7 @@
     {
       "id": "family_name_8",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_8",
@@ -1511,6 +1654,7 @@
     {
       "id": "given_name_10",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_10",
@@ -1521,6 +1665,7 @@
     {
       "id": "middle_name_10",
       "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Names of Beneficiary's Spouses, if",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_10",
@@ -1531,6 +1676,7 @@
     {
       "id": "date_of_marriage_2",
       "question": "What is your beneficiary's Marital Information?",
+      "label": "Beneficiary's Marital Information. Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_of_marriage_2",
@@ -1541,6 +1687,7 @@
     {
       "id": "city_town_2",
       "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage,",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_town_2",
@@ -1552,6 +1699,7 @@
     {
       "id": "state_10",
       "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage,",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_10",
@@ -1562,6 +1710,7 @@
     {
       "id": "province_9",
       "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage,",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_9",
@@ -1573,6 +1722,7 @@
     {
       "id": "country_9",
       "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage,",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_9",
@@ -1583,6 +1733,7 @@
     {
       "id": "family_name_9",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Provide",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_9",
@@ -1593,6 +1744,7 @@
     {
       "id": "given_name_11",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_11",
@@ -1603,6 +1755,7 @@
     {
       "id": "middle_name_11",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_11",
@@ -1613,6 +1766,7 @@
     {
       "id": "relationship",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship",
@@ -1623,6 +1777,7 @@
     {
       "id": "date_of_birth_2",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth_2",
@@ -1633,6 +1788,7 @@
     {
       "id": "family_name_10",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_10",
@@ -1643,6 +1799,7 @@
     {
       "id": "given_name_12",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_12",
@@ -1653,6 +1810,7 @@
     {
       "id": "middle_name_12",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_12",
@@ -1663,6 +1821,7 @@
     {
       "id": "relationship_2",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_2",
@@ -1673,6 +1832,7 @@
     {
       "id": "date_of_birth_3",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth_3",
@@ -1683,6 +1843,7 @@
     {
       "id": "country_of_birth_2",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth_2",
@@ -1693,6 +1854,7 @@
     {
       "id": "family_name_11",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_11",
@@ -1703,6 +1865,7 @@
     {
       "id": "given_name_13",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_13",
@@ -1713,6 +1876,7 @@
     {
       "id": "middle_name_13",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_13",
@@ -1723,6 +1887,7 @@
     {
       "id": "relationship_3",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_3",
@@ -1734,6 +1899,7 @@
     {
       "id": "date_of_birth_4",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth_4",
@@ -1744,6 +1910,7 @@
     {
       "id": "country_of_birth_3",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth_3",
@@ -1754,6 +1921,7 @@
     {
       "id": "country_of_birth_4",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth_4",
@@ -1764,6 +1932,7 @@
     {
       "id": "arrival_departure",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. If the",
       "type": "state",
       "group": "address",
       "memory_key": "address.arrival_departure",
@@ -1775,6 +1944,7 @@
     {
       "id": "class_of_admission_2",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. If the",
       "type": "state",
       "group": "address",
       "memory_key": "address.class_of_admission_2",
@@ -1785,6 +1955,7 @@
     {
       "id": "date_of_arrival",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. If the",
       "type": "date",
       "group": "address",
       "memory_key": "address.date_of_arrival",
@@ -1795,6 +1966,7 @@
     {
       "id": "date_expired",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. If the",
       "type": "date",
       "group": "address",
       "memory_key": "address.date_expired",
@@ -1805,6 +1977,7 @@
     {
       "id": "passport_number",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Enter Passport",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.passport_number",
@@ -1817,6 +1990,7 @@
     {
       "id": "travel_doc_number",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Enter Travel",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.travel_doc_number",
@@ -1827,6 +2001,7 @@
     {
       "id": "country_of_issuance",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Enter Country",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.country_of_issuance",
@@ -1837,6 +2012,7 @@
     {
       "id": "exp_date",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Enter Expiration",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.exp_date",
@@ -1847,6 +2023,7 @@
     {
       "id": "apt_ste_flr_number_9",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_9",
@@ -1858,6 +2035,7 @@
     {
       "id": "city_or_town_10",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_10",
@@ -1869,6 +2047,7 @@
     {
       "id": "country_10",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Country",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_10",
@@ -1879,6 +2058,7 @@
     {
       "id": "name_of_company",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Provide the",
       "type": "state",
       "group": "address",
       "memory_key": "address.name_of_company",
@@ -1890,6 +2070,7 @@
     {
       "id": "postal_code_8",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Postal",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_8",
@@ -1901,6 +2082,7 @@
     {
       "id": "province_10",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_10",
@@ -1912,6 +2094,7 @@
     {
       "id": "state_11",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Select State",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_11",
@@ -1922,6 +2105,7 @@
     {
       "id": "street_number_name_9",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_9",
@@ -1933,6 +2117,7 @@
     {
       "id": "zip_code_8",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Zip",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_8",
@@ -1944,6 +2129,7 @@
     {
       "id": "date_employment_began",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Enter Date",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_employment_began",
@@ -1954,6 +2140,7 @@
     {
       "id": "family_name_12",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_12",
@@ -1964,6 +2151,7 @@
     {
       "id": "given_name_14",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_14",
@@ -1974,6 +2162,7 @@
     {
       "id": "middle_name_14",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_14",
@@ -1984,6 +2173,7 @@
     {
       "id": "relationship_4",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_4",
@@ -1995,6 +2185,7 @@
     {
       "id": "date_of_birth_5",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth_5",
@@ -2005,6 +2196,7 @@
     {
       "id": "country_of_birth_5",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth_5",
@@ -2015,6 +2207,7 @@
     {
       "id": "family_name_13",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_13",
@@ -2025,6 +2218,7 @@
     {
       "id": "given_name_15",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_15",
@@ -2035,6 +2229,7 @@
     {
       "id": "middle_name_15",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_15",
@@ -2045,6 +2240,7 @@
     {
       "id": "relationship_5",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_5",
@@ -2056,6 +2252,7 @@
     {
       "id": "date_of_birth_6",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.date_of_birth_6",
@@ -2066,6 +2263,7 @@
     {
       "id": "country_of_birth_6",
       "question": "What is your information About Beneficiary's Family?",
+      "label": "Information About Beneficiary's Family. Person",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.country_of_birth_6",
@@ -2076,6 +2274,7 @@
     {
       "id": "family_name_14",
       "question": "What is your if the beneficiary's native written language does not use Roman letters, type or print his?",
+      "label": "Additional Information About Beneficiary. If",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_14",
@@ -2086,6 +2285,7 @@
     {
       "id": "given_name_16",
       "question": "What is your given Name (First Name)?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_16",
@@ -2096,6 +2296,7 @@
     {
       "id": "middle_name_16",
       "question": "What is your middle Name?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_16",
@@ -2106,6 +2307,7 @@
     {
       "id": "apt_ste_flr_number_10",
       "question": "What is your apartment, Suite or Floor Number?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_10",
@@ -2117,6 +2319,7 @@
     {
       "id": "city_or_town_11",
       "question": "What is your city or Town?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_11",
@@ -2128,6 +2331,7 @@
     {
       "id": "country_11",
       "question": "What is your country?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_11",
@@ -2138,6 +2342,7 @@
     {
       "id": "postal_code_9",
       "question": "What is your postal Code?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_9",
@@ -2149,6 +2354,7 @@
     {
       "id": "province_11",
       "question": "What is your province?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_11",
@@ -2160,6 +2366,7 @@
     {
       "id": "street_number_name_10",
       "question": "What is your street Number and Name?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_10",
@@ -2171,6 +2378,7 @@
     {
       "id": "apt_ste_flr_number_11",
       "question": "What is your apartment, Suite or Floor?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_11",
@@ -2182,6 +2390,7 @@
     {
       "id": "city_or_town_12",
       "question": "What is your city or Town?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_12",
@@ -2193,6 +2402,7 @@
     {
       "id": "country_12",
       "question": "What is your country?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "other",
       "memory_key": "other.country_12",
@@ -2203,6 +2413,7 @@
     {
       "id": "postal_code_10",
       "question": "What is your postal Code?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_10",
@@ -2214,6 +2425,7 @@
     {
       "id": "province_12",
       "question": "What is your province?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_12",
@@ -2225,6 +2437,7 @@
     {
       "id": "state_12",
       "question": "What is your state from List of States?",
+      "label": "Additional Information About Beneficiary. Select",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_12",
@@ -2235,6 +2448,7 @@
     {
       "id": "street_number_name_11",
       "question": "What is your if filing for your spouse, provide the last address at which you physically lived together?",
+      "label": "Additional Information About Beneficiary. If",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_11",
@@ -2246,6 +2460,7 @@
     {
       "id": "zip_code_9",
       "question": "What is your zip Code?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_9",
@@ -2257,6 +2472,7 @@
     {
       "id": "date_from_5",
       "question": "What is your date From?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_from_5",
@@ -2267,6 +2483,7 @@
     {
       "id": "date_to_3",
       "question": "What is your date To?",
+      "label": "Additional Information About Beneficiary. Enter",
       "type": "date",
       "group": "other",
       "memory_key": "other.date_to_3",
@@ -2277,6 +2494,7 @@
     {
       "id": "city_or_town_13",
       "question": "What is your the beneficiary is in the United States and will apply for adjustment of status to that of?",
+      "label": "Additional Information About Beneficiary. The",
       "type": "state",
       "group": "address",
       "memory_key": "address.city_or_town_13",
@@ -2288,6 +2506,7 @@
     {
       "id": "state_13",
       "question": "What is your the beneficiary is in the United States and will apply for adjustment of status to that of?",
+      "label": "Additional Information About Beneficiary. The",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_13",
@@ -2298,6 +2517,7 @@
     {
       "id": "city_or_town_14",
       "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Additional Information About Beneficiary. The",
       "type": "state",
       "group": "address",
       "memory_key": "address.city_or_town_14",
@@ -2309,6 +2529,7 @@
     {
       "id": "province_13",
       "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Additional Information About Beneficiary. The",
       "type": "state",
       "group": "address",
       "memory_key": "address.province_13",
@@ -2320,6 +2541,7 @@
     {
       "id": "country_13",
       "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Additional Information About Beneficiary. The",
       "type": "state",
       "group": "address",
       "memory_key": "address.country_13",
@@ -2330,6 +2552,7 @@
     {
       "id": "family_name_15",
       "question": "What is your if you are also submitting separate petitions for other relatives, provide the names of and?",
+      "label": "If you are also submitting",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_15",
@@ -2340,6 +2563,7 @@
     {
       "id": "given_name_17",
       "question": "What is your relative Enter Given Name (First Name)?",
+      "label": "Relative Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_17",
@@ -2350,6 +2574,7 @@
     {
       "id": "middle_name_17",
       "question": "What is your relative Enter Middle Name?",
+      "label": "Relative Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_17",
@@ -2360,6 +2585,7 @@
     {
       "id": "relationship_6",
       "question": "What is your relative Enter Relationship?",
+      "label": "Relative Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_6",
@@ -2371,6 +2597,7 @@
     {
       "id": "family_name_16",
       "question": "What is your relative Enter Family Name (Last Name)?",
+      "label": "Relative Enter Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.family_name_16",
@@ -2381,6 +2608,7 @@
     {
       "id": "given_name_18",
       "question": "What is your relative Enter Given Name (First Name)?",
+      "label": "Relative Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.given_name_18",
@@ -2391,6 +2619,7 @@
     {
       "id": "middle_name_18",
       "question": "What is your relative Enter Middle Name?",
+      "label": "Relative Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.middle_name_18",
@@ -2401,6 +2630,7 @@
     {
       "id": "relationship_7",
       "question": "What is your relative Enter Relationship?",
+      "label": "Relative Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.relationship_7",
@@ -2412,6 +2642,7 @@
     {
       "id": "daytime_phone_number_2",
       "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Statement, Contact Information, Declaration,",
       "type": "phone",
       "group": "address",
       "memory_key": "address.daytime_phone_number_2",
@@ -2423,6 +2654,7 @@
     {
       "id": "mobile_number",
       "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Statement, Contact Information, Declaration,",
       "type": "phone",
       "group": "address",
       "memory_key": "address.mobile_number",
@@ -2434,6 +2666,7 @@
     {
       "id": "email",
       "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Statement, Contact Information, Declaration,",
       "type": "email",
       "group": "address",
       "memory_key": "address.email",
@@ -2445,6 +2678,7 @@
     {
       "id": "daytime_phone_number_3",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.daytime_phone_number_3",
@@ -2456,6 +2690,7 @@
     {
       "id": "apt_ste_flr_number_12",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_12",
@@ -2467,6 +2702,7 @@
     {
       "id": "city_or_town_15",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_15",
@@ -2478,6 +2714,7 @@
     {
       "id": "country_14",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.country_14",
@@ -2489,6 +2726,7 @@
     {
       "id": "postal_code_11",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_11",
@@ -2500,6 +2738,7 @@
     {
       "id": "province_14",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_14",
@@ -2511,6 +2750,7 @@
     {
       "id": "state_14",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_14",
@@ -2521,6 +2761,7 @@
     {
       "id": "street_number_name_12",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_12",
@@ -2532,6 +2773,7 @@
     {
       "id": "zip_code_10",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_10",
@@ -2543,6 +2785,7 @@
     {
       "id": "email_2",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.email_2",
@@ -2554,6 +2797,7 @@
     {
       "id": "pt7_nameof_language",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "other",
       "memory_key": "other.pt7_nameof_language",
@@ -2564,6 +2808,7 @@
     {
       "id": "business_name",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "ssn",
       "group": "name",
       "memory_key": "name.business_name",
@@ -2576,6 +2821,7 @@
     {
       "id": "apt_ste_flr_number_13",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.apt_ste_flr_number_13",
@@ -2587,6 +2833,7 @@
     {
       "id": "city_or_town_16",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.city_or_town_16",
@@ -2598,6 +2845,7 @@
     {
       "id": "country_15",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.country_15",
@@ -2608,6 +2856,7 @@
     {
       "id": "postal_code_12",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.postal_code_12",
@@ -2619,6 +2868,7 @@
     {
       "id": "province_15",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.province_15",
@@ -2630,6 +2880,7 @@
     {
       "id": "state_15",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "state",
       "group": "address",
       "memory_key": "address.state_15",
@@ -2640,6 +2891,7 @@
     {
       "id": "street_number_name_13",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.street_number_name_13",
@@ -2651,6 +2903,7 @@
     {
       "id": "zip_code_11",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "zip",
       "group": "address",
       "memory_key": "address.zip_code_11",
@@ -2662,6 +2915,7 @@
     {
       "id": "daytime_phone_number_4",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.daytime_phone_number_4",
@@ -2673,6 +2927,7 @@
     {
       "id": "email_3",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.email_3",
@@ -2684,6 +2939,7 @@
     {
       "id": "page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number",
@@ -2695,6 +2951,7 @@
     {
       "id": "part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number",
@@ -2706,6 +2963,7 @@
     {
       "id": "item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number",
@@ -2717,6 +2975,7 @@
     {
       "id": "additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info",
@@ -2727,6 +2986,7 @@
     {
       "id": "page_number_2",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_2",
@@ -2738,6 +2998,7 @@
     {
       "id": "part_number_2",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_2",
@@ -2749,6 +3010,7 @@
     {
       "id": "item_number_2",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_2",
@@ -2760,6 +3022,7 @@
     {
       "id": "additional_info_2",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_2",
@@ -2770,6 +3033,7 @@
     {
       "id": "page_number_3",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_3",
@@ -2781,6 +3045,7 @@
     {
       "id": "part_number_3",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_3",
@@ -2792,6 +3057,7 @@
     {
       "id": "item_number_3",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_3",
@@ -2803,6 +3069,7 @@
     {
       "id": "additional_info_3",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_3",
@@ -2813,6 +3080,7 @@
     {
       "id": "page_number_4",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_4",
@@ -2824,6 +3092,7 @@
     {
       "id": "part_number_4",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_4",
@@ -2835,6 +3104,7 @@
     {
       "id": "item_number_4",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_4",
@@ -2846,6 +3116,7 @@
     {
       "id": "additional_info_4",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_4",
@@ -2856,6 +3127,7 @@
     {
       "id": "part_number_5",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.part_number_5",
@@ -2867,6 +3139,7 @@
     {
       "id": "item_number_5",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.item_number_5",
@@ -2878,6 +3151,7 @@
     {
       "id": "additional_info_5",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.additional_info_5",
@@ -2888,6 +3162,7 @@
     {
       "id": "page_number_5",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.page_number_5",
@@ -2899,6 +3174,7 @@
     {
       "id": "check_box1",
       "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "To be completed by an",
       "type": "choice",
       "group": "other",
       "memory_key": "other.check_box1",
@@ -2916,6 +3192,7 @@
     {
       "id": "child",
       "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.child",
@@ -2933,6 +3210,7 @@
     {
       "id": "parent",
       "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.parent",
@@ -2950,6 +3228,7 @@
     {
       "id": "siblings",
       "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "address",
       "memory_key": "address.siblings",
@@ -2967,6 +3246,7 @@
     {
       "id": "spouse",
       "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.spouse",
@@ -2984,6 +3264,7 @@
     {
       "id": "adopted_child",
       "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.adopted_child",
@@ -3001,6 +3282,7 @@
     {
       "id": "in_wedlock",
       "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.in_wedlock",
@@ -3018,6 +3300,7 @@
     {
       "id": "out_of_wedlock",
       "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "other",
       "memory_key": "other.out_of_wedlock",
@@ -3035,6 +3318,7 @@
     {
       "id": "stepchild",
       "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "address",
       "memory_key": "address.stepchild",
@@ -3052,6 +3336,7 @@
     {
       "id": "no",
       "question": "What is your relative is the Beneficiary). If the beneficiary is your brother / sister, are you?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "address",
       "memory_key": "address.no",
@@ -3069,6 +3354,7 @@
     {
       "id": "yes",
       "question": "What is your relative is the Beneficiary). If the beneficiary is your brother / sister, are you?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "address",
       "memory_key": "address.yes",
@@ -3086,6 +3372,7 @@
     {
       "id": "no_2",
       "question": "What is your relative is the Beneficiary). Did you gain lawful permanent resident status or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.no_2",
@@ -3103,6 +3390,7 @@
     {
       "id": "yes_2",
       "question": "What is your relative is the Beneficiary). Did you gain lawful permanent resident status or?",
+      "label": "Your relative is the Beneficiary).",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.yes_2",
@@ -3120,6 +3408,7 @@
     {
       "id": "unit",
       "question": "What is your apartment?",
+      "label": "Mailing Address. Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit",
@@ -3149,6 +3438,7 @@
     {
       "id": "no_3",
       "question": "What is your is your current mailing address the same as your physical address? Select No?",
+      "label": "Mailing Address. Is your current",
       "type": "choice",
       "group": "address",
       "memory_key": "address.no_3",
@@ -3166,6 +3456,7 @@
     {
       "id": "yes_3",
       "question": "What is your is your current mailing address the same as your physical address? Select Yes?",
+      "label": "Mailing Address. Is your current",
       "type": "choice",
       "group": "address",
       "memory_key": "address.yes_3",
@@ -3183,6 +3474,7 @@
     {
       "id": "unit_2",
       "question": "What is your physical Address Select Apartment?",
+      "label": "Address History. Physical Address Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_2",
@@ -3212,6 +3504,7 @@
     {
       "id": "unit_3",
       "question": "What is your physical Address Select Apartment?",
+      "label": "Address History. Physical Address Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_3",
@@ -3241,6 +3534,7 @@
     {
       "id": "annulled",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.annulled",
@@ -3258,6 +3552,7 @@
     {
       "id": "divorced",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.divorced",
@@ -3275,6 +3570,7 @@
     {
       "id": "married",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.married",
@@ -3292,6 +3588,7 @@
     {
       "id": "separated",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.separated",
@@ -3309,6 +3606,7 @@
     {
       "id": "single",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.single",
@@ -3326,6 +3624,7 @@
     {
       "id": "widowed",
       "question": "What is your current Marital Status?",
+      "label": "Your Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.widowed",
@@ -3343,6 +3642,7 @@
     {
       "id": "female",
       "question": "What is your sex?",
+      "label": "Other Information. Sex. Select Female",
       "type": "choice",
       "group": "other",
       "memory_key": "other.female",
@@ -3360,6 +3660,7 @@
     {
       "id": "male",
       "question": "What is your sex?",
+      "label": "Other Information. Sex. Select Male",
       "type": "choice",
       "group": "other",
       "memory_key": "other.male",
@@ -3377,6 +3678,7 @@
     {
       "id": "female_2",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "choice",
       "group": "other",
       "memory_key": "other.female_2",
@@ -3394,6 +3696,7 @@
     {
       "id": "male_2",
       "question": "What is your parent One's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "choice",
       "group": "other",
       "memory_key": "other.male_2",
@@ -3411,6 +3714,7 @@
     {
       "id": "female_3",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "choice",
       "group": "other",
       "memory_key": "other.female_3",
@@ -3428,6 +3732,7 @@
     {
       "id": "male_3",
       "question": "What is your parent Two's Information?",
+      "label": "Information About Your Parents. Parent",
       "type": "choice",
       "group": "other",
       "memory_key": "other.male_3",
@@ -3445,6 +3750,7 @@
     {
       "id": "l_p_r",
       "question": "What is your additional Information About You (Petitioner). I am a?",
+      "label": "Additional Information About You. I",
       "type": "choice",
       "group": "other",
       "memory_key": "other.l_p_r",
@@ -3462,6 +3768,7 @@
     {
       "id": "no_4",
       "question": "What is your additional Information About You (Petitioner). Have you obtained a Certificate of?",
+      "label": "Additional Information About You. Have",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.no_4",
@@ -3479,6 +3786,7 @@
     {
       "id": "u_s_citizen",
       "question": "What is your additional Information About You (Petitioner). I am a?",
+      "label": "Additional Information About You. I",
       "type": "choice",
       "group": "other",
       "memory_key": "other.u_s_citizen",
@@ -3496,6 +3804,7 @@
     {
       "id": "yes_4",
       "question": "What is your additional Information About You (Petitioner). Have you obtained a Certificate of?",
+      "label": "Additional Information About You. Have",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.yes_4",
@@ -3513,6 +3822,7 @@
     {
       "id": "no_5",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.no_5",
@@ -3530,6 +3840,7 @@
     {
       "id": "unit_4",
       "question": "What is your employer Select Apartment?",
+      "label": "Employment History. Employer Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_4",
@@ -3559,6 +3870,7 @@
     {
       "id": "yes_5",
       "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Additional Information About You. If",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.yes_5",
@@ -3576,6 +3888,7 @@
     {
       "id": "unit_5",
       "question": "What is your employer Select Apartment?",
+      "label": "Employment History. Employer Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_5",
@@ -3605,6 +3918,7 @@
     {
       "id": "ethnicity",
       "question": "What is your ethnicity?",
+      "label": "Ethnicity. Select Not Hispanic or",
       "type": "choice",
       "group": "address",
       "memory_key": "address.ethnicity",
@@ -3628,6 +3942,7 @@
     {
       "id": "race_american_indian_alaska_native",
       "question": "What is your race?",
+      "label": "Race. Select American Indian or",
       "type": "choice",
       "group": "other",
       "memory_key": "other.race_american_indian_alaska_native",
@@ -3645,6 +3960,7 @@
     {
       "id": "race_asian",
       "question": "What is your race?",
+      "label": "Race. Select Asian",
       "type": "choice",
       "group": "other",
       "memory_key": "other.race_asian",
@@ -3662,6 +3978,7 @@
     {
       "id": "race_black",
       "question": "What is your race?",
+      "label": "Race. Select Black or African",
       "type": "choice",
       "group": "other",
       "memory_key": "other.race_black",
@@ -3679,6 +3996,7 @@
     {
       "id": "race_native_hawaiian_other_pacific_islander",
       "question": "What is your race?",
+      "label": "Race. Select Native Hawaiian or",
       "type": "choice",
       "group": "other",
       "memory_key": "other.race_native_hawaiian_other_pacific_islander",
@@ -3696,6 +4014,7 @@
     {
       "id": "race_white",
       "question": "What is your race?",
+      "label": "Race. Select White",
       "type": "choice",
       "group": "other",
       "memory_key": "other.race_white",
@@ -3713,6 +4032,7 @@
     {
       "id": "eye_color",
       "question": "What is your eye Color?",
+      "label": "Eye Color. Select Blue",
       "type": "choice",
       "group": "other",
       "memory_key": "other.eye_color",
@@ -3778,6 +4098,7 @@
     {
       "id": "hair_color",
       "question": "What is your hair Color?",
+      "label": "Hair Color. Select Bald",
       "type": "choice",
       "group": "other",
       "memory_key": "other.hair_color",
@@ -3843,6 +4164,7 @@
     {
       "id": "no_6",
       "question": "What is your has anyone else ever filed a petition for the beneficiary? Select No?",
+      "label": "Other Information About Beneficiary. Has",
       "type": "choice",
       "group": "other",
       "memory_key": "other.no_6",
@@ -3860,6 +4182,7 @@
     {
       "id": "unknown",
       "question": "What is your has anyone else ever filed a petition for the beneficiary? Select Unknown?",
+      "label": "Other Information About Beneficiary. Has",
       "type": "choice",
       "group": "other",
       "memory_key": "other.unknown",
@@ -3877,6 +4200,7 @@
     {
       "id": "yes_6",
       "question": "What is your has anyone else ever filed a petition for the beneficiary? Select Yes?",
+      "label": "Other Information About Beneficiary. Has",
       "type": "choice",
       "group": "other",
       "memory_key": "other.yes_6",
@@ -3894,6 +4218,7 @@
     {
       "id": "unit_6",
       "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address. Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_6",
@@ -3923,6 +4248,7 @@
     {
       "id": "unit_7",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_7",
@@ -3952,6 +4278,7 @@
     {
       "id": "unit_8",
       "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information.",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_8",
@@ -3981,6 +4308,7 @@
     {
       "id": "female_4",
       "question": "What is your sex?",
+      "label": "Other Information About Beneficiary. Sex.",
       "type": "choice",
       "group": "other",
       "memory_key": "other.female_4",
@@ -3998,6 +4326,7 @@
     {
       "id": "male_4",
       "question": "What is your sex?",
+      "label": "Other Information About Beneficiary. Sex.",
       "type": "choice",
       "group": "other",
       "memory_key": "other.male_4",
@@ -4015,6 +4344,7 @@
     {
       "id": "marital_status",
       "question": "What is your beneficiary's Marital Information?",
+      "label": "Beneficiary's Marital Information. Current Marital",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.marital_status",
@@ -4062,6 +4392,7 @@
     {
       "id": "no_7",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Was the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.no_7",
@@ -4079,6 +4410,7 @@
     {
       "id": "yes_7",
       "question": "What is your beneficiary's Entry Information?",
+      "label": "Beneficiary's Entry Information. Was the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.yes_7",
@@ -4096,6 +4428,7 @@
     {
       "id": "unit_9",
       "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information. Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_9",
@@ -4125,6 +4458,7 @@
     {
       "id": "no_8",
       "question": "What is your was the beneficiary EVER in immigration proceedings? Select No?",
+      "label": "Additional Information About Beneficiary. Was",
       "type": "choice",
       "group": "other",
       "memory_key": "other.no_8",
@@ -4142,6 +4476,7 @@
     {
       "id": "yes_8",
       "question": "What is your was the beneficiary EVER in immigration proceedings? Select Yes?",
+      "label": "Additional Information About Beneficiary. Was",
       "type": "choice",
       "group": "other",
       "memory_key": "other.yes_8",
@@ -4159,6 +4494,7 @@
     {
       "id": "part4_line1_no",
       "question": "What is your have you EVER previously filed a petition for this beneficiary or any other alien? Select No?",
+      "label": "Have you EVER previously filed",
       "type": "choice",
       "group": "other",
       "memory_key": "other.part4_line1_no",
@@ -4176,6 +4512,7 @@
     {
       "id": "part4_line1_yes",
       "question": "What is your have you EVER previously filed a petition for this beneficiary or any other alien? Select?",
+      "label": "Have you EVER previously filed",
       "type": "choice",
       "group": "other",
       "memory_key": "other.part4_line1_yes",
@@ -4193,6 +4530,7 @@
     {
       "id": "unit_10",
       "question": "What is your apartment?",
+      "label": "Additional Information About Beneficiary. Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_10",
@@ -4222,6 +4560,7 @@
     {
       "id": "unit_11",
       "question": "What is your apartment?",
+      "label": "Additional Information About Beneficiary. Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_11",
@@ -4251,6 +4590,7 @@
     {
       "id": "checkbox",
       "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Statement, Contact Information, Declaration,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.checkbox",
@@ -4274,6 +4614,7 @@
     {
       "id": "checkbox_2",
       "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Statement, Contact Information, Declaration,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.checkbox_2",
@@ -4291,6 +4632,7 @@
     {
       "id": "unit_12",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_12",
@@ -4320,6 +4662,7 @@
     {
       "id": "unit_13",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "choice",
       "group": "address",
       "memory_key": "address.unit_13",
@@ -4349,6 +4692,7 @@
     {
       "id": "checkbox_3",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "choice",
       "group": "address",
       "memory_key": "address.checkbox_3",

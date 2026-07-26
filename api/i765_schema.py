@@ -46,6 +46,7 @@ class FormField(BaseModel):
     sensitive: bool
     required: bool
     read_back: bool = False
+    label: str | None = None
     max_len: int | None = None
     depends_on: str | None = None
     help: str | None = None

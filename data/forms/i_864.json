@@ -9,6 +9,7 @@
     {
       "id": "p4_line1a_family_name",
       "question": "What is your sponsor's Full Legal Name?",
+      "label": "Sponsor's Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p4_line1a_family_name",
@@ -20,6 +21,7 @@
     {
       "id": "p4_line1b_given_name",
       "question": "What is your sponsor's Full Legal Name?",
+      "label": "Sponsor's Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p4_line1b_given_name",
@@ -31,6 +33,7 @@
     {
       "id": "p4_line1c_middle_name",
       "question": "What is your sponsor's Full Legal Name?",
+      "label": "Sponsor's Full Legal Name. Enter",
       "type": "text",
       "group": "name",
       "memory_key": "name.p4_line1c_middle_name",
@@ -42,6 +45,7 @@
     {
       "id": "u_s_c_i_s_online_acct_number",
       "question": "What is your to be completed by an attorney or accredited representative (?",
+      "label": "To be completed by an",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
@@ -53,6 +57,7 @@
     {
       "id": "p4_line12_alien_number",
       "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Other Information. Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p4_line12_alien_number",
@@ -64,7 +69,8 @@
     },
     {
       "id": "p4_line10_social_security_number",
-      "question": "What is your u.S. Social Security Number (Required)?",
+      "question": "What is your U.S. Social Security Number (Required)?",
+      "label": "U.S. Social Security Number",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.p4_line10_social_security_number",
@@ -76,7 +82,8 @@
     },
     {
       "id": "p4_line13_acct_identifier",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "Other Information. Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.p4_line13_acct_identifier",
@@ -88,6 +95,7 @@
     {
       "id": "p4_line2a_in_care_of",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2a_in_care_of",
@@ -99,6 +107,7 @@
     {
       "id": "p4_line2b_street_number_name",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2b_street_number_name",
@@ -110,6 +119,7 @@
     {
       "id": "p4_line2d_apt_ste_flr_number",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2d_apt_ste_flr_number",
@@ -121,6 +131,7 @@
     {
       "id": "p4_line2e_city_or_town",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2e_city_or_town",
@@ -132,6 +143,7 @@
     {
       "id": "p4_line2f_state",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. This",
       "type": "state",
       "group": "address",
       "memory_key": "address.p4_line2f_state",
@@ -142,6 +154,7 @@
     {
       "id": "p4_line2g_zip_code",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p4_line2g_zip_code",
@@ -153,6 +166,7 @@
     {
       "id": "p4_line2h_province",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2h_province",
@@ -164,6 +178,7 @@
     {
       "id": "p4_line2i_postal_code",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2i_postal_code",
@@ -175,6 +190,7 @@
     {
       "id": "p4_line2j_country",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Enter",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line2j_country",
@@ -185,6 +201,7 @@
     {
       "id": "p4_line5_country_of_domicile",
       "question": "What is your country of Domicile?",
+      "label": "Country of Domicile",
       "type": "text",
       "group": "other",
       "memory_key": "other.p4_line5_country_of_domicile",
@@ -195,6 +212,7 @@
     {
       "id": "p4_line6_date_of_birth",
       "question": "What is your as 2 digit month, 2 digit day and 4 digit year?",
+      "label": "Date of Birth. Enter as",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p4_line6_date_of_birth",
@@ -205,6 +223,7 @@
     {
       "id": "p4_line7_cityof_birth",
       "question": "What is your country of Birth?",
+      "label": "Country of Birth",
       "type": "text",
       "group": "address",
       "memory_key": "address.p4_line7_cityof_birth",
@@ -215,6 +234,7 @@
     {
       "id": "p2_line5_alien_number",
       "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Other Information. Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p2_line5_alien_number",
@@ -227,6 +247,7 @@
     {
       "id": "p2_line1a_family_name",
       "question": "What is your principal Immigrant's Full Legal Name?",
+      "label": "Principal Immigrant's Full Legal Name.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line1a_family_name",
@@ -238,6 +259,7 @@
     {
       "id": "p2_line1b_given_name",
       "question": "What is your principal Immigrant's Full Legal Name?",
+      "label": "Principal Immigrant's Full Legal Name.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line1b_given_name",
@@ -249,6 +271,7 @@
     {
       "id": "p2_line1c_middle_name",
       "question": "What is your principal Immigrant's Full Legal Name?",
+      "label": "Principal Immigrant's Full Legal Name.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line1c_middle_name",
@@ -260,6 +283,7 @@
     {
       "id": "p2_line2_apt_ste_flr_number",
       "question": "What is your apartment, Suite or Floor Number?",
+      "label": "Current Mailing Address. Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_apt_ste_flr_number",
@@ -271,6 +295,7 @@
     {
       "id": "p2_line2_city_or_town",
       "question": "What is your city or Town?",
+      "label": "Current Mailing Address. Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_city_or_town",
@@ -282,6 +307,7 @@
     {
       "id": "p2_line2_country",
       "question": "What is your country?",
+      "label": "Current Mailing Address. Enter Country",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_country",
@@ -292,6 +318,7 @@
     {
       "id": "p2_line2_in_care_of",
       "question": "What is your in Care of Name?",
+      "label": "Current Mailing Address. Enter In",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_in_care_of",
@@ -303,6 +330,7 @@
     {
       "id": "p2_line2_postal_code",
       "question": "What is your postal Code?",
+      "label": "Current Mailing Address. Enter Postal",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_postal_code",
@@ -314,6 +342,7 @@
     {
       "id": "p2_line2_province",
       "question": "What is your province?",
+      "label": "Current Mailing Address. Enter Province",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_province",
@@ -325,6 +354,7 @@
     {
       "id": "p2_line2_state",
       "question": "What is your this is a drop down menu?",
+      "label": "Current Mailing Address. This is",
       "type": "state",
       "group": "address",
       "memory_key": "address.p2_line2_state",
@@ -335,6 +365,7 @@
     {
       "id": "p2_line2_street_number_name",
       "question": "What is your street Number and Name?",
+      "label": "Current Mailing Address. Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2_street_number_name",
@@ -345,7 +376,8 @@
     },
     {
       "id": "p2_line2_zip_code",
-      "question": "What is your zIP Code?",
+      "question": "What is your ZIP Code?",
+      "label": "Current Mailing Address. Enter ZIP",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p2_line2_zip_code",
@@ -357,6 +389,7 @@
     {
       "id": "p2_line3_country_citizenship",
       "question": "What is your country of Citizenship or Nationality?",
+      "label": "Other Information. Enter Country of",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p2_line3_country_citizenship",
@@ -367,6 +400,7 @@
     {
       "id": "p2_line4_date_of_birth",
       "question": "What is your date of Birth?",
+      "label": "Other Information. Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p2_line4_date_of_birth",
@@ -377,6 +411,7 @@
     {
       "id": "p2_line5_alien_number_2",
       "question": "What is your family Member Enter Alien Registration Number?",
+      "label": "Family Member Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p2_line5_alien_number_2",
@@ -389,6 +424,7 @@
     {
       "id": "p2_line7_daytime_phone_number",
       "question": "What is your daytime Telephone Number?",
+      "label": "Other Information. Enter Daytime Telephone",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p2_line7_daytime_phone_number",
@@ -400,6 +436,7 @@
     {
       "id": "p3_line3a_family_name",
       "question": "What is your family Member Enter Family Name (Last Name)?",
+      "label": "Family Member Enter Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line3a_family_name",
@@ -411,6 +448,7 @@
     {
       "id": "p3_line3b_given_name",
       "question": "What is your family Member Enter Given Name (First Name)?",
+      "label": "Family Member Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line3b_given_name",
@@ -422,6 +460,7 @@
     {
       "id": "p3_line3c_middle_name",
       "question": "What is your family Member Enter Middle Name?",
+      "label": "Family Member Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line3c_middle_name",
@@ -433,6 +472,7 @@
     {
       "id": "p3_line4_relationship",
       "question": "What is your family Member Enter Relationship to Principal Immigrant?",
+      "label": "Family Member Enter Relationship to",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line4_relationship",
@@ -444,6 +484,7 @@
     {
       "id": "p3_line7_acct_identifier",
       "question": "What is your family Member Enter U S C I S Online Account Number?",
+      "label": "Family Member Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line7_acct_identifier",
@@ -455,6 +496,7 @@
     {
       "id": "p3_line_date_of_birth",
       "question": "What is your family Member Enter Date of Birth?",
+      "label": "Family Member Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p3_line_date_of_birth",
@@ -464,7 +506,8 @@
     },
     {
       "id": "pt2_line6_u_s_c_i_s_online_acct_number",
-      "question": "What is your u S C I S Online Account Number?",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "Other Information. Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.pt2_line6_u_s_c_i_s_online_acct_number",
@@ -476,6 +519,7 @@
     {
       "id": "p2_line5_alien_number_3",
       "question": "What is your family Number Enter Alien Registration Number?",
+      "label": "Family Number Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p2_line5_alien_number_3",
@@ -488,6 +532,7 @@
     {
       "id": "p3_line10_date_of_birth",
       "question": "What is your family Number Enter Date of Birth?",
+      "label": "Family Number Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p3_line10_date_of_birth",
@@ -498,6 +543,7 @@
     {
       "id": "p3_line11_alien_number",
       "question": "What is your family Number Enter Alien Registration Number?",
+      "label": "Family Number Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line11_alien_number",
@@ -510,6 +556,7 @@
     {
       "id": "p3_line12_acct_identifier",
       "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "label": "Family Number Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line12_acct_identifier",
@@ -521,6 +568,7 @@
     {
       "id": "p3_line13a_family_name",
       "question": "What is your family Number Enter Family Name (Last Name)?",
+      "label": "Family Number Enter Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line13a_family_name",
@@ -532,6 +580,7 @@
     {
       "id": "p3_line13b_given_name",
       "question": "What is your family Number Enter Given Name (First Name)?",
+      "label": "Family Number Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line13b_given_name",
@@ -543,6 +592,7 @@
     {
       "id": "p3_line13c_middle_name",
       "question": "What is your family Number Enter Middle Name?",
+      "label": "Family Number Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line13c_middle_name",
@@ -554,6 +604,7 @@
     {
       "id": "p3_line14_relationship",
       "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "label": "Family Number Enter Relationship to",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line14_relationship",
@@ -565,6 +616,7 @@
     {
       "id": "p3_line15_date_of_birth",
       "question": "What is your family Number Enter Date of Birth?",
+      "label": "Family Number Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p3_line15_date_of_birth",
@@ -575,6 +627,7 @@
     {
       "id": "p3_line17_acct_identifier",
       "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "label": "Family Number Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line17_acct_identifier",
@@ -586,6 +639,7 @@
     {
       "id": "p3_line18a_family_name",
       "question": "What is your family Number Enter Family Name (Last Name)?",
+      "label": "Family Number Enter Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line18a_family_name",
@@ -597,6 +651,7 @@
     {
       "id": "p3_line18b_given_name",
       "question": "What is your family Number Enter Given Name (First Name)?",
+      "label": "Family Number Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line18b_given_name",
@@ -608,6 +663,7 @@
     {
       "id": "p3_line18c_middle_name",
       "question": "What is your family Number Enter Middle Name?",
+      "label": "Family Number Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line18c_middle_name",
@@ -619,6 +675,7 @@
     {
       "id": "p3_line19_relationship",
       "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "label": "Family Number Enter Relationship to",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line19_relationship",
@@ -630,6 +687,7 @@
     {
       "id": "p3_line20_date_of_birth",
       "question": "What is your family Number Enter Date of Birth?",
+      "label": "Family Number Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p3_line20_date_of_birth",
@@ -640,6 +698,7 @@
     {
       "id": "p3_line21_alien_number",
       "question": "What is your family Number Enter Alien Registration Number?",
+      "label": "Family Number Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line21_alien_number",
@@ -652,6 +711,7 @@
     {
       "id": "p3_line22_acct_identifier",
       "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "label": "Family Number Enter U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.p3_line22_acct_identifier",
@@ -663,6 +723,7 @@
     {
       "id": "p3_line8a_family_name",
       "question": "What is your family Number Enter Family Name (Last Name)?",
+      "label": "Family Number Enter Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line8a_family_name",
@@ -674,6 +735,7 @@
     {
       "id": "p3_line8b_given_name",
       "question": "What is your family Number Enter Given Name (First Name)?",
+      "label": "Family Number Enter Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line8b_given_name",
@@ -685,6 +747,7 @@
     {
       "id": "p3_line8c_middle_name",
       "question": "What is your family Number Enter Middle Name?",
+      "label": "Family Number Enter Middle Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.p3_line8c_middle_name",
@@ -696,6 +759,7 @@
     {
       "id": "p3_line9_relationship",
       "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "label": "Family Number Enter Relationship to",
       "type": "text",
       "group": "other",
       "memory_key": "other.p3_line9_relationship",
@@ -707,6 +771,7 @@
     {
       "id": "override",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.override",
@@ -716,7 +781,8 @@
     },
     {
       "id": "p3_line28_total_numberof_immigrants",
-      "question": "What is your nOTE: Do not count any member of your household more than once?",
+      "question": "What is your NOTE: Do not count any member of your household more than once?",
+      "label": "NOTE: Do not count any",
       "type": "text",
       "group": "address",
       "memory_key": "address.p3_line28_total_numberof_immigrants",
@@ -727,6 +793,7 @@
     {
       "id": "p5_line3_married",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.p5_line3_married",
@@ -737,6 +804,7 @@
     {
       "id": "p5_line4_dependent_children",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.p5_line4_dependent_children",
@@ -747,6 +815,7 @@
     {
       "id": "p5_line5_other_dependents",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.p5_line5_other_dependents",
@@ -757,6 +826,7 @@
     {
       "id": "p5_line6_sponsors",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.p5_line6_sponsors",
@@ -767,6 +837,7 @@
     {
       "id": "p5_line7_same_residence",
       "question": "What is your persons NOT sponsored in this affidavit?",
+      "label": "Persons NOT sponsored in this",
       "type": "text",
       "group": "other",
       "memory_key": "other.p5_line7_same_residence",
@@ -777,6 +848,7 @@
     {
       "id": "p6_line2_total_income",
       "question": "What is your my current individual annual income is?",
+      "label": "My current individual annual income",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line2_total_income",
@@ -787,6 +859,7 @@
     {
       "id": "p6_line10_relationship",
       "question": "What is your person Enter Relationship?",
+      "label": "Person Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line10_relationship",
@@ -798,6 +871,7 @@
     {
       "id": "p6_line11_current_income",
       "question": "What is your person Enter Current Income?",
+      "label": "Person Enter Current Income",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line11_current_income",
@@ -808,6 +882,7 @@
     {
       "id": "p6_line12_name",
       "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "label": "Income you are using from",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line12_name",
@@ -819,6 +894,7 @@
     {
       "id": "p6_line13_relationship",
       "question": "What is your person Enter Relationship?",
+      "label": "Person Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line13_relationship",
@@ -830,6 +906,7 @@
     {
       "id": "p6_line14_current_income",
       "question": "What is your person Enter Current Income?",
+      "label": "Person Enter Current Income",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line14_current_income",
@@ -840,6 +917,7 @@
     {
       "id": "p6_line3_name",
       "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "label": "Income you are using from",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line3_name",
@@ -851,6 +929,7 @@
     {
       "id": "p6_line4_relationship",
       "question": "What is your person Enter Relationship?",
+      "label": "Person Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line4_relationship",
@@ -862,6 +941,7 @@
     {
       "id": "p6_line5_current_income",
       "question": "What is your person Enter Current Income?",
+      "label": "Person Enter Current Income",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line5_current_income",
@@ -872,6 +952,7 @@
     {
       "id": "p6_line6_name",
       "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "label": "Income you are using from",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line6_name",
@@ -883,6 +964,7 @@
     {
       "id": "p6_line7_relationship",
       "question": "What is your person Enter Relationship?",
+      "label": "Person Enter Relationship",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line7_relationship",
@@ -894,6 +976,7 @@
     {
       "id": "p6_line8_current_income",
       "question": "What is your person Enter Current Income?",
+      "label": "Person Enter Current Income",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line8_current_income",
@@ -904,6 +987,7 @@
     {
       "id": "p6_line9_name",
       "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "label": "Income you are using from",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_line9_name",
@@ -915,6 +999,7 @@
     {
       "id": "p6_line19a_tax_year",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19a_tax_year",
@@ -926,6 +1011,7 @@
     {
       "id": "p6_line19a_total_income",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19a_total_income",
@@ -936,6 +1022,7 @@
     {
       "id": "p6_line19b_tax_year",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19b_tax_year",
@@ -947,6 +1034,7 @@
     {
       "id": "p6_line19b_total_income",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19b_total_income",
@@ -957,6 +1045,7 @@
     {
       "id": "p6_line19c_tax_year",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19c_tax_year",
@@ -968,6 +1057,7 @@
     {
       "id": "p6_line19c_total_income",
       "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "label": "My total income as reported",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line19c_total_income",
@@ -978,6 +1068,7 @@
     {
       "id": "p7_line1_balanceof_accounts",
       "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "label": "If If your income, or",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line1_balanceof_accounts",
@@ -989,6 +1080,7 @@
     {
       "id": "p7_line2_real_estate",
       "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "label": "If If your income, or",
       "type": "state",
       "group": "address",
       "memory_key": "address.p7_line2_real_estate",
@@ -999,6 +1091,7 @@
     {
       "id": "p7_line3_stocks_bonds",
       "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "label": "If If your income, or",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line3_stocks_bonds",
@@ -1009,6 +1102,7 @@
     {
       "id": "p7_line5_total_assets_household_members",
       "question": "What is your assets of your household members?",
+      "label": "Assets of your household members.",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line5_total_assets_household_members",
@@ -1019,6 +1113,7 @@
     {
       "id": "p7_line6_balanceof_accounts",
       "question": "What is your assets of the Principal sponsored immigrant?",
+      "label": "Assets of the Principal sponsored",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line6_balanceof_accounts",
@@ -1030,6 +1125,7 @@
     {
       "id": "p7_line7_real_estate",
       "question": "What is your assets of the Principal sponsored immigrant?",
+      "label": "Assets of the Principal sponsored",
       "type": "state",
       "group": "address",
       "memory_key": "address.p7_line7_real_estate",
@@ -1040,6 +1136,7 @@
     {
       "id": "p7_line8_stocks_bonds",
       "question": "What is your assets of the Principal sponsored immigrant?",
+      "label": "Assets of the Principal sponsored",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line8_stocks_bonds",
@@ -1050,6 +1147,7 @@
     {
       "id": "p7_line7_email_address",
       "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "label": "Sponsor's Contract, Contact Information, Certification,",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p7_line7_email_address",
@@ -1061,6 +1159,7 @@
     {
       "id": "p8_line3_daytime_telephone_number",
       "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "label": "Sponsor's Contract, Contact Information, Certification,",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p8_line3_daytime_telephone_number",
@@ -1072,6 +1171,7 @@
     {
       "id": "p8_line4_mobile_telephone_number",
       "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "label": "Sponsor's Contract, Contact Information, Certification,",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p8_line4_mobile_telephone_number",
@@ -1083,6 +1183,7 @@
     {
       "id": "p9_language",
       "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Contact Information, Certification, and",
       "type": "text",
       "group": "other",
       "memory_key": "other.p9_language",
@@ -1093,6 +1194,7 @@
     {
       "id": "p11_line3a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line3a_page_number",
@@ -1104,6 +1206,7 @@
     {
       "id": "p11_line3b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line3b_part_number",
@@ -1115,6 +1218,7 @@
     {
       "id": "p11_line3c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line3c_item_number",
@@ -1126,6 +1230,7 @@
     {
       "id": "p11_line3d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line3d_additional_info",
@@ -1136,6 +1241,7 @@
     {
       "id": "p11_line4a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line4a_page_number",
@@ -1147,6 +1253,7 @@
     {
       "id": "p11_line4b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line4b_part_number",
@@ -1158,6 +1265,7 @@
     {
       "id": "p11_line4c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line4c_item_number",
@@ -1169,6 +1277,7 @@
     {
       "id": "p11_line4d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line4d_additional_info",
@@ -1179,6 +1288,7 @@
     {
       "id": "p11_line5a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line5a_page_number",
@@ -1190,6 +1300,7 @@
     {
       "id": "p11_line5b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line5b_part_number",
@@ -1201,6 +1312,7 @@
     {
       "id": "p11_line5c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line5c_item_number",
@@ -1212,6 +1324,7 @@
     {
       "id": "p11_line5d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line5d_additional_info",
@@ -1222,6 +1335,7 @@
     {
       "id": "p11_line6a_page_number",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line6a_page_number",
@@ -1233,6 +1347,7 @@
     {
       "id": "p11_line6b_part_number",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line6b_part_number",
@@ -1244,6 +1359,7 @@
     {
       "id": "p11_line6c_item_number",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line6c_item_number",
@@ -1255,6 +1371,7 @@
     {
       "id": "p11_line6d_additional_info",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_line6d_additional_info",
@@ -1265,6 +1382,7 @@
     {
       "id": "g28_check_box1",
       "question": "What is your to be completed by an attorney or accredited representative (?",
+      "label": "To be completed by an",
       "type": "choice",
       "group": "other",
       "memory_key": "other.g28_check_box1",
@@ -1281,7 +1399,8 @@
     },
     {
       "id": "p1_line1a_f_c_b",
-      "question": "What is your i am the petitioner?",
+      "question": "What is your I am the petitioner?",
+      "label": "I am the petitioner. I",
       "type": "choice",
       "group": "eligibility",
       "memory_key": "eligibility.p1_line1a_f_c_b",
@@ -1329,6 +1448,7 @@
     {
       "id": "p1_line3_checkbox",
       "question": "What is your is your current mailing address the same as your physical address? Select Yes?",
+      "label": "Is your current mailing address",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p1_line3_checkbox",
@@ -1351,7 +1471,8 @@
     },
     {
       "id": "p4_line11a_checkbox",
-      "question": "What is your i am a U.S. citizen?",
+      "question": "What is your I am a U.S. citizen?",
+      "label": "Immigration Status. Select I am",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line11a_checkbox",
@@ -1368,7 +1489,8 @@
     },
     {
       "id": "p4_line11b_checkbox",
-      "question": "What is your i am a U.S. national?",
+      "question": "What is your I am a U.S. national?",
+      "label": "Immigration Status. Select I am",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line11b_checkbox",
@@ -1385,7 +1507,8 @@
     },
     {
       "id": "p4_line11c_checkbox",
-      "question": "What is your i am a lawful permanent resident?",
+      "question": "What is your I am a lawful permanent resident?",
+      "label": "Immigration Status. Select I am",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line11c_checkbox",
@@ -1403,6 +1526,7 @@
     {
       "id": "p4_line14_checkboxes",
       "question": "What is your military Service?",
+      "label": "Military Service. I am currently",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line14_checkboxes",
@@ -1426,6 +1550,7 @@
     {
       "id": "p4_line2c_unit",
       "question": "What is your sponsor's Current Mailing Address?",
+      "label": "Sponsor's Current Mailing Address. Select",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line2c_unit",
@@ -1455,6 +1580,7 @@
     {
       "id": "p2_line2_unit",
       "question": "What is your apartment?",
+      "label": "Current Mailing Address. Select Apartment",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line2_unit",
@@ -1483,7 +1609,8 @@
     },
     {
       "id": "p3_line1_checkbox",
-      "question": "What is your i am sponsoring the principal immigrant named in Part Select Yes?",
+      "question": "What is your I am sponsoring the principal immigrant named in Part Select Yes?",
+      "label": "I am sponsoring the principal",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p3_line1_checkbox",
@@ -1506,7 +1633,8 @@
     },
     {
       "id": "p3_line2_sponsoring_family",
-      "question": "What is your i am sponsoring the following family members immigrating at the same time or within six?",
+      "question": "What is your I am sponsoring the following family members immigrating at the same time or within six?",
+      "label": "I am sponsoring the following",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p3_line2_sponsoring_family",
@@ -1529,7 +1657,8 @@
     },
     {
       "id": "p6_line1_checkbox",
-      "question": "What is your i am currently?",
+      "question": "What is your I am currently?",
+      "label": "I am currently. Select Employed",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p6_line1_checkbox",
@@ -1546,7 +1675,8 @@
     },
     {
       "id": "p6_line4_checkbox",
-      "question": "What is your i am currently?",
+      "question": "What is your I am currently?",
+      "label": "I am currently. Select Self-Employed",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p6_line4_checkbox",
@@ -1563,7 +1693,8 @@
     },
     {
       "id": "p6_line5_checkbox",
-      "question": "What is your i am currently?",
+      "question": "What is your I am currently?",
+      "label": "I am currently. Select Retired",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p6_line5_checkbox",
@@ -1580,7 +1711,8 @@
     },
     {
       "id": "p6_line6_checkbox",
-      "question": "What is your i am currently?",
+      "question": "What is your I am currently?",
+      "label": "I am currently. Select Unemployed",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p6_line6_checkbox",
@@ -1598,6 +1730,7 @@
     {
       "id": "p6_line16_completed_form",
       "question": "What is your the people listed in Item Numbers , - have completed Form I - 8 64 A. I am filing along?",
+      "label": "Remarks. Select The people listed",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line16_completed_form",
@@ -1615,6 +1748,7 @@
     {
       "id": "p6_line17_not_need_complete",
       "question": "What is your one or more of the people listed in Item Numbers - do not need to complete Form I - 8 64 A?",
+      "label": "One or more of the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line17_not_need_complete",
@@ -1632,6 +1766,7 @@
     {
       "id": "p6_line18a_checkbox",
       "question": "Have you filed a Federal income tax return for each of the three most recent tax years?",
+      "label": "Have you filed a Federal",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p6_line18a_checkbox",
@@ -1655,6 +1790,7 @@
     {
       "id": "p6_line17_i_was_not_req",
       "question": "What is your one or more of the people listed in Item Numbers , , , and Select I was not required to?",
+      "label": "One or more of the",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line17_i_was_not_req",
@@ -1672,6 +1808,7 @@
     {
       "id": "p6_line1_checkbox_2",
       "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "label": "Sponsor's Contract, Contact Information, Certification,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line1_checkbox_2",
@@ -1695,6 +1832,7 @@
     {
       "id": "p8_line2_checkbox",
       "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "label": "Sponsor's Contract, Contact Information, Certification,",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p8_line2_checkbox",

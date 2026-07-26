@@ -318,7 +318,7 @@ async function loadSchema(formId){
       </div>
       <div class="fields">${fs.map(f => `
         <div class="f" id="f-${f.id}">
-          <div class="k"><span>${pretty(f.id)}</span>${
+          <div class="k"><span>${f.label || pretty(f.id)}</span>${
             f.sensitive ? '<span class="tag">sensitive</span>' : ''}</div>
           <div class="v" id="v-${f.id}"></div>
         </div>`).join('')}</div>
@@ -449,6 +449,12 @@ async function hydrate(id){
   if (d.form_id && schema && d.form_id !== schema.form_id){
     await loadSchema(d.form_id);
     resetGrid();
+    // The previous form's PDF is not this form's PDF.
+    el('dl').style.display = 'none';
+    el('p-latency').textContent = '— ms';
+    seen = {}; turns = 0;
+    el('convo').innerHTML = `<div class="empty"><div class="big">Switched to ${d.form_id}</div>
+      Answers already given have been carried over.</div>`;
   }
   // Draw a conversation turn the first time each field resolves.
   Object.entries(d.values).forEach(([k, v]) => {

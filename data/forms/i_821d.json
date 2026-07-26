@@ -9,6 +9,7 @@
     {
       "id": "atty_license_num",
       "question": "What is your to Be Completed by an Attorney or Accredited Representative?",
+      "label": "To Be Completed by an",
       "type": "state",
       "group": "address",
       "memory_key": "address.atty_license_num",
@@ -20,6 +21,7 @@
     {
       "id": "p1_line2_date",
       "question": "What is your for this Renewal request, my most recent period of Deferred Action for Childhood Arrivals?",
+      "label": "For this Renewal request, my",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_line2_date",
@@ -30,6 +32,7 @@
     {
       "id": "p1_line3a_name",
       "question": "What is your family Name (Last Name)?",
+      "label": "Full Legal Name. Enter Family",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line3a_name",
@@ -40,6 +43,7 @@
     {
       "id": "p1_line3b_name",
       "question": "What is your given Name (First Name)?",
+      "label": "Full Legal Name. Enter Given",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line3b_name",
@@ -50,6 +54,7 @@
     {
       "id": "p1_line3c_name",
       "question": "What is your middle Name?",
+      "label": "Full Legal Name. Enter Middle",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line3c_name",
@@ -59,7 +64,8 @@
     },
     {
       "id": "p1_line4a_name",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Enter In",
       "type": "text",
       "group": "address",
       "memory_key": "address.p1_line4a_name",
@@ -70,7 +76,8 @@
     },
     {
       "id": "p1_line4b_street",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Enter Street",
       "type": "text",
       "group": "address",
       "memory_key": "address.p1_line4b_street",
@@ -81,7 +88,8 @@
     },
     {
       "id": "p1_line4c_number",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Enter Apartment,",
       "type": "text",
       "group": "address",
       "memory_key": "address.p1_line4c_number",
@@ -92,7 +100,8 @@
     },
     {
       "id": "p1_line4d_city",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Enter City",
       "type": "text",
       "group": "address",
       "memory_key": "address.p1_line4d_city",
@@ -103,7 +112,8 @@
     },
     {
       "id": "p1_line4e_state",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Select State",
       "type": "state",
       "group": "address",
       "memory_key": "address.p1_line4e_state",
@@ -113,7 +123,8 @@
     },
     {
       "id": "p1_line4f_zip_code",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Enter Zip",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p1_line4f_zip_code",
@@ -125,6 +136,7 @@
     {
       "id": "p1_line7_a_number",
       "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Other Information. Enter Alien Registration",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.p1_line7_a_number",
@@ -137,6 +149,7 @@
     {
       "id": "p1_line11a_city_birth",
       "question": "What is your city, Town or Village of Birth?",
+      "label": "Other Information. Enter City, Town",
       "type": "text",
       "group": "address",
       "memory_key": "address.p1_line11a_city_birth",
@@ -147,6 +160,7 @@
     {
       "id": "p1_line11b_country_birth",
       "question": "What is your country of Birth?",
+      "label": "Other Information. Enter Country of",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line11b_country_birth",
@@ -157,6 +171,7 @@
     {
       "id": "p1_line12_country_res",
       "question": "What is your current Country of Residence?",
+      "label": "Other Information. Enter Current Country",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line12_country_res",
@@ -167,6 +182,7 @@
     {
       "id": "p1_line13_country_citz",
       "question": "What is your country of Citizenship or Nationality?",
+      "label": "Other Information. Enter Country of",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line13_country_citz",
@@ -177,6 +193,7 @@
     {
       "id": "p1_line15a_name",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if applicable.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line15a_name",
@@ -187,6 +204,7 @@
     {
       "id": "p1_line15b_name",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if applicable.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line15b_name",
@@ -197,6 +215,7 @@
     {
       "id": "p1_line15c_name",
       "question": "What is your other Names Used?",
+      "label": "Other Names Used, if applicable.",
       "type": "text",
       "group": "name",
       "memory_key": "name.p1_line15c_name",
@@ -207,6 +226,7 @@
     {
       "id": "p1_line18_height_ft",
       "question": "What is your height?",
+      "label": "Processing Information. Height. Select the",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line18_height_ft",
@@ -217,6 +237,7 @@
     {
       "id": "p1_line18_height_in",
       "question": "What is your height?",
+      "label": "Processing Information. Height. Select the",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line18_height_in",
@@ -227,6 +248,7 @@
     {
       "id": "p1_line19_weight",
       "question": "What is your weight in Pounds?",
+      "label": "Processing Information. Weight in Pounds.",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line19_weight",
@@ -238,6 +260,7 @@
     {
       "id": "p1_line19_weight_2",
       "question": "What is your weight in Pounds?",
+      "label": "Processing Information. Weight in Pounds.",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line19_weight_2",
@@ -249,6 +272,7 @@
     {
       "id": "p1_line19_weight_3",
       "question": "What is your weight in Pounds?",
+      "label": "Processing Information. Weight in Pounds.",
       "type": "text",
       "group": "other",
       "memory_key": "other.p1_line19_weight_3",
@@ -259,7 +283,8 @@
     },
     {
       "id": "p1_line8_s_s_n",
-      "question": "What is your u.S. Social Security Number?",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "Other Information. Enter U.S. Social",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.p1_line8_s_s_n",
@@ -272,6 +297,7 @@
     {
       "id": "p1_line9_d_o_b",
       "question": "What is your date of Birth?",
+      "label": "Other Information. Enter Date of",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p1_line9_d_o_b",
@@ -282,6 +308,7 @@
     {
       "id": "p2_line10_border_card",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "text",
       "group": "other",
       "memory_key": "other.p2_line10_border_card",
@@ -293,6 +320,7 @@
     {
       "id": "p2_line2a_date_from",
       "question": "What is your residence and Travel Information (continued). Present Address?",
+      "label": "Residence and Travel Information. Present",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line2a_date_from",
@@ -303,6 +331,7 @@
     {
       "id": "p2_line2b_street",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2b_street",
@@ -314,6 +343,7 @@
     {
       "id": "p2_line2c_number",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "text",
       "group": "other",
       "memory_key": "other.p2_line2c_number",
@@ -325,6 +355,7 @@
     {
       "id": "p2_line2d_city",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line2d_city",
@@ -336,6 +367,7 @@
     {
       "id": "p2_line2e_state",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "state",
       "group": "address",
       "memory_key": "address.p2_line2e_state",
@@ -346,6 +378,7 @@
     {
       "id": "p2_line2f_zip_code",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p2_line2f_zip_code",
@@ -357,6 +390,7 @@
     {
       "id": "p2_line3a_date_from",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line3a_date_from",
@@ -367,6 +401,7 @@
     {
       "id": "p2_line3a_date_to",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line3a_date_to",
@@ -377,6 +412,7 @@
     {
       "id": "p2_line3b_street",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line3b_street",
@@ -388,6 +424,7 @@
     {
       "id": "p2_line3c_number",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "other",
       "memory_key": "other.p2_line3c_number",
@@ -399,6 +436,7 @@
     {
       "id": "p2_line3d_city",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line3d_city",
@@ -410,6 +448,7 @@
     {
       "id": "p2_line3e_state",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "state",
       "group": "address",
       "memory_key": "address.p2_line3e_state",
@@ -420,6 +459,7 @@
     {
       "id": "p2_line4a_date_from",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line4a_date_from",
@@ -430,6 +470,7 @@
     {
       "id": "p2_line4a_date_to",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line4a_date_to",
@@ -440,6 +481,7 @@
     {
       "id": "p2_line4b_street",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line4b_street",
@@ -451,6 +493,7 @@
     {
       "id": "p2_line4c_number",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "other",
       "memory_key": "other.p2_line4c_number",
@@ -462,6 +505,7 @@
     {
       "id": "p2_line4d_city",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line4d_city",
@@ -473,6 +517,7 @@
     {
       "id": "p2_line4e_state",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "state",
       "group": "address",
       "memory_key": "address.p2_line4e_state",
@@ -483,6 +528,7 @@
     {
       "id": "p2_line4f_zip_code",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p2_line4f_zip_code",
@@ -494,6 +540,7 @@
     {
       "id": "p2_line5a_date_from",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line5a_date_from",
@@ -504,6 +551,7 @@
     {
       "id": "p2_line5a_date_to",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "date",
       "group": "other",
       "memory_key": "other.p2_line5a_date_to",
@@ -514,6 +562,7 @@
     {
       "id": "p2_line5b_street",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line5b_street",
@@ -525,6 +574,7 @@
     {
       "id": "p2_line5c_number",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "other",
       "memory_key": "other.p2_line5c_number",
@@ -536,6 +586,7 @@
     {
       "id": "p2_line5d_city",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "text",
       "group": "address",
       "memory_key": "address.p2_line5d_city",
@@ -547,6 +598,7 @@
     {
       "id": "p2_line5e_state",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "state",
       "group": "address",
       "memory_key": "address.p2_line5e_state",
@@ -557,6 +609,7 @@
     {
       "id": "p2_line5f_zip_code",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p2_line5f_zip_code",
@@ -568,6 +621,7 @@
     {
       "id": "p2_line6a_dep_date",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "date",
       "group": "address",
       "memory_key": "address.p2_line6a_dep_date",
@@ -578,6 +632,7 @@
     {
       "id": "p2_line6b_ret_date",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line6b_ret_date",
@@ -588,6 +643,7 @@
     {
       "id": "p2_line6c_reason",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line6c_reason",
@@ -599,6 +655,7 @@
     {
       "id": "p2_line7a_dept_date",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line7a_dept_date",
@@ -609,6 +666,7 @@
     {
       "id": "p2_line7b_ret_date",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line7b_ret_date",
@@ -619,6 +677,7 @@
     {
       "id": "p2_line7c_reason",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line7c_reason",
@@ -630,6 +689,7 @@
     {
       "id": "p2_line9a_country",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line9a_country",
@@ -641,6 +701,7 @@
     {
       "id": "p2_line9b_passport",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line9b_passport",
@@ -653,6 +714,7 @@
     {
       "id": "p2_line9c_exp_date",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p2_line9c_exp_date",
@@ -663,6 +725,7 @@
     {
       "id": "pt2_line3f_zip_code",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "zip",
       "group": "address",
       "memory_key": "address.pt2_line3f_zip_code",
@@ -674,6 +737,7 @@
     {
       "id": "p3_line2_date",
       "question": "What is your date of Initial Entry into the United States (on or about) as 2 digit month, 2 digit day?",
+      "label": "Date of Initial Entry into",
       "type": "date",
       "group": "address",
       "memory_key": "address.p3_line2_date",
@@ -684,6 +748,7 @@
     {
       "id": "p3_line3_place",
       "question": "What is your place of Initial Entry into the United States?",
+      "label": "Place of Initial Entry into",
       "type": "state",
       "group": "address",
       "memory_key": "address.p3_line3_place",
@@ -695,6 +760,7 @@
     {
       "id": "p3_line4_imm_status",
       "question": "What is your immigration Status on June 15, 2012 from the drop down list?",
+      "label": "Immigration Status on June 15,",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line4_imm_status",
@@ -705,6 +771,7 @@
     {
       "id": "p3_line6_education",
       "question": "What is your indicate how you meet the education guideline certificate or equivalent state-authorized?",
+      "label": "Education Information. Indicate how you",
       "type": "state",
       "group": "address",
       "memory_key": "address.p3_line6_education",
@@ -716,6 +783,7 @@
     {
       "id": "p3_line7_school",
       "question": "What is your name, City, and State of School Currently Attending or Where Education Received?",
+      "label": "Education Information. Enter Name, City,",
       "type": "state",
       "group": "address",
       "memory_key": "address.p3_line7_school",
@@ -727,6 +795,7 @@
     {
       "id": "p3_line8_grad_date",
       "question": "What is your date of Graduation or, if currently in school, date of last attendance?",
+      "label": "Education Information. Enter Date of",
       "type": "date",
       "group": "address",
       "memory_key": "address.p3_line8_grad_date",
@@ -737,6 +806,7 @@
     {
       "id": "p5_line1b_language",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "state",
       "group": "address",
       "memory_key": "address.p5_line1b_language",
@@ -748,6 +818,7 @@
     {
       "id": "p5_line2b_date",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "date",
       "group": "address",
       "memory_key": "address.p5_line2b_date",
@@ -758,6 +829,7 @@
     {
       "id": "p5_line3_day_phone",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "phone",
       "group": "address",
       "memory_key": "address.p5_line3_day_phone",
@@ -769,6 +841,7 @@
     {
       "id": "p5_line4_mobile_phone",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "phone",
       "group": "address",
       "memory_key": "address.p5_line4_mobile_phone",
@@ -780,6 +853,7 @@
     {
       "id": "p5_line5_email",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "email",
       "group": "address",
       "memory_key": "address.p5_line5_email",
@@ -790,6 +864,7 @@
     {
       "id": "p6_line1a_name",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p6_line1a_name",
@@ -800,6 +875,7 @@
     {
       "id": "p6_line1b_name",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p6_line1b_name",
@@ -810,6 +886,7 @@
     {
       "id": "p6_line2_organization",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p6_line2_organization",
@@ -821,6 +898,7 @@
     {
       "id": "p6_line3a_street",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3a_street",
@@ -832,6 +910,7 @@
     {
       "id": "p6_line3b_number",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3b_number",
@@ -843,6 +922,7 @@
     {
       "id": "p6_line3c_city",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3c_city",
@@ -854,6 +934,7 @@
     {
       "id": "p6_line3d_state",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "state",
       "group": "address",
       "memory_key": "address.p6_line3d_state",
@@ -864,6 +945,7 @@
     {
       "id": "p6_line3e_zip_code",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p6_line3e_zip_code",
@@ -875,6 +957,7 @@
     {
       "id": "p6_line3f_province",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3f_province",
@@ -886,6 +969,7 @@
     {
       "id": "p6_line3g_postal_code",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3g_postal_code",
@@ -897,6 +981,7 @@
     {
       "id": "p6_line3h_country",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p6_line3h_country",
@@ -907,6 +992,7 @@
     {
       "id": "p6_line6b_date",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "date",
       "group": "other",
       "memory_key": "other.p6_line6b_date",
@@ -917,6 +1003,7 @@
     {
       "id": "p6_language",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "text",
       "group": "other",
       "memory_key": "other.p6_language",
@@ -928,6 +1015,7 @@
     {
       "id": "p6_line4_day_phone",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p6_line4_day_phone",
@@ -939,6 +1027,7 @@
     {
       "id": "p6_line5_email",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p6_line5_email",
@@ -949,6 +1038,7 @@
     {
       "id": "p7_line1a_name",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p7_line1a_name",
@@ -959,6 +1049,7 @@
     {
       "id": "p7_line1b_name",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p7_line1b_name",
@@ -969,6 +1060,7 @@
     {
       "id": "p7_line2_organization",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "name",
       "memory_key": "name.p7_line2_organization",
@@ -980,6 +1072,7 @@
     {
       "id": "p7_line3a_street",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3a_street",
@@ -991,6 +1084,7 @@
     {
       "id": "p7_line3b_number",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3b_number",
@@ -1002,6 +1096,7 @@
     {
       "id": "p7_line3c_city",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3c_city",
@@ -1013,6 +1108,7 @@
     {
       "id": "p7_line3d_state",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "state",
       "group": "address",
       "memory_key": "address.p7_line3d_state",
@@ -1023,6 +1119,7 @@
     {
       "id": "p7_line3e_zip_code",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "zip",
       "group": "address",
       "memory_key": "address.p7_line3e_zip_code",
@@ -1034,6 +1131,7 @@
     {
       "id": "p7_line3f_province",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3f_province",
@@ -1045,6 +1143,7 @@
     {
       "id": "p7_line3g_postal_code",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3g_postal_code",
@@ -1056,6 +1155,7 @@
     {
       "id": "p7_line3h_country",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "text",
       "group": "address",
       "memory_key": "address.p7_line3h_country",
@@ -1066,6 +1166,7 @@
     {
       "id": "p7_line4_day_phone",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p7_line4_day_phone",
@@ -1077,6 +1178,7 @@
     {
       "id": "p7_line5_mobile_phone",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.p7_line5_mobile_phone",
@@ -1088,6 +1190,7 @@
     {
       "id": "p7_line6_email",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.p7_line6_email",
@@ -1098,6 +1201,7 @@
     {
       "id": "p7_line7b_date",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "date",
       "group": "other",
       "memory_key": "other.p7_line7b_date",
@@ -1108,6 +1212,7 @@
     {
       "id": "p8_line3a_page",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3a_page",
@@ -1119,6 +1224,7 @@
     {
       "id": "p8_line3b_part",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3b_part",
@@ -1130,6 +1236,7 @@
     {
       "id": "p8_line3c_item",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3c_item",
@@ -1141,6 +1248,7 @@
     {
       "id": "p8_line3d_narrative",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line3d_narrative",
@@ -1151,6 +1259,7 @@
     {
       "id": "p8_line4a_page",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4a_page",
@@ -1162,6 +1271,7 @@
     {
       "id": "p8_line4b_part",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4b_part",
@@ -1173,6 +1283,7 @@
     {
       "id": "p8_line4c_item",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4c_item",
@@ -1184,6 +1295,7 @@
     {
       "id": "p8_line4d_narrative",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line4d_narrative",
@@ -1194,6 +1306,7 @@
     {
       "id": "p8_line5a_page",
       "question": "What is your page Number?",
+      "label": "Page Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5a_page",
@@ -1205,6 +1318,7 @@
     {
       "id": "p8_line5b_part",
       "question": "What is your part Number?",
+      "label": "Part Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5b_part",
@@ -1216,6 +1330,7 @@
     {
       "id": "p8_line5c_item",
       "question": "What is your item Number?",
+      "label": "Item Number",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5c_item",
@@ -1227,6 +1342,7 @@
     {
       "id": "p8_line5d_narrative",
       "question": "What is your additional Information?",
+      "label": "Additional Information",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line5d_narrative",
@@ -1237,6 +1353,7 @@
     {
       "id": "g28_attached",
       "question": "What is your to Be Completed by an Attorney or Accredited Representative?",
+      "label": "To Be Completed by an",
       "type": "choice",
       "group": "other",
       "memory_key": "other.g28_attached",
@@ -1254,6 +1371,7 @@
     {
       "id": "p1_line1_checkbox",
       "question": "What is your initial Request - Consideration of Deferred Action for Childhood Arrivals?",
+      "label": "Initial Request - Consideration of",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_line1_checkbox",
@@ -1271,6 +1389,7 @@
     {
       "id": "p1_line2_checkbox",
       "question": "What is your renewal Request - Consideration of Deferred Action for Childhood Arrivals?",
+      "label": "Renewal Request - Consideration of",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_line2_checkbox",
@@ -1287,7 +1406,8 @@
     },
     {
       "id": "p1_line4c_unit",
-      "question": "What is your u.S. Mailing Address?",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "U.S. Mailing Address. Select Floor",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p1_line4c_unit",
@@ -1317,6 +1437,7 @@
     {
       "id": "p1_line5_checkbox",
       "question": "What is your are you NOW or have you EVER been in removal proceedings, or do you have a removal order?",
+      "label": "Removal Proceedings Information. Are you",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p1_line5_checkbox",
@@ -1339,7 +1460,8 @@
     },
     {
       "id": "part1_c_b",
-      "question": "What is your i am in immigration detention?",
+      "question": "What is your I am in immigration detention?",
+      "label": "I am in immigration detention.",
       "type": "choice",
       "group": "other",
       "memory_key": "other.part1_c_b",
@@ -1363,6 +1485,7 @@
     {
       "id": "p1_line10_gender",
       "question": "What is your sex?",
+      "label": "Other Information. Sex. Select Male",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line10_gender",
@@ -1386,6 +1509,7 @@
     {
       "id": "p1_line14_marital_status",
       "question": "What is your marital Status?",
+      "label": "Other Information. Marital Status. Select",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_line14_marital_status",
@@ -1421,6 +1545,7 @@
     {
       "id": "p1_line16_checkbox",
       "question": "What is your ethnicity?",
+      "label": "Processing Information. Ethnicity. Select Not",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p1_line16_checkbox",
@@ -1444,6 +1569,7 @@
     {
       "id": "p1_line17_race_am_indian",
       "question": "What is your race?",
+      "label": "Processing Information. Race. Select American",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line17_race_am_indian",
@@ -1461,6 +1587,7 @@
     {
       "id": "p1_line17_race_asian",
       "question": "What is your race?",
+      "label": "Processing Information. Race. Select Asian",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line17_race_asian",
@@ -1478,6 +1605,7 @@
     {
       "id": "p1_line17_race_black",
       "question": "What is your race?",
+      "label": "Processing Information. Race. Select Black",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line17_race_black",
@@ -1495,6 +1623,7 @@
     {
       "id": "p1_line17_race_native_haw",
       "question": "What is your race?",
+      "label": "Processing Information. Race. Select Native",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line17_race_native_haw",
@@ -1512,6 +1641,7 @@
     {
       "id": "p1_line17_race_white",
       "question": "What is your race?",
+      "label": "Processing Information. Race. Select White",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line17_race_white",
@@ -1529,6 +1659,7 @@
     {
       "id": "p1_line20_checkbox",
       "question": "What is your eye Color?",
+      "label": "Processing Information. Eye Color. Select",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line20_checkbox",
@@ -1594,6 +1725,7 @@
     {
       "id": "p1_line21_checkbox",
       "question": "What is your hair Color?",
+      "label": "Processing Information. Hair Color. Select",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p1_line21_checkbox",
@@ -1659,6 +1791,7 @@
     {
       "id": "p2_line1_checkbox",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. I",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p2_line1_checkbox",
@@ -1682,6 +1815,7 @@
     {
       "id": "p2_line2c_unit",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Present",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line2c_unit",
@@ -1711,6 +1845,7 @@
     {
       "id": "p2_line3c_unit",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line3c_unit",
@@ -1740,6 +1875,7 @@
     {
       "id": "p2_line4c_unit",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line4c_unit",
@@ -1769,6 +1905,7 @@
     {
       "id": "p2_line5c_unit",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Address",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line5c_unit",
@@ -1798,6 +1935,7 @@
     {
       "id": "p2_line8_checkbox",
       "question": "What is your residence and Travel Information?",
+      "label": "Residence and Travel Information. Travel",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p2_line8_checkbox",
@@ -1820,7 +1958,8 @@
     },
     {
       "id": "p3_line1_checkbox",
-      "question": "What is your i initially arrived and established residence in the U.S. prior to 16 years of age?",
+      "question": "What is your I initially arrived and established residence in the U.S. prior to 16 years of age?",
+      "label": "I initially arrived and established",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p3_line1_checkbox",
@@ -1844,6 +1983,7 @@
     {
       "id": "p3_line5a_i94",
       "question": "What is your were you EVER issued an Arrival-Departure Record? Select Yes?",
+      "label": "Were you EVER issued an",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line5a_i94",
@@ -1867,6 +2007,7 @@
     {
       "id": "p3_line9_military",
       "question": "What is your were you a member of the U.S. Armed Forces or U.S. Coast Guard? Select Yes?",
+      "label": "Military Service Information. Were you",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p3_line9_military",
@@ -1890,6 +2031,7 @@
     {
       "id": "p4_line1_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line1_checkbox",
@@ -1913,6 +2055,7 @@
     {
       "id": "p4_line2_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line2_checkbox",
@@ -1936,6 +2079,7 @@
     {
       "id": "p4_line3_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_line3_checkbox",
@@ -1959,6 +2103,7 @@
     {
       "id": "p4_line4_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_line4_checkbox",
@@ -1982,6 +2127,7 @@
     {
       "id": "p4_line5a_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line5a_checkbox",
@@ -2005,6 +2151,7 @@
     {
       "id": "p4_line5b_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line5b_checkbox",
@@ -2028,6 +2175,7 @@
     {
       "id": "p4_line5c_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line5c_checkbox",
@@ -2051,6 +2199,7 @@
     {
       "id": "p4_line5d_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line5d_checkbox",
@@ -2074,6 +2223,7 @@
     {
       "id": "p4_line6_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p4_line6_checkbox",
@@ -2097,6 +2247,7 @@
     {
       "id": "p4_line7_checkbox",
       "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Criminal, National Security, and Public",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_line7_checkbox",
@@ -2120,6 +2271,7 @@
     {
       "id": "p5_line1a_1b_checkbox",
       "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1a_1b_checkbox",
@@ -2143,6 +2295,7 @@
     {
       "id": "p6_line3b_unit",
       "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Contact Information, Certification, and Signature",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line3b_unit",
@@ -2172,6 +2325,7 @@
     {
       "id": "p7_line3b_unit",
       "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Contact Information, Declaration, and Signature",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p7_line3b_unit",
