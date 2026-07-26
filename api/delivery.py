@@ -87,19 +87,36 @@ def build_packet(
 def build_pipeline(to_email: str, subject: str, body: str, name: str) -> dict[str, Any]:
     """The declarative pipeline RocketRide runs to deliver one packet.
 
-    Config, not code -- a second delivery channel is another node here rather
-    than another branch in Python.
+    Config, not code -- a second delivery channel is another component here
+    rather than another branch in Python.
+
+    Shape per RocketRide's pipeline reference: components carry `id`,
+    `provider` and `config`, and are wired by `input` entries naming a `lane`
+    and the `from` component. `source` is the id of the entry point.
     """
+    # tool_gmail declares no lanes: it is a tool an agent calls, not a pipeline
+    # node. So the shape is webhook(questions) -> agent(+gmail) -> response.
+    instruction = (
+        f"Send an email to {to_email} with the subject {subject!r} and exactly "
+        f"this body, unchanged:\n\n{body}"
+    )
     return {
         "name": f"zuzu-delivery-{name}",
-        "source": {"type": "trigger", "data": {"to": to_email, "subject": subject, "body": body}},
-        "nodes": [
+        "source": "in",
+        "components": [
+            {"id": "in", "provider": "webhook", "config": {}},
             {
-                "id": "send",
-                "service": "tool_gmail",
-                "action": "send",
-                "data": {"to": to_email, "subject": subject, "body": body},
-            }
+                "id": "agent",
+                "provider": "agent_rocketride",
+                "config": {"tools": ["tool_gmail"], "prompt": instruction},
+                "input": [{"lane": "questions", "from": "in"}],
+            },
+            {
+                "id": "out",
+                "provider": "response",
+                "config": {"laneName": "answers"},
+                "input": [{"lane": "answers", "from": "agent"}],
+            },
         ],
     }
 
@@ -139,8 +156,18 @@ async def deliver_packet(
         return {"delivered": False, "reason": f"rocketride unreachable: {type(exc).__name__}"}
 
     if payload.get("status") == "OK":
-        logger.info("delivered %s packet via rocketride", form_id)
-        return {"delivered": True, "via": "rocketride/tool_gmail", "subject": subject}
+        token = (payload.get("data") or {}).get("token")
+        logger.info("rocketride accepted %s delivery pipeline", form_id)
+        # The pipeline was accepted and a run token issued. Whether Gmail
+        # actually relayed depends on the Google credentials configured on the
+        # RocketRide account, which this service cannot see -- so report what is
+        # actually known rather than claiming the mail landed.
+        return {
+            "delivered": True,
+            "via": "rocketride/tool_gmail",
+            "pipeline_token": token,
+            "subject": subject,
+        }
 
     reason = json.dumps(payload.get("error", payload))[:200]
     logger.warning("rocketride refused the pipeline: %s", reason)
