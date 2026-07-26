@@ -9,6 +9,7 @@ SESSION_STARTED = "session_started"
 FIELD_SAVED = "field_saved"
 FORM_READY = "form_ready"
 SESSION_COMPLETED = "session_completed"
+FORM_CHANGED = "form_changed"
 
 sensitive_fields: set[str] = {
     "ssn",

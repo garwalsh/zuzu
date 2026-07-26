@@ -23,6 +23,7 @@ from fastapi.responses import FileResponse
 
 from api.contract import (
     FIELD_SAVED,
+    FORM_CHANGED,
     FORM_READY,
     SESSION_COMPLETED,
     SESSION_STARTED,
@@ -42,10 +43,11 @@ from api.contract import (
 )
 from api.delivery import deliver_packet
 from api.event_bus import get_event_bus
+from api.form_finder import identify
 from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
-from api.memory import Tier, get_memory, summarize
+from api.memory import Tier, _user_key, get_memory, summarize
 from api.pdf_engine import fill_i765, missing_required
 from api.retrieval import applicable_items, fetch_document_checklist
 from api.security import require_shared_secret, verify_secret
@@ -447,9 +449,11 @@ async def demo_run(
     persona: str = Query(default="maria"),
     _: None = Depends(require_shared_secret),
 ) -> dict[str, Any]:
-    """Drive a full scripted call through this same contract.
+    """Drive a full application through this same contract.
 
-    The Demo Mode fallback: no microphone, no widget, no network egress.
+    Runs the real interview loop against a sample applicant, so the product can
+    be shown end to end without a microphone or a working widget -- and so the
+    contract itself stays exercised in CI.
     """
     personas = json.loads(PERSONA_PATH.read_text(encoding="utf-8"))["personas"]
     if persona not in personas:
@@ -457,7 +461,7 @@ async def demo_run(
     profile = personas[persona]
     answers: dict[str, str] = profile["answers"]
 
-    session_id = f"demo_{persona}_{int(time.time())}"
+    session_id = f"web_{persona}_{int(time.time())}"
     store = get_session_store()
     await store.create(session_id, profile["caller_id"], DEFAULT_FORM_ID)
     await _publish(SESSION_STARTED, session_id, {"demo": True})
@@ -559,6 +563,116 @@ async def session_deliver(
         applicant_name=plain.get("given_name", ""),
     )
     return {"session_id": session_id, **result}
+
+
+@app.post("/tools/identify_form")
+async def identify_form(
+    text: str = Query(default="", description="what the applicant said"),
+    url: str = Query(default="", description="a uscis.gov link they pasted"),
+    session_id: str = Query(default=""),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Work out which form someone means, and get it ready.
+
+    Applicants say "my work permit", not "I-765". If the match is confident and
+    the form is not loaded yet, it is onboarded from its PDF on the spot, so the
+    interview can begin in the same breath.
+
+    Confidence is returned rather than acted on blindly: the agent reads the
+    form name back before switching. Silently starting the wrong application
+    wastes an hour of a stressed person's time.
+    """
+    hit = await identify(text=text, url=url)
+    if hit is None:
+        return {"found": False, "known_forms": list_forms()}
+
+    form_id = hit["form_id"]
+    ready = form_id.upper() in {f.upper() for f in list_forms()}
+    if not ready:
+        try:
+            await onboard(form_id)
+            ready = True
+        except OnboardingError as exc:
+            logger.warning("could not onboard %s: %s", form_id, exc)
+
+    title = ""
+    if ready:
+        title = _resolve_form(form_id).title
+    if session_id:
+        try:
+            await get_session_store().set_form(session_id, form_id)
+        except SessionNotFoundError:
+            pass
+    return {"found": True, "ready": ready, "title": title, **hit}
+
+
+@app.post("/session/set_form")
+async def session_set_form(
+    session_id: str = Query(...),
+    form_id: str = Query(...),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Switch the form an in-progress call is filling.
+
+    Answers already given are kept: a name and address collected for one form
+    are the same name and address on the next one.
+    """
+    await _load_or_open_session(session_id)
+    schema = _resolve_form(form_id)
+    session = await get_session_store().set_form(session_id, schema.form_id)
+    remaining, known = counts(session, schema)
+    await _publish(
+        FORM_CHANGED,
+        session_id,
+        {
+            "form_id": schema.form_id,
+            "title": schema.title,
+            "edition": schema.edition,
+            "remaining_count": remaining,
+            "known_count": known,
+        },
+    )
+    return {
+        "session_id": session_id,
+        "form_id": schema.form_id,
+        "title": schema.title,
+        "edition": schema.edition,
+        "remaining_count": remaining,
+        "known_count": known,
+        "carried_over": known,
+    }
+
+
+@app.get("/sessions/{session_id}/memory")
+async def session_memory(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Everything remembered about this caller, by tier.
+
+    Semantic facts, past calls, and learned rules are shown separately because
+    they are different kinds of knowledge with different lifetimes -- and an
+    applicant is entitled to see exactly what is held about them.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    profile = await get_memory().load_profile(session.caller_id, schema)
+    return {
+        "caller_key": _user_key(session.caller_id) if session.caller_id else None,
+        "is_returning": profile.is_returning,
+        "summary": summarize(profile, schema),
+        "semantic": [
+            {
+                "field_id": fid,
+                "label": (
+                    schema.get_field(fid).id.replace("_", " ") if schema.get_field(fid) else fid
+                ),
+                "value": _display_value(fid, value, schema),
+            }
+            for fid, value in profile.known_values.items()
+        ],
+        "episodic": [e.model_dump() for e in profile.episodes],
+        "procedural": [p.model_dump() for p in profile.procedures],
+    }
 
 
 @app.get("/forms")

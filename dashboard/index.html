@@ -138,6 +138,16 @@
   .tag{font-size:8px;padding:1.5px 5px;border-radius:4px;border:1px solid currentColor;
     opacity:.55;letter-spacing:.3px}
 
+  #memory{padding:12px 18px 16px;display:flex;flex-direction:column;gap:13px}
+  .tier{display:flex;flex-direction:column;gap:5px}
+  .tier .head{display:flex;align-items:baseline;gap:8px}
+  .tier .nm{font-size:10.5px;text-transform:uppercase;letter-spacing:.75px;font-weight:700}
+  .tier .why{font-size:11px;color:var(--faint)}
+  .tier.semantic .nm{color:var(--ok)} .tier.episodic .nm{color:var(--accent2)}
+  .tier.procedural .nm{color:var(--mem)}
+  .memrow{font-size:12.5px;color:var(--dim);padding:4px 9px;border-radius:7px;
+    background:var(--panel2);border:1px solid var(--line)}
+  .memrow b{color:var(--ink);font-weight:560}
   .voicerow{display:flex;align-items:center;gap:10px;padding:14px 18px 4px}
   .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);
     box-shadow:0 0 10px var(--ok);flex:none;animation:pulse 2s ease-in-out infinite}
@@ -162,8 +172,8 @@
   <span class="pill" id="p-latency">— ms</span>
   <span class="pill mem" id="p-mem" style="display:none">returning caller</span>
   <span class="spacer"></span>
-  <button id="demo">▶ Demo Mode</button>
-  <button id="attach" class="ghost">Attach to live call</button>
+  <button id="run">Start a sample application</button>
+  <button id="attach" class="ghost">Follow the active call</button>
 </header>
 
 <main>
@@ -190,8 +200,9 @@
         </div>
         <div class="heroinfo">
           <div class="lbl" id="statuslbl">Waiting for a call</div>
-          <div class="q" id="statusq">Press <b>Start a call</b> and speak in any language,
-            or run <b>Demo Mode</b> to watch a full call with no microphone.</div>
+          <div class="q" id="statusq">Press <b>Start a call</b> and tell Zuzu what you need
+            &mdash; &ldquo;my work permit&rdquo;, &ldquo;I want to become a citizen&rdquo; &mdash;
+            in any language. Zuzu finds the right USCIS form and fills it as you answer.</div>
           <div class="meta" id="statusmeta"></div>
         </div>
       </div>
@@ -206,10 +217,18 @@
     </section>
 
     <section class="card">
+      <h2>What Zuzu remembers <span class="count" id="memcount"></span></h2>
+      <div id="memory">
+        <p class="muted">Nothing yet. Answers are remembered so a second
+          application takes minutes instead of an hour.</p>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>Conversation <span class="count" id="turncount"></span></h2>
       <div id="convo">
-        <div class="empty"><div class="big">No call yet</div>
-          Every question Zuzu asks, and every answer given, appears here.</div>
+        <div class="empty"><div class="big">No active call</div>
+          Every question Zuzu asks, and every answer you give, appears here.</div>
       </div>
     </section>
   </div>
@@ -280,10 +299,12 @@ let turns = 0;
 const el = id => document.getElementById(id);
 const pretty = s => s.replace(/_/g,' ');
 
-async function loadSchema(){
-  schema = await (await fetch(`/forms/${FORM}/schema`)).json();
+async function loadSchema(formId){
+  const target = formId || FORM;
+  schema = await (await fetch(`/forms/${target}/schema`)).json();
+  document.title = `${schema.form_id} — ${schema.title} · Zuzu`;
   byId = Object.fromEntries(schema.fields.map(f => [f.id, f]));
-  el('formtitle').textContent = `${schema.form_id} · ${schema.title} · ed. ${schema.edition}`;
+  el('formtitle').textContent = `${schema.form_id} · ${schema.title} · edition ${schema.edition}`;
   el('fieldcount').textContent = `${schema.fields.length} fields`;
 
   const groups = {};
@@ -370,8 +391,8 @@ function render(values, sources){
 
 function resetView(){
   seen = {}; turns = 0; saves = [];
-  el('convo').innerHTML = `<div class="empty"><div class="big">Call starting…</div>
-    Questions and answers will appear here.</div>`;
+  el('convo').innerHTML = `<div class="empty"><div class="big">Starting…</div>
+    Questions and answers appear here as you speak.</div>`;
   el('turncount').textContent = '';
   el('p-latency').textContent = '— ms';
   el('p-mem').style.display = 'none';
@@ -382,6 +403,31 @@ function resetView(){
     el(`v-${f.id}`).textContent = '';
   });
   render({});
+}
+
+async function loadMemory(id){
+  try{
+    const m = await (await fetch(`/sessions/${id}/memory`, {headers:H})).json();
+    const total = m.semantic.length + m.episodic.length + m.procedural.length;
+    el('memcount').textContent = total ? `${total} stored` : '';
+    if (!total){
+      el('memory').innerHTML = `<p class="muted">Nothing yet. Answers are remembered
+        so a second application takes minutes instead of an hour.</p>`;
+      return;
+    }
+    const tier = (cls, name, why, rows) => rows.length ? `
+      <div class="tier ${cls}">
+        <div class="head"><span class="nm">${name}</span><span class="why">${why}</span></div>
+        ${rows.map(r => `<div class="memrow">${r}</div>`).join('')}
+      </div>` : '';
+    el('memory').innerHTML =
+      tier('semantic','Semantic','facts about you',
+        m.semantic.map(x => `<b>${x.label}</b> — ${x.value}`)) +
+      tier('episodic','Episodic','past applications',
+        m.episodic.map(x => `<b>${x.form_id}</b> on ${String(x.at).slice(0,10)} — ${x.fields_collected} answers, ${x.completed ? 'completed' : 'unfinished'}`)) +
+      tier('procedural','Procedural','how to help you',
+        m.procedural.map(x => `<b>${x.kind}</b> — ${x.value}`));
+  } catch(e){}
 }
 
 async function hydrate(id){
@@ -396,6 +442,7 @@ async function hydrate(id){
   render(d.values, d.sources);
   if (d.is_returning) el('p-mem').style.display = '';
   if (d.has_pdf) showPdf(id);
+  loadMemory(id);
 }
 
 function showPdf(id){
@@ -427,17 +474,21 @@ function connect(id){
       hydrate(id);
     }
     if (e.type === 'form_ready') showPdf(id);
+    if (e.type === 'form_changed'){
+      // The applicant asked for a different form mid-call; re-render for it.
+      loadSchema(e.data.form_id).then(() => hydrate(id));
+    }
   };
 }
 
-el('demo').onclick = async () => {
-  el('demo').disabled = true; el('demo').textContent = 'running…';
+el('run').onclick = async () => {
+  el('run').disabled = true; el('run').textContent = 'Filling…';
   try{
     const d = await (await fetch('/demo/run', {method:'POST', headers:H})).json();
     resetView(); connect(d.session_id);
     setTimeout(() => hydrate(d.session_id), 250);
-  } catch(e){ el('statusq').textContent = 'Demo failed: ' + e.message; }
-  el('demo').disabled = false; el('demo').textContent = '▶ Demo Mode';
+  } catch(e){ el('statusq').textContent = 'Could not start: ' + e.message; }
+  el('run').disabled = false; el('run').textContent = 'Start a sample application';
 };
 
 el('attach').onclick = async () => {

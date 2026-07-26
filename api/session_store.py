@@ -72,6 +72,8 @@ class SessionStore(Protocol):
 
     async def set_pdf_path(self, session_id: str, pdf_path: str) -> Session: ...
 
+    async def set_form(self, session_id: str, form_id: str) -> Session: ...
+
     async def delete(self, session_id: str) -> None: ...
 
 
@@ -131,6 +133,21 @@ class InMemorySessionStore:
             if session is None:
                 raise SessionNotFoundError(session_id)
             session.pdf_path = pdf_path
+            return session
+
+    async def set_form(self, session_id: str, form_id: str) -> Session:
+        """Point an in-progress call at a different form.
+
+        Collected values are deliberately kept: a name and address gathered for
+        one USCIS form are the same name and address on the next one, and
+        re-asking is the thing this product exists to avoid.
+        """
+        async with self._lock:
+            session = self._sessions.get(session_id)
+            if session is None:
+                raise SessionNotFoundError(session_id)
+            session.form_id = form_id
+            session.pdf_path = None
             return session
 
     async def delete(self, session_id: str) -> None:
