@@ -199,7 +199,7 @@
 
 <header>
   <div class="bar">
-    <h1 class="brand"><span>Zuzu</span> <small>U.S. immigration forms, by voice</small></h1>
+    <h1 class="brand"><span>Zuzu</span> <small>USCIS forms by voice</small></h1>
     <div class="picker">
       <select id="formpick" aria-label="Choose a form"><option>Loading forms…</option></select>
     </div>
@@ -239,8 +239,8 @@
         </div>
         <div class="heroinfo">
           <div class="lbl" id="statuslbl">Ready</div>
-          <div class="q" id="statusq">Press <b>Start a call</b> and tell Zuzu what you need &mdash;
-            &ldquo;my work permit&rdquo;, &ldquo;I want to become a citizen&rdquo; &mdash; in any language.</div>
+          <div class="q" id="statusq">Start a call and say which form you need. You can say it
+            plainly &mdash; &ldquo;my work permit&rdquo; &mdash; in any language.</div>
         </div>
       </div>
       <a class="dl" id="dl" style="display:none">Download completed form</a>
@@ -254,10 +254,9 @@
     </section>
 
     <section class="card">
-      <h2>What Zuzu remembers <span class="count" id="memcount"></span></h2>
+      <h2>Memory <span class="count" id="memcount"></span></h2>
       <div id="memory">
-        <p class="muted" style="padding:0">Nothing yet. Answers are remembered so a second
-          application takes minutes instead of an hour.</p>
+        <p class="muted" style="padding:0">Nothing stored for this caller yet.</p>
       </div>
     </section>
 
@@ -265,7 +264,7 @@
       <h2>Conversation <span class="count" id="turncount"></span></h2>
       <div id="convo">
         <div class="empty"><div class="big">No active call</div>
-          Every question Zuzu asks, and every answer you give, appears here.</div>
+          Questions and answers appear here.</div>
       </div>
     </section>
   </div>
@@ -455,7 +454,7 @@ function render(values, sources){
     el('statusq').textContent = next.question;
   } else if (sessionId){
     el('statuslbl').textContent = 'Complete';
-    el('statusq').textContent = 'Every question answered. Review and sign the form yourself.';
+    el('statusq').textContent = 'All questions answered. Review and sign the form yourself.';
   }
 }
 
@@ -485,8 +484,8 @@ async function loadMemory(id){
     const total = m.semantic.length + m.episodic.length + m.procedural.length;
     el('memcount').textContent = total ? `${total} stored` : '';
     if (!total){
-      el('memory').innerHTML = `<p class="muted" style="padding:0">Nothing yet. Answers are
-        remembered so a second application takes minutes instead of an hour.</p>`;
+      el('memory').innerHTML =
+        `<p class="muted" style="padding:0">Nothing stored for this caller yet.</p>`;
       return;
     }
     const tier = (cls,name,why,rows) => rows.length ? `
@@ -494,11 +493,11 @@ async function loadMemory(id){
       <span class="why">${why}</span></div>
       ${rows.map(r => `<div class="memrow">${r}</div>`).join('')}</div>` : '';
     el('memory').innerHTML =
-      tier('semantic','Semantic','facts about you',
+      tier('semantic','Semantic','facts',
         m.semantic.map(x => `<b>${x.label}</b> — ${x.value}`)) +
-      tier('episodic','Episodic','past applications',
+      tier('episodic','Episodic','past calls',
         m.episodic.map(x => `<b>${x.form_id}</b> on ${String(x.at).slice(0,10)} — ${x.fields_collected} answers, ${x.completed?'completed':'unfinished'}`)) +
-      tier('procedural','Procedural','how to help you',
+      tier('procedural','Procedural','learned rules',
         m.procedural.map(x => `<b>${x.kind}</b> — ${x.value}`));
   } catch(e){}
 }
@@ -567,7 +566,7 @@ el('run').onclick = async () => {
 
 el('attach').onclick = async () => {
   const d = await (await fetch('/sessions/recent', {headers:H})).json();
-  if (!d.sessions.length){ el('statusq').textContent = 'No active call yet.'; return; }
+  if (!d.sessions.length){ el('statusq').textContent = 'No active call.'; return; }
   seen = {}; turns = 0;
   connect(d.sessions[0].session_id); hydrate(d.sessions[0].session_id);
 };
@@ -588,7 +587,7 @@ async function mountVoice(){
   document.body.appendChild(s);
   el('vstate').textContent = 'Voice agent connected';
   el('widgethint').textContent =
-    'Press “Start a call” at the bottom of the screen. Say what you need — Zuzu picks the form.';
+    'Use “Start a call” at the bottom of the screen.';
 
   // Follow the newest session even while connected, or the page latches onto a
   // stale one and ignores the real call.

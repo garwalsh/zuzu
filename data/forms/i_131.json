@@ -9,7 +9,7 @@
     {
       "id": "part2_line1_family_name",
       "question": "What is your family Name (Last Name)?",
-      "label": "Your Full Name. Enter Family",
+      "label": "Family Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line1_family_name",
@@ -20,7 +20,7 @@
     {
       "id": "part2_line1_given_name",
       "question": "What is your given Name (First Name)?",
-      "label": "Your Full Name. Enter Given",
+      "label": "Given Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line1_given_name",
@@ -31,7 +31,7 @@
     {
       "id": "part2_line1_middle_name",
       "question": "What is your middle Name?",
-      "label": "Your Full Name. Enter Middle",
+      "label": "Middle Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line1_middle_name",
@@ -42,7 +42,7 @@
     {
       "id": "part2_line5_alien_number",
       "question": "What is your alien Registration Number (A-Number) (?",
-      "label": "Other Information. Enter Alien Registration",
+      "label": "Alien Registration Number",
       "type": "a_number",
       "group": "identifiers",
       "memory_key": "identifiers.part2_line5_alien_number",
@@ -55,7 +55,7 @@
     {
       "id": "part2_line10_s_s_n",
       "question": "What is your U. S. Social Security Number?",
-      "label": "Other Information. Enter U. S.",
+      "label": "Social Security Number",
       "type": "ssn",
       "group": "identifiers",
       "memory_key": "identifiers.part2_line10_s_s_n",
@@ -68,7 +68,7 @@
     {
       "id": "part2_line11_u_s_c_i_s_online_acct_number",
       "question": "What is your a U S C I S Online Account Number (?",
-      "label": "Other Information. Enter a U",
+      "label": "A U S",
       "type": "text",
       "group": "identifiers",
       "memory_key": "identifiers.part2_line11_u_s_c_i_s_online_acct_number",
@@ -80,7 +80,7 @@
     {
       "id": "part2_line12_classof_admission",
       "question": "What is your class of Admission?",
-      "label": "Other Information. Enter Class of",
+      "label": "Class of Admission",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.part2_line12_classof_admission",
@@ -91,7 +91,7 @@
     {
       "id": "part2_line13_i94_record_no",
       "question": "What is your most recent Form I-94 Arrival Departure Record Number?",
-      "label": "Other Information. Enter Most recent",
+      "label": "Most recent Form I-94 Arrival Departure",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.part2_line13_i94_record_no",
@@ -103,7 +103,7 @@
     {
       "id": "part2_line2_family_name1",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Family Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_family_name1",
@@ -114,7 +114,7 @@
     {
       "id": "part2_line2_family_name2",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Family Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_family_name2",
@@ -125,7 +125,7 @@
     {
       "id": "part2_line2_family_name3",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Family Name 3",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_family_name3",
@@ -136,7 +136,7 @@
     {
       "id": "part2_line2_given_name1",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Given Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_given_name1",
@@ -147,7 +147,7 @@
     {
       "id": "part2_line2_given_name2",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Given Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_given_name2",
@@ -158,7 +158,7 @@
     {
       "id": "part2_line2_given_name3",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Given Name 3",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_given_name3",
@@ -169,7 +169,7 @@
     {
       "id": "part2_line2_middle_name1",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Middle Name 1",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_middle_name1",
@@ -180,7 +180,7 @@
     {
       "id": "part2_line2_middle_name2",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Middle Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_middle_name2",
@@ -191,7 +191,7 @@
     {
       "id": "part2_line2_middle_name3",
       "question": "What is your other Names Used?",
-      "label": "Other Names Used if applicable.",
+      "label": "Row Enter Middle Name 3",
       "type": "text",
       "group": "name",
       "memory_key": "name.part2_line2_middle_name3",
@@ -202,7 +202,7 @@
     {
       "id": "part2_line3_apt_ste_flr_number",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "If Apartment, Suite or Floor is 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_apt_ste_flr_number",
@@ -214,7 +214,7 @@
     {
       "id": "part2_line3_city_town",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "City or Town 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_city_town",
@@ -226,7 +226,7 @@
     {
       "id": "part2_line3_country",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "Current Mailing Address or Safe Address 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_country",
@@ -237,7 +237,7 @@
     {
       "id": "part2_line3_in_careof_name",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "In Care of Name 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_in_careof_name",
@@ -249,7 +249,7 @@
     {
       "id": "part2_line3_postal_code",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "Postal Code 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_postal_code",
@@ -261,7 +261,7 @@
     {
       "id": "part2_line3_province",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "Current Mailing Address or Safe Address 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_province",
@@ -273,7 +273,7 @@
     {
       "id": "part2_line3_state",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "State from a List of States 1",
       "type": "state",
       "group": "address",
       "memory_key": "address.part2_line3_state",
@@ -284,7 +284,7 @@
     {
       "id": "part2_line3_street_number_name",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "Street Number and Name 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line3_street_number_name",
@@ -296,7 +296,7 @@
     {
       "id": "part2_line3_zip_code",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "ZIP Code 1",
       "type": "zip",
       "group": "address",
       "memory_key": "address.part2_line3_zip_code",
@@ -308,7 +308,7 @@
     {
       "id": "part2_line4_apt_ste_flr_number",
       "question": "What is your information About You Current Physical Address if different from the above address. rt?",
-      "label": "Information About You Current Physical",
+      "label": "If Apartment, Suite or Floor is 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_apt_ste_flr_number",
@@ -320,7 +320,7 @@
     {
       "id": "part2_line4_city_town",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "City or Town 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_city_town",
@@ -332,7 +332,7 @@
     {
       "id": "part2_line4_country",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "Current Physical Address if different from 1",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_country",
@@ -343,7 +343,7 @@
     {
       "id": "part2_line4_in_careof_name",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "In Care of Name 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_in_careof_name",
@@ -355,7 +355,7 @@
     {
       "id": "part2_line4_postal_code",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "Postal Code 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_postal_code",
@@ -367,7 +367,7 @@
     {
       "id": "part2_line4_province",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "Current Physical Address if different from 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_province",
@@ -379,7 +379,7 @@
     {
       "id": "part2_line4_state",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "State from a List of States 2",
       "type": "state",
       "group": "address",
       "memory_key": "address.part2_line4_state",
@@ -390,7 +390,7 @@
     {
       "id": "part2_line4_street_number_name",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "Street Number and Name 2",
       "type": "text",
       "group": "address",
       "memory_key": "address.part2_line4_street_number_name",
@@ -402,7 +402,7 @@
     {
       "id": "part2_line4_zip_code",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "ZIP Code 2",
       "type": "zip",
       "group": "address",
       "memory_key": "address.part2_line4_zip_code",
@@ -414,7 +414,7 @@
     {
       "id": "part2_line6_country_of_birth",
       "question": "What is your country of Birth?",
-      "label": "Other Information. Enter Country of",
+      "label": "Country of Birth",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.part2_line6_country_of_birth",
@@ -425,7 +425,7 @@
     {
       "id": "part2_line7_country_of_citizenshipor_nationality",
       "question": "What is your country of Citizenship?",
-      "label": "Other Information. Enter Country of",
+      "label": "Country of Citizenship",
       "type": "text",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.part2_line7_country_of_citizenshipor_nationality",
@@ -436,7 +436,7 @@
     {
       "id": "part2_line9_date_of_birth",
       "question": "What is your date of Birth as 2-digit Month, 2-digit Day, and 4-digit Year?",
-      "label": "Other Information. Enter Date of",
+      "label": "Date of Birth as 2-digit Month,",
       "type": "date",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.part2_line9_date_of_birth",
@@ -447,7 +447,7 @@
     {
       "id": "p2_line16_family_name",
       "question": "What is your if you are requesting parole on behalf of someone other than yourself, provide the?",
-      "label": "If you are requesting parole",
+      "label": "Family Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line16_family_name",
@@ -458,7 +458,7 @@
     {
       "id": "p2_line16_given_name",
       "question": "What is your given Name (First Name)?",
-      "label": "Given Name",
+      "label": "Given Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line16_given_name",
@@ -469,7 +469,7 @@
     {
       "id": "p2_line16_middle_name",
       "question": "What is your middle Name?",
-      "label": "Middle Name",
+      "label": "Middle Name 2",
       "type": "text",
       "group": "name",
       "memory_key": "name.p2_line16_middle_name",
@@ -480,7 +480,7 @@
     {
       "id": "par2_line15_e_medical_parolee_i_d",
       "question": "What is your other Information. eMedical U S Parolee I D U S P I D?",
-      "label": "Other Information. eMedical U S",
+      "label": "EMedical U S Parolee",
       "type": "text",
       "group": "other",
       "memory_key": "other.par2_line15_e_medical_parolee_i_d",
@@ -491,7 +491,7 @@
     {
       "id": "part2_line14_i94_exp_date",
       "question": "What is your expiration Date of Authorized Stay Shown on Form I-94?",
-      "label": "Other Information. Expiration Date of",
+      "label": "As 2 digit month, 2 digit",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.part2_line14_i94_exp_date",
@@ -503,7 +503,7 @@
     {
       "id": "p3_line3_height_feet",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "The number of feet",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line3_height_feet",
@@ -514,7 +514,7 @@
     {
       "id": "p3_line3_height_inches",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "The number of Inches",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line3_height_inches",
@@ -525,7 +525,7 @@
     {
       "id": "p3_line4_pound1",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "The first digit of a three",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line4_pound1",
@@ -537,7 +537,7 @@
     {
       "id": "p3_line4_pound2",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "The second digit of a three",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line4_pound2",
@@ -549,7 +549,7 @@
     {
       "id": "p3_line4_pound3",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "The third digit of a three",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line4_pound3",
@@ -584,7 +584,7 @@
     {
       "id": "p6_line1_country_refugee",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Country from which you are a?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 1",
       "type": "text",
       "group": "arrival_status",
       "memory_key": "arrival_status.p6_line1_country_refugee",
@@ -595,7 +595,7 @@
     {
       "id": "p7_line1_date_of_departure",
       "question": "What is your information About Your Proposed Travel.) Date of Intended Departure?",
-      "label": "Information About Your Proposed Travel.)",
+      "label": "2-digit Month, 2-digit Day, and 4-digit 1",
       "type": "date",
       "group": "arrival_status",
       "memory_key": "arrival_status.p7_line1_date_of_departure",
@@ -606,7 +606,7 @@
     {
       "id": "p7_line2_purpose",
       "question": "What is your information About Your Proposed Travel.) Purpose of trip?",
-      "label": "Information About Your Proposed Travel.)",
+      "label": "Information About Your Proposed Travel.) Purpose",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line2_purpose",
@@ -617,7 +617,7 @@
     {
       "id": "p7_line3_list_countries",
       "question": "What is your information About Your Proposed Travel.) List the countries you intend to visit?",
-      "label": "Information About Your Proposed Travel.)",
+      "label": "Information About Your Proposed Travel.) List",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line3_list_countries",
@@ -628,7 +628,7 @@
     {
       "id": "p7_line5_expected_length_trip",
       "question": "What is your information About Your Proposed Travel.) Expected Length of Trip (in days)?",
-      "label": "Information About Your Proposed Travel.)",
+      "label": "Information About Your Proposed Travel.) Expected",
       "type": "text",
       "group": "other",
       "memory_key": "other.p7_line5_expected_length_trip",
@@ -639,7 +639,7 @@
     {
       "id": "p8_line1_explain",
       "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
-      "label": "Complete Only If Applying for",
+      "label": "Include copies of any supporting documents",
       "type": "text",
       "group": "other",
       "memory_key": "other.p8_line1_explain",
@@ -650,7 +650,7 @@
     {
       "id": "p8_line2_expected_length_tripin_u_s",
       "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for an",
       "type": "state",
       "group": "address",
       "memory_key": "address.p8_line2_expected_length_tripin_u_s",
@@ -662,7 +662,7 @@
     {
       "id": "p8_line3a_date_of_intended_arrival",
       "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole If?",
-      "label": "Complete Only If Applying for",
+      "label": "2-digit Month, 2-digit Day, and 4-digit 2",
       "type": "date",
       "group": "address",
       "memory_key": "address.p8_line3a_date_of_intended_arrival",
@@ -673,7 +673,7 @@
     {
       "id": "p8_line3b_city_or_town",
       "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
-      "label": "Complete Only If Applying for",
+      "label": "City or Town 3",
       "type": "text",
       "group": "address",
       "memory_key": "address.p8_line3b_city_or_town",
@@ -685,7 +685,7 @@
     {
       "id": "p8_line3b_country",
       "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
-      "label": "Complete Only If Applying for",
+      "label": "Consulate, or the USCIS international field",
       "type": "text",
       "group": "address",
       "memory_key": "address.p8_line3b_country",
@@ -696,7 +696,7 @@
     {
       "id": "part10_line1_day_phone",
       "question": "What is your applicant's Contact Information, Certification, and Signature Applicant's Contact?",
-      "label": "Applicant's Contact Information, Certification, and",
+      "label": "Applicant's Daytime Telephone Number",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.part10_line1_day_phone",
@@ -708,7 +708,7 @@
     {
       "id": "part10_line2_mobile_phone",
       "question": "What is your applicant's Contact Information, Certification, and Signature Applicant Mobile Telephone?",
-      "label": "Applicant's Contact Information, Certification, and",
+      "label": "Applicant's Contact Information, Certification, and Signature 1",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.part10_line2_mobile_phone",
@@ -720,7 +720,7 @@
     {
       "id": "part10_line3_email",
       "question": "What is your applicant's Contact Information, Certification, and Signature Applicant's Email Address (?",
-      "label": "Applicant's Contact Information, Certification, and",
+      "label": "Applicant's Contact Information, Certification, and Signature 2",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.part10_line3_email",
@@ -731,7 +731,7 @@
     {
       "id": "p11_language",
       "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Certification?",
-      "label": "Interpreter's Contact Information, Certification, and",
+      "label": "I certify, under penalty of perjury,",
       "type": "text",
       "group": "other",
       "memory_key": "other.p11_language",
@@ -743,7 +743,7 @@
     {
       "id": "part11_line2_nameof_businessor_org_name",
       "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Business or?",
-      "label": "Interpreter's Contact Information, Certification, and",
+      "label": "Interpreter's Contact Information, Certification, and Signature 1",
       "type": "text",
       "group": "other",
       "memory_key": "other.part11_line2_nameof_businessor_org_name",
@@ -755,7 +755,7 @@
     {
       "id": "part11_line3_day_phone",
       "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Contact?",
-      "label": "Interpreter's Contact Information, Certification, and",
+      "label": "Interpreter's Daytime Telephone Number",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.part11_line3_day_phone",
@@ -767,7 +767,7 @@
     {
       "id": "part11_line4_mobile_phone",
       "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Mobile?",
-      "label": "Interpreter's Contact Information, Certification, and",
+      "label": "Interpreter's Contact Information, Certification, and Signature 2",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.part11_line4_mobile_phone",
@@ -779,7 +779,7 @@
     {
       "id": "part11_line5_email",
       "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Email Address?",
-      "label": "Interpreter's Contact Information, Certification, and",
+      "label": "Interpreter's Contact Information, Certification, and Signature 3",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.part11_line5_email",
@@ -790,7 +790,7 @@
     {
       "id": "part12_line1_family_name",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Family Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.part12_line1_family_name",
@@ -801,7 +801,7 @@
     {
       "id": "part12_line1_given_name",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Given Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.part12_line1_given_name",
@@ -812,7 +812,7 @@
     {
       "id": "part12_line2_nameof_businessor_org_name",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Business or Organization Name",
       "type": "text",
       "group": "name",
       "memory_key": "name.part12_line2_nameof_businessor_org_name",
@@ -824,7 +824,7 @@
     {
       "id": "part12_line3_day_phone",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Daytime Telephone Number",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.part12_line3_day_phone",
@@ -836,7 +836,7 @@
     {
       "id": "part12_line4_mobile_phone",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Mobile Telephone Number",
       "type": "phone",
       "group": "contact",
       "memory_key": "contact.part12_line4_mobile_phone",
@@ -848,7 +848,7 @@
     {
       "id": "part12_line5_email",
       "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
-      "label": "Contact Information, Certification, and Signature",
+      "label": "Preparer's Email Address",
       "type": "email",
       "group": "contact",
       "memory_key": "contact.part12_line5_email",
@@ -859,7 +859,7 @@
     {
       "id": "part13_line3_additional_info",
       "question": "What is your additional Information?",
-      "label": "Additional Information",
+      "label": "Additional Information 1",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line3_additional_info",
@@ -870,7 +870,7 @@
     {
       "id": "part13_line3_item_number",
       "question": "What is your item Number?",
-      "label": "Item Number",
+      "label": "Item Number 1",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line3_item_number",
@@ -882,7 +882,7 @@
     {
       "id": "part13_line3_page_number",
       "question": "What is your page Number?",
-      "label": "Page Number",
+      "label": "Page Number 1",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line3_page_number",
@@ -894,7 +894,7 @@
     {
       "id": "part13_line3_part_number",
       "question": "What is your part Number?",
-      "label": "Part Number",
+      "label": "Part Number 1",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line3_part_number",
@@ -906,7 +906,7 @@
     {
       "id": "part13_line4_additional_info",
       "question": "What is your additional Information?",
-      "label": "Additional Information",
+      "label": "Additional Information 2",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line4_additional_info",
@@ -917,7 +917,7 @@
     {
       "id": "part13_line4_item_number",
       "question": "What is your item Number?",
-      "label": "Item Number",
+      "label": "Item Number 2",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line4_item_number",
@@ -929,7 +929,7 @@
     {
       "id": "part13_line4_page_number",
       "question": "What is your page Number?",
-      "label": "Page Number",
+      "label": "Page Number 2",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line4_page_number",
@@ -941,7 +941,7 @@
     {
       "id": "part13_line4_part_number",
       "question": "What is your part Number?",
-      "label": "Part Number",
+      "label": "Part Number 2",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line4_part_number",
@@ -953,7 +953,7 @@
     {
       "id": "part13_line5_additional_info",
       "question": "What is your additional Information?",
-      "label": "Additional Information",
+      "label": "Additional Information 3",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line5_additional_info",
@@ -964,7 +964,7 @@
     {
       "id": "part13_line5_item_number",
       "question": "What is your item Number?",
-      "label": "Item Number",
+      "label": "Item Number 3",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line5_item_number",
@@ -976,7 +976,7 @@
     {
       "id": "part13_line5_page_number",
       "question": "What is your page Number?",
-      "label": "Page Number",
+      "label": "Page Number 3",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line5_page_number",
@@ -988,7 +988,7 @@
     {
       "id": "part13_line5_part_number",
       "question": "What is your part Number?",
-      "label": "Part Number",
+      "label": "Part Number 3",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line5_part_number",
@@ -1000,7 +1000,7 @@
     {
       "id": "part13_line6_additional_info",
       "question": "What is your additional Information?",
-      "label": "Additional Information",
+      "label": "Additional Information 4",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line6_additional_info",
@@ -1011,7 +1011,7 @@
     {
       "id": "part13_line6_item_number",
       "question": "What is your item Number?",
-      "label": "Item Number",
+      "label": "Item Number 4",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line6_item_number",
@@ -1023,7 +1023,7 @@
     {
       "id": "part13_line6_page_number",
       "question": "What is your page Number?",
-      "label": "Page Number",
+      "label": "Page Number 4",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line6_page_number",
@@ -1035,7 +1035,7 @@
     {
       "id": "part13_line6_part_number",
       "question": "What is your part Number?",
-      "label": "Part Number",
+      "label": "Part Number 4",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line6_part_number",
@@ -1047,7 +1047,7 @@
     {
       "id": "part13_line7_additional_info",
       "question": "What is your additional Information?",
-      "label": "Additional Information",
+      "label": "Additional Information 5",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line7_additional_info",
@@ -1058,7 +1058,7 @@
     {
       "id": "part13_line7_item_number",
       "question": "What is your item Number?",
-      "label": "Item Number",
+      "label": "Item Number 5",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line7_item_number",
@@ -1070,7 +1070,7 @@
     {
       "id": "part13_line7_page_number",
       "question": "What is your page Number?",
-      "label": "Page Number",
+      "label": "Page Number 5",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line7_page_number",
@@ -1082,7 +1082,7 @@
     {
       "id": "part13_line7_part_number",
       "question": "What is your part Number?",
-      "label": "Part Number",
+      "label": "Part Number 5",
       "type": "text",
       "group": "other",
       "memory_key": "other.part13_line7_part_number",
@@ -1094,7 +1094,7 @@
     {
       "id": "c_b_app_type",
       "question": "What is your the application type below?",
-      "label": "The application type below. Reentry",
+      "label": "Check box I am a lawful",
       "type": "choice",
       "group": "address",
       "memory_key": "address.c_b_app_type",
@@ -1136,7 +1136,7 @@
     {
       "id": "g28_attached",
       "question": "What is your check Fill in box if G-28 is attached to represent the applicant?",
-      "label": "Check Fill in box if",
+      "label": "Check Fill in box if G-28",
       "type": "choice",
       "group": "other",
       "memory_key": "other.g28_attached",
@@ -1154,7 +1154,7 @@
     {
       "id": "c_b_app_type_2",
       "question": "What is your advance Parole Document and Advance Permission to Travel for Commonwealth of Northern?",
-      "label": "Advance Parole Document and Advance",
+      "label": "Advance Parole Document and Advance Permission",
       "type": "choice",
       "group": "address",
       "memory_key": "address.c_b_app_type_2",
@@ -1244,7 +1244,7 @@
     {
       "id": "c_b_app_type_3",
       "question": "What is your the application type below. initial Parole Document Process; Task Force?",
-      "label": "The application type below. initial",
+      "label": "Initial Parole Document Process Task Force",
       "type": "choice",
       "group": "address",
       "memory_key": "address.c_b_app_type_3",
@@ -1310,7 +1310,7 @@
     {
       "id": "c_b_app_type_4",
       "question": "What is your arrival/Departure Records for Re-parole for aliens Who Are Requesting a New Period of?",
-      "label": "Arrival/Departure Records for Re-parole for",
+      "label": "Arrival/Departure Records for Re-parole for aliens",
       "type": "choice",
       "group": "address",
       "memory_key": "address.c_b_app_type_4",
@@ -1382,7 +1382,7 @@
     {
       "id": "p1_line13_yes_no",
       "question": "What is your refugee Status?",
-      "label": "Application Type. Refugee Status. Do",
+      "label": "Do you hold status as",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p1_line13_yes_no",
@@ -1406,7 +1406,7 @@
     {
       "id": "part2_line3_unit",
       "question": "What is your current Mailing Address or Safe Address?",
-      "label": "Current Mailing Address or Safe",
+      "label": "Current Mailing Address or Safe Address 3",
       "type": "choice",
       "group": "address",
       "memory_key": "address.part2_line3_unit",
@@ -1436,7 +1436,7 @@
     {
       "id": "part2_line4_unit",
       "question": "What is your current Physical Address if different from the above address?",
-      "label": "Current Physical Address if different",
+      "label": "Current Physical Address if different from 3",
       "type": "choice",
       "group": "address",
       "memory_key": "address.part2_line4_unit",
@@ -1466,7 +1466,7 @@
     {
       "id": "part2_line8_gender",
       "question": "What is your sex?",
-      "label": "Other Information. Sex. Check Female",
+      "label": "Sex Check Female",
       "type": "choice",
       "group": "other",
       "memory_key": "other.part2_line8_gender",
@@ -1490,7 +1490,7 @@
     {
       "id": "p3_line1_ethnicity",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Not Hispanic or Latino",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p3_line1_ethnicity",
@@ -1514,7 +1514,7 @@
     {
       "id": "p3_line2_race_american",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "American Indian or Alaska Native",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line2_race_american",
@@ -1532,7 +1532,7 @@
     {
       "id": "p3_line2_race_asian",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Race Select Asian",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line2_race_asian",
@@ -1550,7 +1550,7 @@
     {
       "id": "p3_line2_race_black",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Black or African American",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line2_race_black",
@@ -1568,7 +1568,7 @@
     {
       "id": "p3_line2_race_hawaiian",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Native Hawaiian or Other Pacific Islander",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line2_race_hawaiian",
@@ -1586,7 +1586,7 @@
     {
       "id": "p3_line2_race_white",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Race Select White",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line2_race_white",
@@ -1604,7 +1604,7 @@
     {
       "id": "p3_line5_eye_color",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Eye Color Select Brown",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line5_eye_color",
@@ -1670,7 +1670,7 @@
     {
       "id": "p3_line6_hair_color",
       "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
-      "label": "Biographic Information of the Person",
+      "label": "Hair Color Select Bald",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p3_line6_hair_color",
@@ -1736,7 +1736,7 @@
     {
       "id": "p4_line1_yes_no",
       "question": "What is your has the person who will receive the travel document, parole document, or Arrival/Departure?",
-      "label": "Has the person who will",
+      "label": "Has the person who will receive",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line1_yes_no",
@@ -1760,7 +1760,7 @@
     {
       "id": "p4_line2a_yes_no",
       "question": "What is your have you EVER before been issued a Reentry Permit or Refugee Travel Document? Check Yes?",
-      "label": "Have you EVER before been",
+      "label": "Have you EVER before been issued",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line2a_yes_no",
@@ -1784,7 +1784,7 @@
     {
       "id": "p4_line3a_yes_no",
       "question": "What is your have you EVER been issued an Advance Parole Document? Check Yes?",
-      "label": "Have you EVER been issued",
+      "label": "Have you EVER been issued an",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_line3a_yes_no",
@@ -1808,7 +1808,7 @@
     {
       "id": "p4_line4_yes_no",
       "question": "What is your are you requesting a replacement Reentry Permit, Refugee Travel Document, Advance Parole?",
-      "label": "Are you requesting a replacement",
+      "label": "Are you requesting a replacement Reentry",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line4_yes_no",
@@ -1832,7 +1832,7 @@
     {
       "id": "p4_line7a",
       "question": "What is your to a U.S. Embassy, U.S. Consulate, USCIS international field office, or Department of?",
-      "label": "To a U.S. Embassy, U.S.",
+      "label": "Consulate, USCIS international field office, or",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p4_line7a",
@@ -1856,7 +1856,7 @@
     {
       "id": "p4_line8_c_b",
       "question": "What is your if you are requesting that the Reentry Permit or Refugee Travel Document be sent to a U.S?",
-      "label": "If you are requesting that",
+      "label": "Consulate, or USCIS international field office,",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p4_line8_c_b",
@@ -1880,7 +1880,7 @@
     {
       "id": "p5_line1_1to2",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 2",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_1to2",
@@ -1898,7 +1898,7 @@
     {
       "id": "p5_line1_2to3",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 3",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_2to3",
@@ -1916,7 +1916,7 @@
     {
       "id": "p5_line1_3to4",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 4",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_3to4",
@@ -1934,7 +1934,7 @@
     {
       "id": "p5_line1_6months",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 5",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_6months",
@@ -1952,7 +1952,7 @@
     {
       "id": "p5_line1_lessthan6",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 6",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_lessthan6",
@@ -1970,7 +1970,7 @@
     {
       "id": "p5_line1_morethan",
       "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 7",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p5_line1_morethan",
@@ -1988,7 +1988,7 @@
     {
       "id": "p6_line2_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Do you plan to travel to the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 8",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p6_line2_yes_no",
@@ -2012,7 +2012,7 @@
     {
       "id": "p6_line3a_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Since you were admitted to the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 9",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line3a_yes_no",
@@ -2036,7 +2036,7 @@
     {
       "id": "p6_line3b_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Applied for and/or obtained a?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 10",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p6_line3b_yes_no",
@@ -2060,7 +2060,7 @@
     {
       "id": "p6_line3c_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Applied for and/or received any?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 11",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.p6_line3c_yes_no",
@@ -2084,7 +2084,7 @@
     {
       "id": "no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Been granted refugee or asylee?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 12",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.no",
@@ -2102,7 +2102,7 @@
     {
       "id": "yes",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Been granted refugee or asylee?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 13",
       "type": "choice",
       "group": "arrival_status",
       "memory_key": "arrival_status.yes",
@@ -2120,7 +2120,7 @@
     {
       "id": "p6_line4a_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Reacquired the nationality of the?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 14",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p6_line4a_yes_no",
@@ -2144,7 +2144,7 @@
     {
       "id": "p6_line4b_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Acquired a new nationality? Yes?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 15",
       "type": "choice",
       "group": "birth_citizenship",
       "memory_key": "birth_citizenship.p6_line4b_yes_no",
@@ -2168,7 +2168,7 @@
     {
       "id": "p6_line5_yes_no",
       "question": "What is your complete Only If Applying for a Refugee Travel Document Are you filing for a Refugee Travel?",
-      "label": "Complete Only If Applying for",
+      "label": "Complete Only If Applying for 16",
       "type": "choice",
       "group": "address",
       "memory_key": "address.p6_line5_yes_no",
@@ -2192,7 +2192,7 @@
     {
       "id": "p7_line4_c_b",
       "question": "Information About Your Proposed Travel.) How many trips do you intend to use this document?",
-      "label": "Information About Your Proposed Travel.)",
+      "label": "Information About Your Proposed Travel.) How",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p7_line4_c_b",
@@ -2216,7 +2216,7 @@
     {
       "id": "p9_line1_e_a_d",
       "question": "What is your employment Authorization For New Period of Parole (Re-parole) I am requesting an Employment?",
-      "label": "Employment Authorization For New Period",
+      "label": "Employment Authorization For New Period of",
       "type": "choice",
       "group": "other",
       "memory_key": "other.p9_line1_e_a_d",

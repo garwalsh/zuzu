@@ -408,17 +408,41 @@ def _classify(name: str, label: str) -> tuple[str, str]:
 def _short_label(label: str, field_id: str) -> str:
     """A few words a person can scan in a grid.
 
-    The field id is derived from the PDF's internal name and reads like
-    "p14_line1_interpreter_family_name" -- fine as a key, unusable as a caption.
+    USCIS tooltips read "Other Names You Have Used Since Birth. Family Name
+    (Last Name)": a section heading, then the part that identifies the box.
+    Keeping the first words gives six identical tiles reading "Other Names You
+    Have Used", so take the clause that actually names the field.
     """
     text = _strip_navigation(label)
-    text = re.sub(r"\s*\([^)]*\)", "", text).strip(" .:;,-")
+    # Parentheticals are glosses ("(Last Name)", "(A-Number)"); dropping them
+    # first stops the clause splitter from cutting inside one and leaving a
+    # fragment like "Number), if any".
+    text = re.sub(r"\s*\([^)]*\)", "", text)
+    text = re.sub(r",?\s*(if any|if applicable|if known)\b", "", text, flags=re.I)
+    text = re.sub(r"\s{2,}", " ", text).strip(" .:;,-")
     if not text:
-        text = field_id.replace("_", " ")
-    words = text.split()
-    if len(words) > 5:
-        text = " ".join(words[:5])
-    return text[:1].upper() + text[1:]
+        return (field_id.replace("_", " ") or "field").title()
+
+    parts = [
+        c.strip(" .:;,-") for c in re.split(r"[.;]\s+|\s+[-\u2013]\s+", text) if c.strip(" .:;,-")
+    ]
+    tail = parts[-1] if parts else text
+    # A two-word tail is usually a qualifier, not the field name.
+    if len(tail.split()) <= 2 and len(parts) > 1:
+        tail = f"{parts[-2]} {tail}"
+    tail = re.sub(r"^(enter|provide|select|type|your)\s+", "", tail, flags=re.I).strip()
+    if not tail:
+        tail = text
+
+    words = tail.split()
+    if len(words) > 6:
+        # Trim to whole words, and never end on a stray single letter left over
+        # from a chopped acronym like "U S C I S".
+        words = words[:6]
+        while len(words) > 3 and len(words[-1]) == 1:
+            words.pop()
+        tail = " ".join(words)
+    return tail[:1].upper() + tail[1:]
 
 
 def _strip_navigation(label: str) -> str:
@@ -576,6 +600,18 @@ def derive_schema(
                 ],
             }
         )
+
+    # USCIS forms repeat whole blocks -- six slots for other names, three for
+    # employers. Identical captions on all of them is unusable, so number the
+    # repeats in the order they appear on the page.
+    counts: dict[str, int] = {}
+    for f in fields:
+        counts[f["label"]] = counts.get(f["label"], 0) + 1
+    seen_label: dict[str, int] = {}
+    for f in fields:
+        if counts[f["label"]] > 1:
+            seen_label[f["label"]] = seen_label.get(f["label"], 0) + 1
+            f["label"] = f"{f['label']} {seen_label[f['label']]}"
 
     schema = {
         "form_id": form_id,

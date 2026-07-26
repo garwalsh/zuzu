@@ -33,6 +33,36 @@ logger = logging.getLogger(__name__)
 
 ROCKETRIDE_BASE_URL = "https://api.rocketride.ai"
 TIMEOUT_SECONDS = 60.0
+RUN_TIMEOUT_SECONDS = 180.0
+
+
+def _gmail_config() -> dict[str, Any] | None:
+    """Credentials for RocketRide's tool_gmail, if any are configured.
+
+    tool_gmail requires `type`, `authType` and `access`, satisfied either by a
+    Google Workspace service account or by a user OAuth token obtained through
+    RocketRide's own consent flow. Without one of those the agent has no
+    mailbox to send from, and the pipeline completes having sent nothing.
+    """
+    if token := os.environ.get("ROCKETRIDE_GMAIL_USER_TOKEN"):
+        return {
+            "type": "tool_gmail",
+            "authType": "oauth",
+            "access": "full",
+            "userToken": token,
+        }
+    key = os.environ.get("ROCKETRIDE_GMAIL_SERVICE_KEY")
+    admin = os.environ.get("ROCKETRIDE_GMAIL_ADMIN_EMAIL")
+    if key and admin:
+        return {
+            "type": "tool_gmail",
+            "authType": "service",
+            "access": "full",
+            "serviceKey": key,
+            "adminEmail": admin,
+            "customerId": os.environ.get("ROCKETRIDE_GMAIL_CUSTOMER_ID", ""),
+        }
+    return None
 
 
 class DeliveryUnavailable(RuntimeError):
@@ -84,6 +114,15 @@ def build_packet(
     return f"Your {form_id} is ready to review and sign", "\n".join(lines)
 
 
+def instruction_for(to_email: str, subject: str, body: str) -> str:
+    """What the agent is told to do when the pipeline runs."""
+    return (
+        f"Send an email using the gmail tool. To: {to_email}. "
+        f"Subject: {subject}. Body, exactly as written:\n\n{body}\n\n"
+        "Send it now. Do not ask any questions."
+    )
+
+
 def build_pipeline(to_email: str, subject: str, body: str, name: str) -> dict[str, Any]:
     """The declarative pipeline RocketRide runs to deliver one packet.
 
@@ -100,6 +139,11 @@ def build_pipeline(to_email: str, subject: str, body: str, name: str) -> dict[st
         f"Send an email to {to_email} with the subject {subject!r} and exactly "
         f"this body, unchanged:\n\n{body}"
     )
+    gmail = _gmail_config()
+    agent_config: dict[str, Any] = {"tools": ["tool_gmail"], "prompt": instruction}
+    if gmail:
+        agent_config["tool_gmail"] = gmail
+
     return {
         "name": f"zuzu-delivery-{name}",
         "source": "in",
@@ -108,7 +152,7 @@ def build_pipeline(to_email: str, subject: str, body: str, name: str) -> dict[st
             {
                 "id": "agent",
                 "provider": "agent_rocketride",
-                "config": {"tools": ["tool_gmail"], "prompt": instruction},
+                "config": agent_config,
                 "input": [{"lane": "questions", "from": "in"}],
             },
             {
@@ -155,19 +199,61 @@ async def deliver_packet(
         logger.warning("rocketride unreachable: %s", type(exc).__name__)
         return {"delivered": False, "reason": f"rocketride unreachable: {type(exc).__name__}"}
 
-    if payload.get("status") == "OK":
-        token = (payload.get("data") or {}).get("token")
-        logger.info("rocketride accepted %s delivery pipeline", form_id)
-        # The pipeline was accepted and a run token issued. Whether Gmail
-        # actually relayed depends on the Google credentials configured on the
-        # RocketRide account, which this service cannot see -- so report what is
-        # actually known rather than claiming the mail landed.
+    if payload.get("status") != "OK":
+        reason = json.dumps(payload.get("error", payload))[:200]
+        logger.warning("rocketride refused the pipeline: %s", reason)
+        return {"delivered": False, "reason": reason, "subject": subject, "body": body}
+
+    token = (payload.get("data") or {}).get("token")
+    if not token:
+        return {"delivered": False, "reason": "rocketride returned no run token"}
+
+    if not _gmail_config():
+        # Be blunt rather than reporting a success nobody can see in an inbox.
+        return {
+            "delivered": False,
+            "reason": (
+                "RocketRide tool_gmail has no credentials. Connect Gmail in the "
+                "RocketRide dashboard and set ROCKETRIDE_GMAIL_USER_TOKEN, or set "
+                "ROCKETRIDE_GMAIL_SERVICE_KEY and ROCKETRIDE_GMAIL_ADMIN_EMAIL."
+            ),
+            "pipeline_token": token,
+            "subject": subject,
+            "body": body,
+        }
+
+    # Feed the pipeline. Creating it only reserves a token; this is the run.
+    try:
+        async with httpx.AsyncClient(timeout=RUN_TIMEOUT_SECONDS) as client:
+            run = await client.post(
+                f"{ROCKETRIDE_BASE_URL}/task/data",
+                params={"token": token},
+                headers={"Authorization": f"Bearer {key}"},
+                files={"question": (None, f"{instruction_for(to_email, subject, body)}")},
+            )
+            run_payload = run.json() if run.content else {}
+    except Exception as exc:
+        return {"delivered": False, "reason": f"pipeline run failed: {type(exc).__name__}"}
+
+    produced = (run_payload.get("data") or {}).get("resultTypes") or {}
+    if run_payload.get("status") == "OK" and produced:
+        logger.info("rocketride delivered %s packet", form_id)
         return {
             "delivered": True,
             "via": "rocketride/tool_gmail",
             "pipeline_token": token,
             "subject": subject,
         }
+    return {
+        "delivered": False,
+        "reason": (
+            "the pipeline ran but the agent produced no output, which is what "
+            "an unauthenticated tool_gmail looks like"
+        ),
+        "pipeline_token": token,
+        "subject": subject,
+        "body": body,
+    }
 
     reason = json.dumps(payload.get("error", payload))[:200]
     logger.warning("rocketride refused the pipeline: %s", reason)
