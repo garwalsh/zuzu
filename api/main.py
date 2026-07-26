@@ -50,7 +50,8 @@ from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import Tier, _user_key, get_memory, summarize
-from api.pdf_engine import fill_i765, missing_required
+from api.orchestrator import registered_agents, run_pipeline
+from api.pdf_engine import missing_required
 from api.retrieval import applicable_items, fetch_document_checklist
 from api.security import require_shared_secret, verify_secret
 from api.session_store import (
@@ -62,6 +63,9 @@ from api.session_store import (
 )
 
 CONFIDENCE_CONFIRM_THRESHOLD = 0.85
+#: Audit records from the most recent pipeline run per session. In Layer 2 this
+#: belongs in Redis alongside the session it describes.
+_AUDIT: dict[str, dict[str, Any]] = {}
 OUT_DIR = REPO_ROOT / "out"
 PERSONA_PATH = REPO_ROOT / "data" / "demo_personas.json"
 
@@ -360,8 +364,16 @@ async def generate_form(
         return GenerateFormResponse(status="incomplete", pdf_url=None, missing=missing)
 
     out_path = OUT_DIR / f"{payload.session_id}.pdf"
-    # Off the event loop: the call is still live and other tool calls must land.
-    await asyncio.to_thread(fill_i765, plain, out_path, schema)
+    sources = {fid: fv.source for fid, fv in session.values.items()}
+    # Extractor -> Mapper -> Validator -> Filler -> Auditor. Off the event loop:
+    # the call is still live and other tool calls must land.
+    written, record = await asyncio.to_thread(
+        run_pipeline, payload.session_id, schema, plain, sources, out_path
+    )
+    _AUDIT[payload.session_id] = record
+    if written is None:
+        blocking = [f["field_id"] for f in record["findings"] if f["severity"] == "error"]
+        return GenerateFormResponse(status="incomplete", pdf_url=None, missing=blocking)
     await get_session_store().set_pdf_path(payload.session_id, str(out_path))
 
     pdf_url = f"{os.environ.get('PUBLIC_BASE_URL', '').rstrip('/')}/forms/{payload.session_id}.pdf"
@@ -658,6 +670,37 @@ async def session_set_form(
         "known_count": known,
         "carried_over": known,
     }
+
+
+@app.get("/agents")
+async def agents_index() -> dict[str, Any]:
+    """The pipeline's stages and their Band agent identities, checked live."""
+    agents = await registered_agents()
+    return {
+        "stages": ["extractor", "mapper", "validator", "filler", "auditor"],
+        "agents": agents,
+        "dispatch": "in-process",
+        "note": (
+            "Stage identities are registered on Band and appear on every audit "
+            "entry. Execution is in-process: Band dispatch requires agents "
+            "running as WebSocket-connected processes with per-agent keys."
+        ),
+    }
+
+
+@app.get("/sessions/{session_id}/audit")
+async def session_audit(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Who set which field, from where, and what the Validator objected to.
+
+    In a legal-filing domain this is the point of separating the stages: when a
+    form comes back rejected, someone has to be able to work out why.
+    """
+    record = _AUDIT.get(session_id)
+    if record is None:
+        raise HTTPException(status_code=404, detail="no pipeline run for this session yet")
+    return record
 
 
 @app.get("/sessions/{session_id}/memory")
