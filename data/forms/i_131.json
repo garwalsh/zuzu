@@ -1,0 +1,2101 @@
+{
+  "form_id": "I-131",
+  "title": "Application for Travel Document",
+  "agency": "USCIS",
+  "edition": "01/20/25",
+  "pdf": "assets/i_131.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "part2_line1_family_name",
+      "question": "What is your family Name (Last Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line1_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P4[0].Part2_Line1_FamilyName[0]"
+    },
+    {
+      "id": "part2_line1_given_name",
+      "question": "What is your given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line1_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P4[0].Part2_Line1_GivenName[0]"
+    },
+    {
+      "id": "part2_line1_middle_name",
+      "question": "What is your middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line1_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P4[0].Part2_Line1_MiddleName[0]"
+    },
+    {
+      "id": "part2_line5_alien_number",
+      "question": "What is your alien Registration Number (A-Number) (?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.part2_line5_alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].#area[0].Part2_Line5_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "part2_line10_s_s_n",
+      "question": "What is your u. S. Social Security Number?",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.part2_line10_s_s_n",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].#area[1].Part2_Line10_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "part2_line11_u_s_c_i_s_online_acct_number",
+      "question": "What is your a U S C I S Online Account Number (?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.part2_line11_u_s_c_i_s_online_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line11_USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "part2_line12_classof_admission",
+      "question": "What is your class of Admission?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.part2_line12_classof_admission",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line12_ClassofAdmission[0]"
+    },
+    {
+      "id": "part2_line13_i94_record_no",
+      "question": "What is your most recent Form I-94 Arrival Departure Record Number?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.part2_line13_i94_record_no",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line13_I94RecordNo[0]",
+      "read_back": true
+    },
+    {
+      "id": "part2_line2_family_name1",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_family_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_FamilyName1[0]"
+    },
+    {
+      "id": "part2_line2_family_name2",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_family_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_FamilyName2[0]"
+    },
+    {
+      "id": "part2_line2_family_name3",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_family_name3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_FamilyName3[0]"
+    },
+    {
+      "id": "part2_line2_given_name1",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_given_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_GivenName1[0]"
+    },
+    {
+      "id": "part2_line2_given_name2",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_given_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_GivenName2[0]"
+    },
+    {
+      "id": "part2_line2_given_name3",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_given_name3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_GivenName3[0]"
+    },
+    {
+      "id": "part2_line2_middle_name1",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_middle_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_MiddleName1[0]"
+    },
+    {
+      "id": "part2_line2_middle_name2",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_middle_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_MiddleName2[0]"
+    },
+    {
+      "id": "part2_line2_middle_name3",
+      "question": "What is your other Names Used?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part2_line2_middle_name3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line2_MiddleName3[0]"
+    },
+    {
+      "id": "part2_line3_apt_ste_flr_number",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_apt_ste_flr_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part2_line3_city_town",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_city_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_CityTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "part2_line3_country",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_Country[0]"
+    },
+    {
+      "id": "part2_line3_in_careof_name",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_in_careof_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_InCareofName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_line3_postal_code",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "part2_line3_province",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "part2_line3_state",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.part2_line3_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_State[0]"
+    },
+    {
+      "id": "part2_line3_street_number_name",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line3_street_number_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_line3_zip_code",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.part2_line3_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line3_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "part2_line4_apt_ste_flr_number",
+      "question": "What is your information About You Current Physical Address if different from the above address. rt?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_apt_ste_flr_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part2_line4_city_town",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_city_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_CityTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "part2_line4_country",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_Country[0]"
+    },
+    {
+      "id": "part2_line4_in_careof_name",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_in_careof_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_InCareofName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_line4_postal_code",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "part2_line4_province",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "part2_line4_state",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.part2_line4_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_State[0]"
+    },
+    {
+      "id": "part2_line4_street_number_name",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_line4_street_number_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_line4_zip_code",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.part2_line4_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line4_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "part2_line6_country_of_birth",
+      "question": "What is your country of Birth?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.part2_line6_country_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line6_CountryOfBirth[0]"
+    },
+    {
+      "id": "part2_line7_country_of_citizenshipor_nationality",
+      "question": "What is your country of Citizenship?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.part2_line7_country_of_citizenshipor_nationality",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line7_CountryOfCitizenshiporNationality[0]"
+    },
+    {
+      "id": "part2_line9_date_of_birth",
+      "question": "What is your date of Birth as 2-digit Month, 2-digit Day, and 4-digit Year?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.part2_line9_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P5[0].Part2_Line9_DateOfBirth[0]"
+    },
+    {
+      "id": "p2_line16_family_name",
+      "question": "What is your if you are requesting parole on behalf of someone other than yourself, provide the?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line16_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P6[0].P2_Line16_FamilyName[0]"
+    },
+    {
+      "id": "p2_line16_given_name",
+      "question": "What is your given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line16_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P6[0].P2_Line16_GivenName[0]"
+    },
+    {
+      "id": "p2_line16_middle_name",
+      "question": "What is your middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line16_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P6[0].P2_Line16_MiddleName[0]"
+    },
+    {
+      "id": "par2_line15_e_medical_parolee_i_d",
+      "question": "What is your other Information. eMedical U S Parolee I D U S P I D?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.par2_line15_e_medical_parolee_i_d",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P6[0].Par2_Line15_eMedicalParoleeID[0]"
+    },
+    {
+      "id": "part2_line14_i94_exp_date",
+      "question": "What is your expiration Date of Authorized Stay Shown on Form I-94?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.part2_line14_i94_exp_date",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].P6[0].Part2_Line14_I94ExpDate[0]",
+      "read_back": true
+    },
+    {
+      "id": "p3_line3_height_feet",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line3_height_feet",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P7[0].P3_Line3_HeightFeet[0]"
+    },
+    {
+      "id": "p3_line3_height_inches",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line3_height_inches",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P7[0].P3_Line3_HeightInches[0]"
+    },
+    {
+      "id": "p3_line4_pound1",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line4_pound1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P7[0].P3_Line4_Pound1[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p3_line4_pound2",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line4_pound2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P7[0].P3_Line4_Pound2[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p3_line4_pound3",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line4_pound3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].P7[0].P3_Line4_Pound3[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p4_line9b_email",
+      "question": "What is your daytime Phone Number?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p4_line9b_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].P4_Line9b_Email[0]",
+      "max_len": 15
+    },
+    {
+      "id": "p4_line9c_email",
+      "question": "What is your email Address?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p4_line9c_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].P4_Line9c_Email[0]"
+    },
+    {
+      "id": "p6_line1_country_refugee",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Country from which you are a?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p6_line1_country_refugee",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].P6_Line1_CountryRefugee[0]"
+    },
+    {
+      "id": "p7_line1_date_of_departure",
+      "question": "What is your information About Your Proposed Travel.) Date of Intended Departure?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p7_line1_date_of_departure",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P7_Line1_DateOfDeparture[0]"
+    },
+    {
+      "id": "p7_line2_purpose",
+      "question": "What is your information About Your Proposed Travel.) Purpose of trip?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line2_purpose",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P7_Line2_Purpose[0]"
+    },
+    {
+      "id": "p7_line3_list_countries",
+      "question": "What is your information About Your Proposed Travel.) List the countries you intend to visit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line3_list_countries",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P7_Line3_ListCountries[0]"
+    },
+    {
+      "id": "p7_line5_expected_length_trip",
+      "question": "What is your information About Your Proposed Travel.) Expected Length of Trip (in days)?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line5_expected_length_trip",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P7_Line5_ExpectedLengthTrip[0]"
+    },
+    {
+      "id": "p8_line1_explain",
+      "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line1_explain",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P8_Line1_Explain[0]"
+    },
+    {
+      "id": "p8_line2_expected_length_tripin_u_s",
+      "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line2_expected_length_tripin_u_s",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P8_Line2_ExpectedLengthTripinUS[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p8_line3a_date_of_intended_arrival",
+      "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole If?",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line3a_date_of_intended_arrival",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P8_Line3a_DateOfIntendedArrival[0]"
+    },
+    {
+      "id": "p8_line3b_city_or_town",
+      "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p8_line3b_city_or_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P8_Line3b_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p8_line3b_country",
+      "question": "What is your complete Only If Applying for an Initial Parole Document, Parole In Place, or Re-parole?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p8_line3b_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P8_Line3b_Country[0]"
+    },
+    {
+      "id": "part10_line1_day_phone",
+      "question": "What is your applicant's Contact Information, Certification, and Signature Applicant's Contact?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.part10_line1_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].Part10_Line1_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part10_line2_mobile_phone",
+      "question": "What is your applicant's Contact Information, Certification, and Signature Applicant Mobile Telephone?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.part10_line2_mobile_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].Part10_Line2_MobilePhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part10_line3_email",
+      "question": "What is your applicant's Contact Information, Certification, and Signature Applicant's Email Address (?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.part10_line3_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].Part10_Line3_Email[0]"
+    },
+    {
+      "id": "p11_language",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Certification?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Language[0]",
+      "max_len": 18
+    },
+    {
+      "id": "part11_line2_nameof_businessor_org_name",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Business or?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part11_line2_nameof_businessor_org_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Part11_Line2_NameofBusinessorOrgName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part11_line3_day_phone",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Contact?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.part11_line3_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Part11_Line3_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part11_line4_mobile_phone",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Mobile?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.part11_line4_mobile_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Part11_Line4_MobilePhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part11_line5_email",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature Interpreter's Email Address?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.part11_line5_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Part11_Line5_Email[0]"
+    },
+    {
+      "id": "part12_line1_family_name",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part12_line1_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line1_FamilyName[0]"
+    },
+    {
+      "id": "part12_line1_given_name",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part12_line1_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line1_GivenName[0]"
+    },
+    {
+      "id": "part12_line2_nameof_businessor_org_name",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.part12_line2_nameof_businessor_org_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line2_NameofBusinessorOrgName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part12_line3_day_phone",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.part12_line3_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line3_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part12_line4_mobile_phone",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.part12_line4_mobile_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line4_MobilePhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "part12_line5_email",
+      "question": "What is your contact Information, Certification, and Signature of the Person Preparing this Application,?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.part12_line5_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].Part12_Line5_Email[0]"
+    },
+    {
+      "id": "part13_line3_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line3_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line3_AdditionalInfo[0]"
+    },
+    {
+      "id": "part13_line3_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line3_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line3_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line3_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line3_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line3_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part13_line3_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line3_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line3_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line4_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line4_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line4_AdditionalInfo[0]"
+    },
+    {
+      "id": "part13_line4_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line4_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line4_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line4_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line4_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line4_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part13_line4_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line4_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line4_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line5_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line5_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line5_AdditionalInfo[0]"
+    },
+    {
+      "id": "part13_line5_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line5_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line5_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line5_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line5_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line5_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part13_line5_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line5_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line5_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line6_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line6_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line6_AdditionalInfo[0]"
+    },
+    {
+      "id": "part13_line6_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line6_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line6_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line6_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line6_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line6_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part13_line6_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line6_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line6_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line7_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line7_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line7_AdditionalInfo[0]"
+    },
+    {
+      "id": "part13_line7_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line7_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line7_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part13_line7_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line7_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line7_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part13_line7_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part13_line7_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[13].Part13_Line7_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "c_b_app_type",
+      "question": "What is your the application type below?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c_b_app_type",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Part 1. Application Type.  Select the application type below. Reentry Permit.  C",
+          "pdf_field": "form1[0].P1[0].CB_AppType[0]",
+          "pdf_value": "/1"
+        },
+        {
+          "value": "2",
+          "label": "Part 1. Application Type.  Select the application type below. Refugee Travel Doc",
+          "pdf_field": "form1[0].P1[0].CB_AppType[1]",
+          "pdf_value": "/2"
+        },
+        {
+          "value": "3",
+          "label": "Part 1. Application Type.  Select the application type below. Refugee Travel Doc",
+          "pdf_field": "form1[0].P1[0].CB_AppType[2]",
+          "pdf_value": "/3"
+        },
+        {
+          "value": "4",
+          "label": "Part 1. Application Type.  Select the application type below. Travel Authorizati",
+          "pdf_field": "form1[0].P1[0].CB_AppType[3]",
+          "pdf_value": "/4"
+        },
+        {
+          "value": "5",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P1[0].CB_AppType[4]",
+          "pdf_value": "/5"
+        }
+      ]
+    },
+    {
+      "id": "g28_attached",
+      "question": "What is your check Fill in box if G-28 is attached to represent the applicant?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.g28_attached",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "To Be Completed by an Attorney/Representative, if any. Check Fill in box if G-28",
+          "pdf_field": "form1[0].P1[0].G28_Attached[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "c_b_app_type_2",
+      "question": "What is your advance Parole Document and Advance Permission to Travel for Commonwealth of Northern?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c_b_app_type_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "12",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[0]",
+          "pdf_value": "/12"
+        },
+        {
+          "value": "7",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[10]",
+          "pdf_value": "/7"
+        },
+        {
+          "value": "16",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[11]",
+          "pdf_value": "/16"
+        },
+        {
+          "value": "6",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[12]",
+          "pdf_value": "/6"
+        },
+        {
+          "value": "11",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[1]",
+          "pdf_value": "/11"
+        },
+        {
+          "value": "13",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[2]",
+          "pdf_value": "/13"
+        },
+        {
+          "value": "14",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[3]",
+          "pdf_value": "/14"
+        },
+        {
+          "value": "15",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[4]",
+          "pdf_value": "/15"
+        },
+        {
+          "value": "17",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[5]",
+          "pdf_value": "/17"
+        },
+        {
+          "value": "18",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P2[0].CB_AppType[6]",
+          "pdf_value": "/18"
+        },
+        {
+          "value": "8",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[7]",
+          "pdf_value": "/8"
+        },
+        {
+          "value": "9",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[8]",
+          "pdf_value": "/9"
+        },
+        {
+          "value": "10",
+          "label": "Part 1.  Application Type.  Advance Parole Document (for aliens who are inside t",
+          "pdf_field": "form1[0].P2[0].CB_AppType[9]",
+          "pdf_value": "/10"
+        }
+      ]
+    },
+    {
+      "id": "c_b_app_type_3",
+      "question": "What is your the application type below. initial Parole Document Process; Task Force?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c_b_app_type_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "21",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P3[0].CB_AppType[0]",
+          "pdf_value": "/21"
+        },
+        {
+          "value": "22",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P3[0].CB_AppType[1]",
+          "pdf_value": "/22"
+        },
+        {
+          "value": "24",
+          "label": "Part 1. Application Type.  Select  the application type below.  Initial Request ",
+          "pdf_field": "form1[0].P3[0].CB_AppType[2]",
+          "pdf_value": "/24"
+        },
+        {
+          "value": "26",
+          "label": "Part 1. Application Type.  Select  the application type below.  Initial Request ",
+          "pdf_field": "form1[0].P3[0].CB_AppType[3]",
+          "pdf_value": "/26"
+        },
+        {
+          "value": "25",
+          "label": "Part 1. Application Type.  Select  the application type below.  Initial Request ",
+          "pdf_field": "form1[0].P3[0].CB_AppType[4]",
+          "pdf_value": "/25"
+        },
+        {
+          "value": "23",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P3[0].CB_AppType[5]",
+          "pdf_value": "/23"
+        },
+        {
+          "value": "27",
+          "label": "Part 1. Application Type.  Select  the application type below.  Initial Request ",
+          "pdf_field": "form1[0].P3[0].CB_AppType[6]",
+          "pdf_value": "/27"
+        },
+        {
+          "value": "20",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P3[0].CB_AppType[7]",
+          "pdf_value": "/20"
+        },
+        {
+          "value": "19",
+          "label": "Part 1. Application Type.  Select  the application type below.  initial Parole D",
+          "pdf_field": "form1[0].P3[0].CB_AppType[8]",
+          "pdf_value": "/19"
+        }
+      ]
+    },
+    {
+      "id": "c_b_app_type_4",
+      "question": "What is your arrival/Departure Records for Re-parole for aliens Who Are Requesting a New Period of?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c_b_app_type_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "37",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[0]",
+          "pdf_value": "/37"
+        },
+        {
+          "value": "34",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[1]",
+          "pdf_value": "/34"
+        },
+        {
+          "value": "35",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[2]",
+          "pdf_value": "/35"
+        },
+        {
+          "value": "36",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[3]",
+          "pdf_value": "/36"
+        },
+        {
+          "value": "29",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[4]",
+          "pdf_value": "/29"
+        },
+        {
+          "value": "28",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[5]",
+          "pdf_value": "/28"
+        },
+        {
+          "value": "30",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[6]",
+          "pdf_value": "/30"
+        },
+        {
+          "value": "31",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[7]",
+          "pdf_value": "/31"
+        },
+        {
+          "value": "32",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[8]",
+          "pdf_value": "/32"
+        },
+        {
+          "value": "33",
+          "label": "Part 1.  Application Type.  Arrival/Departure Records for Re-parole for aliens W",
+          "pdf_field": "form1[0].P4[0].CB_AppType[9]",
+          "pdf_value": "/33"
+        }
+      ]
+    },
+    {
+      "id": "p1_line13_yes_no",
+      "question": "What is your refugee Status?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_line13_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Type 1.  Application Type.  Refugee Status.  13.  Do you hold status as a refuge",
+          "pdf_field": "form1[0].P4[0].P1_Line13_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Type 1.  Application Type.  Refugee Status.  13.  Do you hold status as a refuge",
+          "pdf_field": "form1[0].P4[0].P1_Line13_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "part2_line3_unit",
+      "question": "What is your current Mailing Address or Safe Address?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.part2_line3_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You. 3. Current Mailing Address or Safe Address if app",
+          "pdf_field": "form1[0].P5[0].Part2_Line3_Unit[0]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You. 3. Current Mailing Address or Safe Address if app",
+          "pdf_field": "form1[0].P5[0].Part2_Line3_Unit[1]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You. 3. Current Mailing Address or Safe Address if app",
+          "pdf_field": "form1[0].P5[0].Part2_Line3_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "part2_line4_unit",
+      "question": "What is your current Physical Address if different from the above address?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.part2_line4_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You 4. Current Physical Address if different from the ",
+          "pdf_field": "form1[0].P5[0].Part2_Line4_Unit[0]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You 4. Current Physical Address if different from the ",
+          "pdf_field": "form1[0].P5[0].Part2_Line4_Unit[1]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "flr",
+          "label": "Part Part 2. Information About You 4. Current Physical Address if different from",
+          "pdf_field": "form1[0].P5[0].Part2_Line4_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "part2_line8_gender",
+      "question": "What is your sex?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.part2_line8_gender",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "f",
+          "label": "Part 2. Information About You. Other Information. 8. Sex. Check Female. ",
+          "pdf_field": "form1[0].P5[0].Part2_Line8_Gender[0]",
+          "pdf_value": "/F"
+        },
+        {
+          "value": "m",
+          "label": "Part 2. Information About You. Other Information. 8. Sex. Check Male. ",
+          "pdf_field": "form1[0].P5[0].Part2_Line8_Gender[1]",
+          "pdf_value": "/M"
+        }
+      ]
+    },
+    {
+      "id": "p3_line1_ethnicity",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p3_line1_ethnicity",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "nh",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line1_Ethnicity[0]",
+          "pdf_value": "/NH"
+        },
+        {
+          "value": "h",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line1_Ethnicity[1]",
+          "pdf_value": "/H"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_race_american",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line2_race_american",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "i",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line2_Race_American[0]",
+          "pdf_value": "/I"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_race_asian",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line2_race_asian",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line2_Race_Asian[0]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_race_black",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line2_race_black",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line2_Race_Black[0]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_race_hawaiian",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line2_race_hawaiian",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "h",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line2_Race_Hawaiian[0]",
+          "pdf_value": "/H"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_race_white",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line2_race_white",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "w",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line2_Race_White[0]",
+          "pdf_value": "/W"
+        }
+      ]
+    },
+    {
+      "id": "p3_line5_eye_color",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line5_eye_color",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "brn",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[0]",
+          "pdf_value": "/BRN"
+        },
+        {
+          "value": "gry",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[1]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "mrn",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[2]",
+          "pdf_value": "/MRN"
+        },
+        {
+          "value": "oth",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[3]",
+          "pdf_value": "/OTH"
+        },
+        {
+          "value": "pnk",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[4]",
+          "pdf_value": "/PNK"
+        },
+        {
+          "value": "hzl",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[5]",
+          "pdf_value": "/HZL"
+        },
+        {
+          "value": "grn",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[6]",
+          "pdf_value": "/GRN"
+        },
+        {
+          "value": "blu",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[7]",
+          "pdf_value": "/BLU"
+        },
+        {
+          "value": "blk",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line5_EyeColor[8]",
+          "pdf_value": "/BLK"
+        }
+      ]
+    },
+    {
+      "id": "p3_line6_hair_color",
+      "question": "What is your biographic Information of the Person Who Will Receive the Travel Document, Parole Document,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line6_hair_color",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "bld",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[0]",
+          "pdf_value": "/BLD"
+        },
+        {
+          "value": "bnd",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[1]",
+          "pdf_value": "/BND"
+        },
+        {
+          "value": "gry",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[2]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "sdy",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[3]",
+          "pdf_value": "/SDY"
+        },
+        {
+          "value": "oth",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[4]",
+          "pdf_value": "/OTH"
+        },
+        {
+          "value": "wht",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[5]",
+          "pdf_value": "/WHT"
+        },
+        {
+          "value": "red",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[6]",
+          "pdf_value": "/RED"
+        },
+        {
+          "value": "brn",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[7]",
+          "pdf_value": "/BRN"
+        },
+        {
+          "value": "blk",
+          "label": "Part 3. Biographic Information of the Person Who Will Receive the Travel Documen",
+          "pdf_field": "form1[0].P7[0].P3_Line6_HairColor[8]",
+          "pdf_value": "/BLK"
+        }
+      ]
+    },
+    {
+      "id": "p4_line1_yes_no",
+      "question": "What is your has the person who will receive the travel document, parole document, or Arrival/Departure?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line1_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Processing Information. 1.  Has the person who will receive the travel d",
+          "pdf_field": "form1[0].P7[0].P4_Line1_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 4. Processing Information. 1.  Has the person who will receive the travel d",
+          "pdf_field": "form1[0].P7[0].P4_Line1_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line2a_yes_no",
+      "question": "What is your have you EVER before been issued a Reentry Permit or Refugee Travel Document? Check Yes?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line2a_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Processing Information. 2. A. Have you EVER before been issued a Reentry",
+          "pdf_field": "form1[0].P7[0].P4_Line2a_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 4. Processing Information. 2. A. Have you EVER before been issued a Reentry",
+          "pdf_field": "form1[0].P7[0].P4_Line2a_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line3a_yes_no",
+      "question": "What is your have you EVER been issued an Advance Parole Document? Check Yes?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_line3a_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Processing Information. 3. A.   Have you EVER been issued an Advance Par",
+          "pdf_field": "form1[0].P7[0].P4_Line3a_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 4. Processing Information. 3. A.   Have you EVER been issued an Advance Par",
+          "pdf_field": "form1[0].P7[0].P4_Line3a_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line4_yes_no",
+      "question": "What is your are you requesting a replacement Reentry Permit, Refugee Travel Document, Advance Parole?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line4_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Processing Information. 4. Are you requesting a replacement Reentry Perm",
+          "pdf_field": "form1[0].P7[0].P4_Line4_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 4. Processing Information. 4. Are you requesting a replacement Reentry Perm",
+          "pdf_field": "form1[0].P7[0].P4_Line4_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line7a",
+      "question": "What is your to a U.S. Embassy, U.S. Consulate, USCIS international field office, or Department of?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_line7a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 4. Processing Information. 7.b. To a U.S. Embassy, U.S. Consulate, USCIS in",
+          "pdf_field": "form1[0].#subform[7].P4_Line7a[0]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "a",
+          "label": "Part 4. Processing Information. If you are applying for an Advance Parole Docume",
+          "pdf_field": "form1[0].#subform[7].P4_Line7a[1]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "p4_line8_c_b",
+      "question": "What is your if you are requesting that the Reentry Permit or Refugee Travel Document be sent to a U.S?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line8_c_b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 4. Processing Information. If you are requesting that the Reentry Permit or",
+          "pdf_field": "form1[0].#subform[8].P4_Line8_CB[0]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 4. Processing Information. If you are requesting that the Reentry Permit or",
+          "pdf_field": "form1[0].#subform[8].P4_Line8_CB[1]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_1to2",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_1to2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_1to2[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_2to3",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_2to3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_2to3[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_3to4",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_3to4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_3to4[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_6months",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_6months",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_6months[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_lessthan6",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_lessthan6",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_Lessthan6[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1_morethan",
+      "question": "What is your complete Only If Applying for a Reentry Permit Since becoming a permanent resident of the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1_morethan",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Complete Only If Applying for a Reentry Permit (Part 1., Item Number 1.)",
+          "pdf_field": "form1[0].#subform[8].P5_Line1_morethan[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line2_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Do you plan to travel to the?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p6_line2_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line2_YesNo[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line2_YesNo[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line3a_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Since you were admitted to the?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line3a_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3a_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3a_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p6_line3b_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Applied for and/or obtained a?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p6_line3b_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3b_YesNo[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3b_YesNo[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line3c_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Applied for and/or received any?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p6_line3c_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3c_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[8].P6_Line3c_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Been granted refugee or asylee?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].Line4c_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "yes",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Been granted refugee or asylee?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].Line4c_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line4a_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Reacquired the nationality of the?",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p6_line4a_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line4a_YesNo[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line4a_YesNo[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line4b_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Acquired a new nationality? Yes?",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p6_line4b_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line4b_YesNo[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line4b_YesNo[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p6_line5_yes_no",
+      "question": "What is your complete Only If Applying for a Refugee Travel Document Are you filing for a Refugee Travel?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line5_yes_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line5_YesNo[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 6. Complete Only If Applying for a Refugee Travel Document (Part 1., Item N",
+          "pdf_field": "form1[0].#subform[9].P6_Line5_YesNo[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p7_line4_c_b",
+      "question": "Information About Your Proposed Travel.) How many trips do you intend to use this document?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p7_line4_c_b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "o",
+          "label": "Part 7. Information About Your Proposed Travel (Complete only if you are applyin",
+          "pdf_field": "form1[0].#subform[9].P7_Line4_CB[0]",
+          "pdf_value": "/O"
+        },
+        {
+          "value": "m",
+          "label": "Part 7. Information About Your Proposed Travel (Complete only if you are applyin",
+          "pdf_field": "form1[0].#subform[9].P7_Line4_CB[1]",
+          "pdf_value": "/M"
+        }
+      ]
+    },
+    {
+      "id": "p9_line1_e_a_d",
+      "question": "What is your employment Authorization For New Period of Parole (Re-parole) I am requesting an Employment?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p9_line1_e_a_d",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "Part 9. Employment Authorization For New Period of Parole (Re-parole) (Part 1., ",
+          "pdf_field": "form1[0].#subform[10].P9_Line1_EAD[0]",
+          "pdf_value": "/1"
+        }
+      ]
+    }
+  ]
+}

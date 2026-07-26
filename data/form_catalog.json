@@ -1,0 +1,89 @@
+{
+  "notes": "The USCIS forms Zuzu can onboard on demand. `pdf` is the official fillable PDF; `page` is the instructions page rtrvr reads for the document checklist. Onboarding needs no code change -- POST /forms/onboard fetches the PDF, extracts its AcroForm inventory, derives a schema, and registers it.",
+  "forms": [
+    {
+      "form_id": "I-765",
+      "title": "Application for Employment Authorization",
+      "why": "Work permit. The MVP form.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-765.pdf",
+      "page": "https://www.uscis.gov/i-765"
+    },
+    {
+      "form_id": "N-400",
+      "title": "Application for Naturalization",
+      "why": "Becoming a U.S. citizen. One of the highest-volume USCIS forms.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/n-400.pdf",
+      "page": "https://www.uscis.gov/n-400"
+    },
+    {
+      "form_id": "I-130",
+      "title": "Petition for Alien Relative",
+      "why": "Family-based immigration. The most filed USCIS petition.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-130.pdf",
+      "page": "https://www.uscis.gov/i-130"
+    },
+    {
+      "form_id": "I-485",
+      "title": "Application to Register Permanent Residence or Adjust Status",
+      "why": "Green card from inside the U.S.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-485.pdf",
+      "page": "https://www.uscis.gov/i-485"
+    },
+    {
+      "form_id": "I-131",
+      "title": "Application for Travel Document",
+      "why": "Advance parole and re-entry permits. Often filed alongside I-765.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-131.pdf",
+      "page": "https://www.uscis.gov/i-131"
+    },
+    {
+      "form_id": "I-90",
+      "title": "Application to Replace Permanent Resident Card",
+      "why": "Renewing or replacing a green card.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-90.pdf",
+      "page": "https://www.uscis.gov/i-90"
+    },
+    {
+      "form_id": "I-751",
+      "title": "Petition to Remove Conditions on Residence",
+      "why": "Conditional residents moving to a permanent green card.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-751.pdf",
+      "page": "https://www.uscis.gov/i-751"
+    },
+    {
+      "form_id": "I-864",
+      "title": "Affidavit of Support Under Section 213A of the INA",
+      "why": "Financial sponsorship, required with most family green cards.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-864.pdf",
+      "page": "https://www.uscis.gov/i-864"
+    },
+    {
+      "form_id": "I-821D",
+      "title": "Consideration of Deferred Action for Childhood Arrivals",
+      "why": "DACA requests, filed together with I-765.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-821d.pdf",
+      "page": "https://www.uscis.gov/i-821d"
+    },
+    {
+      "form_id": "I-589",
+      "title": "Application for Asylum and for Withholding of Removal",
+      "why": "Asylum. High stakes and high volume.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-589.pdf",
+      "page": "https://www.uscis.gov/i-589"
+    },
+    {
+      "form_id": "G-28",
+      "title": "Notice of Entry of Appearance as Attorney or Accredited Representative",
+      "why": "Filed whenever a representative is involved.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/g-28.pdf",
+      "page": "https://www.uscis.gov/g-28"
+    },
+    {
+      "form_id": "I-539",
+      "title": "Application to Extend/Change Nonimmigrant Status",
+      "why": "Status extensions and changes for nonimmigrants.",
+      "pdf": "https://www.uscis.gov/sites/default/files/document/forms/i-539.pdf",
+      "page": "https://www.uscis.gov/i-539"
+    }
+  ]
+}

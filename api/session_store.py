@@ -162,8 +162,15 @@ def next_missing_field(session: Session, schema: FormSchema) -> FormField | None
 
 
 def counts(session: Session, schema: FormSchema) -> tuple[int, int]:
-    """(remaining_count, known_count) for the agent's progress reporting."""
-    remaining = sum(1 for f in schema.fields if f.required and not session.answered(f.id))
+    """(remaining_count, known_count) for the agent's progress reporting.
+
+    Counts every unanswered field, not just required ones, so it matches what
+    `next_missing_field` will actually keep asking for. Counting only required
+    fields reported 0 remaining on a schema derived from a PDF -- where nothing
+    is marked required -- while 273 questions were still to come, which would
+    invite the agent to generate the form early.
+    """
+    remaining = sum(1 for f in schema.fields if not session.answered(f.id))
     return remaining, len(session.values)
 
 

@@ -100,7 +100,27 @@ def run_full_call(client, conversation_id: str) -> dict:
 def test_health_needs_no_auth(client):
     resp = client.get("/health")
     assert resp.status_code == 200
-    assert resp.json() == {"status": "ok", "form_ids": ["I-765"]}
+    body = resp.json()
+    assert body["status"] == "ok"
+    # I-765 is the MVP form; anything else present has been onboarded from its
+    # PDF into data/forms/ and is served without a code change.
+    assert "I-765" in body["form_ids"]
+
+
+def test_onboarded_forms_are_served_without_a_code_change(client):
+    """Every schema under data/forms/ should be answerable."""
+    listed = client.get("/forms").json()
+    for form_id in listed["ready"]:
+        resp = client.get(f"/forms/{form_id}/schema")
+        assert resp.status_code == 200, form_id
+        assert resp.json()["fields"], f"{form_id} has no questions"
+
+
+def test_catalog_reports_what_is_ready(client):
+    listed = client.get("/forms").json()
+    assert listed["catalog"], "the form catalog should not be empty"
+    i765 = next(e for e in listed["catalog"] if e["form_id"] == "I-765")
+    assert i765["ready"] is True
 
 
 def test_full_call_produces_a_downloadable_pdf(client):

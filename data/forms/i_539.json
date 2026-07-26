@@ -1,0 +1,1568 @@
+{
+  "form_id": "I-539",
+  "title": "Application to Extend/Change Nonimmigrant Status",
+  "agency": "USCIS",
+  "edition": "08/28/24",
+  "pdf": "assets/i_539.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "p1_line1a_family_name",
+      "question": "What is your family Name, Last Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line1a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1Line1a_FamilyName[0]"
+    },
+    {
+      "id": "p1_line1b_given_name",
+      "question": "What is your given Name, First Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line1b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line1b_GivenName[0]"
+    },
+    {
+      "id": "p1_line1c_middle_name",
+      "question": "What is your middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line1c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line1c_MiddleName[0]"
+    },
+    {
+      "id": "part1_item4_number",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part1_item4_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part1_Item4_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part1_item6_number",
+      "question": "What is your if Apartment, Suite or Floor is Checked, Enter Apartment, Suite or Floor Number?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part1_item6_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part1_Item6_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "part2_item11_city",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_item11_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part2_Item11_City[0]",
+      "max_len": 28
+    },
+    {
+      "id": "part2_item11_in_care_of_name",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_item11_in_care_of_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part2_Item11_InCareOfName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_item11_state",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.part2_item11_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part2_Item11_State[0]"
+    },
+    {
+      "id": "part2_item11_street_name",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.part2_item11_street_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part2_Item11_StreetName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "part2_item11_zip_code",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.part2_item11_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Part2_Item11_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "alien_number",
+      "question": "What is your alien Registration Number, A. Number?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt1Line2_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "u_s_c_i_s_online_acct_number",
+      "question": "What is your u S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt1Line2_USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "u_s_c_i_s_online_acct_number_2",
+      "question": "What is your to be completed by an Attorney or Accredited Representative (?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_acct_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p1_line6_country_of_birth",
+      "question": "What is your country of Birth?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line6_country_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line6_CountryOfBirth[0]"
+    },
+    {
+      "id": "p1_line7_country_of_citizenship",
+      "question": "What is your country of Citizenship or Nationality?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line7_country_of_citizenship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line7_CountryOfCitizenship[0]"
+    },
+    {
+      "id": "p1_line8_date_of_birth",
+      "question": "What is your date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line8_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line8_DateOfBirth[0]"
+    },
+    {
+      "id": "p1_line9_s_s_n",
+      "question": "What is your u.S. Social Security Number?",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.p1_line9_s_s_n",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line9_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p3_line1a_date_extended",
+      "question": "What is your i / We request that my / our current or requested status be extended until?",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p3_line1a_date_extended",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P3_Line1a_DateExtended[0]"
+    },
+    {
+      "id": "new_status",
+      "question": "What is your current Nonimmigrant Status?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.new_status",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt1Line15a_NewStatus[0]"
+    },
+    {
+      "id": "sup_a_line1i_date_of_arrival",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.sup_a_line1i_date_of_arrival",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1i_DateOfArrival[0]"
+    },
+    {
+      "id": "sup_a_line1j_arrival_departure",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.sup_a_line1j_arrival_departure",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1j_ArrivalDeparture[0]",
+      "max_len": 11
+    },
+    {
+      "id": "sup_a_line1k_passport",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.sup_a_line1k_passport",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1k_Passport[0]",
+      "max_len": 30,
+      "read_back": true
+    },
+    {
+      "id": "sup_a_line1k_passport_2",
+      "question": "What is your the name of the school you will attend?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.sup_a_line1k_passport_2",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1k_Passport[1]",
+      "read_back": true
+    },
+    {
+      "id": "sup_a_line1k_passport_3",
+      "question": "What is your student and Exchange Visitor Information System S E V I S, I D Number?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.sup_a_line1k_passport_3",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1k_Passport[2]",
+      "max_len": 30,
+      "read_back": true
+    },
+    {
+      "id": "sup_a_line1l_travel_doc",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.sup_a_line1l_travel_doc",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1l_TravelDoc[0]",
+      "max_len": 30
+    },
+    {
+      "id": "sup_a_line1m_country_of_issuance",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.sup_a_line1m_country_of_issuance",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1m_CountryOfIssuance[0]"
+    },
+    {
+      "id": "sup_a_line1n_exp_date",
+      "question": "What is your information About Your Most Recent Entry Into the United States?",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.sup_a_line1n_exp_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1n_ExpDate[0]"
+    },
+    {
+      "id": "sup_a_line1p_date_expires",
+      "question": "What is your current Nonimmigrant Status?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.sup_a_line1p_date_expires",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].SupA_Line1p_DateExpires[0]"
+    },
+    {
+      "id": "p2_line10_city",
+      "question": "What is your the City or Town?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_City[0]",
+      "max_len": 28
+    },
+    {
+      "id": "p2_line10_country",
+      "question": "What is your for International address enter the Country?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_Country[0]",
+      "max_len": 41
+    },
+    {
+      "id": "p2_line10_number",
+      "question": "What is your the Apartment, Suite, or Floor Number?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_Number[0]"
+    },
+    {
+      "id": "p2_line10_postal_code",
+      "question": "What is your for International address enter the Postal Code?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p2_line10_province",
+      "question": "What is your for International address enter the Province?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line10_street_name",
+      "question": "What is your street Number and Name?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line10_street_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_StreetName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p3_line4_nameof_petitioner",
+      "question": "What is your if the petition or application is pending with U S C I S, also provide the following?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line4_nameof_petitioner",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line4_NameofPetitioner[0]"
+    },
+    {
+      "id": "p3_line4_nameof_petitioner_2",
+      "question": "What is your if the petition or application is pending with U S C I S, also provide the following?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line4_nameof_petitioner_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line4_NameofPetitioner[1]"
+    },
+    {
+      "id": "p3_line5_date_filed",
+      "question": "What is your as 2-digit Month, 2-digit Day, and 4-digit Year?",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p3_line5_date_filed",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line5_DateFiled[0]"
+    },
+    {
+      "id": "p4_line1a_country_of_issuance",
+      "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line1a_country_of_issuance",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1a_CountryOfIssuance[0]"
+    },
+    {
+      "id": "p4_line1a_country_of_issuance_2",
+      "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line1a_country_of_issuance_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1a_CountryOfIssuance[1]"
+    },
+    {
+      "id": "p4_line1b_expiration_date",
+      "question": "What is your if your current passport information is different from the information you provided in Part?",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line1b_expiration_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1b_ExpirationDate[0]"
+    },
+    {
+      "id": "p5_line3_daytime_phone_number",
+      "question": "What is your applicant's Contact Information?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p5_line3_daytime_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line3_DaytimePhoneNumber[0]",
+      "max_len": 15
+    },
+    {
+      "id": "p5_line4_mobile_phone_number",
+      "question": "What is your applicant's Contact Information?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p5_line4_mobile_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line4_MobilePhoneNumber[0]",
+      "max_len": 15
+    },
+    {
+      "id": "p5_line5_email_address",
+      "question": "What is your applicant's Contact Information?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p5_line5_email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line5_EmailAddress[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line4_daytime_phone_number",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p6_line4_daytime_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line4_DaytimePhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p6_line4_daytime_phone_number_2",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p6_line4_daytime_phone_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line4_DaytimePhoneNumber[1]",
+      "max_len": 10
+    },
+    {
+      "id": "p6_line5_email_address",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p6_line5_email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line5_EmailAddress[0]"
+    },
+    {
+      "id": "p7_line6_language",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line6_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_Line6_Language[0]"
+    },
+    {
+      "id": "p7_line2_business_name",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "type": "ssn",
+      "group": "name",
+      "memory_key": "name.p7_line2_business_name",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line2_BusinessName[0]",
+      "max_len": 34,
+      "read_back": true
+    },
+    {
+      "id": "p7_line5_fax_phone_number",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p7_line5_fax_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line5_FaxPhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p7_line6_email_address",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Application,?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p7_line6_email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line6_EmailAddress[0]"
+    },
+    {
+      "id": "p8_line3_a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3_a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3_A_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line3_b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3_b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3_B_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line3_c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3_c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3_C_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line3_d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3_d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3_D_AdditionalInfo[0]"
+    },
+    {
+      "id": "p8_line4_a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4_a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4_A_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line4_b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4_b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4_B_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line4_c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4_c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4_C_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line4_d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4_d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4_D_AdditionalInfo[0]"
+    },
+    {
+      "id": "p8_line5_a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5_a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5_A_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line5_b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5_b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5_B_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line5_c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5_c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5_C_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line5_d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5_d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5_D_AdditionalInfo[0]"
+    },
+    {
+      "id": "p8_line6_a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line6_a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line6_A_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line6_b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line6_b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line6_B_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line6_c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line6_c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line6_C_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p8_line6_d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line6_d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line6_D_AdditionalInfo[0]"
+    },
+    {
+      "id": "check_box1",
+      "question": "What is your to be completed by an Attorney or Accredited Representative (?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.check_box1",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "To be completed by an Attorney or Accredited Representative (if any). Check this",
+          "pdf_field": "form1[0].#subform[0].CheckBox1[0]",
+          "pdf_value": "/1"
+        }
+      ]
+    },
+    {
+      "id": "p1_checkbox5",
+      "question": "What is your is your mailing address the same as your physical address? Check this box for No?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p1_checkbox5",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 1.  Information About You. 5. Is your mailing address the same as your phys",
+          "pdf_field": "form1[0].#subform[0].P1_checkbox5[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 1.  Information About You. 5. Is your mailing address the same as your phys",
+          "pdf_field": "form1[0].#subform[0].P1_checkbox5[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "part1_item4_unit",
+      "question": "What is your u.S. Mailing Address, Safe Address?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.part1_item4_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if a",
+          "pdf_field": "form1[0].#subform[0].Part1_Item4_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if a",
+          "pdf_field": "form1[0].#subform[0].Part1_Item4_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 1.  Information About You. 4. Your U.S. Mailing Address, Safe Address, if a",
+          "pdf_field": "form1[0].#subform[0].Part1_Item4_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "p1_checkbox12c",
+      "question": "What is your current Nonimmigrant Status?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_checkbox12c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You. Other Information About You. 12. Current Nonimmig",
+          "pdf_field": "form1[0].#subform[1].P1_Checkbox12c[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_checkbox4",
+      "question": "What is your number of people included in this application, select only one box?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_checkbox4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "d",
+          "label": "Part 2. Application Type. 3. Number of people included in this application, sele",
+          "pdf_field": "form1[0].#subform[1].P2_checkbox4[0]",
+          "pdf_value": "/D"
+        },
+        {
+          "value": "e",
+          "label": "Part 2. Application Type. 3. Number of people included in this application, sele",
+          "pdf_field": "form1[0].#subform[1].P2_checkbox4[1]",
+          "pdf_value": "/E"
+        }
+      ]
+    },
+    {
+      "id": "p2_checkbox",
+      "question": "What is your i am applying for, select only one box?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this ",
+          "pdf_field": "form1[0].#subform[1].P2_checkbox[0]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "c",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this ",
+          "pdf_field": "form1[0].#subform[1].P2_checkbox[1]",
+          "pdf_value": "/C"
+        },
+        {
+          "value": "a",
+          "label": "Part 2. Application Type. 1. I am applying for, select only one box. Check this ",
+          "pdf_field": "form1[0].#subform[1].P2_checkbox[2]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "p3_checkbox2a",
+      "question": "What is your is this application based on an extension or change of status already granted to your?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_checkbox2a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 3. Processing Information. 2.  Is this application based on an extension or",
+          "pdf_field": "form1[0].#subform[1].P3_checkbox2a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 3. Processing Information. 2. Is this application based on an extension or ",
+          "pdf_field": "form1[0].#subform[1].P3_checkbox2a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_line10_unit",
+      "question": "What is your check this box for Apartment?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line10_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Addre",
+          "pdf_field": "form1[0].#subform[2].P2_Line10_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Addre",
+          "pdf_field": "form1[0].#subform[2].P2_Line10_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 4.  Additional Information About the Principal Applicant. 2. Physical Addre",
+          "pdf_field": "form1[0].#subform[2].P2_Line10_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "p3_checkbox1",
+      "question": "What is your is this application based on a separate petition or application to provide your spouse,?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_checkbox1",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 3. Processing Information. 3.  Is this application based on a separate peti",
+          "pdf_field": "form1[0].#subform[2].P3_checkbox1[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "a",
+          "label": "Part 3. Processing Information. 3.  Is this application based on a separate peti",
+          "pdf_field": "form1[0].#subform[2].P3_checkbox1[1]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 3. Processing Information. 3. Is this application based on a separate petit",
+          "pdf_field": "form1[0].#subform[2].P3_checkbox1[2]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p3_checkbox4",
+      "question": "What is your if you answered \"Yes\" to Item Number or Item Number , select the Form type below?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_checkbox4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 3. Processing Information. 4. If you answered \"Yes\" to Item Number 2. or It",
+          "pdf_field": "form1[0].#subform[2].P3_checkbox4[0]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 3. Processing Information. 4. If you answered \"Yes\" to Item Number 2. or It",
+          "pdf_field": "form1[0].#subform[2].P3_checkbox4[1]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox3_no",
+      "question": "What is your are you an applicant for an immigrant visa? Check this box for No?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_checkbox3_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Answer the following questio",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox3_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox3_yes",
+      "question": "What is your if you answer \"Yes\" to any of the questions in Item Numbers - , use the space provided in?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_checkbox3_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Answer the following questio",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox3_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox4_no",
+      "question": "What is your has an immigrant petition EVER been filed for you? Check this box for No?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox4_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant.  Answer the following questi",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox4_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox4_yes",
+      "question": "What is your if you answer \"Yes\" to any of the questions in Item Numbers - , use the space provided in?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox4_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant.  Answer the following questi",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox4_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox5_no",
+      "question": "What is your have you EVER filed Form I-4 85, Application to Register Permanent Residence or Adjust?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox5_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant.  Answer the following questi",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox5_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox5_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox5_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Answer the following questio",
+          "pdf_field": "form1[0].#subform[2].P4_checkbox5_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox10_no",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox10_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox10_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox10_yes",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox10_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox10_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox11_no",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox11_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox11_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox11_yes",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox11_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox11_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox12_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox12_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox12_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox12_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox12_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox12_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox13_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox13_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox13_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox13_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox13_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox13_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox14_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox14_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox14_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox14_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox14_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox14_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox15_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox15_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox15_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox15_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox15_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox15_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox16_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox16_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox16_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox16_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox16_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox16_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox17_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_checkbox17_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox17_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox17_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_checkbox17_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox17_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox18_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox18_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox18_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox18_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox18_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox18_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox19_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox19_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox19_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox19_yes",
+      "question": "What is your answer athe following questions?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox19_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer athe f",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox19_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox20_no",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_checkbox20_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox20_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox20_yes",
+      "question": "What is your answer the following questions?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_checkbox20_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER. Answer the fo",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox20_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox6_no",
+      "question": "What is your have you been arrested or convicted of any criminal offense since last entering the United?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox6_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant.  Answer the following questi",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox6_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox6_yes",
+      "question": "What is your have you been arrested or convicted of any criminal offense since last entering the United?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox6_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant.  Answer the following questi",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox6_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox7_no",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox7_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox7_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox7_yes",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox7_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox7_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox8_no",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox8_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox8_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox8_yes",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox8_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox8_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox9_no",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox9_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox9_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p4_checkbox9_yes",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_checkbox9_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Additional Information About the Applicant. Have you EVER ordered, incit",
+          "pdf_field": "form1[0].#subform[3].P4_checkbox9_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    }
+  ]
+}

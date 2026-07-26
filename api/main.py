@@ -42,6 +42,7 @@ from api.contract import (
 )
 from api.delivery import deliver_packet
 from api.event_bus import get_event_bus
+from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import Tier, get_memory, summarize
@@ -558,6 +559,38 @@ async def session_deliver(
         applicant_name=plain.get("given_name", ""),
     )
     return {"session_id": session_id, **result}
+
+
+@app.get("/forms")
+async def forms_index() -> dict[str, Any]:
+    """What Zuzu can fill now, and what it can learn on request."""
+    ready = list_forms()
+    catalog = [
+        {**entry, "ready": entry["form_id"].upper() in {f.upper() for f in ready}}
+        for entry in load_catalog()
+    ]
+    return {"ready": ready, "catalog": catalog}
+
+
+@app.post("/forms/onboard")
+async def forms_onboard(
+    form_id: str = Query(..., description="e.g. N-400"),
+    pdf_url: str | None = Query(
+        default=None, description="fillable PDF url, if not in the catalog"
+    ),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Teach Zuzu a new USCIS form while it is running.
+
+    Fetches the fillable PDF, extracts its AcroForm inventory, derives the
+    questions from the PDF's own screen-reader tooltips, and registers it. No
+    deploy and no code change -- which is the whole "a form is data" claim,
+    tested rather than asserted.
+    """
+    try:
+        return await onboard(form_id, pdf_url)
+    except OnboardingError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @app.get("/forms/{form_id}/schema")

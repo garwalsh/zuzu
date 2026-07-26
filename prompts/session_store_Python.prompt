@@ -41,8 +41,12 @@ Requirements:
    asked; the applicant can always say skip.
 
 6. Provide `counts(session, schema) -> tuple[int, int]` returning
-   `(remaining_count, known_count)`, where remaining counts unanswered required
-   fields and known counts all stored values.
+   `(remaining_count, known_count)`. Remaining counts **every** unanswered
+   field, not just required ones, so it matches what `next_missing_field` will
+   keep asking for. Counting only required fields reports 0 remaining on a
+   schema derived straight from a PDF -- where nothing is marked required --
+   while hundreds of questions are still to come, which invites the agent to
+   generate the form early. Known counts all stored values.
 
 7. Treat the literal stored value `"__skip__"` as answered-but-empty: it satisfies
    the missing check so the agent stops re-asking, and the PDF engine leaves the

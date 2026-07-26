@@ -1,0 +1,1713 @@
+{
+  "form_id": "I-864",
+  "title": "Affidavit of Support Under Section 213A of the INA",
+  "agency": "USCIS",
+  "edition": "10/17/24",
+  "pdf": "assets/i_864.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "p4_line1a_family_name",
+      "question": "What is your sponsor's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p4_line1a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P4_Line1a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p4_line1b_given_name",
+      "question": "What is your sponsor's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p4_line1b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P4_Line1b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p4_line1c_middle_name",
+      "question": "What is your sponsor's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p4_line1c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P4_Line1c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "u_s_c_i_s_online_acct_number",
+      "question": "What is your to be completed by an attorney or accredited representative (?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p4_line12_alien_number",
+      "question": "What is your alien Registration Number (A. Number)?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p4_line12_alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].#area[1].P4_Line12_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p4_line10_social_security_number",
+      "question": "What is your u.S. Social Security Number (Required)?",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.p4_line10_social_security_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line10_SocialSecurityNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p4_line13_acct_identifier",
+      "question": "What is your u S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p4_line13_acct_identifier",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line13_AcctIdentifier[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p4_line2a_in_care_of",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2a_in_care_of",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2a_InCareOf[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p4_line2b_street_number_name",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2b_street_number_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2b_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p4_line2d_apt_ste_flr_number",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2d_apt_ste_flr_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2d_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p4_line2e_city_or_town",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2e_city_or_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2e_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p4_line2f_state",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p4_line2f_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2f_State[0]"
+    },
+    {
+      "id": "p4_line2g_zip_code",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line2g_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2g_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p4_line2h_province",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2h_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2h_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p4_line2i_postal_code",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2i_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2i_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p4_line2j_country",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line2j_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line2j_Country[0]"
+    },
+    {
+      "id": "p4_line5_country_of_domicile",
+      "question": "What is your country of Domicile?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p4_line5_country_of_domicile",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line5_CountryOfDomicile[0]"
+    },
+    {
+      "id": "p4_line6_date_of_birth",
+      "question": "What is your as 2 digit month, 2 digit day and 4 digit year?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p4_line6_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line6_DateOfBirth[0]"
+    },
+    {
+      "id": "p4_line7_cityof_birth",
+      "question": "What is your country of Birth?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line7_cityof_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P4_Line7_CityofBirth[0]"
+    },
+    {
+      "id": "p2_line5_alien_number",
+      "question": "What is your alien Registration Number (A. Number)?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p2_line5_alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].#area[2].P2_Line5_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p2_line1a_family_name",
+      "question": "What is your principal Immigrant's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line1a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p2_line1b_given_name",
+      "question": "What is your principal Immigrant's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line1b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p2_line1c_middle_name",
+      "question": "What is your principal Immigrant's Full Legal Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line1c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p2_line2_apt_ste_flr_number",
+      "question": "What is your apartment, Suite or Floor Number?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_apt_ste_flr_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p2_line2_city_or_town",
+      "question": "What is your city or Town?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_city_or_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line2_country",
+      "question": "What is your country?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_Country[0]"
+    },
+    {
+      "id": "p2_line2_in_care_of",
+      "question": "What is your in Care of Name?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_in_care_of",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_InCareOf[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line2_postal_code",
+      "question": "What is your postal Code?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p2_line2_province",
+      "question": "What is your province?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line2_state",
+      "question": "What is your this is a drop down menu?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p2_line2_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_State[0]"
+    },
+    {
+      "id": "p2_line2_street_number_name",
+      "question": "What is your street Number and Name?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2_street_number_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line2_zip_code",
+      "question": "What is your zIP Code?",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p2_line2_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p2_line3_country_citizenship",
+      "question": "What is your country of Citizenship or Nationality?",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p2_line3_country_citizenship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3_CountryCitizenship[0]"
+    },
+    {
+      "id": "p2_line4_date_of_birth",
+      "question": "What is your date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p2_line4_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4_DateOfBirth[0]"
+    },
+    {
+      "id": "p2_line5_alien_number_2",
+      "question": "What is your family Member Enter Alien Registration Number?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p2_line5_alien_number_2",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5_AlienNumber[1]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p2_line7_daytime_phone_number",
+      "question": "What is your daytime Telephone Number?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p2_line7_daytime_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line7_DaytimePhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p3_line3a_family_name",
+      "question": "What is your family Member Enter Family Name (Last Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line3a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line3a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line3b_given_name",
+      "question": "What is your family Member Enter Given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line3b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line3b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line3c_middle_name",
+      "question": "What is your family Member Enter Middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line3c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line3c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line4_relationship",
+      "question": "What is your family Member Enter Relationship to Principal Immigrant?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line4_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line4_Relationship[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line7_acct_identifier",
+      "question": "What is your family Member Enter U S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line7_acct_identifier",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line7_AcctIdentifier[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p3_line_date_of_birth",
+      "question": "What is your family Member Enter Date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p3_line_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P3_Line_DateOfBirth[0]"
+    },
+    {
+      "id": "pt2_line6_u_s_c_i_s_online_acct_number",
+      "question": "What is your u S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.pt2_line6_u_s_c_i_s_online_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2_Line6_USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p2_line5_alien_number_3",
+      "question": "What is your family Number Enter Alien Registration Number?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p2_line5_alien_number_3",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P2_Line5_AlienNumber[2]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p3_line10_date_of_birth",
+      "question": "What is your family Number Enter Date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p3_line10_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line10_DateOfBirth[0]"
+    },
+    {
+      "id": "p3_line11_alien_number",
+      "question": "What is your family Number Enter Alien Registration Number?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line11_alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line11_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p3_line12_acct_identifier",
+      "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line12_acct_identifier",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line12_AcctIdentifier[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p3_line13a_family_name",
+      "question": "What is your family Number Enter Family Name (Last Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line13a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line13a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line13b_given_name",
+      "question": "What is your family Number Enter Given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line13b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line13b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line13c_middle_name",
+      "question": "What is your family Number Enter Middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line13c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line13c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line14_relationship",
+      "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line14_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line14_Relationship[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line15_date_of_birth",
+      "question": "What is your family Number Enter Date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p3_line15_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line15_DateOfBirth[0]"
+    },
+    {
+      "id": "p3_line17_acct_identifier",
+      "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line17_acct_identifier",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line17_AcctIdentifier[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p3_line18a_family_name",
+      "question": "What is your family Number Enter Family Name (Last Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line18a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line18a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line18b_given_name",
+      "question": "What is your family Number Enter Given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line18b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line18b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line18c_middle_name",
+      "question": "What is your family Number Enter Middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line18c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line18c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line19_relationship",
+      "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line19_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line19_Relationship[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line20_date_of_birth",
+      "question": "What is your family Number Enter Date of Birth?",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p3_line20_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line20_DateOfBirth[0]"
+    },
+    {
+      "id": "p3_line21_alien_number",
+      "question": "What is your family Number Enter Alien Registration Number?",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line21_alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line21_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p3_line22_acct_identifier",
+      "question": "What is your family Number Enter U S C I S Online Account Number?",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p3_line22_acct_identifier",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line22_AcctIdentifier[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p3_line8a_family_name",
+      "question": "What is your family Number Enter Family Name (Last Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line8a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line8a_FamilyName[0]",
+      "max_len": 30
+    },
+    {
+      "id": "p3_line8b_given_name",
+      "question": "What is your family Number Enter Given Name (First Name)?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line8b_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line8b_GivenName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line8c_middle_name",
+      "question": "What is your family Number Enter Middle Name?",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p3_line8c_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line8c_MiddleName[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p3_line9_relationship",
+      "question": "What is your family Number Enter Relationship to Principal Immigrant?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p3_line9_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line9_Relationship[0]",
+      "max_len": 30
+    },
+    {
+      "id": "override",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.override",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Override[0]"
+    },
+    {
+      "id": "p3_line28_total_numberof_immigrants",
+      "question": "What is your nOTE: Do not count any member of your household more than once?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p3_line28_total_numberof_immigrants",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P3_Line28_TotalNumberofImmigrants[0]"
+    },
+    {
+      "id": "p5_line3_married",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_line3_married",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line3_Married[0]"
+    },
+    {
+      "id": "p5_line4_dependent_children",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_line4_dependent_children",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line4_DependentChildren[0]"
+    },
+    {
+      "id": "p5_line5_other_dependents",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_line5_other_dependents",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line5_OtherDependents[0]"
+    },
+    {
+      "id": "p5_line6_sponsors",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_line6_sponsors",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line6_Sponsors[0]"
+    },
+    {
+      "id": "p5_line7_same_residence",
+      "question": "What is your persons NOT sponsored in this affidavit?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_line7_same_residence",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line7_SameResidence[0]"
+    },
+    {
+      "id": "p6_line2_total_income",
+      "question": "What is your my current individual annual income is?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line2_total_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line2_TotalIncome[0]"
+    },
+    {
+      "id": "p6_line10_relationship",
+      "question": "What is your person Enter Relationship?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line10_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line10_Relationship[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line11_current_income",
+      "question": "What is your person Enter Current Income?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line11_current_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line11_CurrentIncome[0]"
+    },
+    {
+      "id": "p6_line12_name",
+      "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line12_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line12_Name[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line13_relationship",
+      "question": "What is your person Enter Relationship?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line13_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line13_Relationship[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line14_current_income",
+      "question": "What is your person Enter Current Income?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line14_current_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line14_CurrentIncome[0]"
+    },
+    {
+      "id": "p6_line3_name",
+      "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line3_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line3_Name[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line4_relationship",
+      "question": "What is your person Enter Relationship?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line4_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line4_Relationship[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line5_current_income",
+      "question": "What is your person Enter Current Income?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line5_current_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line5_CurrentIncome[0]"
+    },
+    {
+      "id": "p6_line6_name",
+      "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line6_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line6_Name[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line7_relationship",
+      "question": "What is your person Enter Relationship?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line7_relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line7_Relationship[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line8_current_income",
+      "question": "What is your person Enter Current Income?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line8_current_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line8_CurrentIncome[0]"
+    },
+    {
+      "id": "p6_line9_name",
+      "question": "What is your income you are using from any other person who was counted in your household size,?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_line9_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line9_Name[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p6_line19a_tax_year",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19a_tax_year",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19a_TaxYear[0]",
+      "max_len": 4
+    },
+    {
+      "id": "p6_line19a_total_income",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19a_total_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19a_TotalIncome[0]"
+    },
+    {
+      "id": "p6_line19b_tax_year",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19b_tax_year",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19b_TaxYear[0]",
+      "max_len": 4
+    },
+    {
+      "id": "p6_line19b_total_income",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19b_total_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19b_TotalIncome[0]"
+    },
+    {
+      "id": "p6_line19c_tax_year",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19c_tax_year",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19c_TaxYear[0]",
+      "max_len": 4
+    },
+    {
+      "id": "p6_line19c_total_income",
+      "question": "What is your my total income as reported on my Federal income tax returns for the most recent three?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line19c_total_income",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P6_Line19c_TotalIncome[0]"
+    },
+    {
+      "id": "p7_line1_balanceof_accounts",
+      "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line1_balanceof_accounts",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P7_Line1_BalanceofAccounts[0]",
+      "read_back": true
+    },
+    {
+      "id": "p7_line2_real_estate",
+      "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_line2_real_estate",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P7_Line2_RealEstate[0]"
+    },
+    {
+      "id": "p7_line3_stocks_bonds",
+      "question": "What is your if If your income, or the total income for you and your household, from Part , Item Numbers?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line3_stocks_bonds",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P7_Line3_StocksBonds[0]"
+    },
+    {
+      "id": "p7_line5_total_assets_household_members",
+      "question": "What is your assets of your household members?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line5_total_assets_household_members",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P7_Line5_TotalAssetsHouseholdMembers[0]"
+    },
+    {
+      "id": "p7_line6_balanceof_accounts",
+      "question": "What is your assets of the Principal sponsored immigrant?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line6_balanceof_accounts",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P7_Line6_BalanceofAccounts[0]",
+      "read_back": true
+    },
+    {
+      "id": "p7_line7_real_estate",
+      "question": "What is your assets of the Principal sponsored immigrant?",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_line7_real_estate",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P7_Line7_RealEstate[0]"
+    },
+    {
+      "id": "p7_line8_stocks_bonds",
+      "question": "What is your assets of the Principal sponsored immigrant?",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line8_stocks_bonds",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P7_Line8_StocksBonds[0]"
+    },
+    {
+      "id": "p7_line7_email_address",
+      "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p7_line7_email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P7Line7_EmailAddress[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p8_line3_daytime_telephone_number",
+      "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p8_line3_daytime_telephone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P8_Line3_DaytimeTelephoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p8_line4_mobile_telephone_number",
+      "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p8_line4_mobile_telephone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].P8_Line4_MobileTelephoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p9_language",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p9_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P9_Language[0]"
+    },
+    {
+      "id": "p11_line3a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line3a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line3b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line3b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line3c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line3c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line3d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line3d_AdditionalInfo[0]"
+    },
+    {
+      "id": "p11_line4a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line4a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line4b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line4b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line4c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line4c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line4d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line4d_AdditionalInfo[0]"
+    },
+    {
+      "id": "p11_line5a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line5a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line5b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line5b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line5c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line5c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line5d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line5d_AdditionalInfo[0]"
+    },
+    {
+      "id": "p11_line6a_page_number",
+      "question": "What is your page Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6a_page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line6a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line6b_part_number",
+      "question": "What is your part Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6b_part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line6b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line6c_item_number",
+      "question": "What is your item Number?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6c_item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line6c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line6d_additional_info",
+      "question": "What is your additional Information?",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6d_additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P11_Line6d_AdditionalInfo[0]"
+    },
+    {
+      "id": "g28_check_box1",
+      "question": "What is your to be completed by an attorney or accredited representative (?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.g28_check_box1",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "To be completed by an attorney or accredited representative (if any).  Select th",
+          "pdf_field": "form1[0].#subform[0].G28-CheckBox1[0]",
+          "pdf_value": "/1"
+        }
+      ]
+    },
+    {
+      "id": "p1_line1a_f_c_b",
+      "question": "What is your i am the petitioner?",
+      "type": "choice",
+      "group": "eligibility",
+      "memory_key": "eligibility.p1_line1a_f_c_b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1a",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. A. I am the petitioner.",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[0]",
+          "pdf_value": "/1A"
+        },
+        {
+          "value": "1b",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. B. I filed an alien wor",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[1]",
+          "pdf_value": "/1B"
+        },
+        {
+          "value": "1c",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. C. I have an ownership ",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[2]",
+          "pdf_value": "/1C"
+        },
+        {
+          "value": "1d",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. D. I am the only joint ",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[3]",
+          "pdf_value": "/1D"
+        },
+        {
+          "value": "1e",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. E. I am the first or se",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[4]",
+          "pdf_value": "/1E"
+        },
+        {
+          "value": "1f",
+          "label": "Part 1. Basis For Filing Affidavit of Support. Select 1. F.  The original petiti",
+          "pdf_field": "form1[0].#subform[0].P1_Line1a-f_CB[5]",
+          "pdf_value": "/1F"
+        }
+      ]
+    },
+    {
+      "id": "p1_line3_checkbox",
+      "question": "What is your is your current mailing address the same as your physical address? Select Yes?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p1_line3_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Sponsor) 3. Is your current mailing address the s",
+          "pdf_field": "form1[0].#subform[1].P1_Line3_Checkbox[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Sponsor) 3. Is your current mailing address the s",
+          "pdf_field": "form1[0].#subform[1].P1_Line3_Checkbox[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line11a_checkbox",
+      "question": "What is your i am a U.S. citizen?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line11a_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 2. Information About You (Sponsor) Other Information. 9. Immigration Status",
+          "pdf_field": "form1[0].#subform[1].P4_Line11a_Checkbox[0]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "p4_line11b_checkbox",
+      "question": "What is your i am a U.S. national?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line11b_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 2. Information About You (Sponsor) Other Information. 9. Immigration Status",
+          "pdf_field": "form1[0].#subform[1].P4_Line11b_Checkbox[0]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p4_line11c_checkbox",
+      "question": "What is your i am a lawful permanent resident?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p4_line11c_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "c",
+          "label": "Part 2. Information About You (Sponsor) Other Information. 9. Immigration Status",
+          "pdf_field": "form1[0].#subform[1].P4_Line11c_Checkbox[0]",
+          "pdf_value": "/C"
+        }
+      ]
+    },
+    {
+      "id": "p4_line14_checkboxes",
+      "question": "What is your military Service?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line14_checkboxes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Sponsor). Military Service (To be completed by pe",
+          "pdf_field": "form1[0].#subform[1].P4_Line14_Checkboxes[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Sponsor). Military Service (To be completed by pe",
+          "pdf_field": "form1[0].#subform[1].P4_Line14_Checkboxes[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line2c_unit",
+      "question": "What is your sponsor's Current Mailing Address?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line2c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Sponsor) 2. Sponsor's Current Mailing Address.  S",
+          "pdf_field": "form1[0].#subform[1].P4_Line2c_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Sponsor) 2. Sponsor's Current Mailing Address. Se",
+          "pdf_field": "form1[0].#subform[1].P4_Line2c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Sponsor) 2. Sponsor's Current Mailing Address. Se",
+          "pdf_field": "form1[0].#subform[1].P4_Line2c_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "p2_line2_unit",
+      "question": "What is your apartment?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line2_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 3. Information About the Principal Immigrant. 2. Current Mailing Address. S",
+          "pdf_field": "form1[0].#subform[2].P2_Line2_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 3. Information About the Principal Immigrant. 2. Current Mailing Address. S",
+          "pdf_field": "form1[0].#subform[2].P2_Line2_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 3. Information About the Principal Immigrant. 2. Current Mailing Address. S",
+          "pdf_field": "form1[0].#subform[2].P2_Line2_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "p3_line1_checkbox",
+      "question": "What is your i am sponsoring the principal immigrant named in Part Select Yes?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p3_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About the Immigrants You Are Sponsoring. 1. I am sponsoring ",
+          "pdf_field": "form1[0].#subform[2].P3_Line1_Checkbox[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 4. Information About the Immigrants You Are Sponsoring. 1. I am sponsoring ",
+          "pdf_field": "form1[0].#subform[2].P3_Line1_Checkbox[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p3_line2_sponsoring_family",
+      "question": "What is your i am sponsoring the following family members immigrating at the same time or within six?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p3_line2_sponsoring_family",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About the Immigrants You Are Sponsoring. 2. Select I am spon",
+          "pdf_field": "form1[0].#subform[2].P3_Line2_SponsoringFamily[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "y",
+          "label": "Part 4. Information About the Immigrants You Are Sponsoring. 3. Select I am spon",
+          "pdf_field": "form1[0].#subform[2].P3_Line2_SponsoringFamily[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line1_checkbox",
+      "question": "What is your i am currently?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p6_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6.  Sponsor's Employment and Income. I am currently. 1. Select  Employed. ",
+          "pdf_field": "form1[0].#subform[4].P6_Line1_Checkbox[0]",
+          "pdf_value": "/ Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line4_checkbox",
+      "question": "What is your i am currently?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p6_line4_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6.  Sponsor's Employment and Income. I am currently. 4. Select Self-Employe",
+          "pdf_field": "form1[0].#subform[4].P6_Line4_Checkbox[0]",
+          "pdf_value": "/ Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line5_checkbox",
+      "question": "What is your i am currently?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p6_line5_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6.  Sponsor's Employment and Income. I am currently. 5. Select Retired.",
+          "pdf_field": "form1[0].#subform[4].P6_Line5_Checkbox[0]",
+          "pdf_value": "/Y "
+        }
+      ]
+    },
+    {
+      "id": "p6_line6_checkbox",
+      "question": "What is your i am currently?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p6_line6_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6.  Sponsor's Employment and Income. I am currently. 6. Select Unemployed.",
+          "pdf_field": "form1[0].#subform[4].P6_Line6_Checkbox[0]",
+          "pdf_value": "/ Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line16_completed_form",
+      "question": "What is your the people listed in Item Numbers , - have completed Form I - 8 64 A. I am filing along?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line16_completed_form",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Sponsor's Employment and Income. Remarks. 13. Select The people listed i",
+          "pdf_field": "form1[0].#subform[5].P6_Line16_CompletedForm[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line17_not_need_complete",
+      "question": "What is your one or more of the people listed in Item Numbers - do not need to complete Form I - 8 64 A?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line17_not_need_complete",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Sponsor's Employment and Income. 14. Select One or more of the people li",
+          "pdf_field": "form1[0].#subform[5].P6_Line17_NotNeedComplete[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line18a_checkbox",
+      "question": "Have you filed a Federal income tax return for each of the three most recent tax years?",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p6_line18a_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Sponsor's Employment and Income. 15. Have you filed a Federal income tax",
+          "pdf_field": "form1[0].#subform[5].P6_Line18a_Checkbox[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 6. Sponsor's Employment and Income. 15. Have you filed a Federal income tax",
+          "pdf_field": "form1[0].#subform[5].P6_Line18a_Checkbox[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p6_line17_i_was_not_req",
+      "question": "What is your one or more of the people listed in Item Numbers , , , and Select I was not required to?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line17_i_was_not_req",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 6. Sponsor's Employment and Income. 17. One or more of the people listed in",
+          "pdf_field": "form1[0].#subform[6].P6_Line17_IWasNotReq[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_line1_checkbox_2",
+      "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line1_checkbox_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 8. Sponsor's Contract, Contact Information, Certification, and Signature. S",
+          "pdf_field": "form1[0].#subform[9].P6_Line1_Checkbox[1]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 8. Sponsor's Contract, Contact Information, Certification, and Signature. S",
+          "pdf_field": "form1[0].#subform[9].P6_Line1_Checkbox[2]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "p8_line2_checkbox",
+      "question": "What is your sponsor's Contract, Contact Information, Certification, and Signature?",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p8_line2_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 8. Sponsor's Contract, Contact Information, Certification, and Signature. S",
+          "pdf_field": "form1[0].#subform[9].P8_Line2_Checkbox[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    }
+  ]
+}

@@ -309,6 +309,257 @@ def slugify(form_id: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", form_id.lower()).strip("_")
 
 
+# ---------------------------------------------------------------------------
+# Deterministic path
+# ---------------------------------------------------------------------------
+
+_GROUP_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("name", ("familyname", "givenname", "middlename", "othernames", "fullname")),
+    (
+        "address",
+        (
+            "street",
+            "city",
+            "state",
+            "zip",
+            "province",
+            "postal",
+            "apt",
+            "ste",
+            "flr",
+            "unit",
+            "incareof",
+            "mailing",
+            "physicaladdress",
+            "countryaddress",
+        ),
+    ),
+    (
+        "identifiers",
+        (
+            "aliennumber",
+            "anumber",
+            "elisaccount",
+            "uscisaccount",
+            "ssn",
+            "socialsecurity",
+            "receipt",
+            "accountnumber",
+        ),
+    ),
+    (
+        "birth_citizenship",
+        (
+            "dateofbirth",
+            "dob",
+            "countryofbirth",
+            "cityofbirth",
+            "placeofbirth",
+            "citizenship",
+            "nationality",
+        ),
+    ),
+    (
+        "arrival_status",
+        (
+            "i94",
+            "passport",
+            "traveldoc",
+            "sevis",
+            "arrival",
+            "departure",
+            "lastentry",
+            "status",
+            "admission",
+            "visa",
+        ),
+    ),
+    ("eligibility", ("eligibility", "category", "classification", "basis")),
+    ("contact", ("phone", "mobile", "email", "daytime", "telephone", "fax")),
+)
+
+_TYPE_RULES: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("date", ("date", "dob", "expdate", "expiration", "validfrom", "validto")),
+    ("email", ("email",)),
+    ("phone", ("phone", "telephone", "mobile", "fax")),
+    ("zip", ("zipcode", "zip")),
+    ("ssn", ("ssn", "socialsecurity")),
+    ("a_number", ("aliennumber", "anumber")),
+    ("state", ("state",)),
+)
+
+
+def _classify(name: str, label: str) -> tuple[str, str]:
+    """(group, type) for a raw field, from its name and tooltip."""
+    blob = re.sub(r"[^a-z0-9]", "", f"{name} {label}".lower())
+    group = "other"
+    for candidate, keys in _GROUP_RULES:
+        if any(k in blob for k in keys):
+            group = candidate
+            break
+    kind = "text"
+    for candidate, keys in _TYPE_RULES:
+        if any(k in blob for k in keys):
+            kind = candidate
+            break
+    return group, kind
+
+
+def _question_from_label(label: str, field_id: str) -> str:
+    """Turn a USCIS tooltip into something a person can answer out loud.
+
+    Tooltips read like "Part 2. Information About You. 1.a. Family Name (Last
+    Name)". The part/item prefix is navigation for someone holding the paper
+    form, and noise to someone on a phone call.
+    """
+    text = re.sub(r"\s+", " ", label or "").strip()
+    # Drop leading "Part N." / "Item Number 3.a." / bare "1.b." prefixes.
+    text = re.sub(
+        r"^(part\s*\d+\.?\s*|item\s*number\s*[\d.a-z]*\.?\s*|\d+\.[a-z]?\.?\s*)+",
+        "",
+        text,
+        flags=re.I,
+    )
+    # Drop a leading section title that ends in a period, e.g. "Information About You. "
+    text = re.sub(r"^[A-Z][^.]{4,60}\.\s+(?=[A-Z0-9])", "", text)
+    # Item numbering also shows up mid-label after a section title -- "Your Name.
+    # 4. A. Enter Family Name" -- so strip these tokens wherever they appear.
+    text = re.sub(r"\b\d{1,2}\.\s*(?:[A-Za-z]\.\s*)?", "", text)
+    text = re.sub(r"^[A-Za-z]\.\s+", "", text)
+    text = re.sub(r"^[A-Z][a-z]+(?:\s+[A-Za-z]+){0,3}\.\s+(?=[A-Z])", "", text)
+    text = re.sub(r"^(enter|provide|select|type|please)\s+", "", text, flags=re.I)
+    # Parenthetical hints and cross-references are for someone holding the paper
+    # form, not for someone answering out loud.
+    text = re.sub(r"\s*\([^)]{12,}\)", "", text)
+    text = re.sub(r"\s*(see the instructions|if any|if applicable).*$", "", text, flags=re.I)
+    text = text.strip(" .:;,-")
+    # One clause only: some USCIS labels run to a whole paragraph.
+    text = re.split(r"(?<=[a-z])\.\s+(?=[A-Z])", text)[0].strip(" .")
+    if len(text) > 92:
+        text = text[:92].rsplit(" ", 1)[0]
+    if not text:
+        text = field_id.replace("_", " ")
+    if text.endswith("?"):
+        return text
+    # Avoid "What is your your ..." when the label already begins with "Your".
+    lead = re.sub(r"^your\s+", "", text, flags=re.I).strip(" .")
+    if not lead:
+        lead = field_id.replace("_", " ")
+    # Only downcase an ordinary word. "U S C I S" and "U.S." are acronyms and
+    # lowercasing them makes the question read as a typo.
+    first = lead.split(" ", 1)[0]
+    if not (first.isupper() or "." in first or len(first) == 1):
+        lead = lead[0].lower() + lead[1:]
+    return f"What is your {lead}?"
+
+
+def _field_id_from(name: str, label: str, taken: set[str]) -> str:
+    """A stable snake_case id, preferring the PDF's own leaf name."""
+    leaf = name.split(".")[-1]
+    leaf = re.sub(r"\[\d+\]$", "", leaf)
+    leaf = re.sub(r"^(Pt\d+)?Line\d*[a-z]?_?", "", leaf)
+    base = re.sub(r"(?<!^)(?=[A-Z])", "_", leaf).lower()
+    base = re.sub(r"[^a-z0-9]+", "_", base).strip("_") or "field"
+    candidate, n = base, 2
+    while candidate in taken:
+        candidate, n = f"{base}_{n}", n + 1
+    taken.add(candidate)
+    return candidate
+
+
+def derive_schema(
+    inventory: dict[str, Any], form_id: str, pdf_rel_path: str, title: str = ""
+) -> dict[str, Any]:
+    """Build a working schema from the PDF alone, with no model involved.
+
+    Every USCIS field carries a `/TU` tooltip written for screen readers, which
+    is already close to a spoken question. Using it means a new form works
+    immediately and identically every time, instead of depending on a reasoning
+    model returning well-formed JSON for two hundred fields.
+
+    `build_schema_from_inventory` can then improve the wording. This is the
+    floor, not the ceiling -- but a reliable floor is what makes the claim that
+    Zuzu supports any USCIS form actually true.
+    """
+    fields: list[dict[str, Any]] = []
+    taken: set[str] = set()
+    # Group checkbox siblings so a set of related boxes becomes one question.
+    button_groups: dict[str, list[dict[str, Any]]] = {}
+
+    for entry in inventory["fields"]:
+        if not _askable(entry):
+            continue
+        name, label = entry["name"], entry.get("label") or ""
+        if entry["type"] == "/Btn":
+            parent = re.sub(r"\[\d+\]$", "", name)
+            button_groups.setdefault(parent, []).append(entry)
+            continue
+
+        field_id = _field_id_from(name, label, taken)
+        group, kind = _classify(name, label)
+        if entry.get("options"):
+            kind = "state" if kind == "state" else "text"
+        field: dict[str, Any] = {
+            "id": field_id,
+            "question": _question_from_label(label, field_id),
+            "type": kind,
+            "group": group,
+            "memory_key": f"{group}.{field_id}",
+            "sensitive": _looks_sensitive(field_id, name),
+            "required": False,
+            "pdf_field": name,
+        }
+        if entry.get("max_len"):
+            field["max_len"] = entry["max_len"]
+        if field["sensitive"]:
+            field["read_back"] = True
+        fields.append(field)
+
+    for parent, entries in button_groups.items():
+        usable = [e for e in entries if e.get("on_value")]
+        if not usable:
+            continue
+        label = usable[0].get("label") or parent
+        field_id = _field_id_from(parent, label, taken)
+        group, _ = _classify(parent, label)
+        fields.append(
+            {
+                "id": field_id,
+                "question": _question_from_label(label, field_id),
+                "type": "choice",
+                "group": group,
+                "memory_key": f"{group}.{field_id}",
+                "sensitive": False,
+                "required": False,
+                "options": [
+                    {
+                        "value": (e.get("on_value") or "").strip("/ ").lower() or f"option_{i}",
+                        "label": (e.get("label") or "")[:80] or f"Option {i + 1}",
+                        "pdf_field": e["name"],
+                        "pdf_value": e["on_value"],
+                    }
+                    for i, e in enumerate(usable)
+                ],
+            }
+        )
+
+    schema = {
+        "form_id": form_id,
+        "title": title or f"USCIS Form {form_id}",
+        "agency": "USCIS",
+        "edition": inventory.get("edition", "unknown"),
+        "pdf": pdf_rel_path,
+        "notes": (
+            "Derived deterministically from the PDF's own field inventory and "
+            "screen-reader tooltips. No field name is ever recalled by a model."
+        ),
+        "fields": fields,
+    }
+    FormSchema.model_validate(schema)
+    logger.info("derived schema form=%s fields=%d (deterministic)", form_id, len(fields))
+    return schema
+
+
 def save_schema(schema: dict[str, Any]) -> Path:
     FORMS_DIR.mkdir(parents=True, exist_ok=True)
     path = FORMS_DIR / f"{slugify(schema['form_id'])}.json"
