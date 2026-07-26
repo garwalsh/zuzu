@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 from typing import Any
 
 import httpx
@@ -145,8 +146,9 @@ async def fetch_document_checklist(form_id: str) -> dict[str, Any]:
             "requirements: a wrong checklist causes a rejected filing.\n\n"
             f"{page[:60000]}",
             system="You extract filing requirements from official USCIS pages.",
-            max_tokens=4096,
-            timeout=300.0,
+            # 17 items of prose truncated at 4096 and lost the whole parse.
+            max_tokens=16384,
+            timeout=420.0,
         )
     except (InferenceUnavailable, ValueError) as exc:
         logger.warning("checklist parse failed for %s: %s", form_id, exc)
@@ -169,29 +171,53 @@ async def fetch_document_checklist(form_id: str) -> dict[str, Any]:
     return {"form_id": form_id, "source": url, "items": clean}
 
 
-def applicable_items(checklist: dict[str, Any], values: dict[str, str]) -> list[dict[str, str]]:
-    """Narrow a checklist to this applicant, using what they told us.
+def _normalise_category(raw: str) -> str:
+    """(c)(3)(B), c3b, C 3 B -> c3b."""
+    return re.sub(r"[^a-z0-9]", "", (raw or "").lower())
 
-    Conditions are prose, so matching is deliberately loose and errs toward
-    including an item. Showing someone a document they do not need costs them a
-    moment; omitting one costs them months.
+
+def applicable_items(checklist: dict[str, Any], values: dict[str, str]) -> list[dict[str, str]]:
+    """Narrow a checklist to this applicant, deterministically.
+
+    Conditions are prose, so this reads them for the two things that actually
+    gate an I-765 document: the eligibility category and the reason for filing.
+
+    Where a condition names a *specific* category and it is not this
+    applicant's, the item is dropped -- an applicant filing under (c)(3)(B)
+    should not be told to bring Form I-821D. Where a condition is unparseable,
+    the item is kept: showing someone a document they do not need costs them a
+    moment, omitting one costs them months.
     """
     reason = (values.get("reason") or "").lower()
-    category = (values.get("eligibility_category") or "").lower().replace(" ", "")
+    category = _normalise_category(values.get("eligibility_category", ""))
     out: list[dict[str, str]] = []
 
     for item in checklist.get("items", []):
         when = (item.get("when") or "always").lower()
-        if when in ("always", "", "all", "required"):
+
+        if when in ("always", "", "all", "required", "n/a"):
             out.append(item)
             continue
-        if "renewal" in when or "replacement" in when:
+
+        # Categories named in the condition, e.g. "(c)(6)", "(a)(20)".
+        named = {_normalise_category(m) for m in re.findall(r"\(?[ac]\)?\s*\(?\d{1,2}\)?", when)}
+        if named:
+            # Keep only if the applicant's category is one of them. A prefix
+            # match handles (c)(3) covering (c)(3)(B).
+            if category and any(category.startswith(n) or n.startswith(category) for n in named):
+                out.append(item)
+            continue
+
+        if "renewal" in when or "replacement" in when or "previous" in when:
             if reason in ("renewal", "replacement"):
                 out.append(item)
             continue
-        if "(c)(3)" in when or "c3" in when.replace(" ", ""):
-            if category.startswith("(c)(3") or category.startswith("c3"):
+
+        if "daca" in when or "deferred action" in when:
+            if category.startswith("c33"):
                 out.append(item)
             continue
+
+        # Unparseable condition: keep it and let the applicant judge.
         out.append(item)
     return out
