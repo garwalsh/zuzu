@@ -32,6 +32,7 @@ from api.contract import (
     GenerateFormResponse,
     GetMissingFieldsRequest,
     GetMissingFieldsResponse,
+    IdentifyFormRequest,
     NextField,
     SaveFieldRequest,
     SaveFieldResponse,
@@ -40,6 +41,7 @@ from api.contract import (
     SessionEvent,
     SessionInitRequest,
     SessionInitResponse,
+    SetFormRequest,
 )
 from api.delivery import deliver_packet
 from api.event_bus import get_event_bus
@@ -567,6 +569,7 @@ async def session_deliver(
 
 @app.post("/tools/identify_form")
 async def identify_form(
+    payload: IdentifyFormRequest | None = None,
     text: str = Query(default="", description="what the applicant said"),
     url: str = Query(default="", description="a uscis.gov link they pasted"),
     session_id: str = Query(default=""),
@@ -582,6 +585,13 @@ async def identify_form(
     form name back before switching. Silently starting the wrong application
     wastes an hour of a stressed person's time.
     """
+    # ElevenLabs server tools POST a JSON body. Accepting the query form too
+    # keeps curl and the docs page working; the body wins when both are sent.
+    if payload is not None:
+        text = payload.text or text
+        url = payload.url or url
+        session_id = payload.session_id or session_id
+
     hit = await identify(text=text, url=url)
     if hit is None:
         return {"found": False, "known_forms": list_forms()}
@@ -608,8 +618,9 @@ async def identify_form(
 
 @app.post("/session/set_form")
 async def session_set_form(
-    session_id: str = Query(...),
-    form_id: str = Query(...),
+    payload: SetFormRequest | None = None,
+    session_id: str = Query(default=""),
+    form_id: str = Query(default=""),
     _: None = Depends(require_shared_secret),
 ) -> dict[str, Any]:
     """Switch the form an in-progress call is filling.
@@ -617,6 +628,12 @@ async def session_set_form(
     Answers already given are kept: a name and address collected for one form
     are the same name and address on the next one.
     """
+    if payload is not None:
+        session_id = payload.session_id or session_id
+        form_id = payload.form_id or form_id
+    if not session_id or not form_id:
+        raise HTTPException(status_code=422, detail="session_id and form_id are required")
+
     await _load_or_open_session(session_id)
     schema = _resolve_form(form_id)
     session = await get_session_store().set_form(session_id, schema.form_id)

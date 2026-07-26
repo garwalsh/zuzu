@@ -502,6 +502,60 @@ def test_returning_caller_gets_a_language_override(client, monkeypatch):
     assert body["conversation_config_override"] == {"agent": {"language": "es"}}
 
 
+# --------------------------------------------------------------------------
+# ElevenLabs server tools POST a JSON body, never a query string
+# --------------------------------------------------------------------------
+
+
+def test_identify_form_reads_a_json_body(client):
+    """The tools were written against query params while the agent sends a
+    body, so `text` arrived empty and every call answered 'I can't find that'.
+    This is the shape ElevenLabs actually sends."""
+    resp = client.post(
+        "/tools/identify_form",
+        json={"text": "I want to become a citizen", "session_id": "conv_body"},
+        headers=auth(),
+    )
+    assert resp.status_code == 200, resp.text
+    body = resp.json()
+    assert body["found"] is True
+    assert body["form_id"] == "N-400"
+
+
+def test_identify_form_handles_plain_language_and_urls(client):
+    cases = [
+        ({"text": "I need my work permit"}, "I-765"),
+        ({"text": "necesito permiso de trabajo"}, "I-765"),
+        ({"text": "my green card is expiring"}, "I-485"),
+        ({"text": "", "url": "https://www.uscis.gov/n-400"}, "N-400"),
+        ({"text": "I need form I-131"}, "I-131"),
+    ]
+    for payload, expected in cases:
+        body = client.post("/tools/identify_form", json=payload, headers=auth()).json()
+        assert body.get("form_id") == expected, f"{payload} -> {body}"
+
+
+def test_set_form_reads_a_json_body_and_keeps_answers(client):
+    conversation_id = start_session(client, "conv_switch")
+    client.post(
+        "/tools/save_field",
+        json={"session_id": conversation_id, "field_id": "given_name", "value": "Maria"},
+        headers=auth(),
+    )
+    resp = client.post(
+        "/session/set_form",
+        json={"session_id": conversation_id, "form_id": "I-765"},
+        headers=auth(),
+    )
+    assert resp.status_code == 200, resp.text
+    # Switching forms must not discard what the applicant already told us.
+    assert resp.json()["carried_over"] >= 1
+
+
+def test_set_form_requires_both_values(client):
+    assert client.post("/session/set_form", json={"form_id": ""}, headers=auth()).status_code == 422
+
+
 def test_websocket_rejects_a_bad_secret(client):
     """Closed with 1008 (policy violation), not merely dropped."""
     from starlette.websockets import WebSocketDisconnect

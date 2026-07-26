@@ -119,6 +119,21 @@ class SaveFieldResponse(StrictModel):
     remaining_count: int
 
 
+class IdentifyFormRequest(InboundModel):
+    """Payload for the identify_form server tool."""
+
+    text: str = ""
+    url: str = ""
+    session_id: str = ""
+
+
+class SetFormRequest(InboundModel):
+    """Payload for the set_form server tool."""
+
+    form_id: str
+    session_id: str = ""
+
+
 class GenerateFormRequest(InboundModel):
     """Request payload used to trigger form generation."""
 
