@@ -1,15 +1,30 @@
-"""Cross-session applicant memory, keyed by caller id.
+"""Cross-session applicant memory in three tiers.
 
 Spec: prompts/memory_Python.prompt
 
-The moat: a returning caller is greeted by name and never asked for their date
-of birth twice. Exact values are carried in mem0's `metadata`, not parsed back
-out of its LLM-extracted prose -- "User's family name is Reyes" is fine for a
-human to read and useless for filling a legal form.
+A single flat store is the wrong shape for this problem. Remembering a passport
+number, remembering that someone called last Tuesday, and remembering that they
+need numbers read back slowly are three different kinds of knowledge, with three
+different lifetimes and three different privacy postures.
 
-This module sits on the live call path at /session/init, so its failure
-behaviour matters as much as its success behaviour: every call here degrades to
-an empty profile rather than raising.
+    SEMANTIC    Stable facts about the applicant: name, date of birth, passport
+                number. Long-lived. This is what prefills the next form.
+
+    EPISODIC    What happened on a particular call: which form, how many fields,
+                whether a PDF came out, when. Time-bound. This is what lets Zuzu
+                say "last time we filed your renewal on the 25th" rather than
+                greeting a returning caller like a stranger.
+
+    PROCEDURAL  How to serve this person, and how this process works. "Speak
+                Spanish." "Has no SSN, stop asking." "Category (c)(3)(B) needs
+                an I-20 attached." Learned once, applied on every later call.
+
+The tiers are separated in mem0 metadata so each can be recalled, summarised,
+and forgotten independently -- an applicant can drop their call history without
+losing the profile that saves them an hour on the next form.
+
+Everything here degrades to empty rather than raising: this module sits on the
+live call path at /session/init, and a memory outage must never end a call.
 """
 
 from __future__ import annotations
@@ -17,6 +32,8 @@ from __future__ import annotations
 import hashlib
 import logging
 import os
+from datetime import UTC, datetime
+from enum import StrEnum
 from typing import Any
 
 import httpx
@@ -32,22 +49,54 @@ LOOKUP_TIMEOUT_SECONDS = 3.0
 WRITE_TIMEOUT_SECONDS = 5.0
 
 
+class Tier(StrEnum):
+    SEMANTIC = "semantic"
+    EPISODIC = "episodic"
+    PROCEDURAL = "procedural"
+
+
+class Episode(BaseModel):
+    """One past call."""
+
+    session_id: str
+    form_id: str
+    at: str
+    fields_collected: int = 0
+    completed: bool = False
+    language: str = "en"
+
+
+class Procedure(BaseModel):
+    """One learned rule about serving this applicant, or about the process."""
+
+    key: str
+    value: str
+    #: `applicant` rules are personal; `process` rules are about the form itself
+    #: and could in principle be shared across applicants.
+    kind: str = "applicant"
+
+
 class ApplicantProfile(BaseModel):
-    """What we already know about a caller, before they say anything."""
+    """Everything the three tiers know, assembled for one call."""
 
     caller_id: str
     display_name: str = ""
     preferred_language: str = "en"
     known_values: dict[str, str] = Field(default_factory=dict)
+    episodes: list[Episode] = Field(default_factory=list)
+    procedures: list[Procedure] = Field(default_factory=list)
     is_returning: bool = False
+
+    @property
+    def last_episode(self) -> Episode | None:
+        return self.episodes[0] if self.episodes else None
 
 
 def _store_sensitive() -> bool:
     """Whether sensitive values may persist in a third-party memory store.
 
-    Off by default. Holding an SSN for the duration of one call is a materially
-    different privacy posture from persisting it indefinitely somewhere else,
-    and that should be a deliberate choice.
+    Off by default. Holding an SSN for one call is a materially different
+    privacy posture from parking it somewhere else indefinitely.
     """
     return os.environ.get("ZUZU_MEMORY_STORE_SENSITIVE", "").strip().lower() in (
         "1",
@@ -68,7 +117,7 @@ def _log_id(caller_id: str) -> str:
 
 
 class ApplicantMemory:
-    """Thin async wrapper over the mem0 REST API."""
+    """Async mem0 wrapper, tier-aware."""
 
     def __init__(self, api_key: str | None = None) -> None:
         self._api_key = api_key if api_key is not None else os.environ.get("MEM0_API_KEY", "")
@@ -80,14 +129,33 @@ class ApplicantMemory:
     def _headers(self) -> dict[str, str]:
         return {"Authorization": f"Token {self._api_key}", "Content-Type": "application/json"}
 
-    async def load_profile(
-        self, caller_id: str, schema: FormSchema | None = None
-    ) -> ApplicantProfile:
-        """Everything we know about this caller. Never raises."""
-        empty = ApplicantProfile(caller_id=caller_id)
-        if not self.enabled:
-            return empty
+    async def _write(self, caller_id: str, text: str, metadata: dict[str, Any]) -> bool:
+        """One mem0 write. Never raises into the caller."""
+        body = {
+            "messages": [{"role": "user", "content": text}],
+            "user_id": _user_key(caller_id),
+            "metadata": metadata,
+        }
+        try:
+            async with httpx.AsyncClient(timeout=WRITE_TIMEOUT_SECONDS) as client:
+                resp = await client.post(
+                    f"{MEM0_BASE_URL}/memories/", json=body, headers=self._headers()
+                )
+                resp.raise_for_status()
+        except Exception as exc:
+            logger.warning(
+                "mem0 write failed tier=%s caller=%s: %s",
+                metadata.get("tier"),
+                _log_id(caller_id),
+                type(exc).__name__,
+            )
+            return False
+        return True
 
+    async def _read_all(self, caller_id: str) -> list[dict[str, Any]]:
+        """Every memory for this caller, across tiers. Never raises."""
+        if not self.enabled:
+            return []
         try:
             async with httpx.AsyncClient(timeout=LOOKUP_TIMEOUT_SECONDS) as client:
                 resp = await client.get(
@@ -100,40 +168,90 @@ class ApplicantMemory:
         except Exception as exc:
             # A memory outage must not stop someone filing their form.
             logger.warning(
-                "mem0 lookup failed for caller=%s: %s", _log_id(caller_id), type(exc).__name__
+                "mem0 lookup failed caller=%s: %s", _log_id(caller_id), type(exc).__name__
             )
-            return empty
+            return []
+        return payload if isinstance(payload, list) else payload.get("results", [])
 
-        entries = payload if isinstance(payload, list) else payload.get("results", [])
+    # ---- reads -----------------------------------------------------------
+
+    async def load_profile(
+        self, caller_id: str, schema: FormSchema | None = None
+    ) -> ApplicantProfile:
+        """Assemble all three tiers into one profile. Never raises."""
+        entries = await self._read_all(caller_id)
         known: dict[str, str] = {}
+        episodes: list[Episode] = []
+        procedures: list[Procedure] = []
         language = "en"
+
         for entry in entries:
-            metadata = entry.get("metadata") or {}
-            field_id = metadata.get("field_id")
-            value = metadata.get("value")
-            if field_id and isinstance(value, str) and value:
-                known[field_id] = value
-            if metadata.get("preferred_language"):
-                language = str(metadata["preferred_language"])
+            meta = entry.get("metadata") or {}
+            tier = meta.get("tier", Tier.SEMANTIC)
+
+            if tier == Tier.SEMANTIC:
+                field_id, value = meta.get("field_id"), meta.get("value")
+                if field_id and isinstance(value, str) and value:
+                    known[field_id] = value
+                if meta.get("preferred_language"):
+                    language = str(meta["preferred_language"])
+
+            elif tier == Tier.EPISODIC:
+                try:
+                    episodes.append(
+                        Episode(
+                            session_id=str(meta.get("session_id", "")),
+                            form_id=str(meta.get("form_id", "")),
+                            at=str(meta.get("at", "")),
+                            fields_collected=int(meta.get("fields_collected", 0) or 0),
+                            completed=bool(meta.get("completed", False)),
+                            language=str(meta.get("language", "en")),
+                        )
+                    )
+                except Exception:
+                    continue
+
+            elif tier == Tier.PROCEDURAL:
+                key, value = meta.get("key"), meta.get("value")
+                if key and value:
+                    procedures.append(
+                        Procedure(
+                            key=str(key),
+                            value=str(value),
+                            kind=str(meta.get("kind", "applicant")),
+                        )
+                    )
 
         if schema is not None:
             # Drop anything the current form no longer has a home for.
             known = {k: v for k, v in known.items() if schema.get_field(k) is not None}
 
+        # A procedural language rule outranks whatever a stale semantic row says.
+        for proc in procedures:
+            if proc.key == "language" and proc.value.startswith("speak "):
+                language = proc.value.split()[1]
+
+        episodes.sort(key=lambda e: e.at, reverse=True)
         profile = ApplicantProfile(
             caller_id=caller_id,
             display_name=known.get("given_name", ""),
             preferred_language=language,
             known_values=known,
-            is_returning=bool(known),
+            episodes=episodes[:10],
+            procedures=procedures,
+            is_returning=bool(known or episodes),
         )
         logger.info(
-            "mem0 lookup caller=%s returning=%s known_fields=%d",
+            "mem0 recall caller=%s returning=%s semantic=%d episodic=%d procedural=%d",
             _log_id(caller_id),
             profile.is_returning,
             len(known),
+            len(episodes),
+            len(procedures),
         )
         return profile
+
+    # ---- writes ----------------------------------------------------------
 
     async def save_field(
         self,
@@ -143,10 +261,9 @@ class ApplicantMemory:
         schema: FormSchema,
         language: str = "en",
     ) -> bool:
-        """Persist one confirmed answer. Returns whether it was stored."""
+        """SEMANTIC: one confirmed fact about the applicant."""
         if not self.enabled or not value or value == SKIP_SENTINEL:
             return False
-
         form_field = schema.get_field(field_id)
         if form_field is None:
             return False
@@ -154,95 +271,163 @@ class ApplicantMemory:
             logger.info("mem0 skip sensitive field=%s caller=%s", field_id, _log_id(caller_id))
             return False
 
-        # Keyed by the schema's memory_key so the stored shape survives the form
-        # being renumbered in a future edition.
-        body: dict[str, Any] = {
-            "messages": [{"role": "user", "content": f"My {form_field.memory_key} is {value}."}],
-            "user_id": _user_key(caller_id),
-            "metadata": {
+        ok = await self._write(
+            caller_id,
+            f"My {form_field.memory_key} is {value}.",
+            {
+                "tier": Tier.SEMANTIC,
                 "field_id": field_id,
+                # Keyed by memory_key so the stored shape survives the form
+                # being renumbered in a future edition.
                 "memory_key": form_field.memory_key,
                 "value": value,
                 "form_id": schema.form_id,
                 "preferred_language": language,
             },
-        }
-        try:
-            async with httpx.AsyncClient(timeout=WRITE_TIMEOUT_SECONDS) as client:
-                resp = await client.post(
-                    f"{MEM0_BASE_URL}/memories/", json=body, headers=self._headers()
-                )
-                resp.raise_for_status()
-        except Exception as exc:
-            logger.warning(
-                "mem0 write failed field=%s caller=%s: %s",
-                field_id,
-                _log_id(caller_id),
-                type(exc).__name__,
-            )
+        )
+        if ok:
+            logger.info("mem0 stored field=%s caller=%s", field_id, _log_id(caller_id))
+        return ok
+
+    async def record_episode(
+        self,
+        caller_id: str,
+        session_id: str,
+        form_id: str,
+        fields_collected: int,
+        completed: bool,
+        language: str = "en",
+    ) -> bool:
+        """EPISODIC: what happened on this call."""
+        if not self.enabled:
             return False
-        # Never log the value itself.
-        logger.info("mem0 stored field=%s caller=%s", field_id, _log_id(caller_id))
-        return True
+        when = datetime.now(UTC).isoformat()
+        outcome = "completed it and generated the PDF" if completed else "did not finish"
+        return await self._write(
+            caller_id,
+            f"On {when[:10]} I worked on form {form_id}, answered "
+            f"{fields_collected} questions, and {outcome}.",
+            {
+                "tier": Tier.EPISODIC,
+                "session_id": session_id,
+                "form_id": form_id,
+                "at": when,
+                "fields_collected": fields_collected,
+                "completed": completed,
+                "language": language,
+            },
+        )
 
-    async def forget(self, caller_id: str) -> int:
-        """Delete everything stored for this caller.
+    async def learn(self, caller_id: str, key: str, value: str, kind: str = "applicant") -> bool:
+        """PROCEDURAL: a rule worth applying on every future call."""
+        if not self.enabled or not key or not value:
+            return False
+        return await self._write(
+            caller_id,
+            f"When helping me, remember: {value}",
+            {"tier": Tier.PROCEDURAL, "key": key, "value": value, "kind": kind},
+        )
 
-        The playbook promises an applicant can say "delete my data"; that
-        promise needs an implementation.
+    async def learn_from_session(
+        self, caller_id: str, values: dict[str, str], schema: FormSchema, language: str
+    ) -> int:
+        """Derive procedural rules from what actually happened on this call.
+
+        Deliberately conservative. A wrong rule is worse than no rule: it makes
+        Zuzu confidently skip a question the applicant could have answered.
+        """
+        learned = 0
+        if language and not language.startswith("en"):
+            learned += await self.learn(
+                caller_id, "language", f"speak {language} with this applicant", "applicant"
+            )
+
+        # A skipped identifier usually means they do not have one at all, so
+        # leading with it next time wastes the opening of the call.
+        for field_id in ("ssn", "a_number", "uscis_online_account_number", "sevis_number"):
+            if values.get(field_id) == SKIP_SENTINEL:
+                learned += await self.learn(
+                    caller_id,
+                    f"no_{field_id}",
+                    f"they do not have a {field_id.replace('_', ' ')}; ask late or not at all",
+                    "applicant",
+                )
+
+        category = values.get("eligibility_category")
+        if category and category != SKIP_SENTINEL:
+            learned += await self.learn(
+                caller_id,
+                "eligibility_category",
+                f"their eligibility category is {category}; confirm it rather than re-derive it",
+                "process",
+            )
+        return learned
+
+    async def forget(self, caller_id: str, tier: Tier | None = None) -> int:
+        """Delete memories for this caller, optionally just one tier.
+
+        The pitch promises an applicant can say "delete my data". Tier-scoped
+        deletion means they can drop their call history without losing the
+        profile that saves them an hour next time.
         """
         if not self.enabled:
             return 0
+        entries = await self._read_all(caller_id)
+        removed = 0
         try:
             async with httpx.AsyncClient(timeout=WRITE_TIMEOUT_SECONDS) as client:
-                listing = await client.get(
-                    f"{MEM0_BASE_URL}/memories/",
-                    params={"user_id": _user_key(caller_id)},
-                    headers=self._headers(),
-                )
-                listing.raise_for_status()
-                payload = listing.json()
-                entries = payload if isinstance(payload, list) else payload.get("results", [])
-                removed = 0
                 for entry in entries:
+                    meta = entry.get("metadata") or {}
+                    if tier is not None and meta.get("tier") != tier:
+                        continue
                     memory_id = entry.get("id")
                     if not memory_id:
                         continue
-                    deleted = await client.delete(
+                    resp = await client.delete(
                         f"{MEM0_BASE_URL}/memories/{memory_id}/", headers=self._headers()
                     )
-                    if deleted.status_code < 300:
+                    if resp.status_code < 300:
                         removed += 1
         except Exception as exc:
             logger.warning(
                 "mem0 forget failed caller=%s: %s", _log_id(caller_id), type(exc).__name__
             )
-            return 0
-        logger.info("mem0 forgot caller=%s entries=%d", _log_id(caller_id), removed)
+            return removed
+        logger.info(
+            "mem0 forgot caller=%s tier=%s entries=%d", _log_id(caller_id), tier or "all", removed
+        )
         return removed
 
 
 def summarize(profile: ApplicantProfile, schema: FormSchema) -> str:
-    """The short spoken line the agent greets a returning caller with."""
-    if not profile.known_values:
-        return ""
+    """The spoken line the agent greets a returning caller with.
 
-    labels: list[str] = []
-    for field_id in profile.known_values:
-        form_field = schema.get_field(field_id)
-        if form_field is None or form_field.sensitive:
-            continue
-        labels.append(form_field.id.replace("_", " "))
-        if len(labels) == 3:
-            break
+    Draws on all three tiers, because "we have your date of birth" is a weaker
+    greeting than "last time we filed your renewal, and I remember you prefer
+    Spanish".
+    """
+    parts: list[str] = []
 
-    if not labels:
-        return ""
-    if len(labels) == 1:
-        spoken = labels[0]
-    else:
-        spoken = ", ".join(labels[:-1]) + f", and {labels[-1]}"
-    return f"We already have your {spoken}."
+    episode = profile.last_episode
+    if episode and episode.at:
+        outcome = "we finished it" if episode.completed else "we did not finish"
+        parts.append(
+            f"Last time, on {episode.at[:10]}, you worked on {episode.form_id} and {outcome}."
+        )
+
+    labels = [
+        schema.get_field(fid).id.replace("_", " ")
+        for fid in profile.known_values
+        if schema.get_field(fid) is not None and not schema.get_field(fid).sensitive
+    ][:3]
+    if labels:
+        spoken = labels[0] if len(labels) == 1 else ", ".join(labels[:-1]) + f", and {labels[-1]}"
+        parts.append(f"We already have your {spoken}.")
+
+    if profile.procedures:
+        parts.append("I also remember how you like to work.")
+
+    return " ".join(parts)
 
 
 _memory: ApplicantMemory | None = None

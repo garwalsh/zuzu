@@ -40,11 +40,13 @@ from api.contract import (
     SessionInitRequest,
     SessionInitResponse,
 )
+from api.delivery import deliver_packet
 from api.event_bus import get_event_bus
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
-from api.memory import get_memory, summarize
+from api.memory import Tier, get_memory, summarize
 from api.pdf_engine import fill_i765, missing_required
+from api.retrieval import applicable_items, fetch_document_checklist
 from api.security import require_shared_secret, verify_secret
 from api.session_store import (
     Session,
@@ -395,6 +397,28 @@ async def session_complete(
         )
         reconciled += 1
 
+    # EPISODIC + PROCEDURAL writes happen here, at the natural end of a call,
+    # and off the response path -- the agent is hanging up, not waiting on us.
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    _spawn_background(
+        get_memory().record_episode(
+            caller_id=session.caller_id,
+            session_id=payload.conversation_id,
+            form_id=schema.form_id,
+            fields_collected=len(session.values),
+            completed=bool(session.pdf_path),
+            language=session.preferred_language,
+        )
+    )
+    _spawn_background(
+        get_memory().learn_from_session(
+            caller_id=session.caller_id,
+            values=plain,
+            schema=schema,
+            language=session.preferred_language,
+        )
+    )
+
     await _publish(SESSION_COMPLETED, payload.conversation_id, {"reconciled": reconciled})
     logger.info(
         "session completed",
@@ -487,6 +511,53 @@ def _display_value(field_id: str, value: str, schema: Any) -> str:
     if form_field is not None and form_field.sensitive and len(value) > 2:
         return "*" * (len(value) - 2) + value[-2:]
     return value
+
+
+@app.get("/sessions/{session_id}/checklist")
+async def session_checklist(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Supporting documents this applicant still has to attach.
+
+    The completed PDF is half the deliverable; USCIS also wants photos, the
+    I-94, a copy of the prior EAD. Which ones apply depends on their answers.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    checklist = await fetch_document_checklist(schema.form_id)
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    return {
+        "form_id": schema.form_id,
+        "source": checklist.get("source"),
+        "items": applicable_items(checklist, plain),
+    }
+
+
+@app.post("/sessions/{session_id}/deliver")
+async def session_deliver(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Email the finished packet to the applicant.
+
+    The person called from a phone and hung up; a PDF on a dashboard they are
+    not looking at is not a delivered outcome.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    if not session.pdf_path:
+        raise HTTPException(status_code=409, detail="no completed form for this session yet")
+
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    checklist = await fetch_document_checklist(schema.form_id)
+    base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+    result = await deliver_packet(
+        to_email=plain.get("email", ""),
+        form_id=schema.form_id,
+        pdf_url=f"{base}/forms/{session_id}.pdf",
+        checklist=applicable_items(checklist, plain),
+        applicant_name=plain.get("given_name", ""),
+    )
+    return {"session_id": session_id, **result}
 
 
 @app.get("/forms/{form_id}/schema")
@@ -583,14 +654,18 @@ async def dashboard() -> FileResponse:
 @app.post("/session/forget")
 async def session_forget(
     caller_id: str = Query(...),
+    tier: str | None = Query(default=None, description="semantic|episodic|procedural"),
     _: None = Depends(require_shared_secret),
 ) -> dict[str, Any]:
-    """Delete everything remembered about a caller.
+    """Delete what is remembered about a caller, optionally one tier only.
 
-    The pitch promises an applicant can say "delete my data". This is that.
+    The pitch promises an applicant can say "delete my data". Tier scoping means
+    they can drop their call history without losing the profile that saves them
+    an hour on the next form.
     """
-    removed = await get_memory().forget(caller_id)
-    return {"ok": True, "entries_removed": removed}
+    scope = Tier(tier) if tier else None
+    removed = await get_memory().forget(caller_id, scope)
+    return {"ok": True, "entries_removed": removed, "tier": tier or "all"}
 
 
 @app.get("/")
