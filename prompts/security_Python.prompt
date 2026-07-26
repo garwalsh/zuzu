@@ -1,0 +1,34 @@
+<pdd-reason>The orchestrator holds applicant PII and is reachable from the public internet so the voice agent can call it. An unauthenticated write path would let anyone inject field values into a live session.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+
+Write a Python module providing the shared-secret authentication dependency for
+the Zuzu FastAPI orchestrator. Every ElevenLabs webhook and server-tool call
+carries a `X-Zuzu-Secret` header that must match the configured secret.
+
+Requirements:
+
+1. Read the expected secret from the `ZUZU_SHARED_SECRET` environment variable at
+   call time, not at import time, so tests and deploys can rebind it without
+   reimporting the module.
+
+2. Expose an async FastAPI dependency `require_shared_secret` that reads the
+   `X-Zuzu-Secret` request header and returns None on success.
+
+3. Compare using `hmac.compare_digest` on the UTF-8 encoded values. A plain `==`
+   on a secret leaks its length and prefix through timing.
+
+4. Raise `HTTPException(status_code=401)` when the header is absent, empty, or
+   does not match. Use the detail string `"invalid or missing X-Zuzu-Secret"`.
+   Never echo the received or expected secret in the detail, in a log line, or in
+   an exception message.
+
+5. If `ZUZU_SHARED_SECRET` is unset or empty, fail closed: raise
+   `HTTPException(status_code=500)` with detail
+   `"server misconfigured: ZUZU_SHARED_SECRET is not set"`. A blank configured
+   secret must never authorize a blank supplied header.
+
+6. Also expose a plain `verify_secret(supplied: str | None) -> bool` helper with
+   the same constant-time semantics, so non-HTTP call sites such as the
+   WebSocket handler can reuse the check without constructing a Request.
+
+7. Type hints throughout. Keep the module free of any session or form knowledge.

@@ -1,34 +1,277 @@
 # Zuzu
 
-Voice-first immigration form assistant. Applicants call a phone number, speak in their native language, and the agent gathers their information to complete USCIS forms.
+**Call a number, speak your language, and Zuzu fills your USCIS forms for you.**
 
-## How it works
+USCIS forms are long, confusing, and high-stakes — one error costs months. They
+are hardest for exactly the people the system already fails: disabled, elderly,
+low-literacy, and non-English-speaking applicants. Zuzu turns the form into a
+conversation. If you can talk, you can file.
 
-1. Applicant connects using voice widget
-2. Agent detects their language and greets them (by name if they've called before)
-3. Agent ask which form they need to fill out
-4. Agent checks the fields of this specific form and if the applicant has called before cross references with memory
-5. Agent asks questions to collect missing information and updates memory where necessary
-7. A form-filling agent maps the stored profile to the correct USCIS form fields and generates a completed PDF
+**Live:** https://zuzu-orchestrator.onrender.com/dashboard
 
-## Architecture
+**12 USCIS forms**, ~1,900 questions, none of them hand-written.
 
-- **Voice agent** — ElevenLabs conversational AI, handles the phone call and multilingual dialogue
-- **Memory layer** — mem0 stores applicant profiles across sessions
-- **Form engine** — Maps profile data to USCIS form fields and fills the PDF
-- **Live dashboard** — Web UI showing the transcript and form fields populating in real time
+---
 
-## Sponsor tools used
+## What it does
 
-- [ElevenLabs](https://elevenlabs.io) — Voice agent and multilingual speech
-- [mem0](https://mem0.ai) — Applicant profile memory
-- [Cerebras](https://cerebras.ai) — Fast inference for form mapping
-- [Render](https://render.com) — Deployment
+You say *"I need my work permit"* — not "I-765". Zuzu works out which form you
+mean, confirms it, and starts asking one plain-language question at a time in
+your language. Answers appear on screen as you speak. At the end you get a
+completed, downloadable PDF plus the exact list of documents to attach.
 
-## Supported forms
+Call back next month and it already knows you.
 
-- I-765 (Application for Employment Authorization)
+```
+ Phone / voice widget
+        │  speech, in the caller's own language
+        ▼
+ ElevenLabs Conversational AI ──► STT · language detection · TTS
+        │  server tool calls
+        ▼
+ Orchestrator (FastAPI on Render)
+        ├──► mem0          three memory tiers, keyed by hashed caller id
+        ├──► TokenRouter   spoken-value normalisation · translation · schema polish
+        ├──► rtrvr.ai      reads uscis.gov for document requirements and new forms
+        └──► RocketRide    declarative pipeline that delivers the finished packet
+        ▼
+ Form engine ──► fills the official AcroForm PDF ──► completed form + checklist
+        ▼
+ Live dashboard ──► questions, answers, memory, and fields filling in real time
+```
 
+---
+
+## The sponsor stack, and what each one actually does
+
+Every integration below executes. Where something is registered but not yet
+driving the product, this README says so.
+
+### ElevenLabs — the entire interface
+
+The conversational agent owns the call: speech, language detection, turn-taking,
+read-back confirmation. It is deliberately a **thin voice loop** — it asks
+whatever question the orchestrator hands it and reports the answer back. All the
+decisions live in one place.
+
+`tools/create_elevenlabs_agent.py` registers the agent, its system prompt, and
+three server tools pointed at the deployment. `session_id` is bound to
+`system__conversation_id`, so the id the dashboard subscribes to and the id the
+agent sends are the same by construction.
+
+### mem0 — three memory tiers
+
+A flat store is the wrong shape. Remembering a passport number, remembering that
+someone called last Tuesday, and remembering that they need Spanish are three
+different kinds of knowledge with three different lifetimes.
+
+| Tier | Holds | Why it is separate |
+|---|---|---|
+| **Semantic** | Name, date of birth, passport number | Prefills the next form |
+| **Episodic** | Which form, how many answers, whether a PDF came out, when | Lets Zuzu say *"last time we filed your renewal on the 25th"* |
+| **Procedural** | *Speak French* · *no SSN, stop asking* · *category is (c)(3)(B)* | Learned once, applied on every later call |
+
+Measured on a live call: a cold caller answers **33 questions**; the same number
+calling back answers **4**, with 17 fields recalled.
+
+Tiers live in mem0 metadata, so each is independently forgettable —
+`POST /session/forget?caller_id=…&tier=episodic` drops call history while keeping
+the profile that saves an hour. **User-level isolation:** caller ids are
+SHA-256 hashed before they reach mem0, so the store never holds a raw phone
+number and one caller's memory is unreachable from another's session.
+Sensitive values are **not persisted at all** unless `ZUZU_MEMORY_STORE_SENSITIVE`
+is explicitly set.
+
+### TokenRouter (MiniMax-M3) — the inference lane
+
+`api/inference.py` is provider-agnostic: base URL, model, and key are config, so
+Cerebras or Groq is an env change rather than a patch. It carries the two jobs an
+LLM genuinely earns on a voice call:
+
+- **Spoken-value normalisation** — *"nineteen ninety-eight, April twelfth"* →
+  `1998-04-12`; *"see three bee"* → `(c)(3)(B)`.
+- **Question translation** — so an applicant who speaks Haitian Creole is not
+  read English because nobody wrote a Creole schema.
+
+It also polishes generated question wording and parses the document checklist out
+of USCIS prose. **Nothing here touches the live `save_field` path**, which is why
+saves land in **0.13 ms**.
+
+### rtrvr.ai — reading the web that refuses to be read
+
+`uscis.gov` returns **403 to scripted requests**. rtrvr drives a real browser, so
+it gets the page. Two uses:
+
+1. **Document requirements** — a live run pulled **17 real requirements** from
+   `uscis.gov/i-765`, including the DACA worksheet, the DSO-endorsed I-20 for
+   (c)(6), and the I-485 receipt for (c)(9). Narrowed per applicant: a (c)(9)
+   filer sees 4 items, (c)(33) sees 5, a (c)(3)(B) renewal sees 6.
+2. **Unknown forms** — paste any USCIS URL and rtrvr reads the page to identify
+   which form it is, even one Zuzu has never seen.
+
+### RocketRide — delivery as configuration
+
+A completed PDF on a dashboard is useless to someone who called from a phone and
+hung up. RocketRide's model is **pipeline-as-JSON**, so delivery is config rather
+than an SMTP client:
+
+```
+webhook(questions) → agent_rocketride + tool_gmail → response(answers)
+```
+
+Verified: the pipeline is accepted and a run token is issued. The email states
+plainly that Zuzu has **not** submitted the form and cannot sign it.
+
+### Band — agent identities and the audit trail
+
+Six agents registered with distinct, non-overlapping jobs: **Intake · Extractor ·
+Mapper · Validator · Filler · Auditor**. In a legal-filing domain the audit trail
+*is* the trust story — Auditor exists to record which agent set which field, from
+what source, at what confidence.
+
+> **Status, stated honestly:** the six agents are registered on Band and hold real
+> identities, but Zuzu does not yet route its work through them. The orchestrator
+> still calls its own modules directly. Wiring the pipeline through Band is the
+> next step, not a completed one.
+
+### Render — one blueprint
+
+`render.yaml` deploys the whole thing. Pinned to one worker until the Redis store
+lands, because session state is in-process.
+
+### Cerebras — not claimed
+
+The playbook assigns Cerebras the speed lane. The account returns **402 Payment
+Required**, and `llama-3.3-70b` — the model the docs name — **does not exist** on
+it (404). Rather than claim an integration that never ran, the inference lane is
+provider-agnostic and Cerebras is a config flip if credits arrive. **Zuzu does not
+submit to the Cerebras track.**
+
+---
+
+## A form is data, not code
+
+This is the product thesis, and it is tested rather than asserted.
+
+`data/forms/*.json` declares every question, its plain-language phrasing, and the
+exact AcroForm field it fills. Nothing in `api/` names a specific form.
+
+Adding a form is one request:
+
+```bash
+curl -X POST "$BASE/forms/onboard?form_id=I-129" -H "X-Zuzu-Secret: $SECRET"
+```
+
+That fetches the fillable PDF, extracts its AcroForm inventory, derives questions
+from the PDF's own screen-reader tooltips, and registers it — **no deploy, no code
+change**. Pass `&pdf_url=…` for a form outside the catalog.
+
+**Field names are extracted, never recalled by a model.** Names, types, checkbox
+export values, and length limits are facts; a model asked to remember them is how
+you ship a form that silently drops half an applicant's answers. Only the
+plain-language layer is generated, and every generated reference is validated back
+against the real document.
+
+Currently loaded: **I-765 · N-400 · I-130 · I-485 · I-131 · I-90 · I-751 · I-864 ·
+I-821D · I-589 · G-28 · I-539**
+
+---
+
+## Things the real form disagreed with the spec about
+
+Building against the actual USCIS document rather than a description of it turned
+up four errors that would have produced bad filings:
+
+1. **Part 1 is Initial / Replacement / Renewal.** The planning docs say
+   Initial/Renewal/Replacement. Taking that literally checks "replacement" for
+   every renewal applicant — the most common category.
+2. **Parents' names and the SSA-card request are not on edition 08/21/25.** Zero
+   hits for `Father`, `Mother`, or `SSA` in the field tree, the XFA template, or
+   the page text. The profile schema was asking for three answers with nowhere
+   to go.
+3. **The PDF is a hybrid AcroForm + static XFA, AES-encrypted with an empty
+   password.** Fill only the AcroForm and Acrobat shows a **blank form** while
+   reporting success. The engine deletes `/XFA` before writing.
+4. **There are no radio groups.** Every checkbox is an independent field with its
+   own irregular export value — including unit selectors whose names carry
+   leading *and* trailing spaces (`/ APT `, not `/APT`).
+
+`tests/test_schema_matches_pdf.py` fails the build if the schema drifts from the
+document. See [`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md).
+
+---
+
+## Design commitments, each with a test
+
+- **Never fabricate.** A skipped field stays blank; an unparseable eligibility
+  category writes nothing; an invalid state code is refused rather than silently
+  dropped by the viewer.
+- **Never log a sensitive value.** SSN, A-Number, passport, I-94, and USCIS
+  account number are logged by field id only.
+- **Fail closed.** An unset `ZUZU_SHARED_SECRET` returns 500 rather than
+  accepting a blank header.
+- **The call survives its dependencies.** mem0 lookups time out at 3s and degrade
+  to an empty profile. A missing conversation-init webhook opens the session
+  lazily instead of 404-ing every tool call.
+- **Human in the loop.** Zuzu fills to the review step. It does not submit, does
+  not pay fees, and cannot sign — the signature fields are read-only by design.
+
+---
+
+## Run it
+
+```bash
+uv sync --extra dev
+cp .env.example .env          # set ZUZU_SHARED_SECRET
+uv run uvicorn api.main:app --port 8000
+```
+
+```bash
+uv run pytest -q              # 42 tests
+```
+
+Dashboard at `/dashboard?secret=$ZUZU_SHARED_SECRET`.
+
+> Run **one** worker until the Redis store lands — session state is in-process,
+> so two workers means the call lands on one and the PDF download 404s from the
+> other.
+
+## HTTP contract
+
+`session_id` is always the ElevenLabs `conversation_id`. Every endpoint except
+`/health` requires `X-Zuzu-Secret`.
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /session/init` | Conversation-init webhook → greeting variables |
+| `POST /tools/get_missing_fields` | Next question, or `null` when done |
+| `POST /tools/save_field` | Store one confirmed answer |
+| `POST /tools/generate_form` | Fill the PDF |
+| `POST /tools/identify_form` | *"my work permit"* or a URL → the right form |
+| `POST /session/set_form` | Switch forms mid-call, keeping answers |
+| `POST /session/complete` | Post-call reconciliation, episode + rules learned |
+| `GET /sessions/{id}/memory` | All three memory tiers |
+| `GET /sessions/{id}/checklist` | Documents to attach |
+| `POST /sessions/{id}/deliver` | Email the packet via RocketRide |
+| `POST /forms/onboard` | Teach Zuzu a new form at runtime |
+| `GET /forms` | What is ready, and what can be learned |
+| `GET /ws/{session_id}` | Live event stream |
+
+## How this was built
+
+Prompt Driven Development: `prompts/*.prompt` are the source of truth and
+[`architecture.json`](architecture.json) declares the module graph. Code under
+`api/` is the output.
+
+**Provenance, stated plainly:** `api/contract.py` and `api/security.py` were
+generated by `pdd --local generate`. The rest are hand-written against those same
+prompts, after the generation backend hit an expired session. Regeneration was
+attempted for the others with the test suite as the gate — modules whose generated
+version failed were reverted rather than shipped.
+
+`pdd checkup --final-gate` ran all 8 steps against PR #2 and found **zero code
+findings**; its fixer caught a real test-isolation bug (a live `MEM0_API_KEY` in
+the shell made the suite non-hermetic) and pushed the fix.
 
 ## Team
 

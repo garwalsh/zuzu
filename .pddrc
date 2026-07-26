@@ -1,0 +1,19 @@
+version: "1.0"
+
+contexts:
+  default:
+    defaults:
+      prompts_dir: "prompts"
+      generate_output_path: "api/"
+      test_output_path: "tests/"
+      example_output_path: "context/"
+      default_language: "python"
+      strength: 0.818
+      temperature: 0.0
+      target_coverage: 80.0
+      budget: 10.0
+      max_attempts: 3
+# Note: mocks/mock_voice_client.py is generated with an explicit
+# `--output mocks/mock_voice_client.py`. A second context keyed on a path
+# pattern was tried and matched every basename, silently redirecting unrelated
+# modules, so the explicit flag is the safer instruction.

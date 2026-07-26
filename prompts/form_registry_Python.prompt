@@ -1,0 +1,35 @@
+<pdd-reason>Keeps the routes form-agnostic so a second form is a registry entry rather than a branch in the request handler.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+<pdd-dependency>i765_schema_Python.prompt</pdd-dependency>
+
+<include>prompts/i765_schema_Python.prompt</include>
+
+Write a small Python module providing the drop-in form registry for the Zuzu
+orchestrator, so request handlers never name a specific form.
+
+Requirements:
+
+1. Maintain a registry mapping a form id string to a zero-argument loader that
+   returns a `FormSchema`. Seed it with `"I-765"` bound to `get_i765_schema`
+   from the schema module.
+
+2. Expose `get_form(form_id: str) -> FormSchema`. Look up case-insensitively and
+   tolerate the common spoken and typed variants of the id by normalizing:
+   uppercase, and treat `I765` and `I-765` as the same form.
+
+3. Raise `UnknownFormError`, a module-defined exception carrying the requested
+   id and the list of known ids, when the form is not registered. The API layer
+   turns this into a 404; do not import FastAPI here.
+
+4. Expose `list_forms() -> list[str]` returning the registered ids, and
+   `register_form(form_id: str, loader) -> None` so a new form can be added at
+   runtime or in a test without editing this module.
+
+5. Resolve loaders lazily and cache the resulting schema per form id, so an
+   unused form is never parsed and a used one is parsed once.
+
+6. Type hints throughout. Keep it under roughly sixty lines -- this is a lookup
+   table, and any real logic here means it belongs in the schema module.
+
+7. `DEFAULT_FORM_ID` module constant set to `"I-765"`, used by callers that
+   need a fallback when the voice agent does not name a form.

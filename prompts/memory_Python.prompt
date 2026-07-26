@@ -1,0 +1,56 @@
+<pdd-reason>The moat. A returning caller should never be asked for their date of birth twice. Memory is also the thing that makes a second form take seconds instead of an hour, which is the strongest moment in the demo.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+<pdd-dependency>i765_schema_Python.prompt</pdd-dependency>
+
+<include>prompts/i765_schema_Python.prompt</include>
+
+Write a Python module wrapping mem0 to give Zuzu cross-session applicant memory,
+keyed by caller id. It stores what an applicant has told us on previous calls so
+we can greet them by name and skip questions we already know the answers to.
+
+This module sits on the live call path at `/session/init`, so its failure
+behaviour matters as much as its success behaviour.
+
+Requirements:
+
+1. Expose an async `ApplicantMemory` class constructed from the `MEM0_API_KEY`
+   environment variable, with a module-level `get_memory()` accessor returning a
+   singleton.
+
+2. `load_profile(caller_id: str) -> ApplicantProfile` returns what we know. Define
+   `ApplicantProfile` as a Pydantic model with `caller_id: str`,
+   `display_name: str` defaulting to "", `preferred_language: str` defaulting to
+   "en", `known_values: dict[str, str]` keyed by **schema field id**, and
+   `is_returning: bool`.
+
+3. `save_field(caller_id, field_id, value, schema)` writes one confirmed answer.
+   Store it under the field's `memory_key` from the schema, not the raw field id,
+   so the memory shape survives a form schema being renumbered.
+
+4. **Never store a value for a field marked `sensitive` in the schema unless
+   `ZUZU_MEMORY_STORE_SENSITIVE` is explicitly truthy, defaulting to off.** SSNs,
+   A-Numbers, and passport numbers persisting in a third-party memory store is a
+   materially different privacy posture than holding them for one call, and it
+   should be a deliberate decision rather than a default.
+
+5. `forget(caller_id) -> int` deletes everything stored for that caller and
+   returns how many entries were removed. The playbook promises applicants can
+   say "delete my data"; that promise needs an implementation.
+
+6. **Degrade gracefully and never break the call.** Every mem0 call is wrapped so
+   that a timeout, an auth failure, or a network error logs a warning and returns
+   an empty profile rather than raising. A caller whose memory lookup fails must
+   still be able to complete their form from scratch. Use a hard timeout of 3
+   seconds on the lookup -- a slow memory service must not stall a greeting.
+
+7. Never log a stored value. Log the caller id **hashed**, plus field ids and
+   counts. This module handles the most sensitive data in the system.
+
+8. Provide `summarize(profile, schema) -> str` producing the short spoken
+   `known_summary` the agent greets with, naming at most three things in plain
+   language, for example "We already have your name, date of birth, and
+   passport number." Return "" when nothing is known.
+
+9. Type hints throughout. No FastAPI imports. The mem0 client must be importable
+   lazily so the package remains an optional dependency and Layer 1 still runs
+   with no key set.

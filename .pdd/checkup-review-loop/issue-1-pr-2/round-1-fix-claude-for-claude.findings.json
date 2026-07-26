@@ -1,0 +1,24 @@
+{
+  "summary": "Ran uv sync to install the declared pypdf dependency (was missing from the reviewer's ad-hoc python env), which cleared all ModuleNotFoundError errors. Then fixed a real test-isolation defect: the _isolate fixture in tests/test_contract.py did not neutralize the memory layer, so an ambient MEM0_API_KEY caused session_init to hit the live mem0 API and prefill fields, breaking the fresh-session contract tests. Made the fixture hermetic by delenv-ing MEM0_API_KEY and calling memory.reset_memory() around each test. Full suite now passes (40 passed) even with MEM0_API_KEY exported.",
+  "changed_files": [
+    "tests/test_contract.py",
+    ".pdd/agentic-logs/session_20260725_162130.jsonl"
+  ],
+  "changed_files_original_count": 2,
+  "changed_files_omitted_count": 0,
+  "success": true,
+  "dispositions": {
+    "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": "fixed"
+  },
+  "rationales": {
+    "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": "Primary cause was pypdf not installed in the ad-hoc test env; pypdf is properly declared in pyproject.toml and locked, so uv sync installs it (as CI does). Additionally fixed a latent non-hermetic test bug: _isolate now unsets MEM0_API_KEY and resets the memory singleton so contract tests no longer depend on the developer's shell hitting the live mem0 API. Targeted command `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` now passes 40/40."
+  },
+  "dispositions_original_count": 1,
+  "rationales_original_count": 1,
+  "fix_items_omitted_count": 0,
+  "round_number": 1,
+  "fixer_result": "attempted",
+  "push_status": "pushed",
+  "local_fixer_commit_sha": "00abe924b95615c788715ee4713897a4ba4b9a6d",
+  "pushed_head_sha": "00abe924b95615c788715ee4713897a4ba4b9a6d"
+}

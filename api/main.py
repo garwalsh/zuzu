@@ -1,0 +1,844 @@
+"""Zuzu orchestrator: the service the ElevenLabs voice agent calls.
+
+Spec: prompts/main_Python.prompt
+
+A human is mid-sentence while these endpoints run, so the read and write paths
+do nothing but touch session state and publish an event.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import logging
+import os
+import time
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+from fastapi import Depends, FastAPI, HTTPException, Query, Response, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+
+from api.contract import (
+    FIELD_SAVED,
+    FORM_CHANGED,
+    FORM_READY,
+    SESSION_COMPLETED,
+    SESSION_STARTED,
+    DynamicVariables,
+    GenerateFormRequest,
+    GenerateFormResponse,
+    GetMissingFieldsRequest,
+    GetMissingFieldsResponse,
+    IdentifyFormRequest,
+    NextField,
+    SaveFieldRequest,
+    SaveFieldResponse,
+    SessionCompleteRequest,
+    SessionCompleteResponse,
+    SessionEvent,
+    SessionInitRequest,
+    SessionInitResponse,
+    SetFormRequest,
+)
+from api.delivery import deliver_packet
+from api.event_bus import get_event_bus
+from api.form_finder import identify
+from api.form_onboarding import OnboardingError, load_catalog, onboard
+from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
+from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
+from api.memory import Tier, _user_key, get_memory, summarize
+from api.pdf_engine import fill_i765, missing_required
+from api.retrieval import applicable_items, fetch_document_checklist
+from api.security import require_shared_secret, verify_secret
+from api.session_store import (
+    Session,
+    SessionNotFoundError,
+    counts,
+    get_session_store,
+    next_missing_field,
+)
+
+CONFIDENCE_CONFIRM_THRESHOLD = 0.85
+OUT_DIR = REPO_ROOT / "out"
+PERSONA_PATH = REPO_ROOT / "data" / "demo_personas.json"
+
+
+class JsonLogFormatter(logging.Formatter):
+    """Structured logs. Field ids are loggable; field values never are."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        payload: dict[str, Any] = {
+            "at": datetime.now(UTC).isoformat(),
+            "level": record.levelname,
+            "msg": record.getMessage(),
+        }
+        for key in ("session_id", "field_id", "duration_ms", "form_id"):
+            value = getattr(record, key, None)
+            if value is not None:
+                payload[key] = value
+        return json.dumps(payload)
+
+
+def _configure_logging() -> logging.Logger:
+    handler = logging.StreamHandler()
+    handler.setFormatter(JsonLogFormatter())
+    root = logging.getLogger()
+    if not any(isinstance(h.formatter, JsonLogFormatter) for h in root.handlers):
+        root.handlers = [handler]
+    root.setLevel(logging.INFO)
+    return logging.getLogger("zuzu")
+
+
+logger = _configure_logging()
+
+app = FastAPI(title="Zuzu orchestrator", version="0.1.0")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+async def _publish(event_type: str, session_id: str, data: dict[str, Any] | None = None) -> None:
+    await get_event_bus().publish(
+        SessionEvent(
+            type=event_type,
+            session_id=session_id,
+            at=datetime.now(UTC),
+            data=data or {},
+        )
+    )
+
+
+#: Strong refs to in-flight background tasks; without these the event loop can
+#: garbage-collect a task mid-write.
+_background: set[asyncio.Task[Any]] = set()
+
+
+def _spawn_background(coro: Any) -> None:
+    task = asyncio.create_task(coro)
+    _background.add(task)
+    task.add_done_callback(_background.discard)
+
+
+async def _load_session(session_id: str) -> Session:
+    """Strict lookup, for read paths where inventing a session would be a lie."""
+    try:
+        return await get_session_store().get(session_id)
+    except SessionNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=f"unknown session: {session_id}") from exc
+
+
+async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session:
+    """Lookup for the live tool path, creating the session if it is missing.
+
+    The conversation-initiation webhook is an optimisation, not a precondition.
+    It fires for telephony but not reliably for the embedded widget, and when it
+    does not fire every tool call 404s and the agent tells the applicant it
+    cannot get the next question -- which is exactly what happens on stage.
+
+    A session opened here has no caller_id, so there is no memory lookup and the
+    interview simply starts cold. Losing the returning-caller greeting is a far
+    better failure than losing the call.
+    """
+    store = get_session_store()
+    try:
+        return await store.get(session_id)
+    except SessionNotFoundError:
+        logger.warning(
+            "session opened lazily -- conversation-init webhook did not fire",
+            extra={"session_id": session_id},
+        )
+        session = await store.create(
+            session_id=session_id,
+            caller_id=caller_id,
+            form_id=DEFAULT_FORM_ID,
+        )
+        await _publish(SESSION_STARTED, session_id, {"is_returning": False, "lazy": True})
+        return session
+
+
+def _resolve_form(form_id: str):
+    try:
+        return get_form(form_id or DEFAULT_FORM_ID)
+    except UnknownFormError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+
+@app.get("/health")
+async def health() -> dict[str, Any]:
+    return {"status": "ok", "form_ids": list_forms()}
+
+
+@app.post("/session/init", response_model=SessionInitResponse)
+async def session_init(
+    payload: SessionInitRequest,
+    _: None = Depends(require_shared_secret),
+) -> SessionInitResponse:
+    """Create the session the whole call hangs off, and load what we know.
+
+    A returning caller is greeted by name and never re-asked for anything we
+    already have. If the memory lookup fails, we greet them as new rather than
+    failing the call -- see api/memory.py.
+    """
+    session_id = payload.conversation_id
+    schema = get_form(DEFAULT_FORM_ID)
+    profile = await get_memory().load_profile(payload.caller_id, schema)
+
+    session = await get_session_store().create(
+        session_id=session_id,
+        caller_id=payload.caller_id,
+        form_id=DEFAULT_FORM_ID,
+        preferred_language=profile.preferred_language,
+        is_returning=profile.is_returning,
+    )
+
+    # Prefill from memory so the interview only covers what is genuinely new.
+    for field_id, value in profile.known_values.items():
+        await get_session_store().save_field(
+            session_id=session_id,
+            field_id=field_id,
+            value=value,
+            confidence=1.0,
+            language=profile.preferred_language,
+            source="memory",
+        )
+
+    remaining, known = counts(await get_session_store().get(session_id), schema)
+    await _publish(
+        SESSION_STARTED,
+        session_id,
+        {
+            "is_returning": profile.is_returning,
+            "prefilled_count": len(profile.known_values),
+            "remaining_count": remaining,
+            "known_count": known,
+        },
+    )
+    logger.info(
+        "session started",
+        extra={"session_id": session_id, "form_id": schema.form_id},
+    )
+    del session
+
+    # We already know a returning caller's language, so tell the agent to open
+    # in it rather than making them speak first and hoping detection lands.
+    override: dict[str, Any] | None = None
+    if profile.is_returning and profile.preferred_language != "en":
+        override = {"agent": {"language": profile.preferred_language}}
+
+    return SessionInitResponse(
+        dynamic_variables=DynamicVariables(
+            applicant_name=profile.display_name,
+            is_returning=profile.is_returning,
+            preferred_language=profile.preferred_language,
+            active_form=DEFAULT_FORM_ID,
+            known_summary=summarize(profile, schema),
+        ),
+        conversation_config_override=override,
+    )
+
+
+@app.post("/tools/get_missing_fields", response_model=GetMissingFieldsResponse)
+async def get_missing_fields(
+    payload: GetMissingFieldsRequest,
+    _: None = Depends(require_shared_secret),
+) -> GetMissingFieldsResponse:
+    started = time.perf_counter()
+    session = await _load_or_open_session(payload.session_id)
+    schema = _resolve_form(payload.form_id)
+
+    field = next_missing_field(session, schema)
+    remaining, known = counts(session, schema)
+    next_field = (
+        NextField(id=field.id, question=field.question, type=field.type, sensitive=field.sensitive)
+        if field
+        else None
+    )
+    logger.info(
+        "next field resolved",
+        extra={
+            "session_id": payload.session_id,
+            "field_id": field.id if field else None,
+            "duration_ms": round((time.perf_counter() - started) * 1000, 2),
+        },
+    )
+    return GetMissingFieldsResponse(
+        next_field=next_field, remaining_count=remaining, known_count=known
+    )
+
+
+@app.post("/tools/save_field", response_model=SaveFieldResponse)
+async def save_field(
+    payload: SaveFieldRequest,
+    _: None = Depends(require_shared_secret),
+) -> SaveFieldResponse:
+    """Store one answer. No LLM, no filesystem, no PDF work happens here."""
+    started = time.perf_counter()
+    session = await _load_or_open_session(payload.session_id)
+    schema = _resolve_form(session.form_id)
+
+    form_field = schema.get_field(payload.field_id)
+    if form_field is None:
+        # A value with nowhere to go on the form is a value we must not pretend
+        # to have collected.
+        raise HTTPException(
+            status_code=422,
+            detail=f"unknown field_id {payload.field_id!r} for form {schema.form_id}",
+        )
+
+    session = await get_session_store().save_field(
+        session_id=payload.session_id,
+        field_id=payload.field_id,
+        value=payload.value,
+        confidence=payload.confidence,
+        language=payload.language,
+    )
+    remaining, _known = counts(session, schema)
+    needs_confirmation = form_field.sensitive or payload.confidence < CONFIDENCE_CONFIRM_THRESHOLD
+
+    # Persist to long-term memory off the critical path. This endpoint is on a
+    # live human's latency budget; mem0 writes are queued server-side anyway, so
+    # awaiting one would buy nothing but delay.
+    _spawn_background(
+        get_memory().save_field(
+            caller_id=session.caller_id,
+            field_id=payload.field_id,
+            value=payload.value,
+            schema=schema,
+            language=payload.language,
+        )
+    )
+
+    duration_ms = round((time.perf_counter() - started) * 1000, 2)
+    await _publish(
+        FIELD_SAVED,
+        payload.session_id,
+        {
+            "field_id": payload.field_id,
+            "group": form_field.group,
+            "sensitive": form_field.sensitive,
+            "confidence": payload.confidence,
+            "remaining_count": remaining,
+            # Measured, not asserted -- the dashboard shows this number.
+            "duration_ms": duration_ms,
+        },
+    )
+    logger.info(
+        "field saved",
+        extra={
+            "session_id": payload.session_id,
+            "field_id": payload.field_id,
+            "duration_ms": duration_ms,
+        },
+    )
+    return SaveFieldResponse(
+        ok=True, needs_confirmation=needs_confirmation, remaining_count=remaining
+    )
+
+
+@app.post("/tools/generate_form", response_model=GenerateFormResponse)
+async def generate_form(
+    payload: GenerateFormRequest,
+    _: None = Depends(require_shared_secret),
+) -> GenerateFormResponse:
+    session = await _load_or_open_session(payload.session_id)
+    schema = _resolve_form(session.form_id)
+
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    missing = missing_required(plain, schema)
+    if missing:
+        logger.info(
+            "generation refused: incomplete",
+            extra={"session_id": payload.session_id, "form_id": schema.form_id},
+        )
+        return GenerateFormResponse(status="incomplete", pdf_url=None, missing=missing)
+
+    out_path = OUT_DIR / f"{payload.session_id}.pdf"
+    # Off the event loop: the call is still live and other tool calls must land.
+    await asyncio.to_thread(fill_i765, plain, out_path, schema)
+    await get_session_store().set_pdf_path(payload.session_id, str(out_path))
+
+    pdf_url = f"{os.environ.get('PUBLIC_BASE_URL', '').rstrip('/')}/forms/{payload.session_id}.pdf"
+    await _publish(FORM_READY, payload.session_id, {"pdf_url": pdf_url})
+    logger.info("form ready", extra={"session_id": payload.session_id, "form_id": schema.form_id})
+    return GenerateFormResponse(status="complete", pdf_url=pdf_url, missing=[])
+
+
+@app.get("/forms/{session_id}.pdf")
+async def download_form(session_id: str) -> FileResponse:
+    session = await _load_session(session_id)
+    if not session.pdf_path or not Path(session.pdf_path).exists():
+        raise HTTPException(status_code=404, detail="no generated form for this session yet")
+    return FileResponse(
+        session.pdf_path,
+        media_type="application/pdf",
+        filename=f"I-765_{session_id}.pdf",
+    )
+
+
+@app.post("/session/complete", response_model=SessionCompleteResponse)
+async def session_complete(
+    payload: SessionCompleteRequest,
+    _: None = Depends(require_shared_secret),
+) -> SessionCompleteResponse:
+    session = await _load_or_open_session(payload.conversation_id)
+    schema = _resolve_form(session.form_id)
+
+    reconciled = 0
+    for field_id, value in payload.collected.items():
+        if schema.get_field(field_id) is None or session.answered(field_id):
+            continue
+        await get_session_store().save_field(
+            session_id=payload.conversation_id,
+            field_id=field_id,
+            value=value,
+            source="transcript",
+        )
+        reconciled += 1
+
+    # EPISODIC + PROCEDURAL writes happen here, at the natural end of a call,
+    # and off the response path -- the agent is hanging up, not waiting on us.
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    _spawn_background(
+        get_memory().record_episode(
+            caller_id=session.caller_id,
+            session_id=payload.conversation_id,
+            form_id=schema.form_id,
+            fields_collected=len(session.values),
+            completed=bool(session.pdf_path),
+            language=session.preferred_language,
+        )
+    )
+    _spawn_background(
+        get_memory().learn_from_session(
+            caller_id=session.caller_id,
+            values=plain,
+            schema=schema,
+            language=session.preferred_language,
+        )
+    )
+
+    await _publish(SESSION_COMPLETED, payload.conversation_id, {"reconciled": reconciled})
+    logger.info(
+        "session completed",
+        extra={"session_id": payload.conversation_id, "form_id": schema.form_id},
+    )
+    return SessionCompleteResponse(ok=True, fields_reconciled=reconciled)
+
+
+@app.websocket("/ws/{session_id}")
+async def session_events(websocket: WebSocket, session_id: str, secret: str = Query(default="")):
+    if not verify_secret(secret):
+        await websocket.close(code=1008)
+        return
+    await websocket.accept()
+    try:
+        async for event in get_event_bus().subscribe(session_id):
+            await websocket.send_text(event.model_dump_json())
+    except WebSocketDisconnect:
+        # A closed dashboard tab is normal, not an error.
+        pass
+
+
+@app.post("/demo/run")
+async def demo_run(
+    persona: str = Query(default="maria"),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Drive a full application through this same contract.
+
+    Runs the real interview loop against a sample applicant, so the product can
+    be shown end to end without a microphone or a working widget -- and so the
+    contract itself stays exercised in CI.
+    """
+    personas = json.loads(PERSONA_PATH.read_text(encoding="utf-8"))["personas"]
+    if persona not in personas:
+        raise HTTPException(status_code=404, detail=f"unknown persona {persona!r}")
+    profile = personas[persona]
+    answers: dict[str, str] = profile["answers"]
+
+    session_id = f"web_{persona}_{int(time.time())}"
+    store = get_session_store()
+    await store.create(session_id, profile["caller_id"], DEFAULT_FORM_ID)
+    await _publish(SESSION_STARTED, session_id, {"demo": True})
+
+    schema = get_form(DEFAULT_FORM_ID)
+    asked: list[str] = []
+    for _ in range(len(schema.fields) + 5):
+        session = await store.get(session_id)
+        field = next_missing_field(session, schema)
+        if field is None:
+            break
+        # Only ever answer from the persona. Never synthesize.
+        started = time.perf_counter()
+        await store.save_field(
+            session_id=session_id,
+            field_id=field.id,
+            value=answers.get(field.id, SKIP_SENTINEL),
+            source="demo",
+        )
+        duration_ms = round((time.perf_counter() - started) * 1000, 2)
+        asked.append(field.id)
+        remaining, _k = counts(await store.get(session_id), schema)
+        await _publish(
+            FIELD_SAVED,
+            session_id,
+            {
+                "field_id": field.id,
+                "group": field.group,
+                "sensitive": field.sensitive,
+                "remaining_count": remaining,
+                "duration_ms": duration_ms,
+            },
+        )
+        await asyncio.sleep(0.05)  # let the dashboard animate
+
+    result = await generate_form(GenerateFormRequest(session_id=session_id))
+    return {
+        "session_id": session_id,
+        "persona": profile["display_name"],
+        "fields_asked": asked,
+        "status": result.status,
+        "pdf_url": result.pdf_url,
+        "missing": result.missing,
+    }
+
+
+def _display_value(field_id: str, value: str, schema: Any) -> str:
+    """What the dashboard may show. Never the full sensitive value."""
+    if value == SKIP_SENTINEL:
+        return SKIP_SENTINEL
+    form_field = schema.get_field(field_id)
+    if form_field is not None and form_field.sensitive and len(value) > 2:
+        return "*" * (len(value) - 2) + value[-2:]
+    return value
+
+
+@app.get("/sessions/{session_id}/checklist")
+async def session_checklist(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Supporting documents this applicant still has to attach.
+
+    The completed PDF is half the deliverable; USCIS also wants photos, the
+    I-94, a copy of the prior EAD. Which ones apply depends on their answers.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    checklist = await fetch_document_checklist(schema.form_id)
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    return {
+        "form_id": schema.form_id,
+        "source": checklist.get("source"),
+        "items": applicable_items(checklist, plain),
+    }
+
+
+@app.post("/sessions/{session_id}/deliver")
+async def session_deliver(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Email the finished packet to the applicant.
+
+    The person called from a phone and hung up; a PDF on a dashboard they are
+    not looking at is not a delivered outcome.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    if not session.pdf_path:
+        raise HTTPException(status_code=409, detail="no completed form for this session yet")
+
+    plain = {fid: fv.value for fid, fv in session.values.items()}
+    checklist = await fetch_document_checklist(schema.form_id)
+    base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+    result = await deliver_packet(
+        to_email=plain.get("email", ""),
+        form_id=schema.form_id,
+        pdf_url=f"{base}/forms/{session_id}.pdf",
+        checklist=applicable_items(checklist, plain),
+        applicant_name=plain.get("given_name", ""),
+    )
+    return {"session_id": session_id, **result}
+
+
+@app.post("/tools/identify_form")
+async def identify_form(
+    payload: IdentifyFormRequest | None = None,
+    text: str = Query(default="", description="what the applicant said"),
+    url: str = Query(default="", description="a uscis.gov link they pasted"),
+    session_id: str = Query(default=""),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Work out which form someone means, and get it ready.
+
+    Applicants say "my work permit", not "I-765". If the match is confident and
+    the form is not loaded yet, it is onboarded from its PDF on the spot, so the
+    interview can begin in the same breath.
+
+    Confidence is returned rather than acted on blindly: the agent reads the
+    form name back before switching. Silently starting the wrong application
+    wastes an hour of a stressed person's time.
+    """
+    # ElevenLabs server tools POST a JSON body. Accepting the query form too
+    # keeps curl and the docs page working; the body wins when both are sent.
+    if payload is not None:
+        text = payload.text or text
+        url = payload.url or url
+        session_id = payload.session_id or session_id
+
+    hit = await identify(text=text, url=url)
+    if hit is None:
+        return {"found": False, "known_forms": list_forms()}
+
+    form_id = hit["form_id"]
+    ready = form_id.upper() in {f.upper() for f in list_forms()}
+    if not ready:
+        try:
+            await onboard(form_id)
+            ready = True
+        except OnboardingError as exc:
+            logger.warning("could not onboard %s: %s", form_id, exc)
+
+    title = ""
+    if ready:
+        title = _resolve_form(form_id).title
+    if session_id:
+        try:
+            await get_session_store().set_form(session_id, form_id)
+        except SessionNotFoundError:
+            pass
+    return {"found": True, "ready": ready, "title": title, **hit}
+
+
+@app.post("/session/set_form")
+async def session_set_form(
+    payload: SetFormRequest | None = None,
+    session_id: str = Query(default=""),
+    form_id: str = Query(default=""),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Switch the form an in-progress call is filling.
+
+    Answers already given are kept: a name and address collected for one form
+    are the same name and address on the next one.
+    """
+    if payload is not None:
+        session_id = payload.session_id or session_id
+        form_id = payload.form_id or form_id
+    if not session_id or not form_id:
+        raise HTTPException(status_code=422, detail="session_id and form_id are required")
+
+    await _load_or_open_session(session_id)
+    schema = _resolve_form(form_id)
+    session = await get_session_store().set_form(session_id, schema.form_id)
+    remaining, known = counts(session, schema)
+    await _publish(
+        FORM_CHANGED,
+        session_id,
+        {
+            "form_id": schema.form_id,
+            "title": schema.title,
+            "edition": schema.edition,
+            "remaining_count": remaining,
+            "known_count": known,
+        },
+    )
+    return {
+        "session_id": session_id,
+        "form_id": schema.form_id,
+        "title": schema.title,
+        "edition": schema.edition,
+        "remaining_count": remaining,
+        "known_count": known,
+        "carried_over": known,
+    }
+
+
+@app.get("/sessions/{session_id}/memory")
+async def session_memory(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Everything remembered about this caller, by tier.
+
+    Semantic facts, past calls, and learned rules are shown separately because
+    they are different kinds of knowledge with different lifetimes -- and an
+    applicant is entitled to see exactly what is held about them.
+    """
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    profile = await get_memory().load_profile(session.caller_id, schema)
+    return {
+        "caller_key": _user_key(session.caller_id) if session.caller_id else None,
+        "is_returning": profile.is_returning,
+        "summary": summarize(profile, schema),
+        "semantic": [
+            {
+                "field_id": fid,
+                "label": (
+                    schema.get_field(fid).id.replace("_", " ") if schema.get_field(fid) else fid
+                ),
+                "value": _display_value(fid, value, schema),
+            }
+            for fid, value in profile.known_values.items()
+        ],
+        "episodic": [e.model_dump() for e in profile.episodes],
+        "procedural": [p.model_dump() for p in profile.procedures],
+    }
+
+
+@app.get("/forms")
+async def forms_index() -> dict[str, Any]:
+    """What Zuzu can fill now, and what it can learn on request."""
+    ready = list_forms()
+    catalog = [
+        {**entry, "ready": entry["form_id"].upper() in {f.upper() for f in ready}}
+        for entry in load_catalog()
+    ]
+    return {"ready": ready, "catalog": catalog}
+
+
+@app.post("/forms/onboard")
+async def forms_onboard(
+    form_id: str = Query(..., description="e.g. N-400"),
+    pdf_url: str | None = Query(
+        default=None, description="fillable PDF url, if not in the catalog"
+    ),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Teach Zuzu a new USCIS form while it is running.
+
+    Fetches the fillable PDF, extracts its AcroForm inventory, derives the
+    questions from the PDF's own screen-reader tooltips, and registers it. No
+    deploy and no code change -- which is the whole "a form is data" claim,
+    tested rather than asserted.
+    """
+    try:
+        return await onboard(form_id, pdf_url)
+    except OnboardingError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/forms/{form_id}/schema")
+async def form_schema(form_id: str) -> dict[str, Any]:
+    """The field list the dashboard renders. Public: it contains no applicant data."""
+    schema = _resolve_form(form_id)
+    return {
+        "form_id": schema.form_id,
+        "title": schema.title,
+        "edition": schema.edition,
+        "fields": [
+            {
+                "id": f.id,
+                "question": f.question,
+                "label": f.label or f.id.replace("_", " "),
+                "group": f.group,
+                "sensitive": f.sensitive,
+                "required": f.required,
+            }
+            for f in schema.fields
+        ],
+    }
+
+
+@app.get("/sessions/recent")
+async def sessions_recent(_: None = Depends(require_shared_secret)) -> dict[str, Any]:
+    """Most recent sessions, so the dashboard can attach to a live voice call
+    without anyone copying a conversation id by hand mid-demo."""
+    store = get_session_store()
+    sessions = getattr(store, "_sessions", {})
+    ordered = sorted(sessions.values(), key=lambda s: s.created_at, reverse=True)
+    return {
+        "sessions": [
+            {
+                "session_id": s.session_id,
+                "form_id": s.form_id,
+                "is_returning": s.is_returning,
+                "known_count": len(s.values),
+                "created_at": s.created_at.isoformat(),
+                "has_pdf": bool(s.pdf_path),
+            }
+            for s in ordered[:10]
+        ]
+    }
+
+
+@app.get("/sessions/{session_id}/values")
+async def session_values(
+    session_id: str, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Current values for a session, so a dashboard opened mid-call can paint
+    the fields already collected instead of starting blank."""
+    session = await _load_session(session_id)
+    schema = _resolve_form(session.form_id)
+    remaining, known = counts(session, schema)
+    return {
+        "session_id": session_id,
+        "form_id": schema.form_id,
+        "form_title": schema.title,
+        "form_edition": schema.edition,
+        "is_returning": session.is_returning,
+        "remaining_count": remaining,
+        "known_count": known,
+        "has_pdf": bool(session.pdf_path),
+        # Sensitive values are masked here too: this feeds a projected screen.
+        # The skip sentinel is passed through untouched so the dashboard can
+        # render "not provided" rather than a masked-looking fake value.
+        "values": {
+            fid: _display_value(fid, fv.value, schema) for fid, fv in session.values.items()
+        },
+        "sources": {fid: fv.source for fid, fv in session.values.items()},
+    }
+
+
+@app.get("/config")
+async def client_config() -> dict[str, Any]:
+    """Public front-end config. Contains no secret.
+
+    The ElevenLabs agent id is public by design -- it is what the browser widget
+    connects with. The shared secret is never served from here.
+    """
+    return {
+        "elevenlabs_agent_id": os.environ.get("ELEVENLABS_AGENT_ID", ""),
+        "default_form_id": DEFAULT_FORM_ID,
+    }
+
+
+@app.get("/dashboard")
+async def dashboard() -> FileResponse:
+    """Single self-contained page: no build step, so nothing can fail to compile
+    on demo day."""
+    page = REPO_ROOT / "dashboard" / "index.html"
+    if not page.exists():
+        raise HTTPException(status_code=404, detail="dashboard not built")
+    return FileResponse(page, media_type="text/html")
+
+
+@app.post("/session/forget")
+async def session_forget(
+    caller_id: str = Query(...),
+    tier: str | None = Query(default=None, description="semantic|episodic|procedural"),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Delete what is remembered about a caller, optionally one tier only.
+
+    The pitch promises an applicant can say "delete my data". Tier scoping means
+    they can drop their call history without losing the profile that saves them
+    an hour on the next form.
+    """
+    scope = Tier(tier) if tier else None
+    removed = await get_memory().forget(caller_id, scope)
+    return {"ok": True, "entries_removed": removed, "tier": tier or "all"}
+
+
+@app.get("/")
+async def root() -> Response:
+    return Response(
+        content=json.dumps({"service": "zuzu", "docs": "/docs", "health": "/health"}),
+        media_type="application/json",
+    )

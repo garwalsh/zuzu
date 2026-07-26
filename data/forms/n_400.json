@@ -1,0 +1,4334 @@
+{
+  "form_id": "N-400",
+  "title": "Application for Naturalization",
+  "agency": "USCIS",
+  "edition": "01/20/25",
+  "pdf": "assets/n_400.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "alien_number",
+      "question": "What is your 9 Digit Alien Registration Number (A. Number)?",
+      "label": "9 Digit Alien Registration Number",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].#area[0].Line1_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "family_name1",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line2_FamilyName1[0]"
+    },
+    {
+      "id": "family_name2",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line2_FamilyName2[0]"
+    },
+    {
+      "id": "given_name1",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line3_GivenName1[0]"
+    },
+    {
+      "id": "given_name2",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Other Names You Have Used Since 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line3_GivenName2[0]"
+    },
+    {
+      "id": "middle_name1",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Other Names You Have Used Since 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line3_MiddleName1[0]"
+    },
+    {
+      "id": "middle_name2",
+      "question": "What is your other Names You Have Used Since Birth?",
+      "label": "Other Names You Have Used Since 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Line3_MiddleName2[0]"
+    },
+    {
+      "id": "p2_line1_family_name",
+      "question": "What is your current Legal Name?",
+      "label": "Family Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P2_Line1_FamilyName[0]"
+    },
+    {
+      "id": "p2_line1_given_name",
+      "question": "What is your current Legal Name?",
+      "label": "Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P2_Line1_GivenName[0]"
+    },
+    {
+      "id": "p2_line1_middle_name",
+      "question": "What is your current Legal Name?",
+      "label": "Middle Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p2_line1_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P2_Line1_MiddleName[0]"
+    },
+    {
+      "id": "s_s_n",
+      "question": "What is your social Security Number (S S N) (?",
+      "label": "9 digit number",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.s_s_n",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Line12b_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p2_line10_country_of_birth",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "Country of Birth",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p2_line10_country_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P2_Line10_CountryOfBirth[0]"
+    },
+    {
+      "id": "p2_line11_country_of_nationality",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "Country of Citizenship or Nationality",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p2_line11_country_of_nationality",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P2_Line11_CountryOfNationality[0]"
+    },
+    {
+      "id": "p2_line6_u_s_c_i_s_e_l_i_s_acct_number",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "U S C I S Online",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.p2_line6_u_s_c_i_s_e_l_i_s_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P2_Line6_USCISELISAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p2_line8_date_of_birth",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "As 2-digit Month, 2-digit Day, and 1",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p2_line8_date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P2_Line8_DateOfBirth[0]"
+    },
+    {
+      "id": "p2_line9_date_became_permanent_resident",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "As 2-digit Month, 2-digit Day, and 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line9_date_became_permanent_resident",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P2_Line9_DateBecamePermanentResident[0]"
+    },
+    {
+      "id": "p4_line1_city",
+      "question": "What is your current Mailing Address?",
+      "label": "City or Town 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_City[0]"
+    },
+    {
+      "id": "p4_line1_country",
+      "question": "What is your current Mailing Address?",
+      "label": "Current Mailing Address Enter Country 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_Country[0]"
+    },
+    {
+      "id": "p4_line1_datesof_residence",
+      "question": "What is your p4_Line1_DatesofResidence?",
+      "label": "P4_Line1_DatesofResidence",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p4_line1_datesof_residence",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_DatesofResidence[1]"
+    },
+    {
+      "id": "p4_line1_in_care_of_name",
+      "question": "What is your current Mailing Address?",
+      "label": "In Care Of Name 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_in_care_of_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_InCareOfName[0]"
+    },
+    {
+      "id": "p4_line1_postal_code",
+      "question": "What is your current Mailing Address?",
+      "label": "Postal Code 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p4_line1_province",
+      "question": "What is your current Mailing Address?",
+      "label": "Province or Region 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_Province[0]"
+    },
+    {
+      "id": "p4_line1_state",
+      "question": "What is your current Mailing Address?",
+      "label": "State from List of States 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line1_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_State[0]"
+    },
+    {
+      "id": "p4_line1_street_name",
+      "question": "What is your current Mailing Address?",
+      "label": "Street Number and Name 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_street_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_StreetName[0]"
+    },
+    {
+      "id": "p4_line1_zip_code",
+      "question": "What is your current Mailing Address.Enter Zip Code Plus Enter 5-digit Zip Code?",
+      "label": "Current Mailing Address.Enter Zip Code Plus 1",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p4_line1_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line1_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p4_line3_city_town1",
+      "question": "What is your list every location where you have lived during the last 5 years?",
+      "label": "Line Enter City/Town, State, ZIP Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_city_town1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_CityTown1[0]"
+    },
+    {
+      "id": "p4_line3_city_town2",
+      "question": "What is your line Enter City/Town, State, ZIP Code?",
+      "label": "Line Enter City/Town, State, ZIP Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_city_town2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_CityTown2[0]"
+    },
+    {
+      "id": "p4_line3_city_town3",
+      "question": "What is your line Enter City/Town, State, ZIP Code?",
+      "label": "Line Enter City/Town, State, ZIP Code 3",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_city_town3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_CityTown3[0]"
+    },
+    {
+      "id": "p4_line3_country1",
+      "question": "What is your p4_Line3_Country1?",
+      "label": "P4_Line3_Country1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p4_line3_country1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_Country1[0]"
+    },
+    {
+      "id": "p4_line3_country2",
+      "question": "What is your p4_Line3_Country2?",
+      "label": "P4_Line3_Country2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p4_line3_country2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_Country2[0]"
+    },
+    {
+      "id": "p4_line3_country3",
+      "question": "What is your p4_Line3_Country3?",
+      "label": "P4_Line3_Country3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p4_line3_country3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_Country3[0]"
+    },
+    {
+      "id": "p4_line3_from1",
+      "question": "What is your list every location where you have lived during the last 5 years?",
+      "label": "As 2-digit Month, 2-digit Day, and 3",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_from1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_From1[0]"
+    },
+    {
+      "id": "p4_line3_from1_2",
+      "question": "What is your list every location where you have lived during the last 5 years?",
+      "label": "As 2-digit Month, 2-digit Day, and 4",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_from1_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_From1[1]"
+    },
+    {
+      "id": "p4_line3_from2",
+      "question": "What is your line Dates of Residence?",
+      "label": "As 2-digit Month, 2-digit Day, and 5",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_from2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_From2[0]"
+    },
+    {
+      "id": "p4_line3_from3",
+      "question": "What is your line Dates of Residence?",
+      "label": "As 2-digit Month, 2-digit Day, and 6",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_from3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_From3[0]"
+    },
+    {
+      "id": "p4_line3_physical_address1",
+      "question": "What is your list every location where you have lived during the last 5 years?",
+      "label": "Line Enter Physical Addresses 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line3_physical_address1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_PhysicalAddress1[0]"
+    },
+    {
+      "id": "p4_line3_physical_address2",
+      "question": "What is your line Enter Physical Addresses?",
+      "label": "Line Enter Physical Addresses 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line3_physical_address2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_PhysicalAddress2[0]"
+    },
+    {
+      "id": "p4_line3_physical_address3",
+      "question": "What is your line Enter Physical Addresses?",
+      "label": "Line Enter Physical Addresses 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line3_physical_address3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_PhysicalAddress3[0]"
+    },
+    {
+      "id": "p4_line3_state1",
+      "question": "What is your p4_Line3_State1?",
+      "label": "P4_Line3_State1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p4_line3_state1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_State1[0]"
+    },
+    {
+      "id": "p4_line3_state2",
+      "question": "What is your p4_Line3_State2?",
+      "label": "P4_Line3_State2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p4_line3_state2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_State2[0]"
+    },
+    {
+      "id": "p4_line3_state3",
+      "question": "What is your p4_Line3_State3?",
+      "label": "P4_Line3_State3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p4_line3_state3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_State3[0]"
+    },
+    {
+      "id": "p4_line3_to2",
+      "question": "What is your line Dates of Residence?",
+      "label": "As 2-digit Month, 2-digit Day, and 7",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_to2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_To2[0]"
+    },
+    {
+      "id": "p4_line3_to3",
+      "question": "What is your line Dates of Residence?",
+      "label": "As 2-digit Month, 2-digit Day, and 8",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p4_line3_to3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_To3[0]"
+    },
+    {
+      "id": "p4_line3_zip_code1",
+      "question": "What is your list every location where you have lived during the last 5 years?",
+      "label": "Line Enter City/Town, State, ZIP Code 4",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_zip_code1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_ZipCode1[0]"
+    },
+    {
+      "id": "p4_line3_zip_code2",
+      "question": "What is your line Enter City/Town, State, ZIP Code?",
+      "label": "Line Enter City/Town, State, ZIP Code 5",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_zip_code2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_ZipCode2[0]"
+    },
+    {
+      "id": "p4_line3_zip_code3",
+      "question": "What is your line Enter City/Town, State, ZIP Code?",
+      "label": "Line Enter City/Town, State, ZIP Code 6",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p4_line3_zip_code3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P4_Line3_ZipCode3[0]"
+    },
+    {
+      "id": "p7_line3_height_feet",
+      "question": "What is your feet?",
+      "label": "Height Enter Feet",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line3_height_feet",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P7_Line3_HeightFeet[0]"
+    },
+    {
+      "id": "p7_line3_height_inches",
+      "question": "What is your inches?",
+      "label": "Height Enter Inches",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line3_height_inches",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P7_Line3_HeightInches[0]"
+    },
+    {
+      "id": "p7_line4_pounds1",
+      "question": "What is your first digit of three digit weight?",
+      "label": "First digit of three digit weight",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line4_pounds1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P7_Line4_Pounds1[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p7_line4_pounds2",
+      "question": "What is your second digit of three digit weight?",
+      "label": "Second digit of three digit weight",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line4_pounds2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P7_Line4_Pounds2[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p7_line4_pounds3",
+      "question": "What is your third digit of three digit weight?",
+      "label": "Third digit of three digit weight",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_line4_pounds3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P7_Line4_Pounds3[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p10_line4a_family_name",
+      "question": "What is your if you are currently married, including if you are legally separated, provide the following?",
+      "label": "Family Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p10_line4a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P10_Line4a_FamilyName[0]"
+    },
+    {
+      "id": "p10_line4a_given_name",
+      "question": "What is your if you are currently married, including if you are legally separated, provide the following?",
+      "label": "Given Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p10_line4a_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P10_Line4a_GivenName[0]"
+    },
+    {
+      "id": "p10_line4a_middle_name",
+      "question": "What is your if you are currently married, including if you are legally separated, provide the following?",
+      "label": "Middle Name)",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p10_line4a_middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P10_Line4a_MiddleName[0]"
+    },
+    {
+      "id": "p10_line4d_dateof_birth",
+      "question": "What is your if you are currently married, including if you are legally separated, provide the following?",
+      "label": "As 2-digit Month, 2-digit Day, and 9",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p10_line4d_dateof_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P10_Line4d_DateofBirth[0]"
+    },
+    {
+      "id": "p10_line4e_date_enter_marriage",
+      "question": "What is your if you are currently married, including if you are legally separated, provide the following?",
+      "label": "As 2-digit Month, 2-digit Day, and 10",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p10_line4e_date_enter_marriage",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P10_Line4e_DateEnterMarriage[0]"
+    },
+    {
+      "id": "p4_line1_state_2",
+      "question": "What is your current Mailing Address?",
+      "label": "State from List of States 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p4_line1_state_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P4_Line1_State[1]"
+    },
+    {
+      "id": "p5_line1b_city",
+      "question": "What is your current Mailing Address?",
+      "label": "City or Town 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_City[0]"
+    },
+    {
+      "id": "p5_line1b_country",
+      "question": "What is your current Mailing Address?",
+      "label": "Current Mailing Address Enter Country 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_Country[0]"
+    },
+    {
+      "id": "p5_line1b_in_care_of_name",
+      "question": "What is your current Mailing Address?",
+      "label": "In Care Of Name 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_in_care_of_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_InCareOfName[0]"
+    },
+    {
+      "id": "p5_line1b_postal_code",
+      "question": "What is your current Mailing Address?",
+      "label": "Postal Code 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p5_line1b_province",
+      "question": "What is your current Mailing Address?",
+      "label": "Province or Region 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_Province[0]"
+    },
+    {
+      "id": "p5_line1b_street_name",
+      "question": "What is your current Mailing Address?",
+      "label": "Street Number and Name 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_street_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_StreetName[0]"
+    },
+    {
+      "id": "p5_line1b_zip_code",
+      "question": "What is your current Mailing Address.Enter Zip Code Plus Enter 5-digit Zip Code?",
+      "label": "Current Mailing Address.Enter Zip Code Plus 2",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line1b_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P5_Line1b_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "part9_line3_times_married",
+      "question": "What is your how many times have you been married? Enter Number of Marriages?",
+      "label": "How many times have you been",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part9_line3_times_married",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Part9Line3_TimesMarried[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p7_line6_a_number",
+      "question": "What is your current Spouse's Alien Registration Number (A. Number)?",
+      "label": "Current Spouse's Alien Registration Number",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p7_line6_a_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].#area[5].P7_Line6_ANumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p10_line4g_employer",
+      "question": "What is your how many times has your current spouse been married? Enter total number of marriages?",
+      "label": "How many times has your current",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p10_line4g_employer",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P10_Line4g_Employer[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p11_line1_total_children",
+      "question": "What is your indicate your total number of children?",
+      "label": "Total Number of Children 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line1_total_children",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P11_Line1_TotalChildren[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p5_employer_name1",
+      "question": "What is your employer Name or School Name?",
+      "label": "Line Enter Name 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_employer_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_EmployerName1[0]"
+    },
+    {
+      "id": "p5_employer_name2",
+      "question": "What is your employer Name or School Name?",
+      "label": "Line Enter Name 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_employer_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_EmployerName2[0]"
+    },
+    {
+      "id": "p5_employer_name3",
+      "question": "What is your employer Name or School Name?",
+      "label": "Line Enter Name 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p5_employer_name3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_EmployerName3[0]"
+    },
+    {
+      "id": "p7_city1",
+      "question": "What is your line Enter Employer's City?",
+      "label": "Line Enter Employer's City 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_city1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_City1[0]"
+    },
+    {
+      "id": "p7_city2",
+      "question": "What is your line Enter Employer's City?",
+      "label": "Line Enter Employer's City 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_city2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_City2[0]"
+    },
+    {
+      "id": "p7_city3",
+      "question": "What is your line Enter Employer's City?",
+      "label": "Line Enter Employer's City 3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_city3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_City3[0]"
+    },
+    {
+      "id": "p7_country1",
+      "question": "What is your p7_Country1?",
+      "label": "P7_Country1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_country1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_Country1[0]"
+    },
+    {
+      "id": "p7_country2",
+      "question": "What is your p7_Country2?",
+      "label": "P7_Country2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_country2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_Country2[0]"
+    },
+    {
+      "id": "p7_country3",
+      "question": "What is your p7_Country3?",
+      "label": "P7_Country3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_country3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_Country3[0]"
+    },
+    {
+      "id": "p7_employer_name1",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "Line Enter Son or Daughter\u2019s Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_employer_name1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_EmployerName1[0]"
+    },
+    {
+      "id": "p7_employer_name2",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "Line Enter Son or Daughter\u2019s Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_employer_name2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_EmployerName2[0]"
+    },
+    {
+      "id": "p7_employer_name3",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "Line Enter Son or Daughter\u2019s Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_employer_name3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_EmployerName3[0]"
+    },
+    {
+      "id": "p7_from1",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "As 2-digit Month, 2-digit Day, and 11",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p7_from1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From1[0]"
+    },
+    {
+      "id": "p7_from1_2",
+      "question": "What is your line Enter From Date?",
+      "label": "As 2-digit Month, 2-digit Day, and 12",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_from1_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From1[1]"
+    },
+    {
+      "id": "p7_from2",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "As 2-digit Month, 2-digit Day, and 13",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p7_from2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From2[0]"
+    },
+    {
+      "id": "p7_from2_2",
+      "question": "What is your line Enter From Date?",
+      "label": "As 2-digit Month, 2-digit Day, and 14",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_from2_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From2[1]"
+    },
+    {
+      "id": "p7_from3",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "As 2-digit Month, 2-digit Day, and 15",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p7_from3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From3[0]"
+    },
+    {
+      "id": "p7_from3_2",
+      "question": "What is your line Enter From Date?",
+      "label": "As 2-digit Month, 2-digit Day, and 16",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_from3_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_From3[1]"
+    },
+    {
+      "id": "p7_occupation_field_study1",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "One of the following options: Resides 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy1[0]"
+    },
+    {
+      "id": "p7_occupation_field_study1_2",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "One of the following options: Biological 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study1_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy1[1]"
+    },
+    {
+      "id": "p7_occupation_field_study1_3",
+      "question": "What is your line Enter Occupation or Field of Study?",
+      "label": "Line Enter Occupation or Field of 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_occupation_field_study1_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy1[2]"
+    },
+    {
+      "id": "p7_occupation_field_study2",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "One of the following options: Resides 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy2[0]"
+    },
+    {
+      "id": "p7_occupation_field_study2_2",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "One of the following options: Biological 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study2_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy2[1]"
+    },
+    {
+      "id": "p7_occupation_field_study2_3",
+      "question": "What is your line Enter Occupation or Field of Study?",
+      "label": "Line Enter Occupation or Field of 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_occupation_field_study2_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy2[2]"
+    },
+    {
+      "id": "p7_occupation_field_study3",
+      "question": "What is your the following information about your children listed in Item Number For the residence and?",
+      "label": "One of the following options: Resides 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy3[0]"
+    },
+    {
+      "id": "p7_occupation_field_study3_2",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "One of the following options: Biological 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_occupation_field_study3_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy3[1]"
+    },
+    {
+      "id": "p7_occupation_field_study3_3",
+      "question": "What is your line Enter Occupation or Field of Study?",
+      "label": "Line Enter Occupation or Field of 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p7_occupation_field_study3_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_OccupationFieldStudy3[2]"
+    },
+    {
+      "id": "p7_state1",
+      "question": "What is your line Enter Employer' State?",
+      "label": "Line Enter Employer' State",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_state1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_State1[0]"
+    },
+    {
+      "id": "p7_state2",
+      "question": "What is your line Enter Employer's State?",
+      "label": "Line Enter Employer's State 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_state2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_State2[0]"
+    },
+    {
+      "id": "p7_state3",
+      "question": "What is your line Enter Employer's State?",
+      "label": "Line Enter Employer's State 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_state3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_State3[0]"
+    },
+    {
+      "id": "p7_to2",
+      "question": "What is your line Enter To Date?",
+      "label": "As 2-digit Month, 2-digit Day, and 17",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_to2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_To2[0]"
+    },
+    {
+      "id": "p7_to3",
+      "question": "What is your line Enter To Date?",
+      "label": "As 2-digit Month, 2-digit Day, and 18",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_to3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_To3[0]"
+    },
+    {
+      "id": "p7_zip_code1",
+      "question": "What is your line Enter Employer's Zip Code?",
+      "label": "Line Enter Employer's Zip Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p7_zip_code1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_ZipCode1[0]"
+    },
+    {
+      "id": "p7_zip_code2",
+      "question": "What is your line Enter Employer's Zip Code?",
+      "label": "Line Enter Employer's Zip Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p7_zip_code2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_ZipCode2[0]"
+    },
+    {
+      "id": "p7_zip_code3",
+      "question": "What is your line Enter Employer's Zip Code?",
+      "label": "Line Enter Employer's Zip Code 3",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p7_zip_code3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P7_ZipCode3[0]"
+    },
+    {
+      "id": "text_field1",
+      "question": "What is your current Spouse's Current Employer or Company?",
+      "label": "Current Spouse's Current Employer or Company",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.text_field1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].TextField1[0]"
+    },
+    {
+      "id": "p8_line1_countries2",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line1_countries2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_Countries2[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p8_line1_countries3",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line1_countries3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_Countries3[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p8_line1_countries4",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line1_countries4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_Countries4[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p8_line1_countries5",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 4",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line1_countries5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_Countries5[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p8_line1_countries6",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 5",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p8_line1_countries6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_Countries6[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p8_line1_date_left1",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 19",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft1[0]"
+    },
+    {
+      "id": "p8_line1_date_left2",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 20",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft2[0]"
+    },
+    {
+      "id": "p8_line1_date_left3",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 21",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft3[0]"
+    },
+    {
+      "id": "p8_line1_date_left4",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 22",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft4[0]"
+    },
+    {
+      "id": "p8_line1_date_left5",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 23",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft5[0]"
+    },
+    {
+      "id": "p8_line1_date_left6",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 24",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_left6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateLeft6[0]"
+    },
+    {
+      "id": "p8_line1_date_return1",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 25",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn1[0]"
+    },
+    {
+      "id": "p8_line1_date_return2",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 26",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn2[0]"
+    },
+    {
+      "id": "p8_line1_date_return3",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 27",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn3[0]"
+    },
+    {
+      "id": "p8_line1_date_return4",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 28",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn4[0]"
+    },
+    {
+      "id": "p8_line1_date_return5",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 29",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn5[0]"
+    },
+    {
+      "id": "p8_line1_date_return6",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "As 2-digit Month, 2-digit Day, and 30",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p8_line1_date_return6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P8_Line1_DateReturn6[0]"
+    },
+    {
+      "id": "p9_line1_countries1",
+      "question": "What is your list below all the trips that you have taken outside the United States during the last 5?",
+      "label": "List the Countries to Which You 6",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p9_line1_countries1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P9_Line1_Countries1[0]",
+      "max_len": 55
+    },
+    {
+      "id": "p12_line29_date1",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Line Enter Date as Enter as 1",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Date1[0]"
+    },
+    {
+      "id": "p12_line29_date2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Line Enter Date as Enter as 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Date2[0]"
+    },
+    {
+      "id": "p12_line29_date3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Line Enter Date as Enter as 3",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Date3[0]"
+    },
+    {
+      "id": "p12_line29_date4",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Line Enter Date as Enter as 4",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Date4[0]"
+    },
+    {
+      "id": "p12_line29_date5",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Line Enter Date as Enter as 5",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Date5[0]"
+    },
+    {
+      "id": "p12_line29_date_of_conv1",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Date of your conviction or guilty 1",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date_of_conv1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_DateOfConv1[0]"
+    },
+    {
+      "id": "p12_line29_date_of_conv2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Date of your conviction or guilty 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date_of_conv2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_DateOfConv2[0]"
+    },
+    {
+      "id": "p12_line29_date_of_conv3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Date of your conviction or guilty 3",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date_of_conv3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_DateOfConv3[0]"
+    },
+    {
+      "id": "p12_line29_date_of_conv4",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Date of your conviction or guilty 4",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date_of_conv4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_DateOfConv4[0]"
+    },
+    {
+      "id": "p12_line29_date_of_conv5",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Date of your conviction or guilty 5",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p12_line29_date_of_conv5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_DateOfConv5[0]"
+    },
+    {
+      "id": "p12_line29_outcome1",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the result or disposition 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome1[0]"
+    },
+    {
+      "id": "p12_line29_outcome1_2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Place of Crime or Offense Line 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p12_line29_outcome1_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome1[1]"
+    },
+    {
+      "id": "p12_line29_outcome1_3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was your sentence? Line Enter 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome1_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome1[2]"
+    },
+    {
+      "id": "p12_line29_outcome2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the result or disposition 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome2[0]"
+    },
+    {
+      "id": "p12_line29_outcome2_2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Place of Crime or Offense Line 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p12_line29_outcome2_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome2[1]"
+    },
+    {
+      "id": "p12_line29_outcome2_3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was your sentence? Line Enter 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome2_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome2[2]"
+    },
+    {
+      "id": "p12_line29_outcome3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the result or disposition 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome3[0]"
+    },
+    {
+      "id": "p12_line29_outcome3_2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Place of Crime or Offense Line 3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p12_line29_outcome3_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome3[1]"
+    },
+    {
+      "id": "p12_line29_outcome3_3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was your sentence? Line Enter 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome3_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome3[2]"
+    },
+    {
+      "id": "p12_line29_outcome4",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the result or disposition 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome4[0]"
+    },
+    {
+      "id": "p12_line29_outcome4_2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Place of Crime or Offense Line 4",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p12_line29_outcome4_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome4[1]"
+    },
+    {
+      "id": "p12_line29_outcome4_3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was your sentence? Line Enter 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome4_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome4[2]"
+    },
+    {
+      "id": "p12_line29_outcome5",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the result or disposition 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome5[0]"
+    },
+    {
+      "id": "p12_line29_outcome5_2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "Place of Crime or Offense Line 5",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p12_line29_outcome5_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome5[1]"
+    },
+    {
+      "id": "p12_line29_outcome5_3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was your sentence? Line Enter 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_outcome5_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_Outcome5[2]"
+    },
+    {
+      "id": "p12_line29_why1",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the crime or offense? 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_why1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_why1[0]"
+    },
+    {
+      "id": "p12_line29_why2",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the crime or offense? 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_why2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_why2[0]"
+    },
+    {
+      "id": "p12_line29_why3",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the crime or offense? 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_why3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_why3[0]"
+    },
+    {
+      "id": "p12_line29_why4",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the crime or offense? 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_why4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_why4[0]"
+    },
+    {
+      "id": "p12_line29_why5",
+      "question": "What is your if you answer \u201cYes\u201d to any part of Item Number below, complete the table below with each?",
+      "label": "What was the crime or offense? 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p12_line29_why5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].P12_Line29_why5[0]"
+    },
+    {
+      "id": "p9_line22c_date",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Date as Enter as 2-digit Month,",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p9_line22c_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].P9_Line22c_Date[0]"
+    },
+    {
+      "id": "p9_line22c_s_s_number",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Selective Service Number",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.p9_line22c_s_s_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].P9_Line22c_SSNumber[0]",
+      "max_len": 10,
+      "read_back": true
+    },
+    {
+      "id": "p10_line2_total_household_in",
+      "question": "What is your indicate your total number of children?",
+      "label": "Total Number of Children 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p10_line2_total_household_in",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P10_Line2_TotalHouseholdIn[0]",
+      "max_len": 7
+    },
+    {
+      "id": "p10_line3_house_hold_size",
+      "question": "What is your indicate your total number of children?",
+      "label": "Total Number of Children 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p10_line3_house_hold_size",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P10_Line3_HouseHoldSize[0]",
+      "max_len": 7
+    },
+    {
+      "id": "p10_line5b_name_of_household",
+      "question": "What is your indicate your total number of children?",
+      "label": "Total Number of Children 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p10_line5b_name_of_household",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P10_Line5b_NameOfHousehold[0]"
+    },
+    {
+      "id": "p11_line1_total_children_2",
+      "question": "What is your indicate your total number of children?",
+      "label": "Total Number of Children 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line1_total_children_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P11_Line1_TotalChildren[1]",
+      "max_len": 7
+    },
+    {
+      "id": "p12_line3_mobile",
+      "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Mobile Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p12_line3_mobile",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P12_Line3_Mobile[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p12_line3_telephone",
+      "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p12_line3_telephone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P12_Line3_Telephone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p12_line5_email",
+      "question": "What is your applicant's Contact Information?",
+      "label": "Applicant's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p12_line5_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].P12_Line5_Email[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p14_line1_nterpreter_family_name",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Family Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p14_line1_nterpreter_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line1_nterpreterFamilyName[0]"
+    },
+    {
+      "id": "p14_line1_nterpreter_given_name",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Given Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p14_line1_nterpreter_given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line1_nterpreterGivenName[0]"
+    },
+    {
+      "id": "p14_line2_nameof_businessor_org_name",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Business or Organization Name",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p14_line2_nameof_businessor_org_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line2_NameofBusinessorOrgName[0]"
+    },
+    {
+      "id": "p14_line4_telephone",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p14_line4_telephone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line4_Telephone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p14_line5_email_address",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p14_line5_email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line5_EmailAddress[0]"
+    },
+    {
+      "id": "p14_line5_mobile",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Mobile Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p14_line5_mobile",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_Line5_Mobile[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p14_name_of_language",
+      "question": "What is your additional Information.. Interpreter's Contact Information, Certification, and Signature?",
+      "label": "Language in which you are fluent",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p14_name_of_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P14_NameOfLanguage[0]"
+    },
+    {
+      "id": "p15_line2_nameof_businessor_org_name",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing This Application,?",
+      "label": "Preparer's Business or Organization Name",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p15_line2_nameof_businessor_org_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P15_Line2_NameofBusinessorOrgName[0]"
+    },
+    {
+      "id": "p15_line4_telephone",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing This Application,?",
+      "label": "Preparer's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p15_line4_telephone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P15_Line4_Telephone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p15_line5_mobile",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing This Application,?",
+      "label": "Preparer's Mobile Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p15_line5_mobile",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P15_Line5_Mobile[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p15_line6_email",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing This Application,?",
+      "label": "Preparer's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p15_line6_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].P15_Line6_Email[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p11_line3_a",
+      "question": "What is your page Number?",
+      "label": "Page Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3_a",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line3A[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line3_b",
+      "question": "What is your part Number?",
+      "label": "Part Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3_b",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line3B[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line3_c",
+      "question": "What is your item Number?",
+      "label": "Item Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3_c",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line3C[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line3_d",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line3_d",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line3D[0]"
+    },
+    {
+      "id": "p11_line4_a",
+      "question": "What is your page Number?",
+      "label": "Page Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4_a",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line4A[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line4_b",
+      "question": "What is your part Number?",
+      "label": "Part Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4_b",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line4B[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line4_c",
+      "question": "What is your item Number?",
+      "label": "Item Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4_c",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line4C[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line4_d",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line4_d",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line4D[0]"
+    },
+    {
+      "id": "p11_line5_a",
+      "question": "What is your page Number?",
+      "label": "Page Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5_a",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line5A[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line5_b",
+      "question": "What is your part Number?",
+      "label": "Part Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5_b",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line5B[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line5_c",
+      "question": "What is your item Number?",
+      "label": "Item Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5_c",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line5C[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line5_d",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line5_d",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line5D[0]"
+    },
+    {
+      "id": "p11_line6_a",
+      "question": "What is your page Number?",
+      "label": "Page Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6_a",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line6A[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p11_line6_b",
+      "question": "What is your part Number?",
+      "label": "Part Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6_b",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line6B[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line6_c",
+      "question": "What is your item Number?",
+      "label": "Item Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6_c",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line6C[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p11_line6_d",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p11_line6_d",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[12].P11_Line6D[0]"
+    },
+    {
+      "id": "part1_eligibility",
+      "question": "What is your information About Your Eligibility?",
+      "label": "Citizen under the Violence Against Women",
+      "type": "choice",
+      "group": "eligibility",
+      "memory_key": "eligibility.part1_eligibility",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "c",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[0]",
+          "pdf_value": "/C"
+        },
+        {
+          "value": "b",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[1]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "a",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[2]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "e",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[3]",
+          "pdf_value": "/E"
+        },
+        {
+          "value": "f",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[4]",
+          "pdf_value": "/F"
+        },
+        {
+          "value": "g",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[5]",
+          "pdf_value": "/G"
+        },
+        {
+          "value": "d",
+          "label": "Part 1.  Information About Your Eligibility (Select only one box or your Form N-",
+          "pdf_field": "form1[0].#subform[0].Part1_Eligibility[6]",
+          "pdf_value": "/D"
+        }
+      ]
+    },
+    {
+      "id": "c_checkbox",
+      "question": "What is your consent for Disclosure: I authorize disclosure of information from this application and U S?",
+      "label": "Consent for Disclosure: I authorize disclosure",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": " Part 2.  Information About You (Person applying for naturalization). 12. C. Con",
+          "pdf_field": "form1[0].#subform[1].Line12\\.c_Checkbox[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": " Part 2.  Information About You (Person applying for naturalization). 12. C. Con",
+          "pdf_field": "form1[0].#subform[1].Line12\\.c_Checkbox[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "question": "What is your do you want the Social Security Administration (SSA) to issue you an original or?",
+      "label": "Do you want the Social Security",
+      "type": "choice",
+      "group": "identifiers",
+      "memory_key": "identifiers.checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Social Secu",
+          "pdf_field": "form1[0].#subform[1].Line12a_Checkbox[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Social Secu",
+          "pdf_field": "form1[0].#subform[1].Line12a_Checkbox[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_line10_claimdisability",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "Citizen before your 18th birthday? Select",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_line10_claimdisability",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line10_claimdisability[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line10_claimdisability[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_line11_claimdisability",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "Do you have a physical or",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_line11_claimdisability",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line11_claimdisability[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line11_claimdisability[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_line34_name_change",
+      "question": "What is your name Change (optional). Read the Form N - 400 Instructions before you decide whether or not?",
+      "label": "Would you like to legally change",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_line34_name_change",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 3. Name Cha",
+          "pdf_field": "form1[0].#subform[1].P2_Line34_NameChange[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 2.  Information About You (Person applying for naturalization). 3. Name Cha",
+          "pdf_field": "form1[0].#subform[1].P2_Line34_NameChange[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p2_line7_gender",
+      "question": "What is your name Change (Optional). Read the Instructions for this Item Number before you decide?",
+      "label": "Sex Select Male",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_line7_gender",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "m",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line7_Gender[0]",
+          "pdf_value": "/M"
+        },
+        {
+          "value": "f",
+          "label": "Part 2.  Information About You (Person applying for naturalization). Name Change",
+          "pdf_field": "form1[0].#subform[1].P2_Line7_Gender[1]",
+          "pdf_value": "/F"
+        }
+      ]
+    },
+    {
+      "id": "p4_line1_unit",
+      "question": "What is your current Mailing Address?",
+      "label": "Current Mailing Address Select Floor 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line1_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[2].P4_Line1_Unit[0]",
+          "pdf_value": "/FLR"
+        },
+        {
+          "value": "ste",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[2].P4_Line1_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "apt",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[2].P4_Line1_Unit[2]",
+          "pdf_value": "/APT"
+        }
+      ]
+    },
+    {
+      "id": "p7_line1_ethnicity",
+      "question": "What is your ethnicity?",
+      "label": "Not Hispanic or Latino",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p7_line1_ethnicity",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 4. Biographic Information. 1. Ethnicity (Select only one box). Select Not H",
+          "pdf_field": "form1[0].#subform[2].P7_Line1_Ethnicity[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 4. Biographic Information. NOTE:  U S C I S requires you to complete the ca",
+          "pdf_field": "form1[0].#subform[2].P7_Line1_Ethnicity[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p7_line2_race",
+      "question": "What is your race?",
+      "label": "American Indian or Alaska Native",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p7_line2_race",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "i",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Am",
+          "pdf_field": "form1[0].#subform[2].P7_Line2_Race[0]",
+          "pdf_value": "/I"
+        },
+        {
+          "value": "a",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select As",
+          "pdf_field": "form1[0].#subform[2].P7_Line2_Race[1]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Bl",
+          "pdf_field": "form1[0].#subform[2].P7_Line2_Race[2]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "a",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Na",
+          "pdf_field": "form1[0].#subform[2].P7_Line2_Race[3]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "w",
+          "label": "Part 4. Biographic Information. 2. Race (Select all applicable boxes). Select Wh",
+          "pdf_field": "form1[0].#subform[2].P7_Line2_Race[4]",
+          "pdf_value": "/W"
+        }
+      ]
+    },
+    {
+      "id": "p7_line5_eye",
+      "question": "What is your eye color?",
+      "label": "Eye color Select Brown",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p7_line5_eye",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "bro",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Brown",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[0]",
+          "pdf_value": "/BRO"
+        },
+        {
+          "value": "blu",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Blue.",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[1]",
+          "pdf_value": "/BLU"
+        },
+        {
+          "value": "grn",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Green",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[2]",
+          "pdf_value": "/GRN"
+        },
+        {
+          "value": "haz",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Hazel",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[3]",
+          "pdf_value": "/HAZ"
+        },
+        {
+          "value": "gry",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Gray.",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[4]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "blk",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Black",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[5]",
+          "pdf_value": "/BLK"
+        },
+        {
+          "value": "pnk",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Pink.",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[6]",
+          "pdf_value": "/PNK"
+        },
+        {
+          "value": "mar",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Maroo",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[7]",
+          "pdf_value": "/MAR"
+        },
+        {
+          "value": "xxx",
+          "label": "Part 4. Biographic Information. 5. Eye color (Select only one box). Select Unkno",
+          "pdf_field": "form1[0].#subform[2].P7_Line5_Eye[8]",
+          "pdf_value": "/XXX"
+        }
+      ]
+    },
+    {
+      "id": "p7_line6_hair",
+      "question": "What is your hair color?",
+      "label": "Hair color Select Bald",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p7_line6_hair",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "bal",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Bald",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[0]",
+          "pdf_value": "/BAL"
+        },
+        {
+          "value": "sdy",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Sand",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[1]",
+          "pdf_value": "/SDY"
+        },
+        {
+          "value": "red",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Red.",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[2]",
+          "pdf_value": "/RED"
+        },
+        {
+          "value": "whi",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Whit",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[3]",
+          "pdf_value": "/WHI"
+        },
+        {
+          "value": "gry",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Gray",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[4]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "bln",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Blon",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[5]",
+          "pdf_value": "/BLN"
+        },
+        {
+          "value": "bro",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Brow",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[6]",
+          "pdf_value": "/BRO"
+        },
+        {
+          "value": "blk",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Blac",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[7]",
+          "pdf_value": "/BLK"
+        },
+        {
+          "value": "xxx",
+          "label": "Part 4. Biographic Information. 6. Hair color (Select only one box). Select Unkn",
+          "pdf_field": "form1[0].#subform[2].P7_Line6_Hair[8]",
+          "pdf_value": "/XXX"
+        }
+      ]
+    },
+    {
+      "id": "pt3_line2a_checkbox",
+      "question": "What is your is your current physical address also your current mailing address? Select No?",
+      "label": "Is your current physical address also",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.pt3_line2a_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 3.  Information About Your Residence. 2. Is your current physical address a",
+          "pdf_field": "form1[0].#subform[2].Pt3_Line2a_Checkbox[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 3.  Information About Your Residence. 2. Is your current physical address a",
+          "pdf_field": "form1[0].#subform[2].Pt3_Line2a_Checkbox[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p10_line1_marital_status",
+      "question": "What is your what is your current marital status? Select Divorced?",
+      "label": "What is your current marital status?",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p10_line1_marital_status",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "d",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[0]",
+          "pdf_value": "/D"
+        },
+        {
+          "value": "s",
+          "label": "Part 7. Information About Your Marital History. 1. What is your current marital ",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[1]",
+          "pdf_value": "/S"
+        },
+        {
+          "value": "w",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[2]",
+          "pdf_value": "/W"
+        },
+        {
+          "value": "m",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[3]",
+          "pdf_value": "/M"
+        },
+        {
+          "value": "a",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[4]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "e",
+          "label": "Part 7.  Information About Your Marital History. 1. What is your current marital",
+          "pdf_field": "form1[0].#subform[3].P10_Line1_MaritalStatus[5]",
+          "pdf_value": "/E"
+        }
+      ]
+    },
+    {
+      "id": "p10_line5_citizen",
+      "question": "What is your is your current spouse's present physical address the same as your physical address? Select?",
+      "label": "Is your current spouse's present physical 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p10_line5_citizen",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. 4. D. Is",
+          "pdf_field": "form1[0].#subform[3].P10_Line5_Citizen[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage.  4.D. Is",
+          "pdf_field": "form1[0].#subform[3].P10_Line5_Citizen[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p10_line5a_when",
+      "question": "What is your if your current spouse is a U. S. citizen, complete the following information?",
+      "label": "Go to Item Number",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p10_line5a_when",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. If your ",
+          "pdf_field": "form1[0].#subform[3].P10_Line5a_When[0]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "o",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. If your ",
+          "pdf_field": "form1[0].#subform[3].P10_Line5a_When[1]",
+          "pdf_value": "/O"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1b_unit",
+      "question": "What is your current Mailing Address?",
+      "label": "Current Mailing Address Select Floor 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1b_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[3].P5_Line1b_Unit[0]",
+          "pdf_value": "/FLR"
+        },
+        {
+          "value": "ste",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[3].P5_Line1b_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "apt",
+          "label": "Part 3.  Information About Your Residence. 3. Current Mailing Address (Safe Mail",
+          "pdf_field": "form1[0].#subform[3].P5_Line1b_Unit[2]",
+          "pdf_value": "/APT"
+        }
+      ]
+    },
+    {
+      "id": "p7_line2_forces",
+      "question": "If you are currently married, is your spouse a current member of the U. S. armed forces?",
+      "label": "Armed forces? Select No 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p7_line2_forces",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 7.  Information About Your Marital History. 2. If you are currently married",
+          "pdf_field": "form1[0].#subform[3].P7_Line2_Forces[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 7.  Information About Your Marital History. 2. If you are currently married",
+          "pdf_field": "form1[0].#subform[3].P7_Line2_Forces[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_child_three",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "Line Are you providing support for 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_child_three",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P6_ChildThree[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P6_ChildThree[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p6_child_two",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "Line Are you providing support for 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_child_two",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P6_ChildTwo[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P6_ChildTwo[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line5a",
+      "question": "What is your the following information about your children listed in Item Number For the Relationship?",
+      "label": "Line Are you providing support for 3",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line5a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P9_Line5a[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": " Part 6.  Information About Your Children. 2. Provide the following information ",
+          "pdf_field": "form1[0].#subform[4].P9_Line5a[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_5a",
+      "question": "What is your been a member of, involved in, or in any way associated with any Communist or totalitarian?",
+      "label": "Been a member of, involved in,",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p9_5a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. A. Been a member of",
+          "pdf_field": "form1[0].#subform[5].P9_5a[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. A. Been a member of",
+          "pdf_field": "form1[0].#subform[5].P9_5a[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_5b",
+      "question": "What is your been a member of, involved in, or in any way associated with any group anywhere in the?",
+      "label": "Or Sabotage? Select Yes",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_5b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. B. Been a member of",
+          "pdf_field": "form1[0].#subform[5].P9_5b[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER. 5. B. Been a member of",
+          "pdf_field": "form1[0].#subform[5].P9_5b[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_line1",
+      "question": "What is your have you EVER claimed to be a U.S. citizen? Select No?",
+      "label": "Citizen? Select No",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p9_line1",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. 1. Have you EVER claimed to be a U.S.",
+          "pdf_field": "form1[0].#subform[5].P9_Line1[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. 1. Have you EVER claimed to be a U.S.",
+          "pdf_field": "form1[0].#subform[5].P9_Line1[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line2",
+      "question": "What is your have you EVER registered to vote or voted in any Federal, state, or local election in the?",
+      "label": "Have you EVER registered to vote",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. 2. Have you EVER registered to vote o",
+          "pdf_field": "form1[0].#subform[5].P9_Line2[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. 2. Have you EVER registered to vote o",
+          "pdf_field": "form1[0].#subform[5].P9_Line2[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line3",
+      "question": "Do you currently owe any overdue Federal, state, or local taxes in the United States?",
+      "label": "Do you currently owe any overdue",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. 3. Do you currently owe any overdue F",
+          "pdf_field": "form1[0].#subform[5].P9_Line3[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. 3. Do you currently owe any overdue F",
+          "pdf_field": "form1[0].#subform[5].P9_Line3[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_line4",
+      "question": "What is your since you became a lawful permanent resident, have you called yourself a \u201cnon-U.S?",
+      "label": "Resident? Select Yes",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. 4. Since you became a lawful permanen",
+          "pdf_field": "form1[0].#subform[5].P9_Line4[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. 4. Since you became a lawful permanen",
+          "pdf_field": "form1[0].#subform[5].P9_Line4[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p11_7d",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p11_7d",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P11_7d[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P11_7d[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_6a",
+      "question": "What is your have you EVER been a member of, involved in, or in any way associated with, or have you?",
+      "label": "Have you EVER been a member 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_6a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_6b",
+      "question": "What is your have you EVER been a member of, involved in, or in any way associated with, or have you?",
+      "label": "Have you EVER been a member 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_6b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6b[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6b[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_6c",
+      "question": "What is your have you EVER been a member of, involved in, or in any way associated with, or have you?",
+      "label": "Have you EVER been a member 3",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_6c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6c[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER been a member of, invol",
+          "pdf_field": "form1[0].#subform[6].P12_6c[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line10a",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line10a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line10b",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 3",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line10b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10b[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10b[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line10c",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 4",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line10c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10c[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line10c[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_line11",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 5",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line11",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line11[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line11[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line12",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 6",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line12",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line12[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line12[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line13",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 7",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line13",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line13[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line13[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line14",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 8",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line14",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line14[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line14[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "field",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 9",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.field",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.b\\.[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.b\\.[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 10",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.c[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.c[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "e",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 11",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.e",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.e[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.e[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "f",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Not letting someone practice his or",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.f",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About. Have you EVER ordered, incited, called fo",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.f[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About. Have you EVER ordered, incited, called fo",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.f[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "g",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 12",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.g",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.g[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7\\.g[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line7a",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 13",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line7a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line7a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line8a",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 14",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line8a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line8a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line8a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line8b",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 15",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line8b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line8b[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line8b[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line9",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 16",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line9",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line9[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[6].P9_Line9[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line16",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 17",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line16",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P12_Line16[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P12_Line16[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line15a",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 18",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line15a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P9_Line15a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P9_Line15a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line15b",
+      "question": "What is your have you EVER ordered, incited, called for, committed, assisted, helped with, or otherwise?",
+      "label": "Have you EVER ordered, incited, called 19",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line15b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P9_Line15b[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. Have you EVER ordered, incited, calle",
+          "pdf_field": "form1[0].#subform[7].P9_Line15b[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p11_line17_a",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Engaged in prostitution,",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p11_line17_a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17A[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17A[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p11_line17_b",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "State, the United States, or",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p11_line17_b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17B[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17B[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p11_line17_c",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Been married to",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p11_line17_c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17C[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P11_Line17C[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line17d",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Married someone in",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line17d",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17d[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17d[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line17e",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Helped anyone to",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line17e",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17e[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17e[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line17f",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Gambled illegally or",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line17f",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17f[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17f[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line17g",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Failed to support",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line17g",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17g[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17g[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line17h",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER: Made any misrepresentation",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line17h",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17h[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line17h[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line18",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Government officials any information or documentation",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line18",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line18[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line18[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line19",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Government officials to gain entry or",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line19",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line19[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line19[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line20",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER been placed in",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line20",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line20[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line20[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line21",
+      "question": "What is your if you answer \u201cYes\u201d to any of the questions in Item Numbers - , provide an explanation in?",
+      "label": "Have you EVER been removed or",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line21",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line21[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to any of the que",
+          "pdf_field": "form1[0].#subform[8].P12_Line21[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line23",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select No 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line23",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line23[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line23[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line24",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select No 3",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line24",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line24[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line24[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line25",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If you answered \u201cNo\u201d to Item",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line25",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line25[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P12_Line25[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p9_line22a",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Are you a male who lived",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p9_line22a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P9_Line22a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].P9_Line22a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "pt9_line22b",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If you answered \u201cYes,\u201d to Item 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.pt9_line22b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].Pt9_Line22b[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[8].Pt9_Line22b[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p11_line26d",
+      "question": "What is your additional Information About You?",
+      "label": "If you answered \"Yes,\" are you",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p11_line26d",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). ",
+          "pdf_field": "form1[0].#subform[9].P11_Line26d[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). ",
+          "pdf_field": "form1[0].#subform[9].P11_Line26d[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line26a",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select No 4",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line26a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line26a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line26a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line26b",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If you answered \u201cYes\u201d to Item",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line26b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line26b[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line26b[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line26c",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If you answered \u201cYes,\u201d to Item 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line26c",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "\rPart 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers ",
+          "pdf_field": "form1[0].#subform[9].P12_Line26c[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "\rPart 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers ",
+          "pdf_field": "form1[0].#subform[9].P12_Line26c[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line27",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select Yes",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line27",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line27[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line27[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line28",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces because you were an",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line28",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line28[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line28[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line30a",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Do you now have, or did",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line30a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line30a[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line30a[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line30b",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If you answered \u201cYes,\u201d to Item 3",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line30b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line30b[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line30b[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line31",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Do you support the Constitution and 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line31",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line31[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line31[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line32",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Do you understand the full Oath",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line32",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line32[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line32[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line33",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "And see the Legal Guardian, Surrogate,",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line33",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line33[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line33[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line34",
+      "question": "What is your additional Information About You?",
+      "label": "Are you willing to take the",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line34",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 12. Additional Information About You (Person Applying for Naturalization). ",
+          "pdf_field": "form1[0].#subform[9].P12_Line34[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line34[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line35",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If the law requires it, are 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p12_line35",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line35[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line35[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p12_line36",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select No 5",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line36",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line36[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line36[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p12_line37",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "If the law requires it, are 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p12_line37",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line37[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P12_Line37[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p9_line29",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Armed forces? Select No 6",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p9_line29",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P9_Line29[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[9].P9_Line29[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p10_line1_citizen",
+      "question": "What is your is your current spouse's present physical address the same as your physical address? Select?",
+      "label": "Is your current spouse's present physical 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p10_line1_citizen",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage. 4. D. Is",
+          "pdf_field": "form1[0].#subform[10].P10_Line1_Citizen[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 7.  Information About Your Marital History. Your Current Marriage.  4.D. Is",
+          "pdf_field": "form1[0].#subform[10].P10_Line1_Citizen[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p10_line5a",
+      "question": "What is your if you answer \u201cYes\u201d to Item Numbers - below, provide an explanation in the space provided?",
+      "label": "Do you support the Constitution and 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p10_line5a",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[10].P10_Line5a[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "y",
+          "label": "Part 9.  Additional Information About You. If you answer \u201cYes\u201d to Item Numbers 2",
+          "pdf_field": "form1[0].#subform[10].P10_Line5a[1]",
+          "pdf_value": "/Y"
+        }
+      ]
+    }
+  ]
+}

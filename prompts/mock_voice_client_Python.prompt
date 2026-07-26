@@ -1,0 +1,49 @@
+<pdd-reason>Decouples building the orchestrator from owning the voice agent, and doubles as the Demo Mode fallback so the demo survives a dead microphone or a flaky conference network.</pdd-reason>
+<pdd-interface>{"type": "cli"}</pdd-interface>
+<pdd-dependency>contract_Python.prompt</pdd-dependency>
+
+<include>prompts/contract_Python.prompt</include>
+
+Write a Python script that drives a complete Zuzu call over the public HTTP
+contract, imitating exactly what the ElevenLabs agent does. It is both the
+integration test harness and the Demo Mode fallback shown on stage.
+
+Requirements:
+
+1. Run the real agent loop against a base URL: `POST /session/init`, then repeat
+   `POST /tools/get_missing_fields` and `POST /tools/save_field` until
+   `next_field` comes back null, then `POST /tools/generate_form`, then
+   `POST /session/complete`. Use `httpx.AsyncClient` and send the
+   `X-Zuzu-Secret` header on every request.
+
+2. Answer each question from a demo persona keyed by schema field id. Ship one
+   persona, "Maria Reyes", a Spanish-speaking student renewing her permit, whose
+   answers are internally consistent: the eligibility category matches a student,
+   the SEVIS number is present, and the dates are plausible and ordered.
+
+3. Answer only from the persona dictionary. When the persona has no answer for a
+   field id, send the `"__skip__"` sentinel. **Never synthesize a value for a
+   field the persona does not define** -- this harness must not be able to make
+   the orchestrator look more complete than it is.
+
+4. Drive the loop off whatever `get_missing_fields` returns rather than a fixed
+   list of calls, so the script keeps working when the schema changes and fails
+   loudly when a field cannot be answered.
+
+5. Guard against a server that never stops asking: cap the loop at 100 iterations
+   and exit non-zero with a clear message naming the repeated field id if the same
+   field is returned twice in a row.
+
+6. Print a readable transcript as it goes -- the question asked and the answer
+   given -- with sensitive values masked to their last two characters. This
+   output is shown on a projector.
+
+7. Exit non-zero if generate_form does not return `status="complete"`, printing
+   the `missing` list. Exit zero only when a PDF URL comes back.
+
+8. Accept `--base-url` (default `http://localhost:8000`), `--secret` (default
+   from the `ZUZU_SHARED_SECRET` environment variable), and `--persona`, using
+   `argparse`. Runnable directly as `python mocks/mock_voice_client.py`.
+
+9. Type hints throughout, and no import of the `api` package -- this client must
+   exercise the service the same way an external caller does, over HTTP only.

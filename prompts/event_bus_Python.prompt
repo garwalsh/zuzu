@@ -1,0 +1,42 @@
+<pdd-reason>The dashboard's live-fill effect is the demo's visual payload, and it must not add latency to the voice path. Publishing is fire-and-forget behind an interface that Redis pub/sub replaces in Layer 2.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+<pdd-dependency>contract_Python.prompt</pdd-dependency>
+
+<include>prompts/contract_Python.prompt</include>
+
+Write a Python module providing the realtime event bus that pushes session
+updates to the Zuzu dashboard, so form fields visibly populate while the
+applicant is still speaking.
+
+Requirements:
+
+1. Define an `EventBus` Protocol with async `publish(event: SessionEvent) -> None`
+   and an async iterator `subscribe(session_id: str)` yielding `SessionEvent`
+   objects for that session only.
+
+2. Implement `InMemoryEventBus` holding a set of `asyncio.Queue` subscribers per
+   session id. `subscribe` registers a queue, yields from it until the consumer
+   disconnects, and removes the queue in a `finally` block so a closed browser
+   tab does not leak a queue for the life of the process.
+
+3. `publish` must never block the caller and never raise into it. Use
+   `put_nowait` and, if a subscriber's queue is full, drop that event for that
+   subscriber and continue serving the others. A stalled dashboard must not be
+   able to add latency to a live phone call.
+
+4. Bound each subscriber queue with a `maxsize` of 256 so a dead consumer cannot
+   grow memory without limit.
+
+5. Publishing to a session with no subscribers is a no-op success, not an error.
+   The voice call is the product; the dashboard is an observer.
+
+6. Provide `replay_buffer` support: retain the most recent 50 events per session
+   and yield them to a new subscriber before live events, so a dashboard that
+   connects mid-call still renders the fields already collected.
+
+7. Expose `get_event_bus()` returning a module-level singleton selected by the
+   `STORE_BACKEND` environment variable, defaulting to the in-memory bus, and
+   raising `NotImplementedError` naming the Layer 2 milestone when set to `redis`.
+
+8. Type hints throughout. No FastAPI imports -- the WebSocket route adapts this,
+   not the other way around.

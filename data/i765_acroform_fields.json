@@ -1,0 +1,1536 @@
+{
+  "source": "AcroForm inventory of i-765.pdf",
+  "edition": "08/21/25",
+  "pages": 7,
+  "encrypted": "AES-128, empty user password",
+  "xfa_present": true,
+  "need_appearances": false,
+  "field_count": 161,
+  "fields": [
+    {
+      "name": "form1[0].#pageSet[0].Page1[0].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page1[0].Attorney-Rep[0].CheckBox1[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "To be completed by an attorney or Board of Immigration Appeals (B I. A.)-accredited representative (if any). Select this box if Form G-28 is attached.",
+      "on_value": "/1",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page1[0].Attorney-Rep[0].USCISELISAcctNumber[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "To be completed by an attorney or Board of Immigration Appeals (B I. A.)-accredited representative (if any). Enter Attorney or Accredited Representative U S C I S Online Number (if any). Enter 12 characters.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 12
+    },
+    {
+      "name": "form1[0].Page1[0].Attorney-Rep[0].attorneyBarNumber[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Attorney State Bar Number (if applicable)",
+      "max_len": 15
+    },
+    {
+      "name": "form1[0].Page1[0].Line1a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Your Full Legal Name. 1. A. Enter Family Name, Last Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line1b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Your Full Legal Name. 1.B. Enter Given Name, First Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line1c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Your Full Legal Name. 1.C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line2a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 2. A. Enter  Family Name, Last Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line2b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 2.B. Enter  Given Name, First Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line2c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 2.C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 4. A. Enter  Family Name, Last Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3a_FamilyName[1]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 3. A. Enter  Family Name, Last Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 4.B. Enter  Given Name, First Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3b_GivenName[1]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 3.B. Enter  Given Name, First Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 4.C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Line3c_MiddleName[1]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 2.  Information About You. Other Names Used. Provide all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 6. Additional Information. 3.C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page1[0].Part1_Checkbox[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1.  Reason for Applying. I am applying for (select only one box). 1. A. Select Initial Permission to accept employment.",
+      "on_value": "/1",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page1[0].Part1_Checkbox[1]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1.  Reason for Applying. I am applying for (select only one box). 1.B. Select Replacement of lost, stolen, or damaged employment authorization document, or correction of my employment authorization document NOT DUE to U.S. Citizenship and Immigration Services (USCIS) error. NOTE:  Replacement (correction) of an employment authorization document due to USCIS error does not require a new Form I-765 and filing fee.  Refer to  Replacement for Card Error in the What is the Filing Fee section of the Form I-765 Instructions for further details.",
+      "on_value": "/2",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page1[0].Part1_Checkbox[2]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1.  Reason for Applying. I am applying for (select only one box). 1.C. Select Renewal of my permission to accept employment. (Attach a copy of your previous employment authorization document.)",
+      "on_value": "/3",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[1].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page2[0].Line10_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 11. Marital Status. Select Widowed.",
+      "on_value": "/Widowed",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line10_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 11. Marital Status. Select Divorced.",
+      "on_value": "/Divorced",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line10_Checkbox[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 11. Marital Status. Select Single.",
+      "on_value": "/Single",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line10_Checkbox[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 11. Marital Status. Select Married.",
+      "on_value": "/Married",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line12b_SSN[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 13. Provide your Social Security Number (S S N) (if known). Enter 9 digit number.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].Page2[0].Line17a_CountryOfBirth[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your Country or Countries of Citizenship or Nationality. List all countries where you are currently a citizen or national.  If you need extra space to complete this item, use the space provided in Part 6. Additional Information. 14. A. Enter the Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page2[0].Line17b_CountryOfBirth[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your Country or Countries of Citizenship or Nationality. List all countries where you are currently a citizen or national.  If you need extra space to complete this item, use the space provided in Part 6. Additional Information. 14. B. Enter the Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page2[0].Line19_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 12. Have you previously filed Form I - 7 65? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line19_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 12. Have you previously filed Form I - 7 65? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line4a_InCareofName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. A. Enter In Care of Name, if any.",
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page2[0].Line4b_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page2[0].Line7_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 8. Enter Alien Registration Number (A. number(, if any. Enter 9 digit number.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].Page2[0].Line8_ElisAccountNumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 9. U SC I S Online Account Number, if any. Enter 12 characaters.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 12
+    },
+    {
+      "name": "form1[0].Page2[0].Line9_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 10. Sex. Select Female.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Line9_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Other Information. 10. Sex. Select Male.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Part2Line5_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 6. Is your current mailing address the same as your physical address? Select No. NOTE:  If you answered \u201cNo\u201d to Item Number 6., provide your physical address below.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Part2Line5_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 6. Is your current mailing address the same as your physical address? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_State[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. E Select state from list of states.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_Unit[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. C. Select Suite.  ",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_Unit[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. C. Select Designated Floor.  ",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_Unit[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line5_ZipCode[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. Your U.S. Mailing Address. 5. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7.B. Enter Apartment, Suite or Floor number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. C. Enter city or town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_State[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. D. Select State from list of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_Unit[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. B. Select Suite.  ",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_Unit[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. B. Select Designated Floor.  ",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_Unit[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page2[0].Pt2Line7_ZipCode[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2.  Information About You. U.S. Physical Address. 7. E. Enter ZIP Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[2].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page3[0].#area[1].section_1[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 27. Eligibility Category.   Refer to the Who May File Form I - 7 65 section of the Form I - 7 65 Instructions to determine the appropriate eligibility category for this application.  Enter the appropriate letter and number for your eligibility category below (for example, (A.)(8), (c)(17)(i i i )). Enter first four characters.",
+      "flags": [],
+      "max_len": 4
+    },
+    {
+      "name": "form1[0].Page3[0].#area[1].section_2[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 27. Eligibility Category.   Refer to the Who May File Form I - 7 65 section of the Form I - 7 65 Instructions to determine the appropriate eligibility category for this application.  Enter the appropriate letter and number for your eligibility category below (for example, (A.)(8), (c)(17)(i i i )). Enter middle three characters.",
+      "flags": [],
+      "max_len": 3
+    },
+    {
+      "name": "form1[0].Page3[0].#area[1].section_3[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 27. Eligibility Category.   Refer to the Who May File Form I - 7 65 section of the Form I - 7 65 Instructions to determine the appropriate eligibility category for this application.  Enter the appropriate letter and number for your eligibility category below (for example, (A.)(8), (c)(17)(i i i )). Enter Last three characters.",
+      "flags": [],
+      "max_len": 4
+    },
+    {
+      "name": "form1[0].Page3[0].Line18a_CityTownOfBirth[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Place of Birth. List the city / town / village, state / province, and country where you were born. 15. A. Enter City / Town / Village of Birth.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line18a_Receipt[0].Line30a_ReceiptNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 31. A. (c)(35) and (c)(36) Eligibility Category.  If you entered the eligibility category (c)(35) in Item Number 27., please provide the receipt number of your Form I - 7 97 Notice for Form I - 1 40, Immigrant Petition for Alien Worker.  If you entered the eligibility category (c)(36) in Item Number 27., please provide the receipt number of your spouse's or parent's Form I - 7 97 Notice for Form I - 1 40. Enter 13 Characters.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 13
+    },
+    {
+      "name": "form1[0].Page3[0].Line18b_CityTownOfBirth[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Place of Birth. List the city / town / village, state / province, and country where you were born. 15. B. Enter State / Province of Birth.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line18c_CountryOfBirth[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Place of Birth . List the city / town / village, state / province, and country where you were born. 15. C. Enter Country of your Birth.  ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line19_DOB[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Place of Birth. List the city / town / village, state / province, and country where you were born. 16.  Date of Birth . Enter the 2- digit Month, 2-digit Day and 4-digit Year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line20a_I94Number[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 17. Enter Form I - 94 Arrival-Departure Record Number, if any. Enter 11 digit number.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 11
+    },
+    {
+      "name": "form1[0].Page3[0].Line20b_Passport[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 18. Enter Passport Number of Your Most Recently Issued Passport.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line20c_TravelDoc[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 19. Enter your Travel Document Number (if any).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line20d_CountryOfIssuance[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 20. Enter Country That Issued Your Passport or Travel Document.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line20e_ExpDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 21. Enter the Expiration Date for your Passport or Travel Document. Enter the 2-digit month, 2 digit-Day and 4-digit Year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line21_DateOfLastEntry[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 22. Enter the Date of your Last Entry into the U.S. Enter the 2-digit Month, 2-digit Day and 4-digit Year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line23_StatusLastEntry[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 24. Enter Immigration Status at Your Last Arrival (B - 2 visitor, F - 1 student or no status).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line24_CurrentStatus[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 25. Enter Your Current Immigration Status or Category (for example, B - 2 visitor, F - 1 student, parolee, deferred action, or no status or category).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line26_SEVISnumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 26. Enter Student and Exchange Visitor Information System (SEVIS) number (if any).",
+      "flags": [],
+      "max_len": 11
+    },
+    {
+      "name": "form1[0].Page3[0].Line27a_Degree[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 28. (c)(3)(C) STEM OPT Eligibility Category.  If you entered the eligibility category (c)(3)(C) in Item Number 27., provide the information requested in Item Numbers 28. A. - 28. C. 28. A. Enter Degree,",
+      "flags": [],
+      "max_len": 16
+    },
+    {
+      "name": "form1[0].Page3[0].Line27b_Everify[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 28. B. Enter your Employer's Name as Listed in E Verify.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line27c_EverifyIDNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 28.C. Enter your Employer's E Verify Company Identification Number or a valid E Verify Client Company Identification Number.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page3[0].Line28_ReceiptNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 29. (c)(26) Eligibility Category.  If you entered the eligibility category (c)(26) in Item Number 27., provide the receipt number of your H - 1 B spouse's most recent Form I - 7 97 Notice for Form I - 1 29, Petition for a Nonimmigrant Worker. Enter 13 Characters.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 13
+    },
+    {
+      "name": "form1[0].Page3[0].PtLine29_YesNo[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 30. (c)(8) Eligibility Category.  If you entered the eligibility category (c)(8) in Item Number 27., have you EVER been arrested for and/or convicted of any crime? Select Yes. NOTE:  If you answered \u201cYes\u201d to Item Number 30., refer to Special Filing Instructions for Those With Pending Asylum Applications (c)(8) in the Required Documentation section of the Form I - 7 65 Instructions for information about providing court dispositions.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page3[0].PtLine29_YesNo[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 30. (c)(8) Eligibility Category.  If you entered the eligibility category (c)(8) in Item Number 27., have you EVER been arrested for and/or convicted of any crime? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page3[0].PtLine30b_YesNo[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 31. B. If you entered the eligibility category (c)(35) or (c)(36) in Item Number 27., have you EVER been arrested for and/or convicted of any crime? Select Yes. NOTE:  If you answered \u201cYes\u201d to Item Number 31. B., refer to Employment-Based Nonimmigrant Categories, Items 8. - 9., in the Who May File Form I - 7 65 section  of the Form I - 7 65 Instructions for information about providing court dispositions.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page3[0].PtLine30b_YesNo[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Eligibility Category. 31. B. If you entered the eligibility category (c)(35) or (c)(36) in Item Number 27., have you EVER been arrested for and/or convicted of any crime? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page3[0].place_entry[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2.  Information About You. Information About Your Last Arrival in the United States. 23. Enter Place of Last Arrival into the United States.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[3].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page4[0].Part3_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. 2. Select At my request, the preparer named in Part 5., prepared this application for me based only upon information I provided or authorized.",
+      "on_value": "/C",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line1Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. 1. B. Select The interpreter named in Part 4. read to me every question and instruction on this application and my answer to every question in a language in which I am fluent, and I understood everything.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line1Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. NOTE:  Read the Penalties section of the Form I - 7 65 Instructions before completing this section.  You must file Form I - 7 65 while in the United States. Applicant's Statement. NOTE:  Select the box for either Item Number 1. A. or 1. B.  If applicable, select the box for Item Number 2. 1. A. Select I can read and understand English, and I have read and understand every question and instruction on this application and my answer to every question. ",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line1b_Language[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. 1. B. Enter the language in which you are fluent.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line2_RepresentativeName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Statement. 2. Enter name of Preparer from Part 5.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line3_DaytimePhoneNumber1[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Contact Information. 3. Enter Applicant's Daytime Telephone Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line4_MobileNumber1[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Contact Information. 4. Enter Applicant's Mobile Telephone Number, (if any).",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line5_Email[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Contact Information. 5. Enter Applicant's Email Address, (if any).",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line7a_Signature[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Signature.  7. A. Applicant's Signature. Signature.  This form can not be signed electronically.  The name of the applicant can not be typewritten into this space.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].Page4[0].Pt3Line7b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. 7. B. Date of Signature. Enter the 2-digit Month, 2-digit Day and 4-digit Year. NOTE TO ALL APPLICANTS:  If you do not completely fill out this application or fail to submit required documents listed in the Instructions, U S C I S may deny your application.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page4[0].Pt4Line1a_InterpreterFamilyName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Provide the following information about the interpreter: Interpreter's Full Name. 1. A. Enter Interpreter's Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page4[0].Pt4Line1b_InterpreterGivenName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Provide the following information concerning the interpreter: Interpreter's Full Name. 1. B. Enter Interpreter's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page4[0].Pt4Line2_InterpreterBusinessorOrg[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Provide the following information concerning the interpreter: Interpreter's Full Name. 2. Enter Interpreter's Business or Organization Name (if any).",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page4[0].Pt4Line6_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3.  Applicant's Statement, Contact Information, Declaration, Certification, and Signature. Applicant's Contact Information. 6. Select this box if you are a Salvadoran or Guatemalan national eligible for benefits under the. A. B C settlement agreement.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[4].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page5[0].Part4_NameofLanguage[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Certification.  I certify, under penalty of perjury, that  I am fluent in English and (enter language) which is the same language specified in Part 3., Item Number 1.b., and I have read to this applicant in the identified language every question and instruction on this application and his or her answer to every question.  The applicant informed me that he or she understands every instruction, question, and answer on the application, including the Applicant's Certification, and has verified the accuracy of every answer.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page5[0].Pt4Line4_InterpreterDaytimeTelephone[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information.  4. Enter Interpreter's Daytime Telephone Number. ",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page5[0].Pt4Line5_MobileNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 5. Enter Interpreter's Mobile Telephone Number, (if any).",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page5[0].Pt4Line6_Email[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 6. Enter Interpreter's Email Address (if any).",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].Page5[0].Pt4Line6a_Signature[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 7. A. Interpreter's Signature. This form can not be signed electronically.  The name of the applicant can not be typewritten into this space.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].Page5[0].Pt4Line6b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature.  Interpreter's Signature. 7. B. Date of Signature. Enter the 2-digit Month, 2-digit Day and 4-digit Year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line1a_PreparerFamilyName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant.  Provide the following information concerning the preparer:  Preparer's Full Name. 1. A. Enter Preparer's Family Name (Last Name). ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line1b_PreparerGivenName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Provide the following information about the preparer:  Preparer's Full Name. 1. B. Enter Preparer's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line2_BusinessName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Provide the following information about the preparer.  Preparer's Full Name. 2. Enter Preparer's  Business or Organization Name, if any. ",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3a_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3b_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Enter the Apartment, Suite or Floor number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3b_Unit[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Floor. ",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3b_Unit[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3b_Unit[2]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and  Signature. Interpreter's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3c_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. C. Enter City or Town. ",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3d_State[0]",
+      "type": "/Ch",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. D. Select state from list of states.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3e_ZipCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. E. Enter ZIP Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3f_Province[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. F. Enter the Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3g_PostalCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. G. Enter the Postal Code.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line3h_Country[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 4.  Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. H. Enter the Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line4_DaytimePhoneNumber1[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Contact Information.  4. Enter Preparer's Daytime Telephone Number. ",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line5_PreparerFaxNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Contact Information.  5. Enter Preparer's Mobile Telephone  Number (if any). ",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].Page5[0].Pt5Line6_Email[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Contact Information.  6. Enter Preparer's Email Address, (if any).",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3a_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3b_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. B. Enter Apartment, Suite or Floor number. ",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3b_Unit[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. B. Select Floor.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3b_Unit[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant.  Preparer's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3b_Unit[2]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3c_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. C. Enter the City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3d_State[0]",
+      "type": "/Ch",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. D. Select state from list of states.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3e_ZipCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. E. Enter the ZIP code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3f_Province[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. F. Enter the Province.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3g_PostalCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. G. Enter the Postal Code.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].Page5[0].Pt6Line3h_Country[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Mailing Address. 3. H. Enter the Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[5].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page6[0].Part5Line7_Checkbox[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Statement.  7. A. Select I am not an attorney or accredited representative but have prepared this application on behalf of the applicant and with the applicant's consent.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page6[0].Part5Line7_Checkbox[1]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Statement.  7. B. Select I am an attorney or accredited representative and my representation of the applicant in this case extends or does not extend beyond the preparation of this application. NOTE:  If you are an attorney or accredited you may need to submit a completed Form G - 28, Notice of Entry of Appearance as Attorney or Accredited Representative, with this application.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page6[0].Part5Line7b_Checkbox[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Statement.  7. B. Select I am an attorney or accredited representative and my representation of the applicant in this case extends beyond the preparation of this application.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page6[0].Part5Line7b_Checkbox[1]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Statement.  7. B. Select I am an attorney or accredited representative and my representation of the applicant in this case does not extend beyond the preparation of this application.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].Page6[0].Pt5Line8a_Signature[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant.  Preparer's Signature.  8. A. Preparer's Signature. This signature field can not be signed with a digital signature and the signee's name can not be typewritten into this space. This is a protected field. Print and sign in ink.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].Page6[0].Pt5Line8b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 5.  Contact Information, Declaration, and Signature of the Person Preparing this Application, If Other Than the Applicant. Preparer's Signature.  8. B. Date of Signature. Enter the  2-digit Month, 2-digit Day and 4-digit Year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[6].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Line1a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information. If you need extra space to provide any additional information within this application, use the space below.  If you need more space than what is provided, you may make copies of this page to complete and file with this application or attach a separate sheet of paper.  Type or print your name and A-Number (if any) at the top of each sheet; indicate the Page Number, Part Number, and Item Number to which your answer refers; and sign and date each sheet.  1. A. Family Name (Last Name). (This field is pre-populated from Part 1.) ",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Line1b_GivenName[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information. 1. B. Given Name (First Name) (This field is pre-populated from Part 1.) ",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Line1c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information. 1. C. Middle Name (This field is pre-populated from Part 1.) ",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Line7_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information. 2. A. Number, (if any). (This field is pre-populated from Part 1.) ",
+      "flags": [
+        "ReadOnly",
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line3a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information. 3. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line3b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  3. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line3c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  3. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line4a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  4. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line4b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  4. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line4c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  4. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line4d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  4. D. Enter additional information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line4d_AdditionalInfo[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  3. D. Enter additional information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line5a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  5. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line5b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  5. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line5c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  5. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line5d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  5. D. Enter additional information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line6a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  6. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line6b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  6. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line6c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  6. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line6d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  6. D. Enter additional information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line7a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  7. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line7b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  7. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line7c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  7. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].Page7[0].Pt6Line7d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 6.  Additional Information.  7. D. Enter additional information.",
+      "flags": [
+        "Multiline"
+      ]
+    }
+  ]
+}

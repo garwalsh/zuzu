@@ -1,0 +1,2356 @@
+{
+  "form_id": "I-821D",
+  "title": "Consideration of Deferred Action for Childhood Arrivals",
+  "agency": "USCIS",
+  "edition": "01/20/25",
+  "pdf": "assets/i_821d.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "atty_license_num",
+      "question": "What is your to Be Completed by an Attorney or Accredited Representative?",
+      "label": "Attorney State Bar Number",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.atty_license_num",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].#area[1].AttyLicenseNum[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p1_line2_date",
+      "question": "What is your for this Renewal request, my most recent period of Deferred Action for Childhood Arrivals?",
+      "label": "As 2 digit month, 2 digit 1",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_line2_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line2_Date[0]"
+    },
+    {
+      "id": "p1_line3a_name",
+      "question": "What is your family Name (Last Name)?",
+      "label": "Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line3a_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line3a_Name[0]"
+    },
+    {
+      "id": "p1_line3b_name",
+      "question": "What is your given Name (First Name)?",
+      "label": "Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line3b_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line3b_Name[0]"
+    },
+    {
+      "id": "p1_line3c_name",
+      "question": "What is your middle Name?",
+      "label": "Middle Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line3c_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line3c_Name[0]"
+    },
+    {
+      "id": "p1_line4a_name",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "In Care Of Name",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p1_line4a_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4a_Name[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p1_line4b_street",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "Street Number and Name 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p1_line4b_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4b_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p1_line4c_number",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "Apartment, Suite or Floor Number 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p1_line4c_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4c_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p1_line4d_city",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "City or Town 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p1_line4d_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4d_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p1_line4e_state",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "State from List of States 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p1_line4e_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4e_State[0]"
+    },
+    {
+      "id": "p1_line4f_zip_code",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "Zip Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p1_line4f_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].P1_Line4f_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p1_line7_a_number",
+      "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Alien Registration Number",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.p1_line7_a_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Line4_ANumber[0].P1_Line7_ANumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p1_line11a_city_birth",
+      "question": "What is your city, Town or Village of Birth?",
+      "label": "City, Town or Village of Birth",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p1_line11a_city_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line11a_CityBirth[0]"
+    },
+    {
+      "id": "p1_line11b_country_birth",
+      "question": "What is your country of Birth?",
+      "label": "Country of Birth",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line11b_country_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line11b_CountryBirth[0]"
+    },
+    {
+      "id": "p1_line12_country_res",
+      "question": "What is your current Country of Residence?",
+      "label": "Current Country of Residence",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line12_country_res",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line12_CountryRes[0]"
+    },
+    {
+      "id": "p1_line13_country_citz",
+      "question": "What is your country of Citizenship or Nationality?",
+      "label": "Country of Citizenship or Nationality",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line13_country_citz",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line13_CountryCitz[0]"
+    },
+    {
+      "id": "p1_line15a_name",
+      "question": "What is your other Names Used?",
+      "label": "Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line15a_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line15a_Name[0]"
+    },
+    {
+      "id": "p1_line15b_name",
+      "question": "What is your other Names Used?",
+      "label": "Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line15b_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line15b_Name[0]"
+    },
+    {
+      "id": "p1_line15c_name",
+      "question": "What is your other Names Used?",
+      "label": "Middle Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p1_line15c_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line15c_Name[0]"
+    },
+    {
+      "id": "p1_line18_height_ft",
+      "question": "What is your height?",
+      "label": "The Feet from the drop down",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line18_height_ft",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line18_Height-Ft[0]"
+    },
+    {
+      "id": "p1_line18_height_in",
+      "question": "What is your height?",
+      "label": "The Inches from the drop down",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line18_height_in",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line18_Height-In[0]"
+    },
+    {
+      "id": "p1_line19_weight",
+      "question": "What is your weight in Pounds?",
+      "label": "First digit of three digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line19_weight",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line19_Weight[0]",
+      "max_len": 1
+    },
+    {
+      "id": "p1_line19_weight_2",
+      "question": "What is your weight in Pounds?",
+      "label": "Second digit of three digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line19_weight_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line19_Weight[1]",
+      "max_len": 1
+    },
+    {
+      "id": "p1_line19_weight_3",
+      "question": "What is your weight in Pounds?",
+      "label": "Third digit of three digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p1_line19_weight_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line19_Weight[2]",
+      "max_len": 1
+    },
+    {
+      "id": "p1_line8_s_s_n",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "Social Security Number",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.p1_line8_s_s_n",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line8_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "p1_line9_d_o_b",
+      "question": "What is your date of Birth?",
+      "label": "As 2 digit month, 2 digit 2",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.p1_line9_d_o_b",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].P1_Line9_DOB[0]"
+    },
+    {
+      "id": "p2_line10_border_card",
+      "question": "What is your residence and Travel Information?",
+      "label": "Border Crossing Card Number",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p2_line10_border_card",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line10_BorderCard[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line2a_date_from",
+      "question": "What is your residence and Travel Information (continued). Present Address?",
+      "label": "The From Date as 2 digit 1",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line2a_date_from",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2a_Date_From[0]"
+    },
+    {
+      "id": "p2_line2b_street",
+      "question": "What is your residence and Travel Information?",
+      "label": "Street Number and Name 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2b_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2b_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line2c_number",
+      "question": "What is your residence and Travel Information?",
+      "label": "Apartment, Suite or Floor Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p2_line2c_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2c_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p2_line2d_city",
+      "question": "What is your residence and Travel Information?",
+      "label": "City or Town 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line2d_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2d_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line2e_state",
+      "question": "What is your residence and Travel Information?",
+      "label": "State from List of States 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p2_line2e_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2e_State[0]"
+    },
+    {
+      "id": "p2_line2f_zip_code",
+      "question": "What is your residence and Travel Information?",
+      "label": "Zip Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p2_line2f_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line2f_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p2_line3a_date_from",
+      "question": "What is your residence and Travel Information?",
+      "label": "The From Date as 2 digit 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line3a_date_from",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3a_Date_From[0]"
+    },
+    {
+      "id": "p2_line3a_date_to",
+      "question": "What is your residence and Travel Information?",
+      "label": "The To Date as 2 digit 1",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line3a_date_to",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3a_Date_To[0]"
+    },
+    {
+      "id": "p2_line3b_street",
+      "question": "What is your residence and Travel Information?",
+      "label": "Street Number and Name 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line3b_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3b_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line3c_number",
+      "question": "What is your residence and Travel Information?",
+      "label": "Apartment, Suite or Floor Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p2_line3c_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3c_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p2_line3d_city",
+      "question": "What is your residence and Travel Information?",
+      "label": "City or Town 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line3d_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3d_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line3e_state",
+      "question": "What is your residence and Travel Information?",
+      "label": "State from List of States 3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p2_line3e_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line3e_State[0]"
+    },
+    {
+      "id": "p2_line4a_date_from",
+      "question": "What is your residence and Travel Information?",
+      "label": "The From Date as 2 digit 3",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line4a_date_from",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4a_Date_From[0]"
+    },
+    {
+      "id": "p2_line4a_date_to",
+      "question": "What is your residence and Travel Information?",
+      "label": "The To Date as 2 digit 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line4a_date_to",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4a_Date_To[0]"
+    },
+    {
+      "id": "p2_line4b_street",
+      "question": "What is your residence and Travel Information?",
+      "label": "Street Number and Name 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line4b_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4b_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line4c_number",
+      "question": "What is your residence and Travel Information?",
+      "label": "Apartment, Suite or Floor Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p2_line4c_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4c_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p2_line4d_city",
+      "question": "What is your residence and Travel Information?",
+      "label": "City or Town 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line4d_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4d_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line4e_state",
+      "question": "What is your residence and Travel Information?",
+      "label": "State from List of States 4",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p2_line4e_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4e_State[0]"
+    },
+    {
+      "id": "p2_line4f_zip_code",
+      "question": "What is your residence and Travel Information?",
+      "label": "Zip Code 3",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p2_line4f_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line4f_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p2_line5a_date_from",
+      "question": "What is your residence and Travel Information?",
+      "label": "The From Date as 2 digit 4",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line5a_date_from",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5a_Date_From[0]"
+    },
+    {
+      "id": "p2_line5a_date_to",
+      "question": "What is your residence and Travel Information?",
+      "label": "The To Date as 2 digit 3",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p2_line5a_date_to",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5a_Date_To[0]"
+    },
+    {
+      "id": "p2_line5b_street",
+      "question": "What is your residence and Travel Information?",
+      "label": "Street Number and Name 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line5b_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5b_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line5c_number",
+      "question": "What is your residence and Travel Information?",
+      "label": "Apartment, Suite or Floor Number 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p2_line5c_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5c_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p2_line5d_city",
+      "question": "What is your residence and Travel Information?",
+      "label": "City or Town 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p2_line5d_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5d_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p2_line5e_state",
+      "question": "What is your residence and Travel Information?",
+      "label": "State from List of States 5",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p2_line5e_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5e_State[0]"
+    },
+    {
+      "id": "p2_line5f_zip_code",
+      "question": "What is your residence and Travel Information?",
+      "label": "Zip Code 4",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p2_line5f_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line5f_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p2_line6a_dep_date",
+      "question": "What is your residence and Travel Information?",
+      "label": "Departure Date as 2 digit month, 1",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p2_line6a_dep_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line6a_DepDate[0]"
+    },
+    {
+      "id": "p2_line6b_ret_date",
+      "question": "What is your residence and Travel Information?",
+      "label": "Return Date as 2 digit month, 1",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line6b_ret_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line6b_RetDate[0]"
+    },
+    {
+      "id": "p2_line6c_reason",
+      "question": "What is your residence and Travel Information?",
+      "label": "Reason for Departure 1",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line6c_reason",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line6c_Reason[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line7a_dept_date",
+      "question": "What is your residence and Travel Information?",
+      "label": "Departure Date as 2 digit month, 2",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line7a_dept_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line7a_DeptDate[0]"
+    },
+    {
+      "id": "p2_line7b_ret_date",
+      "question": "What is your residence and Travel Information?",
+      "label": "Return Date as 2 digit month, 2",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line7b_ret_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line7b_RetDate[0]"
+    },
+    {
+      "id": "p2_line7c_reason",
+      "question": "What is your residence and Travel Information?",
+      "label": "Reason for Departure 2",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line7c_reason",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line7c_Reason[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p2_line9a_country",
+      "question": "What is your residence and Travel Information?",
+      "label": "What country issued your last passport",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line9a_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line9a_Country[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p2_line9b_passport",
+      "question": "What is your residence and Travel Information?",
+      "label": "Passport Number",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line9b_passport",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line9b_Passport[0]",
+      "max_len": 20,
+      "read_back": true
+    },
+    {
+      "id": "p2_line9c_exp_date",
+      "question": "What is your residence and Travel Information?",
+      "label": "Passport Expiration Date as 2 digit",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p2_line9c_exp_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].P2_Line9c_ExpDate[0]"
+    },
+    {
+      "id": "pt2_line3f_zip_code",
+      "question": "What is your residence and Travel Information?",
+      "label": "Zip Code 5",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.pt2_line3f_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2_Line3f_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p3_line2_date",
+      "question": "What is your date of Initial Entry into the United States (on or about) as 2 digit month, 2 digit day?",
+      "label": "Date of Initial Entry into the",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p3_line2_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line2_Date[0]"
+    },
+    {
+      "id": "p3_line3_place",
+      "question": "What is your place of Initial Entry into the United States?",
+      "label": "Place of Initial Entry into the",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p3_line3_place",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line3_Place[0]",
+      "max_len": 38
+    },
+    {
+      "id": "p3_line4_imm_status",
+      "question": "What is your immigration Status on June 15, 2012 from the drop down list?",
+      "label": "Immigration Status on June 15, 2012",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line4_imm_status",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line4_ImmStatus[0]"
+    },
+    {
+      "id": "p3_line6_education",
+      "question": "What is your indicate how you meet the education guideline certificate or equivalent state-authorized?",
+      "label": "Indicate how you meet the education",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p3_line6_education",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line6_Education[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p3_line7_school",
+      "question": "What is your name, City, and State of School Currently Attending or Where Education Received?",
+      "label": "Name, City, and State of School",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p3_line7_school",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line7_School[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p3_line8_grad_date",
+      "question": "What is your date of Graduation or, if currently in school, date of last attendance?",
+      "label": "As 2 digit month, 2 digit 3",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p3_line8_grad_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].P3_Line8_GradDate[0]"
+    },
+    {
+      "id": "p5_line1b_language",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Statement, Certification, Signature, and Contact Information",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p5_line1b_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line1b_Language[0]",
+      "max_len": 40
+    },
+    {
+      "id": "p5_line2b_date",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Date of Signature as 2 digit 1",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.p5_line2b_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line2b_Date[0]"
+    },
+    {
+      "id": "p5_line3_day_phone",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Requestor's Daytime Telephone Number",
+      "type": "phone",
+      "group": "address",
+      "memory_key": "address.p5_line3_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line3_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p5_line4_mobile_phone",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Requestor's Mobile Telephone Number",
+      "type": "phone",
+      "group": "address",
+      "memory_key": "address.p5_line4_mobile_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line4_MobilePhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p5_line5_email",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "Requestor's Email Address",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.p5_line5_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P5_Line5_Email[0]"
+    },
+    {
+      "id": "p6_line1a_name",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Family Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p6_line1a_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line1a_Name[0]"
+    },
+    {
+      "id": "p6_line1b_name",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Given Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p6_line1b_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line1b_Name[0]"
+    },
+    {
+      "id": "p6_line2_organization",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Business or Organization Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p6_line2_organization",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line2_Organization[0]",
+      "max_len": 40
+    },
+    {
+      "id": "p6_line3a_street",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Street Number and Name 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3a_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3a_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p6_line3b_number",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Apartment, Suite or Floor Number 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3b_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3b_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p6_line3c_city",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "City or Town 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3c_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3c_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p6_line3d_state",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "State from List of States 6",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p6_line3d_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3d_State[0]"
+    },
+    {
+      "id": "p6_line3e_zip_code",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Zip Code 6",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p6_line3e_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3e_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p6_line3f_province",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Mailing Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3f_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3f_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p6_line3g_postal_code",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Postal Code 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3g_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3g_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p6_line3h_country",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Mailing Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p6_line3h_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P6_Line3h_Country[0]"
+    },
+    {
+      "id": "p6_line6b_date",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Date of Signature as 2 digit 2",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p6_line6b_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6Line6b_Date[0]"
+    },
+    {
+      "id": "p6_language",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "I certify that: I am fluent",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p6_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Language[0]",
+      "max_len": 18
+    },
+    {
+      "id": "p6_line4_day_phone",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p6_line4_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line4_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p6_line5_email",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p6_line5_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P6_Line5_Email[0]"
+    },
+    {
+      "id": "p7_line1a_name",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Family Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_line1a_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line1a_Name[0]"
+    },
+    {
+      "id": "p7_line1b_name",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Given Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_line1b_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line1b_Name[0]"
+    },
+    {
+      "id": "p7_line2_organization",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Business or Organization Name",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p7_line2_organization",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line2_Organization[0]",
+      "max_len": 40
+    },
+    {
+      "id": "p7_line3a_street",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Street Number and Name 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3a_street",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3a_Street[0]",
+      "max_len": 34
+    },
+    {
+      "id": "p7_line3b_number",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Apartment, Suite or Floor Number 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3b_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3b_Number[0]",
+      "max_len": 6
+    },
+    {
+      "id": "p7_line3c_city",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "City or Town 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3c_city",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3c_City[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p7_line3d_state",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "State from List of States 7",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.p7_line3d_state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3d_State[0]"
+    },
+    {
+      "id": "p7_line3e_zip_code",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Zip Code 7",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.p7_line3e_zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3e_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "p7_line3f_province",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Mailing Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3f_province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3f_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "p7_line3g_postal_code",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Postal Code 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3g_postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3g_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "p7_line3h_country",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Mailing Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.p7_line3h_country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line3h_Country[0]"
+    },
+    {
+      "id": "p7_line4_day_phone",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p7_line4_day_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line4_DayPhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p7_line5_mobile_phone",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Fax Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.p7_line5_mobile_phone",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line5_MobilePhone[0]",
+      "max_len": 10
+    },
+    {
+      "id": "p7_line6_email",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.p7_line6_email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line6_Email[0]"
+    },
+    {
+      "id": "p7_line7b_date",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Date of Signature as 2 digit 3",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.p7_line7b_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].P7_Line7b_Date[0]"
+    },
+    {
+      "id": "p8_line3a_page",
+      "question": "What is your page Number?",
+      "label": "Page Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3a_page",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3a_Page[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line3b_part",
+      "question": "What is your part Number?",
+      "label": "Part Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3b_part",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3b_Part[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line3c_item",
+      "question": "What is your item Number?",
+      "label": "Item Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3c_item",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3c_Item[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p8_line3d_narrative",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line3d_narrative",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line3d_Narrative[0]"
+    },
+    {
+      "id": "p8_line4a_page",
+      "question": "What is your page Number?",
+      "label": "Page Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4a_page",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4a_Page[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line4b_part",
+      "question": "What is your part Number?",
+      "label": "Part Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4b_part",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4b_Part[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line4c_item",
+      "question": "What is your item Number?",
+      "label": "Item Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4c_item",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4c_Item[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p8_line4d_narrative",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line4d_narrative",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line4d_Narrative[0]"
+    },
+    {
+      "id": "p8_line5a_page",
+      "question": "What is your page Number?",
+      "label": "Page Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5a_page",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5a_Page[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line5b_part",
+      "question": "What is your part Number?",
+      "label": "Part Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5b_part",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5b_Part[0]",
+      "max_len": 2
+    },
+    {
+      "id": "p8_line5c_item",
+      "question": "What is your item Number?",
+      "label": "Item Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5c_item",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5c_Item[0]",
+      "max_len": 3
+    },
+    {
+      "id": "p8_line5d_narrative",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.p8_line5d_narrative",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].P8_Line5d_Narrative[0]"
+    },
+    {
+      "id": "g28_attached",
+      "question": "What is your to Be Completed by an Attorney or Accredited Representative?",
+      "label": "This box if Form G-28 is",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.g28_attached",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "To Be Completed by an Attorney or Accredited Representative, if any. Select this",
+          "pdf_field": "form1[0].#subform[0].G28_Attached[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line1_checkbox",
+      "question": "What is your initial Request - Consideration of Deferred Action for Childhood Arrivals?",
+      "label": "Consideration of Deferred Action for Childhood 1",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "i",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). 1. Initial Req",
+          "pdf_field": "form1[0].#subform[0].P1_Line1_Checkbox[0]",
+          "pdf_value": "/I"
+        }
+      ]
+    },
+    {
+      "id": "p1_line2_checkbox",
+      "question": "What is your renewal Request - Consideration of Deferred Action for Childhood Arrivals?",
+      "label": "Consideration of Deferred Action for Childhood 2",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_line2_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "r",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). 2. Renewal Req",
+          "pdf_field": "form1[0].#subform[0].P1_Line2_Checkbox[0]",
+          "pdf_value": "/R"
+        }
+      ]
+    },
+    {
+      "id": "p1_line4c_unit",
+      "question": "What is your U.S. Mailing Address?",
+      "label": "Mailing Address Select Floor",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p1_line4c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing A",
+          "pdf_field": "form1[0].#subform[0].P1_Line4c_Unit[0]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "ste",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing A",
+          "pdf_field": "form1[0].#subform[0].P1_Line4c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing A",
+          "pdf_field": "form1[0].#subform[0].P1_Line4c_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p1_line5_checkbox",
+      "question": "What is your are you NOW or have you EVER been in removal proceedings, or do you have a removal order?",
+      "label": "Are you NOW or have you 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p1_line5_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Procee",
+          "pdf_field": "form1[0].#subform[0].P1_Line5_Checkbox[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Procee",
+          "pdf_field": "form1[0].#subform[0].P1_Line5_Checkbox[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "part1_c_b",
+      "question": "What is your I am in immigration detention?",
+      "label": "I am in immigration detention Check",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.part1_c_b",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "am",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). I am in immigr",
+          "pdf_field": "form1[0].#subform[0].Part1_CB[0]",
+          "pdf_value": "/AM"
+        },
+        {
+          "value": "am not",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). I am not in im",
+          "pdf_field": "form1[0].#subform[0].Part1_CB[1]",
+          "pdf_value": "/AM NOT"
+        }
+      ]
+    },
+    {
+      "id": "p1_line10_gender",
+      "question": "What is your sex?",
+      "label": "Sex Select Male",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line10_gender",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "m",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line10_Gender[0]",
+          "pdf_value": "/M"
+        },
+        {
+          "value": "f",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line10_Gender[1]",
+          "pdf_value": "/F"
+        }
+      ]
+    },
+    {
+      "id": "p1_line14_marital_status",
+      "question": "What is your marital Status?",
+      "label": "Marital Status Select Single",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p1_line14_marital_status",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "s",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line14_MaritalStatus[0]",
+          "pdf_value": "/S"
+        },
+        {
+          "value": "m",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line14_MaritalStatus[1]",
+          "pdf_value": "/M"
+        },
+        {
+          "value": "d",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line14_MaritalStatus[2]",
+          "pdf_value": "/D"
+        },
+        {
+          "value": "w",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Informat",
+          "pdf_field": "form1[0].#subform[1].P1_Line14_MaritalStatus[3]",
+          "pdf_value": "/W"
+        }
+      ]
+    },
+    {
+      "id": "p1_line16_checkbox",
+      "question": "What is your ethnicity?",
+      "label": "Not Hispanic or Latino",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p1_line16_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line16_Checkbox[0]",
+          "pdf_value": "/N"
+        },
+        {
+          "value": "h",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line16_Checkbox[1]",
+          "pdf_value": "/H"
+        }
+      ]
+    },
+    {
+      "id": "p1_line17_race_am_indian",
+      "question": "What is your race?",
+      "label": "American Indian or Alaska Native",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line17_race_am_indian",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line17_Race_AmIndian[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line17_race_asian",
+      "question": "What is your race?",
+      "label": "Race Select Asian",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line17_race_asian",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line17_Race_Asian[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line17_race_black",
+      "question": "What is your race?",
+      "label": "Black or African American",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line17_race_black",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line17_Race_Black[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line17_race_native_haw",
+      "question": "What is your race?",
+      "label": "Native Hawaiian or Other Pacific Islander",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line17_race_native_haw",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line17_Race_NativeHaw[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line17_race_white",
+      "question": "What is your race?",
+      "label": "Race Select White",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line17_race_white",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line17_Race_White[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "p1_line20_checkbox",
+      "question": "What is your eye Color?",
+      "label": "Eye Color Select Blue",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line20_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "blu",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[0]",
+          "pdf_value": "/BLU"
+        },
+        {
+          "value": "gry",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[1]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "haz",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[2]",
+          "pdf_value": "/HAZ"
+        },
+        {
+          "value": "pnk",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[3]",
+          "pdf_value": "/PNK"
+        },
+        {
+          "value": "mar",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[4]",
+          "pdf_value": "/MAR"
+        },
+        {
+          "value": "grn",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[5]",
+          "pdf_value": "/GRN"
+        },
+        {
+          "value": "bro",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[6]",
+          "pdf_value": "/BRO"
+        },
+        {
+          "value": "blk",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[7]",
+          "pdf_value": "/BLK"
+        },
+        {
+          "value": "unk",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line20_Checkbox[8]",
+          "pdf_value": "/UNK"
+        }
+      ]
+    },
+    {
+      "id": "p1_line21_checkbox",
+      "question": "What is your hair Color?",
+      "label": "Hair Color Select Bald",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p1_line21_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "bal",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[0]",
+          "pdf_value": "/BAL"
+        },
+        {
+          "value": "bln",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[1]",
+          "pdf_value": "/BLN"
+        },
+        {
+          "value": "gry",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[2]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "sdy",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[3]",
+          "pdf_value": "/SDY"
+        },
+        {
+          "value": "unk",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[4]",
+          "pdf_value": "/UNK"
+        },
+        {
+          "value": "whi",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[5]",
+          "pdf_value": "/WHI"
+        },
+        {
+          "value": "red",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[6]",
+          "pdf_value": "/RED"
+        },
+        {
+          "value": "bro",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[7]",
+          "pdf_value": "/BRO"
+        },
+        {
+          "value": "blk",
+          "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Inf",
+          "pdf_field": "form1[0].#subform[1].P1_Line21_Checkbox[8]",
+          "pdf_value": "/BLK"
+        }
+      ]
+    },
+    {
+      "id": "p2_line1_checkbox",
+      "question": "What is your residence and Travel Information?",
+      "label": "Since at least June 15, 2007,",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p2_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). 1. ",
+          "pdf_field": "form1[0].#subform[1].P2_Line1_checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). 1. ",
+          "pdf_field": "form1[0].#subform[1].P2_Line1_checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p2_line2c_unit",
+      "question": "What is your residence and Travel Information?",
+      "label": "Present Address Select Floor",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line2c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Pre",
+          "pdf_field": "form1[0].#subform[2].P2_Line2c_Unit[0]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Pre",
+          "pdf_field": "form1[0].#subform[2].P2_Line2c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Pre",
+          "pdf_field": "form1[0].#subform[2].P2_Line2c_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p2_line3c_unit",
+      "question": "What is your residence and Travel Information?",
+      "label": "Address One Select Floor",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line3c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line3c_Unit[0]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line3c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line3c_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p2_line4c_unit",
+      "question": "What is your residence and Travel Information?",
+      "label": "Address Two Select Floor",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line4c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line4c_Unit[0]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line4c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line4c_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p2_line5c_unit",
+      "question": "What is your residence and Travel Information?",
+      "label": "Address Three Select Floor",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line5c_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "flr",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line5c_Unit[0]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line5c_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "apt",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Add",
+          "pdf_field": "form1[0].#subform[2].P2_Line5c_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p2_line8_checkbox",
+      "question": "What is your residence and Travel Information?",
+      "label": "Have you left the United States",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p2_line8_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Tra",
+          "pdf_field": "form1[0].#subform[2].P2_Line8_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Tra",
+          "pdf_field": "form1[0].#subform[2].P2_Line8_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p3_line1_checkbox",
+      "question": "What is your I initially arrived and established residence in the U.S. prior to 16 years of age?",
+      "label": "Prior to 16 years of age",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p3_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 3. For Initial Requests Only. 1. I initially arrived and established reside",
+          "pdf_field": "form1[0].#subform[3].P3_Line1_checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 3. For Initial Requests Only. 1. I initially arrived and established reside",
+          "pdf_field": "form1[0].#subform[3].P3_Line1_checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p3_line5a_i94",
+      "question": "What is your were you EVER issued an Arrival-Departure Record? Select Yes?",
+      "label": "Were you EVER issued an Arrival-Departure",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.p3_line5a_i94",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 3. For Initial Requests Only. 5. A. Were you EVER issued an Arrival-Departu",
+          "pdf_field": "form1[0].#subform[3].P3_Line5a_I94[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 3. For Initial Requests Only. 5. A. Were you EVER issued an Arrival-Departu",
+          "pdf_field": "form1[0].#subform[3].P3_Line5a_I94[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p3_line9_military",
+      "question": "What is your were you a member of the U.S. Armed Forces or U.S. Coast Guard? Select Yes?",
+      "label": "Coast Guard? Select Yes",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p3_line9_military",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 3. For Initial Requests Only. Military Service Information. 9. Were you a m",
+          "pdf_field": "form1[0].#subform[3].P3_Line9_Military[0]",
+          "pdf_value": "/Y"
+        },
+        {
+          "value": "n",
+          "label": "Part 3. For Initial Requests Only. Military Service Information. 9. Were you a m",
+          "pdf_field": "form1[0].#subform[3].P3_Line9_Military[1]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "p4_line1_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "If you answered \u201cYes,\u201d you must",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line1_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line1_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line1_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line2_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "If you answered \"Yes,\" you must",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line2_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line2_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line2_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line3_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER engaged in, do",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_line3_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line3_Checkbox[0]",
+          "pdf_value": "/No"
+        },
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line3_Checkbox[1]",
+          "pdf_value": "/Yes"
+        }
+      ]
+    },
+    {
+      "id": "p4_line4_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Are you NOW or have you 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_line4_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line4_Checkbox[0]",
+          "pdf_value": "/No"
+        },
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line4_Checkbox[1]",
+          "pdf_value": "/Yes"
+        }
+      ]
+    },
+    {
+      "id": "p4_line5a_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER engaged in, ordered, 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line5a_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5a_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5a_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line5b_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER engaged in, ordered, 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line5b_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5b_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5b_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line5c_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER engaged in, ordered, 3",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line5c_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5c_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5c_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line5d_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER engaged in, ordered, 4",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line5d_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5d_Checkbox[0]",
+          "pdf_value": "/Yes"
+        },
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line5d_Checkbox[1]",
+          "pdf_value": "/No"
+        }
+      ]
+    },
+    {
+      "id": "p4_line6_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER recruited, enlisted, conscripted,",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p4_line6_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line6_Checkbox[0]",
+          "pdf_value": "/No"
+        },
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line6_Checkbox[1]",
+          "pdf_value": "/Yes"
+        }
+      ]
+    },
+    {
+      "id": "p4_line7_checkbox",
+      "question": "What is your criminal, National Security, and Public Safety Information?",
+      "label": "Have you EVER used any person",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.p4_line7_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "no",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line7_Checkbox[0]",
+          "pdf_value": "/No"
+        },
+        {
+          "value": "yes",
+          "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial ",
+          "pdf_field": "form1[0].#subform[3].P4_Line7_Checkbox[1]",
+          "pdf_value": "/Yes"
+        }
+      ]
+    },
+    {
+      "id": "p5_line1a_1b_checkbox",
+      "question": "What is your statement, Certification, Signature, and Contact Information of the Requestor?",
+      "label": "I understand each and every question",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p5_line1a_1b_checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requ",
+          "pdf_field": "form1[0].#subform[4].P5_Line1a_1b_Checkbox[0]",
+          "pdf_value": "/B"
+        },
+        {
+          "value": "a",
+          "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requ",
+          "pdf_field": "form1[0].#subform[4].P5_Line1a_1b_Checkbox[1]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "p6_line3b_unit",
+      "question": "What is your contact Information, Certification, and Signature of the Interpreter?",
+      "label": "Interpreter's Mailing Address Select Suite",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p6_line3b_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "ste",
+          "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (Fo",
+          "pdf_field": "form1[0].#subform[4].P6_Line3b_Unit[0]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (Fo",
+          "pdf_field": "form1[0].#subform[4].P6_Line3b_Unit[1]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "apt",
+          "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (Fo",
+          "pdf_field": "form1[0].#subform[4].P6_Line3b_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    },
+    {
+      "id": "p7_line3b_unit",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Request, If?",
+      "label": "Preparer's Mailing Address Select Suite",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.p7_line3b_unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "ste",
+          "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[5].P7_Line3b_Unit[0]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[5].P7_Line3b_Unit[1]",
+          "pdf_value": "/ FLR "
+        },
+        {
+          "value": "apt",
+          "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[5].P7_Line3b_Unit[2]",
+          "pdf_value": "/ APT "
+        }
+      ]
+    }
+  ]
+}

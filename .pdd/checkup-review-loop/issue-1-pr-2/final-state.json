@@ -1,0 +1,112 @@
+{
+  "reviewer_status": {
+    "claude": "failed"
+  },
+  "active_reviewer": "claude",
+  "reviewer_status_details": {
+    "claude": {
+      "status": "failed",
+      "classification": "unknown",
+      "exit_code": "no exit code",
+      "reason": "Filesystem policy violation: changed files must stay inside caller-declared writable roots and outside declared read-only roots.\nChanged files outside writable roots: /Users/bhargav/Desktop/zuzu/.git/worktrees/checkup-pr-2\nsymlink targets outside audited roots: .venv/bin/python -> /Users/bhargav/.local/share/uv/python/cpython-3.12.8-macos-aarch64-none/bin/python3.12, .venv/bin/python3 -> /Users/bhargav/.local/share/uv/python/cpython-3.12.8-macos-aarch64-none/bin/python3.12, .venv/bin/python3.12 -> /Users/bhargav/.local/share/uv/python/cpython-3.12.8-macos-aarch64-none/bin/python3.12\nChanged files: /Users/bhargav/Desktop/zuzu/.git/worktrees/checkup-pr-2, .venv/bin/python, .venv/bin/python3, .venv/bin/python3.12"
+    }
+  },
+  "fresh_final_status": "missing",
+  "issue_aligned": "unknown",
+  "stop_reason": "Primary reviewer claude could not verify fixes: failed.",
+  "total_cost": 3.004009,
+  "last_model": "claude-haiku-4-5-20251001+claude-opus-4-8[1m]",
+  "max_rounds_reached": false,
+  "rounds_completed": 1,
+  "max_rounds": 1,
+  "max_cost_reached": false,
+  "max_duration_reached": false,
+  "terra_sol_mode": false,
+  "sol_review_status": null,
+  "sol_model": null,
+  "terra_model": null,
+  "terra_fixer": null,
+  "fix_attempts_by_key": {
+    "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": 1
+  },
+  "dispute_notes_by_key": {
+    "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": "fixer=claude fixer_disposition=fixed fixer_rationale=\"Primary cause was pypdf not installed in the ad-hoc test env; pypdf is properly declared in pyproject.toml and locked, so uv sync installs it (as CI does). Additionally fixed a latent non-hermetic test bug: _isolate now unsets MEM0_API_KEY and resets the memory singleton so contract tests no longer depend on the developer's shell hitting the live mem0 API. Targeted command `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` now passes 40/40.\""
+  },
+  "reviewer_feedback_by_key": {},
+  "same_role_review_fix": true,
+  "mode": "single-role-review-fix",
+  "role_independence": "independent",
+  "source_of_truth": null,
+  "verified_head_sha": null,
+  "remote_pr_head_sha": "00abe924b95615c788715ee4713897a4ba4b9a6d",
+  "reviewed_head_sha": "b4d185ed3dad4672eb36a254a8c8eb36350cf0ae",
+  "verification_status_by_round": {
+    "1": "unverified"
+  },
+  "findings": [
+    {
+      "key": "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.",
+      "severity": "critical",
+      "reviewer": "layer1:step5",
+      "area": "test",
+      "evidence": "status: failed\ncommand: python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py\nexit_code: 1\nselected_tests: tests/test_contract.py, tests/test_schema_matches_pdf.py\nartifact_path: .pdd/checkup-pr-2/layer1-step5-evidence.json\noutput:\nEEEEEEEEEEEEEEFFEEEEEEEEEEEEEEE.........                                 [100%]\n==================================== ERRORS ====================================\n_________________ ERROR at setup of test_health_needs_no_auth __________________\n\n    @pytest.fixture\n    def client():\n>       from api.main import app\n\ntests/test_contract.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \napi/main.py:47: in <module>\n    from api.pdf_engine import fill_i765, missing_required\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    \"\"\"Fill the official USCIS I-765 AcroForm.\n    \n    Spec: prompts/pdf_engine_Python.prompt\n    \n    Every non-obvious step below exists because the obvious version fails silently:\n    it reports success and hands the applicant a blank form.\n    \"\"\"\n    \n    from __future__ import annotations\n    \n    import logging\n    import re\n    from pathlib import Path\n    \n>   from pypdf import PdfReader, PdfWriter\nE   ModuleNotFoundError: No module named 'pypdf'\n\napi/pdf_engine.py:15: ModuleNotFoundError\n_________ ERROR at setup of test_full_call_produces_a_downloadable_pdf _________\n\n    @pytest.fixture\n    def client():\n>       from api.main import app\n\ntests/test_contract.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \napi/main.py:47: in <module>\n    from api.pdf_engine import fill_i765, missing_required\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    \"\"\"Fill the official USCIS I-765 AcroForm.\n    \n    Spec: prompts/pdf_engine_Python.prompt\n    \n    Every non-obvious step below exists because the obvious version fails silently:\n    it reports success and hands the applicant a blank form.\n    \"\"\"\n    \n    from __future__ import annotations\n    \n    import logging\n    import re\n    from pathlib import Path\n    \n>   from pypdf import PdfReader, PdfWriter\nE   ModuleNotFoundError: No module named 'pypdf'\n\napi/pdf_engine.py:15: ModuleNotFoundError\n________ ERROR at setup of test_interview_terminates_and_counts_go_down ________\n\n    @pytest.fixture\n    def client():\n>       from api.main import app\n\ntests/test_contract.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \napi/main.py:47: in <module>\n    from api.pdf_engine import fill_i765, missing_required\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    \"\"\"Fill the official USCIS I-765 AcroForm.\n    \n    Spec: prompts/pdf_engine_Python.prompt\n    \n    Every non-obvious step below exists because the obvious version fails silently:\n    it reports success and hands the applicant a blank form.\n    \"\"\"\n    \n    from __future__ import annotations\n    \n    import logging\n    import re\n    from pathlib import Path\n    \n>   from pypdf import PdfReader, PdfWriter\nE   ModuleNotFoundError: No module named 'pypdf'\n\napi/pdf_engine.py:15: ModuleNotFoundError\n___________ ERROR at setup of test_form_id_spelling_variants_resolve ___________\n\n    @pytest.fixture\n    def client():\n>       from api.main import app\n\ntests/test_contract.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \napi/main.py:47: in <module>\n    from api.pdf_engine import fill_i765, missing_required\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    \"\"\"Fill the official USCIS I-765 AcroForm.\n    \n    Spec: prompts/pdf_engine_Python.prompt\n    \n    Every non-obvious step below exists because the obvious version fails silently:\n    it reports success and hands the applicant a blank form.\n    \"\"\"\n    \n    from __future__ import annotations\n    \n    import logging\n    import re\n    from p",
+      "finding": "Layer 1 Step 5 shell-first test execution failed before Layer 2.",
+      "required_fix": "Fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.",
+      "location": "tests/test_contract.py",
+      "status": "open",
+      "round": "0"
+    }
+  ],
+  "findings_original_count": 1,
+  "findings_omitted_count": 0,
+  "findings_valid_original_count": 1,
+  "finding_original_counts_by_reviewer": {
+    "layer1:step5": 1,
+    "claude": 0
+  },
+  "finding_valid_original_counts_by_reviewer": {
+    "layer1:step5": 1,
+    "claude": 0
+  },
+  "finding_omitted_counts_by_reviewer": {
+    "claude": 0
+  },
+  "blocking_original_counts_by_reviewer": {
+    "layer1:step5": 1,
+    "claude": 0
+  },
+  "blocking_omitted_counts_by_reviewer": {
+    "claude": 0
+  },
+  "fixes_original_count": 1,
+  "fixes_omitted_count": 0,
+  "fixes": [
+    {
+      "fixer": "claude",
+      "success": true,
+      "summary": "Ran uv sync to install the declared pypdf dependency (was missing from the reviewer's ad-hoc python env), which cleared all ModuleNotFoundError errors. Then fixed a real test-isolation defect: the _isolate fixture in tests/test_contract.py did not neutralize the memory layer, so an ambient MEM0_API_KEY caused session_init to hit the live mem0 API and prefill fields, breaking the fresh-session contract tests. Made the fixture hermetic by delenv-ing MEM0_API_KEY and calling memory.reset_memory() around each test. Full suite now passes (40 passed) even with MEM0_API_KEY exported.",
+      "changed_files": [
+        "tests/test_contract.py",
+        ".pdd/agentic-logs/session_20260725_162130.jsonl"
+      ],
+      "dispositions": {
+        "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": "fixed"
+      },
+      "rationales": {
+        "|critical|tests/test_contract.py|layer 1 step 5 shell-first test execution failed before layer 2.|fix the code or tests causing this command to fail, then rerun `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` or an equivalent targeted check.": "Primary cause was pypdf not installed in the ad-hoc test env; pypdf is properly declared in pyproject.toml and locked, so uv sync installs it (as CI does). Additionally fixed a latent non-hermetic test bug: _isolate now unsets MEM0_API_KEY and resets the memory singleton so contract tests no longer depend on the developer's shell hitting the live mem0 API. Targeted command `python -m pytest -q tests/test_contract.py tests/test_schema_matches_pdf.py` now passes 40/40."
+      },
+      "changed_files_original_count": 2,
+      "changed_files_omitted_count": 0,
+      "dispositions_original_count": 1,
+      "dispositions_omitted_count": 0,
+      "rationales_original_count": 1,
+      "rationales_omitted_count": 0,
+      "round_number": 1,
+      "fixer_result": "attempted",
+      "push_status": "pushed",
+      "local_fixer_commit_sha": "00abe924b95615c788715ee4713897a4ba4b9a6d",
+      "pushed_head_sha": "00abe924b95615c788715ee4713897a4ba4b9a6d"
+    }
+  ],
+  "gates": []
+}

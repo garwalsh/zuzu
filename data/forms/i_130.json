@@ -1,0 +1,4717 @@
+{
+  "form_id": "I-130",
+  "title": "Petition for Alien Relative",
+  "agency": "USCIS",
+  "edition": "04/01/24",
+  "pdf": "assets/i_130.pdf",
+  "notes": "Derived deterministically from the PDF's own field inventory and screen-reader tooltips. No field name is ever recalled by a model.",
+  "fields": [
+    {
+      "id": "alien_number",
+      "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Alien Registration Number 1",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.alien_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].#area[4].Pt2Line1_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "u_s_c_i_s_online_act_number",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S Online 1",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_act_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].#area[5].Pt2Line2_USCISOnlineActNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "s_s_n",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "Social Security Number 1",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.s_s_n",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt2Line11_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "family_name",
+      "question": "What is your family Name (Last Name)?",
+      "label": "Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt2Line4a_FamilyName[0]"
+    },
+    {
+      "id": "given_name",
+      "question": "What is your given Name (First Name)?",
+      "label": "Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt2Line4b_GivenName[0]"
+    },
+    {
+      "id": "middle_name",
+      "question": "What is your middle Name?",
+      "label": "Middle Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].Pt2Line4c_MiddleName[0]"
+    },
+    {
+      "id": "u_s_c_i_s_online_acct_number",
+      "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "Attorney or Accredited Representative",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_acct_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].USCISOnlineAcctNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "volag_number",
+      "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "Volag Number",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.volag_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[0].VolagNumber[0]",
+      "max_len": 15
+    },
+    {
+      "id": "apt_ste_flr_number",
+      "question": "What is your apartment, Suite or Floor Number?",
+      "label": "Apartment, Suite or Floor Number 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town",
+      "question": "What is your city or Town?",
+      "label": "City or Town 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country",
+      "question": "What is your country?",
+      "label": "Mailing Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_Country[0]"
+    },
+    {
+      "id": "in_careof_name",
+      "question": "What is your in Care Of Name?",
+      "label": "In Care Of Name",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.in_careof_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_InCareofName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "postal_code",
+      "question": "What is your postal Code?",
+      "label": "Postal Code 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province",
+      "question": "What is your province?",
+      "label": "Mailing Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state",
+      "question": "What is your state from List of States?",
+      "label": "State from List of States 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_State[0]"
+    },
+    {
+      "id": "street_number_name",
+      "question": "What is your street Number and Name?",
+      "label": "Street Number and Name 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code",
+      "question": "What is your zip Code?",
+      "label": "Zip Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line10_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "apt_ste_flr_number_2",
+      "question": "What is your physical Address Enter Apartment, Suite or Floor Number?",
+      "label": "Physical Address Enter Apartment, Suite or 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_2",
+      "question": "What is your physical Address Enter City or Town?",
+      "label": "Physical Address Enter City or Town 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_2",
+      "question": "What is your physical Address Enter Country?",
+      "label": "Physical Address Enter Country 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_Country[0]"
+    },
+    {
+      "id": "postal_code_2",
+      "question": "What is your physical Address Enter Postal Code?",
+      "label": "Physical Address Enter Postal Code 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_2",
+      "question": "What is your physical Address Enter Province?",
+      "label": "Physical Address Enter Province 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_2",
+      "question": "What is your physical Address Select State from List of States?",
+      "label": "Physical Address Select State from List 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_State[0]"
+    },
+    {
+      "id": "street_number_name_2",
+      "question": "What is your physical addresses for the last five years, whether inside or outside the United States?",
+      "label": "Your current address first if it",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.street_number_name_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_2",
+      "question": "What is your physical Address Enter Zip Code?",
+      "label": "Physical Address Enter Zip Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line12_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "date_from",
+      "question": "What is your physical Address Enter Date From?",
+      "label": "As 2 digit month, 2 digit 1",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.date_from",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line13a_DateFrom[0]"
+    },
+    {
+      "id": "apt_ste_flr_number_3",
+      "question": "What is your physical Address Enter Apartment, Suite or Floor Number?",
+      "label": "Physical Address Enter Apartment, Suite or 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_3",
+      "question": "What is your physical Address Enter City or Town?",
+      "label": "Physical Address Enter City or Town 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_3",
+      "question": "What is your physical Address Enter Country?",
+      "label": "Physical Address Enter Country 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_Country[0]"
+    },
+    {
+      "id": "postal_code_3",
+      "question": "What is your physical Address Enter Postal Code?",
+      "label": "Physical Address Enter Postal Code 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_3",
+      "question": "What is your physical Address Enter Province?",
+      "label": "Physical Address Enter Province 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_3",
+      "question": "What is your physical Address Select State from List of States?",
+      "label": "Physical Address Select State from List 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_State[0]"
+    },
+    {
+      "id": "street_number_name_3",
+      "question": "What is your physical Address Enter Street Number and Name?",
+      "label": "Physical Address Enter Street Number and",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_3",
+      "question": "What is your physical Address Enter Zip Code?",
+      "label": "Physical Address Enter Zip Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line14_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "date_from_2",
+      "question": "What is your physical Address Enter Date From?",
+      "label": "As 2 digit month, 2 digit 2",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.date_from_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line15a_DateFrom[0]"
+    },
+    {
+      "id": "date_to",
+      "question": "What is your physical Address Enter Date To?",
+      "label": "As 2 digit month, 2 digit 3",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.date_to",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line15b_DateTo[0]"
+    },
+    {
+      "id": "numberof_marriages",
+      "question": "What is your how many times have you been married? Enter Number of Times Married?",
+      "label": "How many times have you been",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.numberof_marriages",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line16_NumberofMarriages[0]",
+      "max_len": 5
+    },
+    {
+      "id": "family_name_2",
+      "question": "What is your other Names Used?",
+      "label": "Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line5a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_2",
+      "question": "What is your other Names Used?",
+      "label": "Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line5b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_2",
+      "question": "What is your other Names Used?",
+      "label": "Middle Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line5c_MiddleName[0]"
+    },
+    {
+      "id": "city_town_of_birth",
+      "question": "What is your city / Town / Village of Birth?",
+      "label": "City / Town / Village of 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line6_CityTownOfBirth[0]"
+    },
+    {
+      "id": "countryof_birth",
+      "question": "What is your country of Birth?",
+      "label": "Country of Birth 1",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.countryof_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line7_CountryofBirth[0]"
+    },
+    {
+      "id": "dateof_birth",
+      "question": "What is your date of Birth?",
+      "label": "As 2 digit month, 2 digit 4",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.dateof_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[1].Pt2Line8_DateofBirth[0]"
+    },
+    {
+      "id": "date_of_marriage",
+      "question": "What is your date of Current Marriage?",
+      "label": "As 2 digit month, 2 digit 5",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_of_marriage",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line18_DateOfMarriage[0]"
+    },
+    {
+      "id": "city_town",
+      "question": "What is your place of Your Current Marriage, if married?",
+      "label": "City or Town 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line19a_CityTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_4",
+      "question": "What is your place of Your Current Marriage, if married?",
+      "label": "State from List of States 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line19b_State[0]"
+    },
+    {
+      "id": "province_4",
+      "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage, if 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line19c_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_4",
+      "question": "What is your place of Your Current Marriage, if married?",
+      "label": "Place of Your Current Marriage, if 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line19d_Country[0]"
+    },
+    {
+      "id": "given_name_3",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line20b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_3",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Middle Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line20c_MiddleName[0]"
+    },
+    {
+      "id": "date_marriage_ended",
+      "question": "What is your names of All Your Spouses?",
+      "label": "As 2 digit month, 2 digit 6",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_marriage_ended",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line21_DateMarriageEnded[0]"
+    },
+    {
+      "id": "family_name_3",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line22a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_4",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line22b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_4",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Middle Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line22c_MiddleName[0]"
+    },
+    {
+      "id": "date_marriage_ended_2",
+      "question": "What is your names of All Your Spouses?",
+      "label": "As 2 digit month, 2 digit 7",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_marriage_ended_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line23_DateMarriageEnded[0]"
+    },
+    {
+      "id": "family_name_4",
+      "question": "What is your parent One's Information?",
+      "label": "Family Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line24_FamilyName[0]"
+    },
+    {
+      "id": "given_name_5",
+      "question": "What is your parent One's Information?",
+      "label": "Given Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line24_GivenName[0]"
+    },
+    {
+      "id": "middle_name_5",
+      "question": "What is your parent One's Information?",
+      "label": "Middle Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line24_MiddleName[0]"
+    },
+    {
+      "id": "dateof_birth_2",
+      "question": "What is your parent One's Information?",
+      "label": "As 2 digit month, 2 digit 8",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.dateof_birth_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line25_DateofBirth[0]"
+    },
+    {
+      "id": "countryof_birth_2",
+      "question": "What is your parent One's Information?",
+      "label": "Country of Birth 2",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.countryof_birth_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line27_CountryofBirth[0]"
+    },
+    {
+      "id": "city_town_or_village_of_residence",
+      "question": "What is your parent One's Information?",
+      "label": "City / Town / Village of 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town_or_village_of_residence",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line28_CityTownOrVillageOfResidence[0]"
+    },
+    {
+      "id": "country_of_residence",
+      "question": "What is your parent One's Information?",
+      "label": "Country of Residence 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_of_residence",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line29_CountryOfResidence[0]"
+    },
+    {
+      "id": "family_name_5",
+      "question": "What is your parent Two's Information?",
+      "label": "Family Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line30a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_6",
+      "question": "What is your parent Two's Information?",
+      "label": "Given Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line30b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_6",
+      "question": "What is your parent Two's Information?",
+      "label": "Middle Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line30c_MiddleName[0]"
+    },
+    {
+      "id": "dateof_birth_3",
+      "question": "What is your parent Two's Information?",
+      "label": "As 2 digit month, 2 digit 9",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.dateof_birth_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line31_DateofBirth[0]"
+    },
+    {
+      "id": "countryof_birth_3",
+      "question": "What is your parent Two's Information?",
+      "label": "Country of Birth 3",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.countryof_birth_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line33_CountryofBirth[0]"
+    },
+    {
+      "id": "city_town_or_village_of_residence_2",
+      "question": "What is your parent Two's Information?",
+      "label": "City / Town / Village of 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town_or_village_of_residence_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line34_CityTownOrVillageOfResidence[0]"
+    },
+    {
+      "id": "country_of_residence_2",
+      "question": "What is your parent Two's Information?",
+      "label": "Country of Residence 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_of_residence_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].Pt2Line35_CountryOfResidence[0]"
+    },
+    {
+      "id": "pt_line20a_family_name",
+      "question": "What is your names of All Your Spouses?",
+      "label": "Spouse Enter Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.pt_line20a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[2].PtLine20a_FamilyName[0]"
+    },
+    {
+      "id": "employer_or_comp_name",
+      "question": "What is your employment history for the last five years, whether inside or outside the United States?",
+      "label": "If you are currently unemployed, type",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.employer_or_comp_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line40_EmployerOrCompName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "class_of_admission",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "If you are a lawful permanent",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.class_of_admission",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line40a_ClassOfAdmission[0]"
+    },
+    {
+      "id": "date_of_admission",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "As 2 digit month, 2 digit 10",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.date_of_admission",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line40b_DateOfAdmission[0]"
+    },
+    {
+      "id": "city_or_town_4",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "City or Town 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line40d_CityOrTown[0]"
+    },
+    {
+      "id": "state_5",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "State from List of States 3",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line40e_State[0]"
+    },
+    {
+      "id": "apt_ste_flr_number_4",
+      "question": "What is your employer Enter Apartment, Suite or Floor Number?",
+      "label": "Employer Enter Apartment, Suite or Floor 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_5",
+      "question": "What is your employer Enter City or Town?",
+      "label": "Employer Enter City or Town 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_5",
+      "question": "What is your employer Enter Country?",
+      "label": "Employer Enter Country 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_Country[0]",
+      "max_len": 29
+    },
+    {
+      "id": "postal_code_4",
+      "question": "What is your employer Enter Postal Code?",
+      "label": "Employer Enter Postal Code 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_5",
+      "question": "What is your employer Enter Province?",
+      "label": "Employer Enter Province 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_6",
+      "question": "What is your employer Select State from List of States?",
+      "label": "Employer Select State from List of 1",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_State[0]"
+    },
+    {
+      "id": "street_number_name_4",
+      "question": "What is your employer Enter Street Number and Name?",
+      "label": "Employer Enter Street Number and Name 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_4",
+      "question": "What is your employer Enter Zip Code?",
+      "label": "Employer Enter Zip Code 1",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line41_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "occupation",
+      "question": "What is your employer Enter Your Occupation?",
+      "label": "Employer Enter Your Occupation 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.occupation",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line42_Occupation[0]"
+    },
+    {
+      "id": "date_from_3",
+      "question": "What is your employer Enter Date From?",
+      "label": "As 2 digit month, 2 digit 11",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_from_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line43a_DateFrom[0]"
+    },
+    {
+      "id": "employer_or_org_name",
+      "question": "What is your employer Enter Name of Employer / Company?",
+      "label": "Employer Enter Name of Employer",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.employer_or_org_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line44_EmployerOrOrgName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "apt_ste_flr_number_5",
+      "question": "What is your employer Enter Apartment, Suite or Floor Number?",
+      "label": "Employer Enter Apartment, Suite or Floor 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_6",
+      "question": "What is your employer Enter City or Town?",
+      "label": "Employer Enter City or Town 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_6",
+      "question": "What is your employer Enter Country?",
+      "label": "Employer Enter Country 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_Country[0]"
+    },
+    {
+      "id": "postal_code_5",
+      "question": "What is your employer Enter Postal Code?",
+      "label": "Employer Enter Postal Code 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_6",
+      "question": "What is your employer Enter Province?",
+      "label": "Employer Enter Province 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_7",
+      "question": "What is your employer Select State from List of States?",
+      "label": "Employer Select State from List of 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_State[0]"
+    },
+    {
+      "id": "street_number_name_5",
+      "question": "What is your employer Enter Street Number and Name?",
+      "label": "Employer Enter Street Number and Name 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_5",
+      "question": "What is your employer Enter Zip Code?",
+      "label": "Employer Enter Zip Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line45_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "occupation_2",
+      "question": "What is your employer Enter Your Occupation?",
+      "label": "Employer Enter Your Occupation 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.occupation_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line46_Occupation[0]"
+    },
+    {
+      "id": "date_from_4",
+      "question": "What is your employer Enter Date From?",
+      "label": "As 2 digit month, 2 digit 12",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_from_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line47a_DateFrom[0]"
+    },
+    {
+      "id": "date_to_2",
+      "question": "What is your employer Enter Date To?",
+      "label": "As 2 digit month, 2 digit 13",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_to_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt2Line47b_DateTo[0]"
+    },
+    {
+      "id": "height_feet",
+      "question": "What is your feet?",
+      "label": "Height Enter Feet",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.height_feet",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt3Line3_HeightFeet[0]"
+    },
+    {
+      "id": "height_inches",
+      "question": "What is your inches?",
+      "label": "Height Enter Inches",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.height_inches",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt3Line3_HeightInches[0]"
+    },
+    {
+      "id": "pound1",
+      "question": "What is your pounds?",
+      "label": "First Digit of Three Digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.pound1",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt3Line4_Pound1[0]",
+      "max_len": 1
+    },
+    {
+      "id": "pound2",
+      "question": "What is your pounds?",
+      "label": "Second Digit of Three Digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.pound2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt3Line4_Pound2[0]",
+      "max_len": 1
+    },
+    {
+      "id": "pound3",
+      "question": "What is your pounds?",
+      "label": "Third Digit of Three Digits",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.pound3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[3].Pt3Line4_Pound3[0]",
+      "max_len": 1
+    },
+    {
+      "id": "alien_number_2",
+      "question": "What is your alien Registration Number (A. Number)?",
+      "label": "Alien Registration Number 2",
+      "type": "a_number",
+      "group": "identifiers",
+      "memory_key": "identifiers.alien_number_2",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].#area[6].Pt4Line1_AlienNumber[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "u_s_c_i_s_online_act_number_2",
+      "question": "What is your U S C I S Online Account Number?",
+      "label": "U S C I S Online 2",
+      "type": "text",
+      "group": "identifiers",
+      "memory_key": "identifiers.u_s_c_i_s_online_act_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].#area[7].Pt4Line2_USCISOnlineActNumber[0]",
+      "max_len": 12
+    },
+    {
+      "id": "p4_line5a_family_name",
+      "question": "What is your other Names Used?",
+      "label": "Family Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.p4_line5a_family_name",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].P4Line5a_FamilyName[0]"
+    },
+    {
+      "id": "apt_ste_flr_number_6",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Apartment, Suite or Floor Number 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_7",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "City or Town 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_7",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_Country[0]",
+      "max_len": 29
+    },
+    {
+      "id": "postal_code_6",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Postal Code 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_7",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_8",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "State from List of States 4",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_State[0]"
+    },
+    {
+      "id": "street_number_name_6",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Street Number and Name 2",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.street_number_name_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_6",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Zip Code 2",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line11_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "street_number_name_7",
+      "question": "What is your other Address and Contact Information?",
+      "label": "The address in the United States",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.street_number_name_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line12a_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "apt_ste_flr_number_7",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Apartment, Suite or Floor Number 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line12b_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "City or Town 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line12c_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_9",
+      "question": "What is your other Address and Contact Information?",
+      "label": "State from List of States 5",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line12d_State[0]"
+    },
+    {
+      "id": "zip_code_7",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Zip Code 3",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line12e_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "apt_ste_flr_number_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Apartment, Suite or Floor Number 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_9",
+      "question": "What is your other Address and Contact Information?",
+      "label": "City or Town 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information Enter 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_Country[0]"
+    },
+    {
+      "id": "postal_code_7",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Postal Code 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information Enter 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "street_number_name_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "The beneficiary's address outside the United",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.street_number_name_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line13_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "daytime_phone_number",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.daytime_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line14_DaytimePhoneNumber[0]",
+      "max_len": 15
+    },
+    {
+      "id": "s_s_n_2",
+      "question": "What is your U.S. Social Security Number?",
+      "label": "Social Security Number 2",
+      "type": "ssn",
+      "group": "identifiers",
+      "memory_key": "identifiers.s_s_n_2",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line3_SSN[0]",
+      "max_len": 9,
+      "read_back": true
+    },
+    {
+      "id": "family_name_6",
+      "question": "What is your beneficiary's Full Name?",
+      "label": "Family Name 6",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line4a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_7",
+      "question": "What is your beneficiary's Full Name?",
+      "label": "Given Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line4b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_7",
+      "question": "What is your beneficiary's Full Name?",
+      "label": "Middle Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line4c_MiddleName[0]"
+    },
+    {
+      "id": "given_name_8",
+      "question": "What is your other Names Used?",
+      "label": "Given Name 6",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line5b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_8",
+      "question": "What is your other Names Used?",
+      "label": "Middle Name 6",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line5c_MiddleName[0]"
+    },
+    {
+      "id": "city_town_of_birth_2",
+      "question": "What is your city / Town / Village of Birth?",
+      "label": "City / Town / Village of 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town_of_birth_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line7_CityTownOfBirth[0]",
+      "max_len": 38
+    },
+    {
+      "id": "country_of_birth",
+      "question": "What is your country of Birth?",
+      "label": "Country of Birth 4",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line8_CountryOfBirth[0]"
+    },
+    {
+      "id": "date_of_birth",
+      "question": "What is your date of Birth?",
+      "label": "As 2 digit month, 2 digit 14",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[4].Pt4Line9_DateOfBirth[0]"
+    },
+    {
+      "id": "mobile_phone_number",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Mobile Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.mobile_phone_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line15_MobilePhoneNumber[0]",
+      "max_len": 15
+    },
+    {
+      "id": "email_address",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.email_address",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line16_EmailAddress[0]"
+    },
+    {
+      "id": "family_name_7",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Family Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line16a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_9",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Given Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line16b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_9",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Middle Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line16c_MiddleName[0]"
+    },
+    {
+      "id": "date_marriage_ended_3",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "As 2 digit month, 2 digit 15",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_marriage_ended_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line17_DateMarriageEnded[0]"
+    },
+    {
+      "id": "date_marriage_ended_4",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "As 2 digit month, 2 digit 16",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_marriage_ended_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line17_DateMarriageEnded[1]"
+    },
+    {
+      "id": "numberof_marriages_2",
+      "question": "What is your beneficiary's Marital Information?",
+      "label": "How many times has the beneficiary",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.numberof_marriages_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line17_NumberofMarriages[0]",
+      "max_len": 5
+    },
+    {
+      "id": "family_name_8",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Family Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line18a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_10",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Given Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line18b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_10",
+      "question": "What is your names of Beneficiary's Spouses?",
+      "label": "Spouse Enter Middle Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line18c_MiddleName[0]"
+    },
+    {
+      "id": "date_of_marriage_2",
+      "question": "What is your beneficiary's Marital Information?",
+      "label": "As 2 digit month, 2 digit 17",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_of_marriage_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line19_DateOfMarriage[0]"
+    },
+    {
+      "id": "city_town_2",
+      "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "City or Town 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_town_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line20a_CityTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_10",
+      "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "State from List of States 6",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line20b_State[0]"
+    },
+    {
+      "id": "province_9",
+      "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage, if 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line20c_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_9",
+      "question": "What is your place of Beneficiary's Current Marriage, if married?",
+      "label": "Place of Beneficiary's Current Marriage, if 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line20d_Country[0]"
+    },
+    {
+      "id": "family_name_9",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line30a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_11",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line30b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_11",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Middle Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line30c_MiddleName[0]"
+    },
+    {
+      "id": "relationship",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Relationship 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line31_Relationship[0]"
+    },
+    {
+      "id": "date_of_birth_2",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "As 2 digit month, 2 digit 18",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line32_DateOfBirth[0]"
+    },
+    {
+      "id": "family_name_10",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line34a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_12",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line34b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_12",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Middle Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line34c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_2",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Relationship 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line35_Relationship[0]"
+    },
+    {
+      "id": "date_of_birth_3",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "As 2 digit month, 2 digit 19",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line36_DateOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth_2",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Country of Birth 1",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line37_CountryOfBirth[0]"
+    },
+    {
+      "id": "family_name_11",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Family Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line38a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_13",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Given Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line38b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_13",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Middle Name 3",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line38c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_3",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Relationship 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line39_Relationship[0]",
+      "max_len": 29
+    },
+    {
+      "id": "date_of_birth_4",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "As 2 digit month, 2 digit 20",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line40_DateOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth_3",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Country of Birth 2",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line41_CountryOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth_4",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Country of Birth 3",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[5].Pt4Line49_CountryOfBirth[0]"
+    },
+    {
+      "id": "arrival_departure",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "94 Arrival-Departure Record Number",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.arrival_departure",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].#area[8].Pt4Line21b_ArrivalDeparture[0]",
+      "max_len": 11
+    },
+    {
+      "id": "class_of_admission_2",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Class of Admission",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.class_of_admission_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line21a_ClassOfAdmission[0]"
+    },
+    {
+      "id": "date_of_arrival",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "As 2 digit month, 2 digit 21",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.date_of_arrival",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line21c_DateOfArrival[0]"
+    },
+    {
+      "id": "date_expired",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "As 2 digit month, 2 digit 22",
+      "type": "date",
+      "group": "address",
+      "memory_key": "address.date_expired",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line21d_DateExpired[0]"
+    },
+    {
+      "id": "passport_number",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Passport Number",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.passport_number",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line22_PassportNumber[0]",
+      "max_len": 30,
+      "read_back": true
+    },
+    {
+      "id": "travel_doc_number",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Travel Document Number",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.travel_doc_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line23_TravelDocNumber[0]"
+    },
+    {
+      "id": "country_of_issuance",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Country of Issuance for Passport or",
+      "type": "text",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.country_of_issuance",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line24_CountryOfIssuance[0]"
+    },
+    {
+      "id": "exp_date",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "As 2 digit month, 2 digit 23",
+      "type": "date",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.exp_date",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line25_ExpDate[0]"
+    },
+    {
+      "id": "apt_ste_flr_number_9",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Apartment, Suite or Floor Number 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_10",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "City or Town 8",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_10",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information Enter Country",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_Country[0]"
+    },
+    {
+      "id": "name_of_company",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "If the beneficiary is currently unemployed,",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.name_of_company",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_NameOfCompany[0]",
+      "max_len": 38
+    },
+    {
+      "id": "postal_code_8",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Postal Code 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_10",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_11",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "State from List of States 7",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_State[0]"
+    },
+    {
+      "id": "street_number_name_9",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Street Number and Name 3",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_8",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Zip Code 4",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_8",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line26_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "date_employment_began",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "As 2 digit month, 2 digit 24",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_employment_began",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line27_DateEmploymentBegan[0]"
+    },
+    {
+      "id": "family_name_12",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Family Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line42a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_14",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Given Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line42b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_14",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Middle Name 4",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line42c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_4",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Relationship 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line43_Relationship[0]",
+      "max_len": 29
+    },
+    {
+      "id": "date_of_birth_5",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "As 2 digit month, 2 digit 25",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line44_DateOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth_5",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Country of Birth 4",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line45_CountryOfBirth[0]"
+    },
+    {
+      "id": "family_name_13",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Family Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line46a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_15",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Given Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line46b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_15",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Middle Name 5",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line46c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_5",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Relationship 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line47_Relationship[0]",
+      "max_len": 29
+    },
+    {
+      "id": "date_of_birth_6",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "As 2 digit month, 2 digit 26",
+      "type": "date",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.date_of_birth_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line48_DateOfBirth[0]"
+    },
+    {
+      "id": "country_of_birth_6",
+      "question": "What is your information About Beneficiary's Family?",
+      "label": "Person Enter Country of Birth 5",
+      "type": "text",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.country_of_birth_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[6].Pt4Line49_CountryOfBirth[1]"
+    },
+    {
+      "id": "family_name_14",
+      "question": "What is your if the beneficiary's native written language does not use Roman letters, type or print his?",
+      "label": "Family Name 7",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line55a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_16",
+      "question": "What is your given Name (First Name)?",
+      "label": "Given Name 7",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_16",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line55b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_16",
+      "question": "What is your middle Name?",
+      "label": "Middle Name 7",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_16",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line55c_MiddleName[0]"
+    },
+    {
+      "id": "apt_ste_flr_number_10",
+      "question": "What is your apartment, Suite or Floor Number?",
+      "label": "Apartment, Suite or Floor Number 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_11",
+      "question": "What is your city or Town?",
+      "label": "City or Town 9",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_11",
+      "question": "What is your country?",
+      "label": "Additional Information About Beneficiary Enter Country 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_Country[0]"
+    },
+    {
+      "id": "postal_code_9",
+      "question": "What is your postal Code?",
+      "label": "Postal Code 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_11",
+      "question": "What is your province?",
+      "label": "Additional Information About Beneficiary Enter Province 1",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "street_number_name_10",
+      "question": "What is your street Number and Name?",
+      "label": "Street Number and Name 4",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line56_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "apt_ste_flr_number_11",
+      "question": "What is your apartment, Suite or Floor?",
+      "label": "Apartment, Suite or Floor",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_12",
+      "question": "What is your city or Town?",
+      "label": "City or Town 10",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_12",
+      "question": "What is your country?",
+      "label": "Additional Information About Beneficiary Enter Country 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.country_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_Country[0]"
+    },
+    {
+      "id": "postal_code_10",
+      "question": "What is your postal Code?",
+      "label": "Postal Code 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_12",
+      "question": "What is your province?",
+      "label": "Additional Information About Beneficiary Enter Province 2",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_12",
+      "question": "What is your state from List of States?",
+      "label": "State from List of States 8",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_State[0]"
+    },
+    {
+      "id": "street_number_name_11",
+      "question": "What is your if filing for your spouse, provide the last address at which you physically lived together?",
+      "label": "If you never lived together, type",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_9",
+      "question": "What is your zip Code?",
+      "label": "Zip Code 5",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_9",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line57_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "date_from_5",
+      "question": "What is your date From?",
+      "label": "As 2 digit month, 2 digit 27",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_from_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line58a_DateFrom[0]"
+    },
+    {
+      "id": "date_to_3",
+      "question": "What is your date To?",
+      "label": "As 2 digit month, 2 digit 28",
+      "type": "date",
+      "group": "other",
+      "memory_key": "other.date_to_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line58b_DateTo[0]"
+    },
+    {
+      "id": "city_or_town_13",
+      "question": "What is your the beneficiary is in the United States and will apply for adjustment of status to that of?",
+      "label": "City or Town 11",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.city_or_town_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line60a_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_13",
+      "question": "What is your the beneficiary is in the United States and will apply for adjustment of status to that of?",
+      "label": "State from List of States 9",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line60b_State[0]"
+    },
+    {
+      "id": "city_or_town_14",
+      "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Consulate in: Enter City or Town",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.city_or_town_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line61a_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "province_13",
+      "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Consulate in: Enter Province",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.province_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line61b_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_13",
+      "question": "What is your the beneficiary will not apply for adjustment of status in the United States, but he or she?",
+      "label": "Consulate has discretion over whether or",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.country_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line61c_Country[0]"
+    },
+    {
+      "id": "family_name_15",
+      "question": "What is your if you are also submitting separate petitions for other relatives, provide the names of and?",
+      "label": "Relative Enter Family Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line6a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_17",
+      "question": "What is your relative Enter Given Name (First Name)?",
+      "label": "Relative Enter Given Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_17",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line6b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_17",
+      "question": "What is your relative Enter Middle Name?",
+      "label": "Relative Enter Middle Name 1",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_17",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line6c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_6",
+      "question": "What is your relative Enter Relationship?",
+      "label": "Relative Enter Relationship 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_6",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[7].Pt4Line7_Relationship[0]",
+      "max_len": 29
+    },
+    {
+      "id": "family_name_16",
+      "question": "What is your relative Enter Family Name (Last Name)?",
+      "label": "Relative Enter Family Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.family_name_16",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt4Line8a_FamilyName[0]"
+    },
+    {
+      "id": "given_name_18",
+      "question": "What is your relative Enter Given Name (First Name)?",
+      "label": "Relative Enter Given Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.given_name_18",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt4Line8b_GivenName[0]"
+    },
+    {
+      "id": "middle_name_18",
+      "question": "What is your relative Enter Middle Name?",
+      "label": "Relative Enter Middle Name 2",
+      "type": "text",
+      "group": "name",
+      "memory_key": "name.middle_name_18",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt4Line8c_MiddleName[0]"
+    },
+    {
+      "id": "relationship_7",
+      "question": "What is your relative Enter Relationship?",
+      "label": "Relative Enter Relationship 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.relationship_7",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt4Line9_Relationship[0]",
+      "max_len": 29
+    },
+    {
+      "id": "daytime_phone_number_2",
+      "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Daytime Telephone Number",
+      "type": "phone",
+      "group": "address",
+      "memory_key": "address.daytime_phone_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt6Line3_DaytimePhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "mobile_number",
+      "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Mobile Telephone Number",
+      "type": "phone",
+      "group": "address",
+      "memory_key": "address.mobile_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt6Line4_MobileNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "email",
+      "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "Petitioner's Email Address",
+      "type": "email",
+      "group": "address",
+      "memory_key": "address.email",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[8].Pt6Line5_Email[0]",
+      "max_len": 38
+    },
+    {
+      "id": "daytime_phone_number_3",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Mobile Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.daytime_phone_number_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt4Line53_DaytimePhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "apt_ste_flr_number_12",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Apartment, Suite or Floor Number 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_AptSteFlrNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "city_or_town_15",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "City or Town 12",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_14",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Mailing Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_Country[0]",
+      "max_len": 29
+    },
+    {
+      "id": "postal_code_11",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Postal Code 7",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_14",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Mailing Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_14",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "State from List of States 10",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_14",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_State[0]"
+    },
+    {
+      "id": "street_number_name_12",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Street Number and Name 5",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_10",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Zip Code 6",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_10",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line3_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "email_2",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.email_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7Line5_Email[0]",
+      "max_len": 38
+    },
+    {
+      "id": "pt7_nameof_language",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "The petitioner informed me that he",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.pt7_nameof_language",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt7_NameofLanguage[0]"
+    },
+    {
+      "id": "business_name",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Business or Organization Name",
+      "type": "ssn",
+      "group": "name",
+      "memory_key": "name.business_name",
+      "sensitive": true,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line2_BusinessName[0]",
+      "max_len": 34,
+      "read_back": true
+    },
+    {
+      "id": "apt_ste_flr_number_13",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Apartment, Suite or Floor Number 8",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.apt_ste_flr_number_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_AptSteFlrNumber[0]",
+      "max_len": 5
+    },
+    {
+      "id": "city_or_town_16",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "City or Town 13",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.city_or_town_16",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_CityOrTown[0]",
+      "max_len": 20
+    },
+    {
+      "id": "country_15",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Mailing Address Enter Country",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.country_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_Country[0]"
+    },
+    {
+      "id": "postal_code_12",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Postal Code 8",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.postal_code_12",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_PostalCode[0]",
+      "max_len": 9
+    },
+    {
+      "id": "province_15",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Mailing Address Enter Province",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.province_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_Province[0]",
+      "max_len": 20
+    },
+    {
+      "id": "state_15",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "State from List of States 11",
+      "type": "state",
+      "group": "address",
+      "memory_key": "address.state_15",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_State[0]"
+    },
+    {
+      "id": "street_number_name_13",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Street Number and Name 6",
+      "type": "text",
+      "group": "address",
+      "memory_key": "address.street_number_name_13",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_StreetNumberName[0]",
+      "max_len": 34
+    },
+    {
+      "id": "zip_code_11",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Zip Code 7",
+      "type": "zip",
+      "group": "address",
+      "memory_key": "address.zip_code_11",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[9].Pt8Line3_ZipCode[0]",
+      "max_len": 5
+    },
+    {
+      "id": "daytime_phone_number_4",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Daytime Telephone Number",
+      "type": "phone",
+      "group": "contact",
+      "memory_key": "contact.daytime_phone_number_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].Pt8Line4_DaytimePhoneNumber[0]",
+      "max_len": 10
+    },
+    {
+      "id": "email_3",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Email Address",
+      "type": "email",
+      "group": "contact",
+      "memory_key": "contact.email_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[10].Pt8Line6_Email[0]",
+      "max_len": 38
+    },
+    {
+      "id": "page_number",
+      "question": "What is your page Number?",
+      "label": "Page Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.page_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line3a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part_number",
+      "question": "What is your part Number?",
+      "label": "Part Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line3b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "item_number",
+      "question": "What is your item Number?",
+      "label": "Item Number 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.item_number",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line3c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "additional_info",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 1",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.additional_info",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line3d_AdditionalInfo[0]"
+    },
+    {
+      "id": "page_number_2",
+      "question": "What is your page Number?",
+      "label": "Page Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.page_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line4a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part_number_2",
+      "question": "What is your part Number?",
+      "label": "Part Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line4b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "item_number_2",
+      "question": "What is your item Number?",
+      "label": "Item Number 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.item_number_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line4c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "additional_info_2",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 2",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.additional_info_2",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line4d_AdditionalInfo[0]"
+    },
+    {
+      "id": "page_number_3",
+      "question": "What is your page Number?",
+      "label": "Page Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.page_number_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line5a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part_number_3",
+      "question": "What is your part Number?",
+      "label": "Part Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part_number_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line5b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "item_number_3",
+      "question": "What is your item Number?",
+      "label": "Item Number 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.item_number_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line5c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "additional_info_3",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 3",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.additional_info_3",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line5d_AdditionalInfo[0]"
+    },
+    {
+      "id": "page_number_4",
+      "question": "What is your page Number?",
+      "label": "Page Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.page_number_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line6a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "part_number_4",
+      "question": "What is your part Number?",
+      "label": "Part Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part_number_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line6b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "item_number_4",
+      "question": "What is your item Number?",
+      "label": "Item Number 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.item_number_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line6c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "additional_info_4",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 4",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.additional_info_4",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line6d_AdditionalInfo[0]"
+    },
+    {
+      "id": "part_number_5",
+      "question": "What is your part Number?",
+      "label": "Part Number 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.part_number_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line7b_PartNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "item_number_5",
+      "question": "What is your item Number?",
+      "label": "Item Number 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.item_number_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line7c_ItemNumber[0]",
+      "max_len": 6
+    },
+    {
+      "id": "additional_info_5",
+      "question": "What is your additional Information?",
+      "label": "Additional Information 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.additional_info_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line7d_AdditionalInfo[0]"
+    },
+    {
+      "id": "page_number_5",
+      "question": "What is your page Number?",
+      "label": "Page Number 5",
+      "type": "text",
+      "group": "other",
+      "memory_key": "other.page_number_5",
+      "sensitive": false,
+      "required": false,
+      "pdf_field": "form1[0].#subform[11].Pt9Line9a_PageNumber[0]",
+      "max_len": 2
+    },
+    {
+      "id": "check_box1",
+      "question": "What is your to be completed by an attorney or accredited representative?",
+      "label": "28 is attached",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.check_box1",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "1",
+          "label": "To be completed by an attorney or accredited representative, if any. Select this",
+          "pdf_field": "form1[0].#subform[0].CheckBox1[0]",
+          "pdf_value": "/1"
+        }
+      ]
+    },
+    {
+      "id": "child",
+      "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "I am filing this petition for 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.child",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line1_Child[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "parent",
+      "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "I am filing this petition for 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.parent",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line1_Parent[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "siblings",
+      "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "Brother / Sister",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.siblings",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line1_Siblings[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "spouse",
+      "question": "What is your relative is the Beneficiary). I am filing this petition for my?",
+      "label": "I am filing this petition for 3",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.spouse",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line1_Spouse[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "adopted_child",
+      "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Child was adopted",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.adopted_child",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line2_AdoptedChild[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "in_wedlock",
+      "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Child was born to parents who 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.in_wedlock",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line2_InWedlock[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "out_of_wedlock",
+      "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Child was born to parents who 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.out_of_wedlock",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line2_OutOfWedlock[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "stepchild",
+      "question": "What is your relative is the Beneficiary). If you are filing this petition for your child or?",
+      "label": "Stepchild / Stepparent",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.stepchild",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line2_Stepchild[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "no",
+      "question": "What is your relative is the Beneficiary). If the beneficiary is your brother / sister, are you?",
+      "label": "If the beneficiary is your brother 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line3_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "yes",
+      "question": "What is your relative is the Beneficiary). If the beneficiary is your brother / sister, are you?",
+      "label": "If the beneficiary is your brother 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line3_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "no_2",
+      "question": "What is your relative is the Beneficiary). Did you gain lawful permanent resident status or?",
+      "label": "Did you gain lawful permanent resident 1",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.no_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line4_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "yes_2",
+      "question": "What is your relative is the Beneficiary). Did you gain lawful permanent resident status or?",
+      "label": "Did you gain lawful permanent resident 2",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.yes_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 1. Relationship (You are the Petitioner. Your relative is the Beneficiary).",
+          "pdf_field": "form1[0].#subform[0].Pt1Line4_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit",
+      "question": "What is your apartment?",
+      "label": "Mailing Address Select Apartment",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 10. C. Select Apart",
+          "pdf_field": "form1[0].#subform[1].Pt2Line10_Unit[0]",
+          "pdf_value": "/APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 10. C. Select Suite",
+          "pdf_field": "form1[0].#subform[1].Pt2Line10_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 10. C. Select Floor",
+          "pdf_field": "form1[0].#subform[1].Pt2Line10_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "no_3",
+      "question": "What is your is your current mailing address the same as your physical address? Select No?",
+      "label": "If you answered \"No\" to Item",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.no_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 11. Is your current",
+          "pdf_field": "form1[0].#subform[1].Pt2Line11_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "yes_3",
+      "question": "What is your is your current mailing address the same as your physical address? Select Yes?",
+      "label": "Is your current mailing address the",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.yes_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Mailing Address. 11. Is your current",
+          "pdf_field": "form1[0].#subform[1].Pt2Line11_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit_2",
+      "question": "What is your physical Address Select Apartment?",
+      "label": "Physical Address Select Apartment 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 1.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line12_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 1.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line12_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 1.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line12_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "unit_3",
+      "question": "What is your physical Address Select Apartment?",
+      "label": "Physical Address Select Apartment 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 2.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line14_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 2.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line14_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Petitioner). Address History. Physical Address 2.",
+          "pdf_field": "form1[0].#subform[1].Pt2Line14_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "annulled",
+      "question": "What is your current Marital Status?",
+      "label": "Current Marital Status Select Annulled",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.annulled",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Annulled[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "divorced",
+      "question": "What is your current Marital Status?",
+      "label": "Current Marital Status Select Divorced",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.divorced",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Divorced[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "married",
+      "question": "What is your current Marital Status?",
+      "label": "Current Marital Status Select Married",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.married",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Married[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "separated",
+      "question": "What is your current Marital Status?",
+      "label": "Current Marital Status Select Separated",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.separated",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Separated[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "single",
+      "question": "What is your current Marital Status?",
+      "label": "Single, Never Married",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.single",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Single[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "widowed",
+      "question": "What is your current Marital Status?",
+      "label": "Current Marital Status Select Widowed 1",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.widowed",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Your Marital Information. 17. Curren",
+          "pdf_field": "form1[0].#subform[1].Pt2Line17_Widowed[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "female",
+      "question": "What is your sex?",
+      "label": "Sex Select Female 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.female",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Other Information. 9. Sex. Select Fe",
+          "pdf_field": "form1[0].#subform[1].Pt2Line9_Female[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "male",
+      "question": "What is your sex?",
+      "label": "Sex Select Male 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.male",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Other Information. 9. Sex. Select Ma",
+          "pdf_field": "form1[0].#subform[1].Pt2Line9_Male[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "female_2",
+      "question": "What is your parent One's Information?",
+      "label": "Sex Select Female 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.female_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Information About Your Parents. Pare",
+          "pdf_field": "form1[0].#subform[2].Pt2Line26_Female[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "male_2",
+      "question": "What is your parent One's Information?",
+      "label": "Sex Select Male 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.male_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Information About Your Parents. Pare",
+          "pdf_field": "form1[0].#subform[2].Pt2Line26_Male[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "female_3",
+      "question": "What is your parent Two's Information?",
+      "label": "Sex Select Female 3",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.female_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Information About Your Parents. Pare",
+          "pdf_field": "form1[0].#subform[2].Pt2Line32_Female[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "male_3",
+      "question": "What is your parent Two's Information?",
+      "label": "Sex Select Male 3",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.male_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Information About Your Parents. Pare",
+          "pdf_field": "form1[0].#subform[2].Pt2Line32_Male[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "l_p_r",
+      "question": "What is your additional Information About You (Petitioner). I am a?",
+      "label": "Lawful Permanent Resident",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.l_p_r",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[2].Pt2Line36_LPR[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "no_4",
+      "question": "What is your additional Information About You (Petitioner). Have you obtained a Certificate of?",
+      "label": "Have you obtained a Certificate of 1",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.no_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[2].Pt2Line36_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "u_s_citizen",
+      "question": "What is your additional Information About You (Petitioner). I am a?",
+      "label": "U.S Citizen",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.u_s_citizen",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[2].Pt2Line36_USCitizen[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "yes_4",
+      "question": "What is your additional Information About You (Petitioner). Have you obtained a Certificate of?",
+      "label": "Have you obtained a Certificate of 2",
+      "type": "choice",
+      "group": "birth_citizenship",
+      "memory_key": "birth_citizenship.yes_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[2].Pt2Line36_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "no_5",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Citizen or lawful permanent resident? Select 1",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.no_5",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[3].Pt2Line41_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "unit_4",
+      "question": "What is your employer Select Apartment?",
+      "label": "Employer Select Apartment 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 1. 43. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line41_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 1. 43. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line41_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 1. 43. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line41_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "yes_5",
+      "question": "What is your additional Information About You (Petitioner). If you are a lawful permanent resident,?",
+      "label": "Citizen or lawful permanent resident? Select 2",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.yes_5",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 2. Information About You (Petitioner). Additional Information About You (Pe",
+          "pdf_field": "form1[0].#subform[3].Pt2Line41_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit_5",
+      "question": "What is your employer Select Apartment?",
+      "label": "Employer Select Apartment 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_5",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 2. 47. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line45_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 2. 47. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line45_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 2. Information About You (Petitioner). Employment History. Employer 2. 47. ",
+          "pdf_field": "form1[0].#subform[3].Pt2Line45_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "ethnicity",
+      "question": "What is your ethnicity?",
+      "label": "Not Hispanic or Latino",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.ethnicity",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "nh",
+          "label": "Part 3. Biographic Information. 1. Ethnicity (Select only one box). Select Not H",
+          "pdf_field": "form1[0].#subform[3].Pt3Line1_Ethnicity[0]",
+          "pdf_value": "/NH"
+        },
+        {
+          "value": "h",
+          "label": "Part 3. Biographic Information. NOTE: Provide the biographic information about y",
+          "pdf_field": "form1[0].#subform[3].Pt3Line1_Ethnicity[1]",
+          "pdf_value": "/H"
+        }
+      ]
+    },
+    {
+      "id": "race_american_indian_alaska_native",
+      "question": "What is your race?",
+      "label": "American Indian or Alaska Native",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.race_american_indian_alaska_native",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "aa",
+          "label": "Part 3. Biographic Information. 2. Race (Select all applicable boxes). Select Am",
+          "pdf_field": "form1[0].#subform[3].Pt3Line2_Race_AmericanIndianAlaskaNative[0]",
+          "pdf_value": "/AA"
+        }
+      ]
+    },
+    {
+      "id": "race_asian",
+      "question": "What is your race?",
+      "label": "Race Select Asian",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.race_asian",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 3. Biographic Information. 2. Race (Select all applicable boxes). Select As",
+          "pdf_field": "form1[0].#subform[3].Pt3Line2_Race_Asian[0]",
+          "pdf_value": "/A"
+        }
+      ]
+    },
+    {
+      "id": "race_black",
+      "question": "What is your race?",
+      "label": "Black or African American",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.race_black",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "b",
+          "label": "Part 3. Biographic Information. 2. Race (Select all applicable boxes). Select Bl",
+          "pdf_field": "form1[0].#subform[3].Pt3Line2_Race_Black[0]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "race_native_hawaiian_other_pacific_islander",
+      "question": "What is your race?",
+      "label": "Native Hawaiian or Other Pacific Islander",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.race_native_hawaiian_other_pacific_islander",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 3. Biographic Information. 2. Race (Select all applicable boxes). Select Na",
+          "pdf_field": "form1[0].#subform[3].Pt3Line2_Race_NativeHawaiianOtherPacificIslander[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "race_white",
+      "question": "What is your race?",
+      "label": "Race Select White",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.race_white",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "w",
+          "label": "Part 3. Biographic Information. 2. Race (Select all applicable boxes). Select Wh",
+          "pdf_field": "form1[0].#subform[3].Pt3Line2_Race_White[0]",
+          "pdf_value": "/W"
+        }
+      ]
+    },
+    {
+      "id": "eye_color",
+      "question": "What is your eye Color?",
+      "label": "Eye Color Select Blue",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.eye_color",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "blu",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Blue.",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[0]",
+          "pdf_value": "/BLU"
+        },
+        {
+          "value": "brn",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Brown",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[1]",
+          "pdf_value": "/BRN"
+        },
+        {
+          "value": "hzl",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Hazel",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[2]",
+          "pdf_value": "/HZL"
+        },
+        {
+          "value": "pnk",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Pink.",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[3]",
+          "pdf_value": "/PNK"
+        },
+        {
+          "value": "mrn",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Maroo",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[4]",
+          "pdf_value": "/MRN"
+        },
+        {
+          "value": "grn",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Green",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[5]",
+          "pdf_value": "/GRN"
+        },
+        {
+          "value": "gray",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Gray.",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[6]",
+          "pdf_value": "/GRAY"
+        },
+        {
+          "value": "blk",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Black",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[7]",
+          "pdf_value": "/BLK"
+        },
+        {
+          "value": "oth",
+          "label": "Part 3. Biographic Information. 5. Eye Color (Select only one box). Select Unkno",
+          "pdf_field": "form1[0].#subform[3].Pt3Line5_EyeColor[8]",
+          "pdf_value": "/OTH"
+        }
+      ]
+    },
+    {
+      "id": "hair_color",
+      "question": "What is your hair Color?",
+      "label": "Hair Color Select Bald",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.hair_color",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "bld",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Bald",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[0]",
+          "pdf_value": "/BLD"
+        },
+        {
+          "value": "blk",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Blac",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[1]",
+          "pdf_value": "/BLK"
+        },
+        {
+          "value": "bnd",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Blon",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[2]",
+          "pdf_value": "/BND"
+        },
+        {
+          "value": "brn",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Brow",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[3]",
+          "pdf_value": "/BRN"
+        },
+        {
+          "value": "gry",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Gray",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[4]",
+          "pdf_value": "/GRY"
+        },
+        {
+          "value": "red",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Red.",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[5]",
+          "pdf_value": "/RED"
+        },
+        {
+          "value": "sdy",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Sand",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[6]",
+          "pdf_value": "/SDY"
+        },
+        {
+          "value": "wht",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Whit",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[7]",
+          "pdf_value": "/WHT"
+        },
+        {
+          "value": "oth",
+          "label": "Part 3. Biographic Information. 6. Hair Color (Select only one box). Select Unkn",
+          "pdf_field": "form1[0].#subform[4].Pt3Line6_HairColor[8]",
+          "pdf_value": "/OTH"
+        }
+      ]
+    },
+    {
+      "id": "no_6",
+      "question": "What is your has anyone else ever filed a petition for the beneficiary? Select No?",
+      "label": "Has anyone else ever filed 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.no_6",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 4. Information About Beneficiary. Other Information About Beneficiary. 10. ",
+          "pdf_field": "form1[0].#subform[4].Pt4Line10_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "unknown",
+      "question": "What is your has anyone else ever filed a petition for the beneficiary? Select Unknown?",
+      "label": "NOTE: Select \"Unknown\" only if you",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.unknown",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "u",
+          "label": "Part 4. Information About Beneficiary. Other Information About Beneficiary. 10. ",
+          "pdf_field": "form1[0].#subform[4].Pt4Line10_Unknown[0]",
+          "pdf_value": "/U"
+        }
+      ]
+    },
+    {
+      "id": "yes_6",
+      "question": "What is your has anyone else ever filed a petition for the beneficiary? Select Yes?",
+      "label": "Has anyone else ever filed 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.yes_6",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Other Information About Beneficiary. 10. ",
+          "pdf_field": "form1[0].#subform[4].Pt4Line10_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit_6",
+      "question": "What is your beneficiary's Physical Address?",
+      "label": "Beneficiary's Physical Address Select Apartment",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_6",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Physical Address. 11. B. Se",
+          "pdf_field": "form1[0].#subform[4].Pt4Line11_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Physical Address. 11. B. Se",
+          "pdf_field": "form1[0].#subform[4].Pt4Line11_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Physical Address. 11. B. Se",
+          "pdf_field": "form1[0].#subform[4].Pt4Line11_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "unit_7",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information Select 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_7",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 12",
+          "pdf_field": "form1[0].#subform[4].Pt4Line12b_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 12",
+          "pdf_field": "form1[0].#subform[4].Pt4Line12b_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 12",
+          "pdf_field": "form1[0].#subform[4].Pt4Line12b_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "unit_8",
+      "question": "What is your other Address and Contact Information?",
+      "label": "Other Address and Contact Information Select 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_8",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 13",
+          "pdf_field": "form1[0].#subform[4].Pt4Line13_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 13",
+          "pdf_field": "form1[0].#subform[4].Pt4Line13_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Other Address and Contact Information. 13",
+          "pdf_field": "form1[0].#subform[4].Pt4Line13_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "female_4",
+      "question": "What is your sex?",
+      "label": "Sex Select Female 4",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.female_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Other Information About Beneficiary. 9. S",
+          "pdf_field": "form1[0].#subform[4].Pt4Line9_Female[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "male_4",
+      "question": "What is your sex?",
+      "label": "Sex Select Male 4",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.male_4",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Other Information About Beneficiary. 9. S",
+          "pdf_field": "form1[0].#subform[4].Pt4Line9_Male[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "marital_status",
+      "question": "What is your beneficiary's Marital Information?",
+      "label": "Current Marital Status Select Widowed 2",
+      "type": "choice",
+      "group": "arrival_status",
+      "memory_key": "arrival_status.marital_status",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "w",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[0]",
+          "pdf_value": "/W"
+        },
+        {
+          "value": "a",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[1]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "s",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[2]",
+          "pdf_value": "/S"
+        },
+        {
+          "value": "snm",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[3]",
+          "pdf_value": "/SNM"
+        },
+        {
+          "value": "m",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[4]",
+          "pdf_value": "/M"
+        },
+        {
+          "value": "d",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Marital Information. 18. Cu",
+          "pdf_field": "form1[0].#subform[5].Pt4Line18_MaritalStatus[5]",
+          "pdf_value": "/D"
+        }
+      ]
+    },
+    {
+      "id": "no_7",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Was the beneficiary EVER in the 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.no_7",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Entry Information. 45. Was ",
+          "pdf_field": "form1[0].#subform[6].Pt4Line20_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "yes_7",
+      "question": "What is your beneficiary's Entry Information?",
+      "label": "Was the beneficiary EVER in the 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.yes_7",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Entry Information. 45. Was ",
+          "pdf_field": "form1[0].#subform[6].Pt4Line20_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit_9",
+      "question": "What is your beneficiary's Employment Information?",
+      "label": "Beneficiary's Employment Information Select Apartment",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_9",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Employment Information. 51.",
+          "pdf_field": "form1[0].#subform[6].Pt4Line26_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Employment Information. 51.",
+          "pdf_field": "form1[0].#subform[6].Pt4Line26_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Beneficiary's Employment Information. 51.",
+          "pdf_field": "form1[0].#subform[6].Pt4Line26_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "no_8",
+      "question": "What is your was the beneficiary EVER in immigration proceedings? Select No?",
+      "label": "Was the beneficiary EVER in immigration 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.no_8",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[6].Pt4Line28_No[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "yes_8",
+      "question": "What is your was the beneficiary EVER in immigration proceedings? Select Yes?",
+      "label": "Was the beneficiary EVER in immigration 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.yes_8",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[6].Pt4Line28_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "part4_line1_no",
+      "question": "What is your have you EVER previously filed a petition for this beneficiary or any other alien? Select No?",
+      "label": "Have you EVER previously filed 1",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.part4_line1_no",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "n",
+          "label": "Part 5. Other Information. 1. Have you EVER previously filed a petition for this",
+          "pdf_field": "form1[0].#subform[7].Part4Line1_No[0]",
+          "pdf_value": "/N"
+        }
+      ]
+    },
+    {
+      "id": "part4_line1_yes",
+      "question": "What is your have you EVER previously filed a petition for this beneficiary or any other alien? Select?",
+      "label": "Have you EVER previously filed 2",
+      "type": "choice",
+      "group": "other",
+      "memory_key": "other.part4_line1_yes",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "y",
+          "label": "Part 5. Other Information. 1. Have you EVER previously filed a petition for this",
+          "pdf_field": "form1[0].#subform[7].Part4Line1_Yes[0]",
+          "pdf_value": "/Y"
+        }
+      ]
+    },
+    {
+      "id": "unit_10",
+      "question": "What is your apartment?",
+      "label": "Additional Information About Beneficiary Select Apartment 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_10",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line56_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line56_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line56_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "unit_11",
+      "question": "What is your apartment?",
+      "label": "Additional Information About Beneficiary Select Apartment 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_11",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line57_Unit[0]",
+          "pdf_value": "/ APT "
+        },
+        {
+          "value": "ste",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line57_Unit[1]",
+          "pdf_value": "/ STE "
+        },
+        {
+          "value": "flr",
+          "label": "Part 4. Information About Beneficiary. Additional Information About Beneficiary.",
+          "pdf_field": "form1[0].#subform[7].Pt4Line57_Unit[2]",
+          "pdf_value": "/ FLR "
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "NOTE: Select the box for either 1",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.checkbox",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 6. Petitioner's Statement, Contact Information, Declaration, and Signature.",
+          "pdf_field": "form1[0].#subform[8].Pt6Line1Checkbox[0]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 6. Petitioner's Statement, Contact Information, Declaration, and Signature.",
+          "pdf_field": "form1[0].#subform[8].Pt6Line1Checkbox[1]",
+          "pdf_value": "/B"
+        }
+      ]
+    },
+    {
+      "id": "checkbox_2",
+      "question": "What is your petitioner's Statement, Contact Information, Declaration, and Signature?",
+      "label": "NOTE: Select the box for either 2",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.checkbox_2",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "c",
+          "label": "Part 6. Petitioner's Statement, Contact Information, Declaration, and Signature.",
+          "pdf_field": "form1[0].#subform[8].Pt6Line2_Checkbox[0]",
+          "pdf_value": "/C"
+        }
+      ]
+    },
+    {
+      "id": "unit_12",
+      "question": "What is your interpreter's Contact Information, Certification, and Signature?",
+      "label": "Interpreter's Mailing Address Select Apartment",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_12",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpr",
+          "pdf_field": "form1[0].#subform[9].Pt7Line3_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpr",
+          "pdf_field": "form1[0].#subform[9].Pt7Line3_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 7. Interpreter's Contact Information, Certification, and Signature. Interpr",
+          "pdf_field": "form1[0].#subform[9].Pt7Line3_Unit[2]",
+          "pdf_value": "/FLR"
+        }
+      ]
+    },
+    {
+      "id": "unit_13",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "Preparer's Mailing Address Select Apartment",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.unit_13",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "apt",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[9].Pt8Line3_Unit[0]",
+          "pdf_value": "/APT"
+        },
+        {
+          "value": "ste",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[9].Pt8Line3_Unit[1]",
+          "pdf_value": "/STE"
+        },
+        {
+          "value": "flr",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[9].Pt8Line3_Unit[2]",
+          "pdf_value": "/FLR "
+        }
+      ]
+    },
+    {
+      "id": "checkbox_3",
+      "question": "What is your contact Information, Declaration, and Signature of the Person Preparing this Petition, if?",
+      "label": "I am not an attorney or",
+      "type": "choice",
+      "group": "address",
+      "memory_key": "address.checkbox_3",
+      "sensitive": false,
+      "required": false,
+      "options": [
+        {
+          "value": "a",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[10].Pt8Line7_Checkbox[0]",
+          "pdf_value": "/A"
+        },
+        {
+          "value": "b",
+          "label": "Part 8. Contact Information, Declaration, and Signature of the Person Preparing ",
+          "pdf_field": "form1[0].#subform[10].Pt8Line7_Checkbox[1]",
+          "pdf_value": "/B"
+        }
+      ]
+    }
+  ]
+}

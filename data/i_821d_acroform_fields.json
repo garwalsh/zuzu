@@ -1,0 +1,2357 @@
+{
+  "source": "AcroForm inventory of i_821d.pdf",
+  "edition": "01/20/25",
+  "pages": 7,
+  "encrypted": "AES-128, empty user password",
+  "xfa_present": true,
+  "need_appearances": false,
+  "field_count": 234,
+  "fields": [
+    {
+      "name": "form1[0].#pageSet[0].Page1[0].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[0].#area[1].AttyLicenseNum[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "To Be Completed by an Attorney or Accredited Representative, if any. Enter Attorney State Bar Number, if any.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[0].G28_Attached[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "To Be Completed by an Attorney or Accredited Representative, if any. Select this box if Form G-28 is attached to represent the requestor.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line1_Checkbox[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). 1. Initial Request - Consideration of Deferred Action for Childhood Arrivals. Check box. ",
+      "on_value": "/I",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line2_Checkbox[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). 2. Renewal Request - Consideration of Deferred Action for Childhood Arrivals. Check box. ",
+      "on_value": "/R",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line2_Date[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). 2. For this Renewal request, my most recent period of Deferred Action for Childhood Arrivals expires on. Enter Date. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3a_Name[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Full Legal Name. 3. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3b_Name[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Full Legal Name. 3. B. Enter Given Name (First Name). ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3c_Name[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Full Legal Name. 3. C. Enter Middle Name. ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4a_Name[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. A. Enter In Care Of Name, if applicable.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4b_Street[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4c_Number[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4c_Unit[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4c_Unit[1]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. C. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4c_Unit[2]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4d_City[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4e_State[0]",
+      "type": "/Ch",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). U.S. Mailing Address (Enter the same address on Form I-7 65). 4. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line5_Checkbox[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. 5. Are you NOW or have you EVER been in removal proceedings, or do you have a removal order issued in any other context (for example, at the border or within the United States by an immigration agent)? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line5_Checkbox[1]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. 5. Are you NOW or have you EVER been in removal proceedings, or do you have a removal order issued in any other context (for example, at the border or within the United States by an immigration agent)? Select No. ",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_CB[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). I am in immigration detention. Check box",
+      "on_value": "/AM",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_CB[1]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). I am not in immigration detention. Check box",
+      "on_value": "/AM NOT",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[1].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].Line4_ANumber[0].P1_Line7_ANumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 7. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line10_Gender[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 10. Sex. Select Male.",
+      "on_value": "/M",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line10_Gender[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 10. Sex. Select Female.",
+      "on_value": "/F",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line11a_CityBirth[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 11. A. Enter City, Town or Village of Birth.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line11b_CountryBirth[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 11. B. Enter Country of Birth.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line12_CountryRes[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 12. Enter Current Country of Residence.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line13_CountryCitz[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 13. Enter Country of Citizenship or Nationality.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line14_MaritalStatus[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 14. Marital Status. Select Single.",
+      "on_value": "/S",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line14_MaritalStatus[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 14. Marital Status. Select Married.",
+      "on_value": "/M",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line14_MaritalStatus[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 14. Marital Status. Select Divorced.",
+      "on_value": "/D",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line14_MaritalStatus[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 14. Marital Status. Select Widowed.",
+      "on_value": "/W",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line15a_Name[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Names Used, if applicable. If you need additional space, use Part 8. Additional Information. 15. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line15b_Name[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Names Used, if applicable. 15. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line15c_Name[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Names Used, if applicable. 15. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line16_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 16. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line16_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 16. Ethnicity (Select only one box). Select Hispanic or Latino.",
+      "on_value": "/H",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line17_Race_AmIndian[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 17. Race (Select all applicable boxes). Select American Indian or Alaska Native.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line17_Race_Asian[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 17. Race (Select all applicable boxes). Select Asian.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line17_Race_Black[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 17. Race (Select all applicable boxes). Select Black or African American.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line17_Race_NativeHaw[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 17. Race (Select all applicable boxes). Select Native Hawaiian or Other Pacific Islander.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line17_Race_White[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 17. Race (Select all applicable boxes). Select White.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line18_Height-Ft[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 18. Height. Select the Feet from the drop down list.",
+      "flags": [],
+      "options": [
+        " ",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line18_Height-In[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 18. Height. Select the Inches from the drop down list.",
+      "flags": [],
+      "options": [
+        " ",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line19_Weight[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 19. Weight in Pounds. Enter first digit of three digits.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line19_Weight[1]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 19. Weight in Pounds. Enter second digit of three digits.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line19_Weight[2]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 19. Weight in Pounds. Enter third digit of three digits.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Blue.",
+      "on_value": "/BLU",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Gray.",
+      "on_value": "/GRY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Hazel.",
+      "on_value": "/HAZ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Pink.",
+      "on_value": "/PNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[4]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Maroon.",
+      "on_value": "/MAR",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[5]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Green.",
+      "on_value": "/GRN",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[6]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Brown.",
+      "on_value": "/BRO",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[7]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Black.",
+      "on_value": "/BLK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line20_Checkbox[8]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 20. Eye Color (Select only one box). Select Unknown / Other.",
+      "on_value": "/UNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Bald (No hair).",
+      "on_value": "/BAL",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Blond.",
+      "on_value": "/BLN",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Gray.",
+      "on_value": "/GRY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Sandy.",
+      "on_value": "/SDY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[4]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Unknown / Other.",
+      "on_value": "/UNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[5]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select White.",
+      "on_value": "/WHI",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[6]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Red.",
+      "on_value": "/RED",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[7]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Brown.",
+      "on_value": "/BRO",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line21_Checkbox[8]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Processing Information. 21. Hair Color (Select only one box). Select Black.",
+      "on_value": "/BLK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6_CB[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. If you answered \"Yes\" to Item Number 5., you must select a box below indicating your current status or outcome of your removal proceedings. Status or outcome. 6. A. Select Currently in Proceedings (Active).",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Active",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6_CB[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. Status or outcome.  6. B. Select Currently in Proceedings (Administratively Closed).",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Closed",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6_CB[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. Status or outcome. 6. C. Select Terminated. ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Terminated",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6_CB[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. Status or outcome. 6. D. Select Subject to a Final Order. ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/FinalOrder",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6_CB[4]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. Status or outcome. 6. E. Select Other. Explain in Part 8. Additional Information. ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Other",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6f_Date[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. 6. F. Enter Most Recent Date of Proceedings. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line6g_Location[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Removal Proceedings Information. 6. G. Enter Location of Proceedings.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line8_SSN[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 8. Enter U.S. Social Security Number, if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[1].P1_Line9_DOB[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You (For Initial and Renewal Requests). Other Information. 9. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[1].P2_Line1_checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). 1. I have been continuously residing in the U.S. since at least June 15, 2007, up to the present time. Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P2_Line1_checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). 1. I have been continuously residing in the U.S. since at least June 15, 2007, up to the present time. Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[2].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line10_BorderCard[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 10. Enter Border Crossing Card Number, if any.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2a_Date_From[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests) (continued). Present Address. 2. A. Dates at this residence (mm/dd/yyyy). Enter the From Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2b_Street[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2c_Number[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2c_Unit[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2c_Unit[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. C. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2c_Unit[2]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2d_City[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2e_State[0]",
+      "type": "/Ch",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line2f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Present Address. 2. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3a_Date_From[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. A. Dates at this residence. Enter the From Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3a_Date_To[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. A. Dates at this residence. Enter the To Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3b_Street[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3c_Number[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3c_Unit[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3c_Unit[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. C. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3c_Unit[2]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3d_City[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line3e_State[0]",
+      "type": "/Ch",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4a_Date_From[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. A. Dates at this residence. Enter the From Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4a_Date_To[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. A. Dates at this residence. Enter the To Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4b_Street[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4c_Number[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4c_Unit[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4c_Unit[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. C. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4c_Unit[2]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4d_City[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4e_State[0]",
+      "type": "/Ch",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line4f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Two. 4. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5a_Date_From[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. A. Dates at this residence. Enter the From Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5a_Date_To[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. A. Dates at this residence. Enter the To Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5b_Street[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5c_Number[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. C. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5c_Unit[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5c_Unit[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. C. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5c_Unit[2]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5d_City[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. D. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5e_State[0]",
+      "type": "/Ch",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line5f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address Three. 5. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line6a_DepDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. For Initial Requests:  List all of your absences from the United States since June 15, 2007.  For Renewal Requests:  List only your absences from the United States since you submitted your last Form I-8 21 D that was approved. If you require additional space, use Part 8. Additional Information. Departure One. 6. A. Enter Departure Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line6b_RetDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. Departure One. 6. B. Enter Return Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line6c_Reason[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. Departure One. 6. C. Enter Reason for Departure.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line7a_DeptDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. Departure Two. 7. A. Enter Departure Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line7b_RetDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. Departure Two. 7. B. Enter Return Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line7c_Reason[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. Departure Two. 7. C. Enter Reason for Departure.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line8_Checkbox[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 8. Have you left the United States without advance parole on or after August 15, 2012? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line8_Checkbox[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 8. Have you left the United States without advance parole on or after August 15, 2012? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line9a_Country[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 9. A. Enter What country issued your last passport. ",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line9b_Passport[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 9. B. Enter Passport Number.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].P2_Line9c_ExpDate[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Travel Information. 9. C. Enter Passport Expiration Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Pt2_Line3f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 2. Residence and Travel Information (For Initial and Renewal Requests). Address One. 3. F. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[3].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].Line16_I94[0].P3_Line5b_I94Number[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 5. B. If you answered \"Yes\" to Item Number 5. A., provide your Form I-94, I-94 W, or I-95 number (if available).",
+      "flags": [
+        "ReadOnly",
+        "Comb"
+      ],
+      "max_len": 11
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line1_checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 1. I initially arrived and established residence in the U.S. prior to 16 years of age. Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line1_checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 1. I initially arrived and established residence in the U.S. prior to 16 years of age. Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line2_Date[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 2. Enter Date of Initial Entry into the United States (on or about) as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line3_Place[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 3. Enter Place of Initial Entry into the United States.",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line4_ImmStatus[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 4. Enter Immigration Status on June 15, 2012 (for example, No Lawful Status, Status Expired, Parole Expired) from the drop down list.",
+      "flags": [],
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line5a_I94[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 5. A. Were you EVER issued an Arrival-Departure Record (Form I-94, I-94 W, or I-95)? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line5a_I94[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 5. A. Were you EVER issued an Arrival-Departure Record (Form I-94, I-94 W, or I-95)? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line5c_I94Date[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. 5. C. If you answered \"Yes\" to Item Number 5. A., provide the date your authorized stay expired, as shown on Form I-94, I-94 W, or I-95 (if available). Enter Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line6_Education[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Education Information. 6. Indicate how you meet the education guideline (for example, Graduated from high school, Received a general educational development (G E D) certificate or equivalent state-authorized exam, Currently in school).",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line7_School[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Education Information. 7. Enter Name, City, and State of School Currently Attending or Where Education Received.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line8_GradDate[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Education Information. 8. Enter Date of Graduation (for example, Receipt of a Certificate of Completion, G E D certificate, other equivalent state-authorized exam) or, if currently in school, date of last attendance. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9_Military[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. 9. Were you a member of the U.S. Armed Forces or U.S. Coast Guard? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9_Military[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. 9. Were you a member of the U.S. Armed Forces or U.S. Coast Guard? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9a_Branch[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. If you answered \"Yes\" to Item Number 9., you must provide responses to Item Numbers 9. A. through 9. D.  9. A. Select Military Branch from the drop down list.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "options": [
+        " ",
+        "Army ",
+        "Marine Corps ",
+        "Navy ",
+        "Air Force ",
+        "National Guard ",
+        "Coast Guard"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9b_SvcDate[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. 9. B. Enter Service Start Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9c_DischgDate[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. 9. C. Enter Discharge Date as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P3_Line9d_Discharge[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 3. For Initial Requests Only. Military Service Information. 9. D. Select Type of Discharge from the drop down list.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "options": [
+        " ",
+        "Bad Conduct (BCD)",
+        "Clemency Discharge",
+        "Dishonorable",
+        "Entry level separation (ELS)",
+        "General",
+        "Honorable",
+        "Other Than Honorable (OTH)",
+        "Not Applicable"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line1_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). If any of the following questions apply to you, use Part 8. Additional Information to describe the circumstances and include a full explanation. 1. Have you EVER been arrested for, charged with, or convicted of a felony or misdemeanor, including incidents handled in juvenile court, in the United States?  Do not include minor traffic violations unless they were alcohol- or drug-related. Select Yes. If you answered \u201cYes,\u201d you must include a certified court disposition, arrest record, charging document, sentencing record, etc., for each arrest, unless disclosure is prohibited under state law.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line1_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 1. Have you EVER been arrested for, charged with, or convicted of a felony or misdemeanor, including incidents handled in juvenile court, in the United States?  Do not include minor traffic violations unless they were alcohol- or drug-related. Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line2_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 2. Have you EVER been arrested for, charged with, or convicted of a crime in any country other than the United States? Select Yes. If you answered \"Yes,\" you must include a certified court disposition, arrest record, charging document, sentencing record, etc., for each arrest. ",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line2_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 2. Have you EVER been arrested for, charged with, or convicted of a crime in any country other than the United States? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line3_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 3. Have you EVER engaged in, do you continue to engage in, or plan to engage in terrorist activities? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line3_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 3. Have you EVER engaged in, do you continue to engage in, or plan to engage in terrorist activities? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line4_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 4. Are you NOW or have you EVER been a member of a gang? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line4_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 4. Are you NOW or have you EVER been a member of a gang? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5a_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. A. Acts involving torture, genocide, or human trafficking? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5a_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. A. Acts involving torture, genocide, or human trafficking? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5b_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. B. Killing any person? Select Yes. ",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5b_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. B. Killing any person? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5c_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. C. Severely injuring any person? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5c_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. C. Severely injuring any person? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5d_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. D. Any kind of sexual contact or relations with any person who was being forced or threatened? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line5d_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 5. Have you EVER engaged in, ordered, incited, assisted, or otherwise participated in any of the following: 5. D. Any kind of sexual contact or relations with any person who was being forced or threatened? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line6_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 6. Have you EVER recruited, enlisted, conscripted, or used any person to serve in or help an armed force or group while such person was under age 15? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line6_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 6. Have you EVER recruited, enlisted, conscripted, or used any person to serve in or help an armed force or group while such person was under age 15? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line7_Checkbox[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 7. Have you EVER used any person under age 15 to take part in hostilities, or to help or provide services to people in combat? Select No.",
+      "on_value": "/No",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].P4_Line7_Checkbox[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 4. Criminal, National Security, and Public Safety Information (For Initial and Renewal Requests). 7. Have you EVER used any person under age 15 to take part in hostilities, or to help or provide services to people in combat? Select Yes.",
+      "on_value": "/Yes",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[4].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line1a_1b_Checkbox[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). NOTE:  Select the box for either Item Number 1. A. or 1. B.  1. B. Select The interpreter named in Part 6. has read to me each and every question and instruction on this form, as well as my answer to each question, in a language in which I am fluent.  I understand each and every question and instruction on this form as translated to me by my interpreter, and have provided true and correct responses in the language indicated above.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line1a_1b_Checkbox[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). NOTE:  Select the box for either Item Number 1. A. or 1. B.  1. A. Select I can read and understand English, and have read and understand each and every question and instruction on this form, as well as my answer to each question.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line1b_Language[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). 1. B. Enter Language.",
+      "flags": [],
+      "max_len": 40
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line2a_Signature[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). Requestor's Certification. I certify, under penalty of perjury under the laws of the United States of America, that the foregoing is true and correct and that copies of documents submitted are exact photocopies of unaltered original documents.  I understand that I may be required to submit original documents to U.S. Citizenship and Immigration Services (U S C I S) at a later date.  I also understand that knowingly and willfully providing materially false information on this form is a federal felony punishable by a fine, imprisonment up to 5 years, or both, under 18 United States Code (U.S.C.) section 1 0 0 1.  Furthermore, I authorize the release of any information from my records that U S C I S may need to reach a determination on my deferred action request. 2. A. Requestor's Signature. This form can not be signed electronically. The name of the requestor can not be typewritten into this space.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line2b_Date[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). Requestor's Certification. 2. B. Enter Date of Signature as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line3_DayPhone[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). Requestor's Contact Information. 3. Enter Requestor's Daytime Telephone Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line4_MobilePhone[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). Requestor's Contact Information. 4. Enter Requestor's Mobile Telephone Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[4].P5_Line5_Email[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Statement, Certification, Signature, and Contact Information of the Requestor (For Initial and Renewal Requests). Requestor's Contact Information. 5. Enter Requestor's Email Address.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line1a_Name[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Full Name. Provide the following information concerning the interpreter. 1. A. Enter Interpreter's Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line1b_Name[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Full Name. 1. B. Enter Interpreter's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line2_Organization[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Full Name. 2. Enter Interpreter's Business or Organization Name, if any.",
+      "flags": [],
+      "max_len": 40
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3a_Street[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3b_Number[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. B. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3b_Unit[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3b_Unit[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3b_Unit[2]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3c_City[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. C. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3d_State[0]",
+      "type": "/Ch",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        "",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3e_ZipCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. E. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3f_Province[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. F. Enter Province.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3g_PostalCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. G. Enter Postal Code.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[4].P6_Line3h_Country[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Mailing Address. 3. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[5].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[5].P6Line6b_Date[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Certification. 6. B. Enter Date of Signature as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P6_Language[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Certification.  I certify that: I am fluent in English and another language which is the same language provided in Part 5., Item Number 1. B. Enter Language.",
+      "flags": [],
+      "max_len": 18
+    },
+    {
+      "name": "form1[0].#subform[5].P6_Line4_DayPhone[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Contact Information. 4. Enter Interpreter's Daytime Telephone Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[5].P6_Line5_Email[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Contact Information. 5. Enter Interpreter's Email Address.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P6_Line6a_Signature[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 6. Contact Information, Certification, and Signature of the Interpreter (For Initial and Renewal Requests). Interpreter's Certification. I have read to this requestor each and every question and instruction on this form, as well as the answer to each question, in the language provided in Part 5., Item Number 1. B.; and The requestor has informed me that he or she understands each and every instruction and question on the form, as well as the answer to each question. 6. A. Interpreter's Signature. This form can not be signed electronically.  The name of the interpreter can not be typewritten into this space.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line1a_Name[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Full Name. Provide the following information concerning the preparer. 1. A. Enter Preparer's Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line1b_Name[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Full Name. 1. B. Enter Preparer's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line2_Organization[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Full Name. 2. Enter Preparer's Business or Organization Name.",
+      "flags": [],
+      "max_len": 40
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3a_Street[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3b_Number[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. B. Enter Apartment, Suite or Floor Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3b_Unit[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3b_Unit[1]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3b_Unit[2]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3c_City[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. C. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3d_State[0]",
+      "type": "/Ch",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        "",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3e_ZipCode[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. E. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3f_Province[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. F. Enter Province.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3g_PostalCode[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. G. Enter Postal Code.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line3h_Country[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Mailing Address. 3. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line4_DayPhone[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Contact Information. 4. Enter Preparer's Daytime Telephone Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line5_MobilePhone[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Contact Information. 5. Enter Preparer's Fax Number.",
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line6_Email[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Contact Information. 6. Enter Preparer's Email Address.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line7a_Signature[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Declaration. I declare that I prepared this Form I-8 21 D at the requestor's behest, and it is based on all the information of which I have knowledge. 7. A. Preparer's Signature. This form can not be signed electronically.  The name of the preparer can not be typewritten into this space.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Line7b_Date[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Contact Information, Declaration, and Signature of the Person Preparing this Request, If Other than the Requestor (For Initial and Renewal Requests). Preparer's Declaration. 7. B. Enter Date of Signature as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[6].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].Line4_ANumber[1].P1_Line7_ANumber[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 2. Alien Registration Number (A. Number), if any. This is a read only field. It pre-populates from Page 1.",
+      "flags": [
+        "ReadOnly",
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[6].P1_Line3a_Name[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). Full Legal Name. 1. A. Family Name (Last Name). This is a read only field. It pre-populates from Page 1.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P1_Line3b_Name[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). Full Legal Name. 1. B. Given Name (First Name). This is a read only field. It pre-populates from Page 1.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P1_Line3c_Name[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). Full Legal Name. 1. C. Middle Name. This is a read only field. It pre-populates from Page 1.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line3a_Page[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 3. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line3b_Part[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 3. B. Enter Part Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line3c_Item[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 3. C. Enter Item Number.",
+      "max_len": 3
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line3d_Narrative[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 3. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line4a_Page[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 4. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line4b_Part[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 4. B. Enter Part Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line4c_Item[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 4. C. Enter Item Number.",
+      "max_len": 3
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line4d_Narrative[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 4. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line5a_Page[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 5. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line5b_Part[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 5. B. Enter Part Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line5c_Item[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 5. C. Enter Item Number.",
+      "max_len": 3
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Line5d_Narrative[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Additional Information (For Initial and Renewal Requests). 5. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    }
+  ]
+}

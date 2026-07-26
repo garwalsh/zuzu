@@ -1,0 +1,3368 @@
+{
+  "source": "AcroForm inventory of i_751.pdf",
+  "edition": "04/01/24",
+  "pages": 11,
+  "encrypted": "AES-128, empty user password",
+  "xfa_present": true,
+  "need_appearances": false,
+  "field_count": 329,
+  "fields": [
+    {
+      "name": "form1[0].#pageSet[0].Page1[0].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[0].AttorneyStateBarNumber[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "To be completed by an attorney or accredited representative, if any. Enter Attorney State Bar Number, if applicable.",
+      "max_len": 15
+    },
+    {
+      "name": "form1[0].#subform[0].G28[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "To be completed by an attorney or accredited representative, if any. Select this box if Form G - 28 is attached.",
+      "on_value": "/1",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line11_DateOfMarriage[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 11. Enter Date of Marriage. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line12_PlaceOfMarriage[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 12. Enter Place of Marriage.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line13_DateMarriageEnded[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 13. If the marriage through which you gained conditional residence has ended, provide the date it ended (date of divorce or date of death). Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line14_CRExpiresOn[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 14. Enter Date Conditional Residence Expires On. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line2a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. List all other names you have ever used, including aliases, maiden name, and nicknames.  If you need extra space to complete this section, use the space provided in Part 11. Additional Information. 2. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line2b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. 2. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line2c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. 2. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. 3. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. 3. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line3c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Names Used. 3. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line4_DateOfBirth[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 4. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line5_CountryOfBirth[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 5. Enter Country of Birth.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line6_CountryOfCitizenship[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 6. Enter Country of Citizenship or Nationality (provide all that apply).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line7_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 7. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line8_SSN[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 8. Enter U.S. Social Security Number, if any. ",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[0].P1_Line9_AcctIdentifier[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Other Information. 9. Enter U S C I S Electronic Immigration System (E L I S) Account Number, if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 12
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_Line10_MaritalStatus[0]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 10. Marital Status. Select Married.",
+      "on_value": "/M",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_Line10_MaritalStatus[1]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 10. Marital Status. Select Widowed.",
+      "on_value": "/W",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_Line10_MaritalStatus[2]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 10. Marital Status. Select Single.",
+      "on_value": "/S",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Part1_Line10_MaritalStatus[3]",
+      "type": "/Btn",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. Marital Status. 10. Marital Status. Select Divorced.",
+      "on_value": "/D",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[0].Pt1Line1a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. 1. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].Pt1Line1b_GivenName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. 1. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].Pt1Line1c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "Part 1. Information About You, the Conditional Resident. 1. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[0].USCISELISAcctNumber[0]",
+      "type": "/Tx",
+      "page": 1,
+      "label": "To be completed by an attorney or accredited representative, if any. Enter Attorney or Accredited Representative U S C I S Electronic Immigration System (E L I S) Number, if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 12
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[1].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].Line16_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 16. Is your physical address different than your mailing address? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line16_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 16. Is your physical address different than your mailing address? Select Yes. If you answered \u201cYes\u201d to Item Number 16., provide your physical address below.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 18. Are you in removal, deportation, or rescission proceedings? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 18. Are you in removal, deportation, or rescission proceedings? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17a_InCareofName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. A. Enter In Care Of Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[1].Line17b_Street_Number_Name[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. B. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[1].Line17c_Apt_Ste_Flr_Number[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. C. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[1].Line17c_Unit[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. C. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17c_Unit[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. C.  Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17c_Unit[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. C. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line17d_City_Town[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. D. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[1].Line18_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 19. Was a fee paid to anyone other than an attorney in connection with this petition? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line18_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 19. Was a fee paid to anyone other than an attorney in connection with this petition? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line19_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 20. Have you ever been arrested, detained, charged, indicted, fined, or imprisoned for breaking or violating any law or ordinance (excluding traffic regulations), or committed any crime which you were not arrested in the United States or abroad? Select Yes. If you answered \"Yes\" to Item Number  20., provide a detailed explanation in Part 11. Additional Information or on a separate sheet of paper, and refer to the What Initial Evidence Is Required section of the Form I - 7 51 instructions to determine what criminal history document to include with your petition.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line19_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 20. Have you ever been arrested, detained, charged, indicted, fined, or imprisoned for breaking or violating any law or ordinance (excluding traffic regulations), or committed any crime which you were not arrested in the United States or abroad? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line20_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 21. If you are married, is this a different marriage than the one through which you gained conditional resident status? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line20_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 21. If you are married, is this a different marriage than the one through which you gained conditional resident status? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line21_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 22. Have you resided at any other address since you became a permanent resident? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line21_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 22. Have you resided at any other address since you became a permanent resident? Select Yes. If you answered \u201cYes\u201d to Item Number 22., provide a list of all addresses where you have resided since becoming a permanent resident and the dates you resided at those locations in the space provided in Part 11. Additional Information.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line22_Checkbox[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 23. Is your spouse or parent's spouse currently serving with or employed by the U.S. Government and serving outside the United States? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Line22_Checkbox[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Additional Information About You. 23. Is your spouse or parent's spouse currently serving with or employed by the U.S. Government and serving outside the United States? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_Line8_HeightFeet[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 3. Height. Feet. Select Number of Feet from list.",
+      "flags": [],
+      "options": [
+        " ",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].P3_Line8_HeightInches[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 3. Height. Inches. Select Number of Inches from list.",
+      "flags": [],
+      "options": [
+        " ",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].P3_Line9_HeightInches1[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 4. Weight. Pounds. Enter first digit of Weight in Pounds.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P3_Line9_HeightInches2[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 4. Weight. Pounds. Enter second digit of Weight in Pounds.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P3_Line9_HeightInches3[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 4. Weight. Pounds. Enter third digit of Weight in Pounds.",
+      "flags": [],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Blue.",
+      "on_value": "/BLU",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Green.",
+      "on_value": "/GRN",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Hazel.",
+      "on_value": "/HAZ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Pink.",
+      "on_value": "/PNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[4]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Maroon.",
+      "on_value": "/MAR",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[5]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Brown.",
+      "on_value": "/BRO",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[6]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Black.",
+      "on_value": "/BLK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[7]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Unknown / Other.",
+      "on_value": "/UNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox10[8]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 5. Eye Color (Select only one box). Select Gray.",
+      "on_value": "/GRY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color(Select only one box). Select Bald (No hair).",
+      "on_value": "/BAL",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Blond.",
+      "on_value": "/BLN",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Gray.",
+      "on_value": "/GRY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[3]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Sandy.",
+      "on_value": "/SDY",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[4]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Unknown / Other.",
+      "on_value": "/UNK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[5]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select White.",
+      "on_value": "/WHI",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[6]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Red.",
+      "on_value": "/RED",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[7]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Brown.",
+      "on_value": "/BRO",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox11[8]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 6. Hair Color (Select only one box). Select Black.",
+      "on_value": "/BLK",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox6[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 1. Ethnicity (Select only one box). Select Not Hispanic or Latino.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox6[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 1. Ethnicity (Select only one box). Select Hispanic or Latino.",
+      "on_value": "/H",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox7_Asian[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 2. Race (Select all applicable boxes). Select Asian.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox7_Black[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 2. Race (Select all applicable boxes). Select Black or African American.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox7_Hawaiian[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 2. Race (Select all applicable boxes). Select Native Hawaiian or Other Pacific Islander.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox7_Indian[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 2. Race (Select all applicable boxes). Select American Indian or Alaska Native.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].P3_checkbox7_White[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 2. Biographic Information. 2. Race (Select all applicable boxes). Select White.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line15e_State[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. E. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line15f_ZipCode[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Mailing Address. 15. F. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. C. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. D. Enter City or Town.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_InCareofName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. A. Enter In Care Of Name.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_State[0]",
+      "type": "/Ch",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. E. Select State from List of States.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. B. Enter Street Number and Name.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_Unit[0]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. C. Select Apartment.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_Unit[1]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. C. Select Suite.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_Unit[2]",
+      "type": "/Btn",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. C. Select Floor.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[1].Pt1Line17_ZipCode[0]",
+      "type": "/Tx",
+      "page": 2,
+      "label": "Part 1. Information About You, the Conditional Resident. Physical Address. 17. F. Enter Zip Code.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[2].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].Line1a_FamilyName3[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Provide information on all of your children.  If you need extra space to complete this section, use the space provided in Part 11. Additional Information. Child 1. 1. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Line1b_GivenName3[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 1. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Line1c_MiddleName3[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 1. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Line2_DateOfBirth2[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 2. Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Line3_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 3. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[2].Line3_DateOfBirth[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 3. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Line4_SSN[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 4. Enter U.S. Social Security Number, if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[2].Line5_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 5. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[2].Part4_Relationship[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Relationship. Select 1. B. Parent's Spouse or Former Spouse.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Part4_Relationship[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Relationship. Select 1. A. Spouse or Former Spouse.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Part5Line5[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 4. Is this child living with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Part5Line5[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 4. Is this child living with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Part5Line6[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 5. Is this child applying with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Part5Line6[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 5. Information About Your Children. Child 1. 5. Is this child applying with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Joint Filing. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, and I am filing this joint petition together with (Select only one box). Select 1. A. My spouse.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Joint Filing. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, and I am filing this joint petition together with (Select only one box). Select 1. B. My parent's spouse because I am unable to be included in a joint petition filed by my parent and my parent's spouse. OR (Select all applicable boxes in the next section.)",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1c[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Waiver or Individual Filing Request. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, I am unable to file a joint petition with my spouse or my parent's spouse, because. Select 1. C. My spouse is deceased.",
+      "on_value": "/C",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1d[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Waiver or Individual Filing Request. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, I am unable to file a joint petition with my spouse or my parent's spouse, because. Select 1. D. My marriage was entered in good faith, but the marriage was terminated through divorce or annulment.",
+      "on_value": "/D",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1e[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Waiver or Individual Filing Request. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, I am unable to file a joint petition with my spouse or my parent's spouse, because. Select 1. E. I entered the marriage in good faith, and, during the marriage, I was battered, or was the subject of extreme cruelty, by my U.S. citizen or lawful permanent resident spouse.",
+      "on_value": "/E",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1f[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Waiver or Individual Filing Request. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, I am unable to file a joint petition with my spouse or my parent's spouse, because. Select 1. F. My parent entered the marriage in good faith, and, during the marriage, I was battered, or was subjected to extreme cruelty, by my parent's U.S. citizen or lawful permanent resident spouse or by my conditional resident parent.",
+      "on_value": "/F",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt3Line1g[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 3. Basis for Petition. Waiver or Individual Filing Request. My conditional residence is based on my marriage or my parent's marriage to a U.S. citizen or lawful permanent resident, I am unable to file a joint petition with my spouse or my parent's spouse, because. Select 1. G. The termination of my status and removal from the United States would result in an extreme hardship.",
+      "on_value": "/G",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line2a_FamilyName2[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 2. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line2b_GivenName2[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 2. B. Enter Given Name (Family Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line2c_MiddleName2[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or  Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Other Information. 2. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or  Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_Country[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_PostalCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_Province[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_State[0]",
+      "type": "/Ch",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_Unit[0]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_Unit[1]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_Unit[2]",
+      "type": "/Btn",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[2].Pt4Line6_ZipCode[0]",
+      "type": "/Tx",
+      "page": 3,
+      "label": "Part 4. Information About the U.S. Citizen or Lawful Permanent Resident Spouse.  If Filing as a Child Separately, Information About the U.S. Citizen or Lawful Permanent Resident Stepparent Through Whom You Gained Your Conditional Residence. Physical Address. 6. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[3].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].Line13a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 7. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13a_FamilyName[1]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 13. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13a_FamilyName[2]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 19. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13b_GivenName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 7. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13b_GivenName[1]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 13. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13b_GivenName[2]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 19. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13c_MiddleName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 7. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13c_MiddleName[1]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 13. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line13c_MiddleName[2]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 19. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line14_DateOfBirth[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 8. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line14_DateOfBirth[1]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 14. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line14_DateOfBirth[2]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 20. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Line15_AlienNumber[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 9. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Line15_AlienNumber[1]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 15. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Line15_AlienNumber[2]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 21. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line11[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 10. Is this child living with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line11[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 10. Is this child living with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line12[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 11. Is this child applying with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line12[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. 11. Is this child applying with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line17[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 16. Is this child living with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line17[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 16. Is this child living with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line18[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 17. Is this child applying with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line18[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. 17. Is this child applying with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line23[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 22. Is this child living with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line23[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 22. Is this child living with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line24[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 23. Is this child applying with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Part5Line24[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 4. 23. Is this child applying with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_Country[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_PostalCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_Province[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_State[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_Unit[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_Unit[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_Unit[2]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line12_ZipCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 2. Physical Address. 12. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_Country[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_PostalCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_Province[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_State[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_Unit[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_Unit[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_Unit[2]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line18_ZipCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 3. Physical Address. 18. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_Country[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_PostalCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_Province[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_State[0]",
+      "type": "/Ch",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_Unit[0]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_Unit[1]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_Unit[2]",
+      "type": "/Btn",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[3].Pt5Line6_ZipCode[0]",
+      "type": "/Tx",
+      "page": 4,
+      "label": "Part 5. Information About Your Children. Child 1. Physical Address. 6. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[4].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Line13a_FamilyName[3]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 25. A. Enter Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Line13b_GivenName[3]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 25. B. Enter Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Line13c_MiddleName[3]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 25. C. Enter Middle Name.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Line14_DateOfBirth[3]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 26. Enter Date of Birth. Enter as 2 digit month, 2 digit day and 4 digit year.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Line15_AlienNumber[3]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 27. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[4].Part5Line29[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 28. Is this child living with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part5Line29[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 28. Is this child living with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part5Line30[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 29. Is this child applying with you? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part5Line30[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. 29. Is this child applying with you? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line1[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 1. Are you requesting an accommodation because of your disabilities and / or impairments? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line1[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. NOTE: Read the information in the Form I - 7 51 Instructions before completing this part. 1. Are you requesting an accommodation because of your disabilities and / or impairments? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line2[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 2. Are you requesting an accommodation because of your spouse's disabilities and / or impairments? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line2[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 2. Are you requesting an accommodation because of your spouse's disabilities and / or impairments? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line3[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 3. Are you requesting an accommodation because of your included children's disabilities and / or impairments? Select No.",
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Part6Line3[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 3. Are you requesting an accommodation because of your included children's disabilities and / or impairments? Select Yes.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_Country[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_PostalCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_Province[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_State[0]",
+      "type": "/Ch",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_Unit[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_Unit[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_Unit[2]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line24_ZipCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 4. Physical Address. 24. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. C. Enter City or Town.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_Country[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_PostalCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_Province[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_State[0]",
+      "type": "/Ch",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_Unit[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_Unit[1]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_Unit[2]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt5Line30_ZipCode[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 5. Information About Your Children. Child 5. Physical Address. 30. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4_AccomodationRequested[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 4. C. Describe the nature of your disability and / or impairment and the accommodation you are requesting.",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4_BlindOrSightImpaired[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 4. B. I am blind or have low vision and request the following accommodation. Enter Accommodation.",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4_DeafOrHardOfHearing[0]",
+      "type": "/Tx",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. 4. A. I am deaf or hard of hearing and request the following accommodation. If you are requesting a sign-language interpreter, indicate for which language (for example, American Sign Language). Enter Accommodation and Language, if applicable.",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4a_chbx[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. If you answered \"Yes\" to Item Numbers 1. through 3., select any applicable box for Item Numbers 4. A. through 4. C. Provide information on the disabilities and / or impairments for each person. Select 4. A. I am deaf or hard of hearing and request the following accommodation.  ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4b_chbx[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. If you answered \"Yes\" to Item Numbers 1. through 3., select any applicable box for Item Numbers 4. A. through 4. C. Provide information on the disabilities and / or impairments for each person. Select 4. B. I am blind or have low vision and request the following accommodation.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[4].Pt6Line4c_chbx[0]",
+      "type": "/Btn",
+      "page": 5,
+      "label": "Part 6. Accommodations for Individuals With Disabilities and / or Impairments. If you answered \"Yes\" to Item Numbers 1. through 3., select any applicable box for Item Numbers 4. A. through 4. C. Provide information on the disabilities and / or impairments for each person. Select 4. C. I have another type of disability and / or impairment. ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/C",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[5].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Checkbox1[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. NOTE: Read the information on penalties in the Penalties section of the Form I - 7 51 Instructions before completing this part. NOTE:  If you selected Box 1. A. in Part 3., your spouse must also read and sign the petition in Part 8.  Signature of a conditional resident child under 14 years of age is not required; a parent may sign for a child. Petitioner's Statement. NOTE:  Select the box for either Item Number 1. A. or 1. B.  If applicable, select the box for Item Number 2. Select 1. A. I can read and understand English, and have read and understand every question and instruction on this petition, as well as my answer to every question.  I have read and understand the Acknowledgement of Appointment at U S C I S Application Support Center.",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Checkbox1[1]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. Select 1. B. The interpreter named in Part 9. has also read to me every question and instruction on this petition, as well as my answer to every question, in a language in which I am fluent.  I understand every question and instruction on this petition as translated to me by my interpreter, and have provided complete, true, and correct responses in the language indicated above.  The interpreter named in Part 9. has also read the Acknowledgement of Appointment at U S C I S Application Support Center to me, in the language in which I am fluent, and I understand this Application Support Center (A. S C) Acknowledgement as read to me by my interpreter.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Checkbox2[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. Select 2. I have requested the services of and consented to (name of preparer), who is / is not an attorney or accredited representative, preparing this petition for me.  This person who assisted me in preparing my petition has reviewed the Acknowledgement of Appointment at U S C I S Application Support Center with me, and I understand the A. S C Acknowledgement.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Checkbox2_Who[0]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. Select 2. I have requested the services of and consented to (name of preparer), who is an attorney or accredited representative, preparing this petition for me.  ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Checkbox2_Who[1]",
+      "type": "/Btn",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. Select 2. I have requested the services of and consented to (name of preparer), who is not an attorney or accredited representative, preparing this petition for me.  ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Line2_NameofRepresentative[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. If 2. is Selected, Enter Name of Preparer.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Line3_DaytimePhoneNumber[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Contact Information. 3. Enter Petitioner's Daytime Telephone Number.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Line4_MobilePhoneNumber[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Contact Information. 4. Enter Petitioner's Mobile Telephone Number, if any.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[5].P5_Line5_EmailAddress[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Contact Information. 5. Enter Petitioner's Email Address, if any.",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[5].P7_Name[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Acknowledgement of Appointment at U S C I S Application Support Center. I, (Enter Name), understand that the purpose of a U S C I S A. S C appointment is for me to provide fingerprints, photograph, and / or signature and to re-affirm that all of the information in my petition is complete, true, and correct and was provided by me.  I understand that I will sign my name to the following declaration which U S C I S will display to me at the time I provide my fingerprints, photograph, and / or signature during my A. S C appointment. Enter Name.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[5].Pt5Line1b_Language[0]",
+      "type": "/Tx",
+      "page": 6,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Statement. If 1. B. is Selected, Enter Language Used.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[6].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Checkbox2[1]",
+      "type": "/Btn",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. Select 2. I have requested the services of and consented to (name of preparer) who is / is not an attorney or accredited representative, preparing this petition for me.  This person who assisted me in preparing my petition has reviewed the Acknowledgement of Appointment at U S C I S Application Support Center with me, and I understand the A. S C Acknowledgement.",
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Line3_DaytimePhoneNumber[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Contact Information. 3. Enter Spouse's or Individual's Daytime Telephone Number.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Line4_MobilePhoneNumber[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Contact Information. 4. Enter Spouse's or Individual's Mobile Telephone Number, if any.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Line5_EmailAddress[1]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Contact Information. 5. Enter Spouse's or Individual's Email Address, if any.",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Line6a_SignatureofPetitioner[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Signature. 6. A. Petitioner's Signature. No Entry. Print and Sign completed form.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P5_Line6b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 7. Petitioner's Statement, Contact Information, Acknowledgement of Appointment at U S C I S Application Support Center, Certification, and Signature. Petitioner's Signature. 6. B. Enter Date of Signature. Enter as 2 digit Month, 2 digit Day, and 4 digit Year. ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[6].P7Line2_NameofRepresentative[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. If 2. is Selected, Enter Name of Preparer.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[6].P7_Checkbox2_Who[0]",
+      "type": "/Btn",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. Select 2. I have requested the services of and consented to (name of preparer) who is an attorney or accredited representative, preparing this petition for me.  ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[6].P7_Checkbox2_Who[1]",
+      "type": "/Btn",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. Select 2. I have requested the services of and consented to (name of preparer) who is not an attorney or accredited representative, preparing this petition for me.  ",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Checkbox1[0]",
+      "type": "/Btn",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Provide the following information about the spouse or individual listed in Part 4. NOTE: Read the information on penalties in the Penalties section of the Form I - 7 51 Instructions before completing this part. Spouse's or Individual's Statement. NOTE:  Select the box for either Item Number 1. A. or 1. B.  If applicable, select the box for Item Number 2. Select 1. A. I can read and understand English, and have read and understand every question and instruction on this petition, as well as the petitioner's answer to every question.  I have read and understand the Acknowledgement of Appointment at U S C I S Application Support Center. ",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[6].P8_Checkbox1[1]",
+      "type": "/Btn",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. Select 1. B. The interpreter named in Part 9. has also read to me every question and instruction on this petition, as well as the petitioner's answer to every question, in a language in which I am fluent.  I understand every question and instruction on this petition as translated to me by my interpreter, and have provided complete, true, and correct responses in the language indicated above.  The interpreter named in Part 9. has also read the Acknowledgement of Appointment at U S C I S Application Support Center to me, in the language in which I am fluent, and I understand this Application Support Center (A. S C) Acknowledgement as read to me by my interpreter.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[6].Pt7Line1b_Language[0]",
+      "type": "/Tx",
+      "page": 7,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Statement. If 1. B. is Selected, Enter Language Used.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[7].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[7].P5_Line6a_SignatureofSpouse[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Signature. 6. A. Spouse's or Individual's Signature. No Entry. Print and Sign completed form.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[7].P5_Line6b_DateofSignature[1]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Spouse's or Individual's Signature. 6. B. Enter Date of Signature. Enter as 2 digit Month, 2 digit Day, and 4 digit Year. ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line1a_InterpretersFamilyName[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Provide the following information about the interpreter. Interpreter's Full Name. 1. A. Enter Interpreter's Family Name (Last Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line1b_InterpretersGivenName[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Full Name. 1. B. Enter Interpreter's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line2_NameofBusinessor[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. 2. Enter Interpreter's Business or Organization Name, if any.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line3a_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. A. Enter Street Number and Name.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line4_InterpretersDaytimePhoneNumber[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 4. Enter Interpreter's Daytime Telephone Number.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[7].P6_Line5_InterpretersEmailAddress[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Contact Information. 5. Enter Interpreter's Email Address, if any.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[7].Pt8_Name[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 8. Spouse's or Individual Listed in Part 4.'s Statement, Contact Information, Acknowledgement of Appointment U S C I S Application Support Center, Certification, and Signature (if applicable). Acknowledgement of Appointment at U S C I S Application Support Center. I, (Enter Name), understand that the purpose of a U S C I S A. S C appointment is for me to provide my fingerprints, photograph, and / or signature and to re-affirm that all of the information in my petition is complete, true, and correct and was provided by me.  I understand that I will sign my name to the following declaration which U S C I S will display to me at the time I provide my fingerprints, photograph, and / or signature during my A. S C appointment. Enter Name.",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_CityOrTown[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. 3. C. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_Country[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_PostalCode[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. G. Enter Postal Code.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_Province[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_State[0]",
+      "type": "/Ch",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_Unit[0]",
+      "type": "/Btn",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_Unit[1]",
+      "type": "/Btn",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_Unit[2]",
+      "type": "/Btn",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[7].Pt9Line3_ZipCode[0]",
+      "type": "/Tx",
+      "page": 8,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Mailing Address. 3. E. Enter Zip Code.",
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[8].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[8].P6_Language[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Certification. I certify that: I am fluent in English and (enter language), which is the same language provided in Part 7., Item Number 1. B. Enter Language in which you are fluent.",
+      "max_len": 18
+    },
+    {
+      "name": "form1[0].#subform[8].P6_Line6a_Signature[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 6. A. Interpreter's Signature. No Entry. Print and Sign completed form.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[8].P6_Line6b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 9. Interpreter's Contact Information, Certification, and Signature. Interpreter's Signature. 6. B. Enter Date of Signature. Enter as 2 digit Month, 2 digit Day, and 4 digit Year. ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line1a_FamilyName[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Provide the following information about the preparer. Preparer's Full Name. 1. A. Enter Preparer's Family Name (Last Name). ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line1b_PreparersGivenName[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Full Name. 1. B. Enter Preparer's Given Name (First Name).",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line2_NameofBusinessor[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. 2. Enter Preparer's Business or Organization Name, if any.",
+      "flags": [],
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3c_CityTown[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. C. Enter City or Town.",
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3d_State[0]",
+      "type": "/Ch",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. D. Select State from List of States.",
+      "flags": [],
+      "options": [
+        " ",
+        "AA",
+        "AE",
+        "AK",
+        "AL",
+        "AP",
+        "AR",
+        "AS",
+        "AZ",
+        "CA",
+        "CO",
+        "CT",
+        "DC",
+        "DE",
+        "FL",
+        "FM",
+        "GA",
+        "GU",
+        "HI",
+        "IA",
+        "ID",
+        "IL",
+        "IN",
+        "KS",
+        "KY",
+        "LA",
+        "MA",
+        "MD",
+        "ME",
+        "MH",
+        "MI",
+        "MN",
+        "MO",
+        "MP",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NJ",
+        "NM",
+        "NV",
+        "NY",
+        "OH",
+        "OK",
+        "OR",
+        "PA",
+        "PR",
+        "PW",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "TX",
+        "UT",
+        "VA",
+        "VI",
+        "VT",
+        "WA",
+        "WI",
+        "WV",
+        "WY"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3e_ZipCode[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. E. Enter Zip Code.",
+      "flags": [],
+      "max_len": 5
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3f_Province[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. F. Enter Province.",
+      "flags": [],
+      "max_len": 20
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3g_PostalCode[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. G. Enter Postal Code.",
+      "flags": [],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line3h_Country[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. H. Enter Country.",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line4_PreparersDaytimePhoneNumber[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Contact Information. 4. Enter Preparer's Daytime Telephone Number.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line5_PreparersFaxNumber[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Contact Information. 5. Enter Preparer's Fax Number.",
+      "flags": [],
+      "max_len": 10
+    },
+    {
+      "name": "form1[0].#subform[8].P7_Line6_PreparersEmailAddress[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Contact Information. 6. Enter Preparer's Email Address, if any.",
+      "flags": [],
+      "max_len": 38
+    },
+    {
+      "name": "form1[0].#subform[8].P7_checkbox7[0]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Statement. Select 7. A. I am not an attorney or accredited representative but have prepared this petition on behalf of the petitioner and with the petitioner's consent. ",
+      "on_value": "/A",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].P7_checkbox7[1]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Statement. Select 7. B. I am an attorney or accredited representative and my representation of the petitioner in this case extends / does not extend beyond the preparation of this petition.",
+      "on_value": "/B",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Item7b_Extends[0]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Statement. Select 7. B. I am an attorney or accredited representative and my representation of the petitioner in this case extends beyond the preparation of this petition. NOTE:  If you are an attorney or accredited representative whose representation extends beyond preparation of this petition, you must submit a completed Form G - 28, Notice of Entry of Appearance as Attorney or Accredited Representative, with this petition.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/Y",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Item7b_NotExtend[0]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Statement. Select 7. B. I am an attorney or accredited representative and my representation of the petitioner in this case does not extend beyond the preparation of this petition.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "on_value": "/N",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Line3_AptSteFlrNumber[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. B. Enter Apartment, Suite or Floor Number.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Line3_Unit[0]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. B. Select Apartment.",
+      "on_value": "/ APT ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Line3_Unit[1]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. B. Select Suite.",
+      "on_value": "/ STE ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt10Line3_Unit[2]",
+      "type": "/Btn",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. B. Select Floor.",
+      "on_value": "/ FLR ",
+      "off_value": "/Off"
+    },
+    {
+      "name": "form1[0].#subform[8].Pt9Line3_StreetNumberName[0]",
+      "type": "/Tx",
+      "page": 9,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Mailing Address. 3. A. Enter Street Number and Name. ",
+      "max_len": 34
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[9].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 10,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[9].P7_Line8a_SignatureofPreparer[0]",
+      "type": "/Tx",
+      "page": 10,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Signature. 8. A. Preparer's Signature. No Entry. Print and Sign completed form.",
+      "flags": [
+        "ReadOnly"
+      ],
+      "max_len": 1
+    },
+    {
+      "name": "form1[0].#subform[9].P7_Line8b_DateofSignature[0]",
+      "type": "/Tx",
+      "page": 10,
+      "label": "Part 10. Contact Information, Statement, Certification, and Signature of the Person Preparing this Petition, If Other Than the Petitioner. Preparer's Signature. 8. B. Enter Date of Signature. Enter as 2 digit Month, 2 digit Day, and 4 digit Year. ",
+      "flags": []
+    },
+    {
+      "name": "form1[0].#pageSet[0].Page1[10].PDF417BarCode1[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "PDF417BarCode1",
+      "flags": [
+        "ReadOnly",
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].P1_Line7_AlienNumber[1]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 2. Enter Alien Registration Number (A. Number), if any.",
+      "flags": [
+        "ReadOnly",
+        "Comb"
+      ],
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line3a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 3. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line3b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 3. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line3c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 3. C. Enter Item Number.",
+      "flags": [],
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line3d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 3. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line4a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 4. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line4b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 4. B. Enter Part Number.",
+      "max_len": 4
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line4c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 4. C. Enter Item Number.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line4d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 4. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line5a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 5. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line5b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 5. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line5c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 5. C. Enter Item Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line5d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 5. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line6a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 6. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line6b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 6. B. Enter Part Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line6c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 6. C. Enter Item Number.",
+      "max_len": 6
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line6d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 6. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line7a_PageNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 7. A. Enter Page Number.",
+      "max_len": 2
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line7b_PartNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 7. B. Enter Part Number.",
+      "max_len": 4
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line7c_ItemNumber[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 7. C. Enter Item Number.",
+      "max_len": 9
+    },
+    {
+      "name": "form1[0].#subform[10].P8_Line7d_AdditionalInfo[0]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. 7. D. Enter Additional Information.",
+      "flags": [
+        "Multiline"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].Pt1Line1a_FamilyName[1]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. If you need extra space to provide any additional information within this petition, use the space below.  If you need more space than what is provided, you may make copies of this page to complete and file with this petition or attach a separate sheet of paper.  Type or print your name and A. Number (if any) at the top of each sheet; indicate the Page Number, Part Number, and Item Number to which your answer refers; and sign and date each sheet. Your Full Name. 1. A. Enter Family Name (Last Name).",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].Pt1Line1b_GivenName[1]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. Your Full Name. 1. B. Enter Given Name (First Name). ",
+      "flags": [
+        "ReadOnly"
+      ]
+    },
+    {
+      "name": "form1[0].#subform[10].Pt1Line1c_MiddleName[1]",
+      "type": "/Tx",
+      "page": 11,
+      "label": "Part 11. Additional Information. Your Full Name. 1. C. Enter Middle Name.",
+      "flags": [
+        "ReadOnly"
+      ]
+    }
+  ]
+}

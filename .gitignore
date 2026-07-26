@@ -1,0 +1,39 @@
+# --- secrets: never commit ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- generated applicant PDFs (contain PII) ---
+out/
+generated_forms/
+*_filled.pdf
+
+# --- python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+htmlcov/
+.coverage
+
+# --- pdd local state (keep prompts + architecture.json, drop machine state) ---
+.pdd/core_dumps/
+.pdd/cache/
+.pdd/worktrees/
+.pdd/backups/
+litellm_cache.sqlite/
+litellm_cache.sqlite
+
+# --- node / dashboard ---
+node_modules/
+dashboard/dist/
+dashboard/.vite/
+
+# --- os ---
+.DS_Store

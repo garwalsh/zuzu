@@ -1,0 +1,62 @@
+<pdd-reason>Session state must live behind an interface from day one. Layer 2 swaps in Redis for horizontal scale, and that has to be a config flip rather than a rewrite of every call site.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+<pdd-dependency>contract_Python.prompt</pdd-dependency>
+<pdd-dependency>form_registry_Python.prompt</pdd-dependency>
+
+<include>prompts/contract_Python.prompt</include>
+
+Write a Python module providing session state for the Zuzu orchestrator: what
+this caller has told us so far, and what the voice agent should ask next.
+
+Requirements:
+
+1. Define a `Session` dataclass with `session_id: str`, `caller_id: str`,
+   `form_id: str`, `values: dict[str, FieldValue]`, `preferred_language: str`,
+   `is_returning: bool`, `created_at: datetime`, and `pdf_path: str | None`.
+
+2. Define a `SessionStore` Protocol with async methods `create`, `get`, `save_field`,
+   `set_pdf_path`, and `delete`. Everything is async even where the in-memory
+   implementation does not need to be, so the Redis implementation is a drop-in
+   and no call site changes in Layer 2.
+
+3. Implement `InMemorySessionStore` backed by a plain dict guarded by an
+   `asyncio.Lock`. Two tool calls from the same conversation can land
+   concurrently, and a lost write here is a lost answer from a real applicant.
+
+4. `save_field(session_id, field_id, value, confidence, language, source)` stores
+   a `FieldValue` carrying provenance, overwrites any prior value for that id,
+   and returns the updated `Session`. Raise `SessionNotFoundError` for an unknown
+   session id rather than silently creating one -- a save against a session that
+   does not exist means the agent and orchestrator have diverged.
+
+5. Provide `next_missing_field(session, schema) -> FormField | None` returning the
+   first schema field, in schema order, that has no stored value and whose
+   `depends_on` field (if any) has a stored non-skipped value. Returning None is
+   what tells the agent to move to form generation.
+
+   Ask about optional fields too, not just required ones. Passport number, I-94
+   number, and SEVIS number are optional to *submit* but they have boxes on the
+   form, and an applicant who has them should not have to discover later that
+   Zuzu never asked. `required` governs what blocks generation, not what gets
+   asked; the applicant can always say skip.
+
+6. Provide `counts(session, schema) -> tuple[int, int]` returning
+   `(remaining_count, known_count)`. Remaining counts **every** unanswered
+   field, not just required ones, so it matches what `next_missing_field` will
+   keep asking for. Counting only required fields reports 0 remaining on a
+   schema derived straight from a PDF -- where nothing is marked required --
+   while hundreds of questions are still to come, which invites the agent to
+   generate the form early. Known counts all stored values.
+
+7. Treat the literal stored value `"__skip__"` as answered-but-empty: it satisfies
+   the missing check so the agent stops re-asking, and the PDF engine leaves the
+   field blank. An applicant who does not know their I-94 number must be able to
+   move on.
+
+8. Expose `get_session_store()` returning a module-level singleton chosen by the
+   `STORE_BACKEND` environment variable, defaulting to the in-memory store. If
+   the value is `redis`, raise `NotImplementedError` with a message naming the
+   Layer 2 milestone -- fail loudly rather than silently running single-process
+   while claiming to be distributed.
+
+9. Type hints throughout. No FastAPI imports and no PDF imports.

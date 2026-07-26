@@ -1,0 +1,66 @@
+<pdd-reason>The completed PDF is the deliverable the applicant actually files. This form is encrypted, carries a stale XFA overlay that blanks the page in Acrobat, and uses irregular per-field checkbox export values -- a naive fill silently produces an empty form.</pdd-reason>
+<pdd-interface>{"type": "module"}</pdd-interface>
+<pdd-dependency>i765_schema_Python.prompt</pdd-dependency>
+
+<include>prompts/i765_schema_Python.prompt</include>
+
+Write a Python module that fills the official USCIS I-765 AcroForm PDF from
+collected session values using `pypdf`, and writes a completed PDF.
+
+The source PDF at `assets/i-765.pdf` is Edition 08/21/25, 7 pages, 161 fields.
+It is hostile to the obvious implementation, and each requirement below exists
+because the naive version fails silently rather than loudly.
+
+Requirements:
+
+1. Expose `fill_i765(values: dict[str, str], out_path: str | Path, schema: FormSchema | None = None) -> Path`
+   where `values` is keyed by schema field id, not by PDF field name. Resolve the
+   schema through `get_i765_schema()` when not supplied.
+
+2. The source PDF is AES-128 encrypted with an **empty user password**. After
+   constructing the reader, if `reader.is_encrypted`, call `reader.decrypt("")`
+   and raise a clear error if that does not succeed. This requires the
+   `pypdf[crypto]` extra; a missing `cryptography` dependency must surface as an
+   actionable message rather than a stack trace.
+
+3. **Delete `/XFA` from the AcroForm dictionary before writing.** This is a hybrid
+   form: filling only the AcroForm values leaves the XFA `datasets` packet stale,
+   and Acrobat prefers XFA, so the applicant opens a completed form and sees a
+   blank one. The XFA here is static (`dynamicRender` is `forbidden`), so removing
+   it loses nothing.
+
+4. Set `/NeedAppearances` to true on the AcroForm **and** let pypdf generate real
+   appearance streams via `update_page_form_field_values(..., auto_regenerate=False)`
+   applied per page. 112 of the 119 text fields ship with no appearance stream, so
+   viewers that honor neither path render nothing.
+
+5. Checkboxes are independent fields with irregular per-field export values --
+   `/1`, `/2`, `/3`, `/Y`, `/N`, `/Single`, `/Married`, and unit selectors whose
+   names contain leading and trailing spaces such as `/ APT `. There are no radio
+   groups. For a selected choice option, set **both** `/V` and `/AS` to a
+   `NameObject` built from the schema's `pdf_value`, and set unselected sibling
+   options to `/Off`. Take the export value from the schema; never construct it.
+
+6. The eligibility category field uses `pdf_field_parts`: split a code such as
+   `(c)(3)(B)` or `c3b` into its letter, digits, and optional trailing letter and
+   write them into the three part fields in order. If the value cannot be parsed
+   into that shape, leave all three blank rather than writing a guess -- a wrong
+   eligibility category is the single most consequential error on this form.
+
+7. Skip any field whose value is missing, empty, or the sentinel `"__skip__"`.
+   Never write a placeholder, a default, or an inferred value into a field the
+   applicant did not answer.
+
+8. Enforce `max_len` from the schema by truncating, and normalize before writing:
+   strip non-digits from `ssn`, `a_number`, `zip`, and `phone` typed fields;
+   uppercase `state` values and reject any that is not one of the form's exact
+   export codes; render `date` typed values as `mm/dd/yyyy`.
+
+9. Create the output directory if needed and return the written `Path`. Do not
+   log any field value: log only field ids and a count.
+
+10. Expose `missing_required(values, schema) -> list[str]` returning the ids of
+    required fields with no usable value, so the caller can report
+    `status="incomplete"` without attempting a fill.
+
+11. Type hints throughout. No FastAPI imports and no network access.
