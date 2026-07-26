@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "cfe3942d984f5d15bd2656d99e5000d6a12b87b340670719354fc91a7dc3fa13",
+      "path": "api/event_bus.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "bba123d4605420f3438e65e98fbb8e8b8a0c7e7089a1b65c32ec837d59f94e1f",
+      "path": "prompts/contract_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "0e8ab1ab41f2e013f067f2f0bc30bea795ede37c71a4a68ddca931f8b0404940",
+      "path": "prompts/event_bus_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "52972e250ae7c09a69f1feb0ffc69db66bd21c38a5c33c744995756b8d9a7ece",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "00aafbbb2d965e43299de553b6e4902d40e91533a36094e89f3942dd991d3c36",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/event_bus_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:06.094765+00:00",
+    "transaction_id": "baseline-1853e265-9616-4cd3-a61c-b4f3d368c7a2"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/event_bus_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "0737a3853380f2db871a195da97d0daf7d6db818fa0c382a2bd827d7fe86b70a"
+}

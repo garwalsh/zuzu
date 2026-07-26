@@ -1,0 +1,55 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "b4e43f4d7a3935532c7c1e36f6e7445eebe9a95d9e9a398ab9ce47ed31ac8fe4",
+      "path": "api/main.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "bba123d4605420f3438e65e98fbb8e8b8a0c7e7089a1b65c32ec837d59f94e1f",
+      "path": "prompts/contract_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "193941c4e92498d37fa5094144f858693a977f724e1b968bc3875dea7c64b28d",
+      "path": "prompts/session_store_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "cb9245a925f0d3fa8e85a8aa127aa3159c118b441ef794792b46637e0f5dc196",
+      "path": "prompts/main_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "dd77f10e524ccae12453f0251fcd111dc1bbca4edb57559f67a3d94d82bfed14",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "8fb96bf852eeb45f3b4befa04fd8be1685895aa8b25fe04fcf2139d40e9678c3",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/main_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:12.769915+00:00",
+    "transaction_id": "baseline-a4772f87-5139-4f73-8d28-c41dc8967366"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/main_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "99dbcacefde66fd11c18968a478f93ecdc04fd297b6870e7d79b5f05a45cd8d2"
+}

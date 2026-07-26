@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "8c32047edad41d78624524ed62e2b812466f86bd2f0a452812d4ce4ba4d8f5b2",
+      "path": "mocks/mock_voice_client.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "bba123d4605420f3438e65e98fbb8e8b8a0c7e7089a1b65c32ec837d59f94e1f",
+      "path": "prompts/contract_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "8523108983125d8b26dfaa4e2b56f8a227ba5dd46abc8140c68c9bc4d09a2d18",
+      "path": "prompts/mock_voice_client_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "b64adf85299cfb134bb2f10df6b9a631378e025339e64e755e5daee6dc9f4046",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "f2b9cd76243da6c16ef04e68503fe77c5a541d7e62dd5e6812cf91a6f7d2bc99",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/mock_voice_client_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:17.178144+00:00",
+    "transaction_id": "baseline-ba52594e-3ec1-4733-b85c-4537a1bc0e27"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/mock_voice_client_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "4b30944da8353ddb698d50f8aa3aa7a80c918bf0c4f7e64bc16a447cbc7cf338"
+}

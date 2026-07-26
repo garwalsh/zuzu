@@ -1,0 +1,41 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "554ac4b464fa701258cafd68f38a3df9392799cf93c0243581bdb54b021777b4",
+      "path": "api/contract.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "bba123d4605420f3438e65e98fbb8e8b8a0c7e7089a1b65c32ec837d59f94e1f",
+      "path": "prompts/contract_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "2c1a2239e383a58fd1a1983a6157fe8e195ea66f2a9f67a871d3a0b58d38359e",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "8ebbf8cdf5ea14a8c4a4cc49185f6f81f2bf2896d8f360b038687075facee02e",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/contract_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:03.830576+00:00",
+    "transaction_id": "baseline-b893974b-28fb-443b-b091-b767e629094f"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/contract_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "03818d5213edc0530468203458a1709c74f4099cf0ed62da4683858494ba9a33"
+}

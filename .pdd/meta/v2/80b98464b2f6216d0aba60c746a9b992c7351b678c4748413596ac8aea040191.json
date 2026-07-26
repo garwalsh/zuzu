@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "c0d3c007ecde90cd5b8344f5fd80cd1d0d9014dd9cb444e1ce633746e7957889",
+      "path": "api/pdf_engine.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "58d3b1da0bca3ec3b954abd1d3ad90e999115fbd511699f896db7cba9fa6b697",
+      "path": "prompts/i765_schema_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "f33cbcf2d0cbd98f732093b66e17dc167686eefa5565b1ce9c2ce9c96eb78e08",
+      "path": "prompts/pdf_engine_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "e5cde48b8c9bfc98549099b8bae2bb85b8539ddc4fd182d007305dd917729546",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "1f12500ccf56c5d5ae328d894f84bfef5d1251d718a80fa3a48d8b8b10164ad2",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/pdf_engine_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:19.389141+00:00",
+    "transaction_id": "baseline-a4a974a7-16f1-43ef-96dc-b9ea290ef212"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/pdf_engine_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "3cd85d0ead88f605cac2fc7806fde3fd1a3cc8aa5364f0aa81512f81e1cdf878"
+}

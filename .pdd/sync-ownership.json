@@ -107,7 +107,7 @@
       "owner": "zuzu-maintainers"
     },
     {
-      "pattern": "stories/*",
+      "pattern": "user_stories/*",
       "inventory": "HUMAN_OWNED",
       "role": "user-story",
       "owner": "zuzu-maintainers"

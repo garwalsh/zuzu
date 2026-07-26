@@ -1,0 +1,48 @@
+{
+  "artifacts": [
+    {
+      "git_mode": "100644",
+      "hash": "1f346103b38e2f93b5941f7e0371d2761081d8b210847337e8dc3487d4adddbf",
+      "path": "api/memory.py",
+      "required": true,
+      "role": "code"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "58d3b1da0bca3ec3b954abd1d3ad90e999115fbd511699f896db7cba9fa6b697",
+      "path": "prompts/i765_schema_Python.prompt",
+      "required": true,
+      "role": "include"
+    },
+    {
+      "git_mode": "100644",
+      "hash": "b0e7c61771ee60b81d8eed476b2e4499deccc98a6704bf7ffa856ce2f550b741",
+      "path": "prompts/memory_Python.prompt",
+      "required": true,
+      "role": "prompt"
+    }
+  ],
+  "attestation_ref": null,
+  "claimed_semantic_status": "UNKNOWN",
+  "dependency_snapshot_digest": "7e40a70fa1fb8b3cbd81f206cdd3c129a2e32d0ce61f1e1feff8c5b93a0f350b",
+  "hash_algorithm_version": 2,
+  "manifest_digest": "120338d0a2a6a861a8222deb40f1997af6d42bac831bb007a85e7bd930a94da3",
+  "nondeterministic_inputs": false,
+  "provenance": {
+    "command": "pdd baseline --module prompts/memory_Python.prompt",
+    "git_commit": "9759a052bc2afd3726bf459fa44f0af56983dd32",
+    "kind": "baseline-reset",
+    "pdd_version": "0.0.308",
+    "reason": "Hackathon submission gate: current bytes reviewed against this prompt and accepted as the baseline. Evidence: 46 passing tests and a live deployment.",
+    "reviewed_by": "bhargav",
+    "timestamp": "2026-07-26T03:00:14.942481+00:00",
+    "transaction_id": "baseline-682c65b5-4159-4947-b4ae-139afcff7a24"
+  },
+  "schema_version": 2,
+  "unit_id": {
+    "language_id": "python",
+    "prompt_relpath": "prompts/memory_Python.prompt",
+    "repository_id": "b93b6cc2-26a7-4a32-8c5f-c9c16c1ac26e"
+  },
+  "verification_profile_digest": "30812d307bc9f1a506709081ae80b713ba96ad71809f8752cee1f9734ac4ab68"
+}
