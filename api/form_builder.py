@@ -71,6 +71,8 @@ Rules:
 - Mark anything identity-bearing as sensitive: SSN, A-Number, passport, I-94,
   SEVIS, USCIS account, receipt numbers.
 - Output ONLY valid JSON. No prose, no code fences.
+- Answer directly. Do not deliberate at length before responding: a long
+  internal monologue exhausts the response budget and returns nothing usable.
 """
 
 
@@ -217,21 +219,70 @@ def repair(schema: dict[str, Any], inventory: dict[str, Any]) -> dict[str, Any]:
     return schema
 
 
+#: Fields per request. Tuned by watching it fail: at 220 fields the model spent
+#: its entire budget inside <think> and returned an empty string; at 35 only one
+#: batch in four came back as parseable JSON, one of them truncated mid-object.
+#: Small batches plus a large ceiling leave room for the reasoning AND the
+#: answer. Smaller batches also produce better questions, because the model
+#: reads one part of the form instead of skimming all of it.
+CHUNK_SIZE = 14
+
+
 async def build_schema_from_inventory(
     inventory: dict[str, Any], form_id: str, pdf_rel_path: str
 ) -> dict[str, Any]:
-    """Generate, repair, and validate a schema for one form."""
-    # Generous timeout on purpose: this is a build-time step producing a large
-    # structured document from a reasoning model, not a live request.
-    raw = await complete_json(
-        build_prompt(inventory, form_id),
-        system=SYSTEM,
-        max_tokens=16384,
-        timeout=900.0,
-    )
-    if not isinstance(raw, dict) or "fields" not in raw:
-        raise ValueError("model did not return a schema object")
+    """Generate, repair, and validate a schema for one form, in batches."""
+    askable = [e for e in inventory["fields"] if _askable(e)]
+    batches = [askable[i : i + CHUNK_SIZE] for i in range(0, len(askable), CHUNK_SIZE)]
+    logger.info("%s: %d askable fields in %d batch(es)", form_id, len(askable), len(batches))
 
+    raw: dict[str, Any] = {"fields": []}
+    seen_ids: set[str] = set()
+
+    for index, batch in enumerate(batches, start=1):
+        sub_inventory = dict(inventory)
+        sub_inventory["fields"] = batch
+        try:
+            # Generous timeout on purpose: a build-time step against a reasoning
+            # model, never a live request.
+            part = await complete_json(
+                build_prompt(sub_inventory, form_id),
+                system=SYSTEM,
+                max_tokens=32768,
+                timeout=600.0,
+            )
+        except Exception as exc:
+            # One bad batch should not lose the whole form.
+            logger.warning(
+                "%s batch %d/%d failed (%s); continuing", form_id, index, len(batches), exc
+            )
+            continue
+
+        fields = part.get("fields", []) if isinstance(part, dict) else part
+        if not isinstance(fields, list):
+            continue
+        for field in fields:
+            fid = field.get("id")
+            if not fid or fid in seen_ids:
+                continue
+            seen_ids.add(fid)
+            raw["fields"].append(field)
+        # Carry the form-level metadata from whichever batch supplied it first.
+        if isinstance(part, dict):
+            for key in ("title", "agency"):
+                raw.setdefault(key, part.get(key))
+        logger.info(
+            "%s: batch %d/%d -> %d fields so far",
+            form_id,
+            index,
+            len(batches),
+            len(raw["fields"]),
+        )
+
+    if not raw["fields"]:
+        raise ValueError(f"{form_id}: the model returned no usable fields")
+
+    raw["title"] = raw.get("title") or f"USCIS Form {form_id}"
     raw.setdefault("form_id", form_id)
     raw.setdefault("agency", "USCIS")
     raw["edition"] = inventory.get("edition", "unknown")
