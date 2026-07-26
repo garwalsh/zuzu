@@ -59,7 +59,7 @@ from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import DeletionUnverifiable, Tier, _user_key, get_memory, summarize
-from api.orchestrator import note_intake, registered_agents, run_pipeline
+from api.orchestrator import BAND_AGENTS, note_intake, registered_agents, run_pipeline
 from api.pdf_engine import missing_required
 from api.retrieval import applicable_items, fetch_document_checklist
 from api.security import (
@@ -798,7 +798,10 @@ async def agents_index() -> dict[str, Any]:
     """The pipeline's stages and their Band agent identities, checked live."""
     agents = await registered_agents()
     return {
-        "stages": ["extractor", "mapper", "validator", "filler", "auditor"],
+        # Derived, not restated. This list was written out by hand and had
+        # already drifted: Intake was added to the pipeline and stamped on the
+        # audit trail while this endpoint went on advertising five stages.
+        "stages": list(BAND_AGENTS),
         "agents": agents,
         "dispatch": "in-process",
         "note": (
