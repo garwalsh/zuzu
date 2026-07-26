@@ -389,6 +389,15 @@ function render(values, sources){
   }
 }
 
+function resetGrid(){
+  schema.fields.forEach(f => {
+    const box = el(`f-${f.id}`);
+    if (!box) return;
+    box.classList.remove('set','frommem','skipped','flash','asking');
+    el(`v-${f.id}`).textContent = '';
+  });
+}
+
 function resetView(){
   seen = {}; turns = 0; saves = [];
   el('convo').innerHTML = `<div class="empty"><div class="big">Starting…</div>
@@ -434,6 +443,13 @@ async function hydrate(id){
   const r = await fetch(`/sessions/${id}/values`, {headers: H});
   if (!r.ok) return;
   const d = await r.json();
+  // Follow the session's form. The applicant may have asked for something other
+  // than the page default, and the grid must be the form they are actually
+  // filling -- not the one whoever opened the tab happened to load.
+  if (d.form_id && schema && d.form_id !== schema.form_id){
+    await loadSchema(d.form_id);
+    resetGrid();
+  }
   // Draw a conversation turn the first time each field resolves.
   Object.entries(d.values).forEach(([k, v]) => {
     if (seen[k] === undefined && byId[k]) addTurn(byId[k], v);

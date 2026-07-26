@@ -761,6 +761,9 @@ async def session_values(
     remaining, known = counts(session, schema)
     return {
         "session_id": session_id,
+        "form_id": schema.form_id,
+        "form_title": schema.title,
+        "form_edition": schema.edition,
         "is_returning": session.is_returning,
         "remaining_count": remaining,
         "known_count": known,
