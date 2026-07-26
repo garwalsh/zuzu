@@ -1,0 +1,157 @@
+<svg viewBox="0 0 760 890" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b6f76"/>
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b33a2b"/>
+    </marker>
+    <style>
+      .lbl{font:600 9.5px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;fill:#6b6f76}
+      .ttl{font:700 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;fill:#1a1d21}
+      .sub{font:400 10.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;fill:#6b6f76}
+      .tag{font:700 8.5px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;fill:#b33a2b}
+      .ok{font:700 8.5px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;fill:#2f6b4f}
+      .box{fill:#ffffff;stroke:#cfcabf;stroke-width:1.5}
+      .band{fill:#ffffff;stroke:#b33a2b;stroke-width:1.5}
+      .zone{fill:none;stroke:#d8d4cb;stroke-width:1;stroke-dasharray:4 3}
+      .flow{stroke:#6b6f76;stroke-width:1.4;fill:none;marker-end:url(#a)}
+      .flowr{stroke:#b33a2b;stroke-width:1.4;fill:none;marker-end:url(#ar)}
+    </style>
+  </defs>
+
+  <!-- ============ APPLICANT ============ -->
+  <rect class="box" x="286" y="8" width="188" height="44" rx="0"/>
+  <text class="ttl" x="380" y="28" text-anchor="middle">Applicant</text>
+  <text class="sub" x="380" y="43" text-anchor="middle">any language · a phone call</text>
+  <path class="flow" d="M380,52 L380,74"/>
+
+  <!-- ============ AGENT 1: VOICE ============ -->
+  <rect class="band" x="230" y="76" width="300" height="60"/>
+  <text class="tag" x="242" y="93">AGENT 1 · ELEVENLABS</text>
+  <text class="ttl" x="242" y="110">Voice agent</text>
+  <text class="sub" x="242" y="126">Listens, speaks, confirms. Knows no specific form.</text>
+  <path class="flow" d="M380,136 L380,160"/>
+  <text class="lbl" x="392" y="152">5 server tools</text>
+
+  <!-- ============ ORCHESTRATOR ZONE ============ -->
+  <rect class="zone" x="14" y="162" width="732" height="418"/>
+  <text class="lbl" x="26" y="178">Orchestrator · FastAPI on Render · agent identities registered on Band</text>
+
+  <!-- ---- live loop: intake ---- -->
+  <rect class="band" x="230" y="190" width="300" height="62"/>
+  <text class="tag" x="242" y="207">AGENT 2 · ZUZU-INTAKE</text>
+  <text class="ttl" x="242" y="224">Intake</text>
+  <text class="sub" x="242" y="240">Chooses the next question. Once per turn, 0.03 ms.</text>
+
+  <!-- mem0 on the left -->
+  <rect class="box" x="26" y="186" width="186" height="128"/>
+  <text class="tag" x="38" y="203">MEM0 · USER-ISOLATED</text>
+  <text class="ttl" x="38" y="220">Memory, in three tiers</text>
+  <rect x="38" y="230" width="162" height="24" fill="#fbfaf7" stroke="#cfcabf" stroke-width="1"/>
+  <text class="sub" x="46" y="246"><tspan font-weight="700" fill="#1a1d21">Semantic</tspan> — stable facts</text>
+  <rect x="38" y="256" width="162" height="24" fill="#fbfaf7" stroke="#cfcabf" stroke-width="1"/>
+  <text class="sub" x="46" y="272"><tspan font-weight="700" fill="#1a1d21">Episodic</tspan> — past calls</text>
+  <rect x="38" y="282" width="162" height="24" fill="#fbfaf7" stroke="#cfcabf" stroke-width="1"/>
+  <text class="sub" x="46" y="298"><tspan font-weight="700" fill="#1a1d21">Procedural</tspan> — learned rules</text>
+  <path class="flow" d="M212,222 L228,222"/>
+  <path class="flow" d="M228,238 L212,238"/>
+  <text class="lbl" x="38" y="330">keyed by a hash</text>
+
+  <!-- loop arrow back to voice -->
+  <path class="flow" d="M530,206 L560,206 L560,106 L532,106"/>
+  <text class="lbl" x="566" y="160">one question</text>
+  <text class="lbl" x="566" y="172">at a time</text>
+
+  <path class="flow" d="M380,252 L380,278"/>
+  <text class="lbl" x="392" y="270">on hang-up</text>
+
+  <!-- ---- batch pipeline: agents 3-7 ---- -->
+  <text class="lbl" x="230" y="294">The pipeline, with a paper trail</text>
+
+  <rect class="band" x="230" y="300" width="300" height="46"/>
+  <text class="tag" x="242" y="316">AGENT 3 · ZUZU-EXTRACTOR</text>
+  <text class="sub" x="242" y="333"><tspan font-weight="700" fill="#1a1d21">Extractor</tspan> — where every value came from</text>
+  <path class="flow" d="M380,346 L380,358"/>
+
+  <rect class="band" x="230" y="360" width="300" height="46"/>
+  <text class="tag" x="242" y="376">AGENT 4 · ZUZU-MAPPER</text>
+  <text class="sub" x="242" y="393"><tspan font-weight="700" fill="#1a1d21">Mapper</tspan> — onto this form's real fields</text>
+  <path class="flow" d="M380,406 L380,418"/>
+
+  <rect class="band" x="230" y="420" width="300" height="46"/>
+  <text class="tag" x="242" y="436">AGENT 5 · ZUZU-VALIDATOR</text>
+  <text class="sub" x="242" y="453"><tspan font-weight="700" fill="#1a1d21">Validator</tspan> — what no single field can show</text>
+  <path class="flow" d="M380,466 L380,478"/>
+
+  <rect class="band" x="230" y="480" width="300" height="46"/>
+  <text class="tag" x="242" y="496">AGENT 6 · ZUZU-FILLER</text>
+  <text class="sub" x="242" y="513"><tspan font-weight="700" fill="#1a1d21">Filler</tspan> — writes it, or refuses to</text>
+  <path class="flow" d="M380,526 L380,538"/>
+
+  <rect class="band" x="230" y="540" width="300" height="34"/>
+  <text class="tag" x="242" y="556">AGENT 7 · ZUZU-AUDITOR</text>
+  <text class="sub" x="242" y="569"><tspan font-weight="700" fill="#1a1d21">Auditor</tspan> — seals the record</text>
+
+  <!-- outputs on the right -->
+  <rect class="box" x="556" y="300" width="176" height="60"/>
+  <text class="tag" x="568" y="317">OUTPUT</text>
+  <text class="ttl" x="568" y="334">The filled PDF</text>
+  <text class="sub" x="568" y="350">signature left blank, by design</text>
+  <path class="flow" d="M530,323 L554,323"/>
+
+  <rect class="box" x="556" y="460" width="176" height="72"/>
+  <text class="tag" x="568" y="477">OUTPUT</text>
+  <text class="ttl" x="568" y="494">The audit trail</text>
+  <text class="sub" x="568" y="510">which agent set which field,</text>
+  <text class="sub" x="568" y="523">from voice or from memory</text>
+  <path class="flow" d="M530,557 L544,557 L544,496 L554,496"/>
+
+  <!-- ============ SUPPORTING PLANE ============ -->
+  <text class="lbl" x="26" y="608">Everything above stands on these</text>
+  <line x1="26" y1="614" x2="734" y2="614" stroke="#1a1d21" stroke-width="1.5"/>
+
+  <!-- rtrvr -->
+  <rect class="box" x="26" y="626" width="222" height="98"/>
+  <text class="tag" x="38" y="643">RTRVR.AI</text>
+  <text class="ttl" x="38" y="661">Reads uscis.gov</text>
+  <text class="sub" x="38" y="678">A real browser, so the page loads.</text>
+  <text class="sub" x="38" y="692">Our own HTTP client gets 403 from</text>
+  <text class="sub" x="38" y="706">uscis.gov — TLS fingerprinting, not</text>
+  <text class="sub" x="38" y="720">the user agent.</text>
+
+  <!-- rocketride + tokenrouter + minimax -->
+  <rect class="box" x="262" y="626" width="240" height="98"/>
+  <text class="tag" x="274" y="643">ROCKETRIDE</text>
+  <text class="ttl" x="274" y="661">Pipeline-as-JSON</text>
+  <text class="sub" x="274" y="678">Form intake and model choice are</text>
+  <text class="sub" x="274" y="692">both config, not code. The model is</text>
+  <text class="sub" x="274" y="706">one component in the pipeline —</text>
+  <text class="sub" x="274" y="720">so swapping it is a config edit.</text>
+
+  <rect class="box" x="516" y="626" width="216" height="98"/>
+  <text class="tag" x="528" y="643">TOKENROUTER → MINIMAX</text>
+  <text class="ttl" x="528" y="661">The model lane</text>
+  <text class="sub" x="528" y="678">MiniMax-M3, reached through</text>
+  <text class="sub" x="528" y="692">TokenRouter's OpenAI-compatible</text>
+  <text class="sub" x="528" y="706">gateway, named inside the</text>
+  <text class="sub" x="528" y="720">RocketRide pipeline itself.</text>
+
+  <path class="flowr" d="M502,675 L514,675"/>
+  <text class="lbl" x="140" y="742">document text</text>
+  <text class="lbl" x="330" y="742">question wording</text>
+
+  <path class="flow" d="M137,626 L137,596 L228,596"/>
+  <path class="flow" d="M382,626 L382,596"/>
+
+  <!-- band note -->
+  <rect class="box" x="26" y="754" width="706" height="56"/>
+  <text class="tag" x="38" y="771">BAND · ORCHESTRATOR IDENTITIES</text>
+  <text class="sub" x="38" y="789">All six pipeline agents are registered on Band and verified live, and their agent ids are stamped onto every</text>
+  <text class="sub" x="38" y="803">audit entry. The stages execute in this process: Band dispatch needs agents running as WebSocket workers.</text>
+
+  <!-- render -->
+  <rect class="box" x="26" y="822" width="706" height="42"/>
+  <text class="tag" x="38" y="839">RENDER</text>
+  <text class="sub" x="38" y="856">One blueprint, one live URL. The voice agent, the dashboard and the deck are all served by this one process.</text>
+</svg>
