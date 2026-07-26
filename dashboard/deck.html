@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zuzu — presentation</title>
+<style>
+  :root{
+    --paper:#fbfaf7; --ink:#1a1d21; --rule:#d8d4cb; --rule-soft:#e8e5de;
+    --stamp:#b33a2b; --approve:#2f6b4f; --pencil:#6b6f76;
+    --box:#ffffff; --box-line:#cfcabf;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#14161a; --ink:#eceae5; --rule:#33373d; --rule-soft:#24272c;
+      --stamp:#e0705e; --approve:#5fb98d; --pencil:#9aa0a8;
+      --box:#1a1d22; --box-line:#3a3f46;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#fbfaf7; --ink:#1a1d21; --rule:#d8d4cb; --rule-soft:#e8e5de;
+    --stamp:#b33a2b; --approve:#2f6b4f; --pencil:#6b6f76;
+    --box:#ffffff; --box-line:#cfcabf;
+  }
+  :root[data-theme="dark"]{
+    --paper:#14161a; --ink:#eceae5; --rule:#33373d; --rule-soft:#24272c;
+    --stamp:#e0705e; --approve:#5fb98d; --pencil:#9aa0a8;
+    --box:#1a1d22; --box-line:#3a3f46;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;overflow:hidden}
+
+  .deck{position:relative;height:100vh;width:100vw}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;
+    padding:clamp(28px,4.4vw,68px) clamp(28px,6vw,96px);
+    max-width:1500px;margin:0 auto}
+  .slide.on{display:flex;animation:in .42s cubic-bezier(.22,.8,.3,1)}
+  @keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+
+  /* ruled header, like the band across a USCIS page */
+  .hdr{display:flex;align-items:baseline;gap:14px;padding-bottom:11px;
+    border-bottom:1.5px solid var(--ink);flex:none}
+  .part{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--stamp);font-weight:700}
+  .hdr h2{margin:0;font-size:clamp(15px,1.5vw,19px);font-weight:640;letter-spacing:-.2px}
+  .hdr .form{margin-left:auto;font-family:var(--mono);font-size:10.5px;
+    color:var(--pencil);letter-spacing:.08em}
+
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,2.2vw,30px);
+    padding:clamp(18px,3vw,44px) 0;min-height:0}
+
+  h1{margin:0;font-size:clamp(38px,6.4vw,88px);line-height:.98;letter-spacing:-.035em;
+    font-weight:760;text-wrap:balance}
+  h1 em{font-style:normal;color:var(--stamp)}
+  .lede{margin:0;font-size:clamp(17px,2.05vw,27px);line-height:1.42;max-width:26ch;
+    color:var(--ink);font-weight:400;text-wrap:balance}
+  .sub{margin:0;font-size:clamp(14px,1.35vw,17px);line-height:1.6;max-width:62ch;color:var(--pencil)}
+
+  /* the core device: a form field box */
+  .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+  .fld{border:1.5px solid var(--box-line);background:var(--box);padding:11px 14px 13px;
+    display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fld .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--pencil)}
+  .fld .val{font-size:clamp(21px,2.7vw,34px);font-weight:700;letter-spacing:-.025em;
+    font-variant-numeric:tabular-nums;line-height:1}
+  .fld .val small{font-size:.44em;font-weight:520;color:var(--pencil);letter-spacing:0}
+  .fld.mark{border-color:var(--stamp)}
+  .fld.mark .val{color:var(--stamp)}
+  .fld.ok{border-color:var(--approve)}
+  .fld.ok .val{color:var(--approve)}
+
+  ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;max-width:66ch}
+  li{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:baseline;
+    font-size:clamp(14px,1.42vw,18px);line-height:1.5}
+  li .m{font-family:var(--mono);font-size:11px;color:var(--stamp);font-weight:700;
+    letter-spacing:.05em}
+  li b{font-weight:660}
+  .note{display:block;color:var(--pencil);font-size:.88em;margin-top:4px;line-height:1.45}
+
+  table{border-collapse:collapse;width:100%;font-size:clamp(13px,1.28vw,16px)}
+  caption{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--pencil);padding-bottom:8px}
+  th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule-soft);
+    vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--pencil);font-weight:600;border-bottom-color:var(--rule)}
+  td.was{color:var(--pencil);text-decoration:line-through;text-decoration-thickness:1px}
+  td.now{font-weight:640}
+  .wrap{overflow-x:auto}
+
+  /* the flow strip */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:0}
+  .step{border:1.5px solid var(--box-line);background:var(--box);padding:10px 15px;
+    display:flex;flex-direction:column;gap:3px;flex:1;min-width:132px}
+  .step + .step{border-left:none}
+  .step .n{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;color:var(--stamp)}
+  .step .t{font-size:14px;font-weight:640}
+  .step .d{font-size:11.5px;color:var(--pencil);line-height:1.4}
+
+  .stamp{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    border:2px solid var(--stamp);color:var(--stamp);padding:7px 14px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:700;transform:rotate(-1.4deg)}
+
+  .foot{display:flex;align-items:center;gap:16px;padding-top:12px;
+    border-top:1px solid var(--rule);flex:none;
+    font-family:var(--mono);font-size:10.5px;color:var(--pencil);letter-spacing:.06em}
+  .foot .url{color:var(--ink)}
+  /* The keyboard affordance lives in the footer rather than floating over it --
+     a fixed hint in the corner sat on top of the page number. */
+  .foot .keys{margin-left:auto;opacity:.7}
+  .foot .pg{margin-left:16px;font-variant-numeric:tabular-nums}
+
+  .nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;
+    z-index:10}
+  .dot{width:22px;height:3px;background:var(--rule);border:none;padding:0;cursor:pointer}
+  .dot.on{background:var(--stamp)}
+  .dot:focus-visible{outline:2px solid var(--stamp);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1 -->
+  <section class="slide on">
+    <div class="hdr"><span class="part">Zuzu</span>
+      <h2>Voice-first U.S. immigration forms</h2>
+      <span class="form">PDD Hackathon</span></div>
+    <div class="body">
+      <h1>If you can talk,<br>you can <em>file</em>.</h1>
+      <p class="lede">Call a number, speak your language, and Zuzu fills your USCIS
+        forms with you — one plain question at a time.</p>
+      <div class="fields" style="max-width:760px">
+        <div class="fld"><span class="lab">Forms supported</span><span class="val">12</span></div>
+        <div class="fld"><span class="lab">Questions mapped</span><span class="val">1,900<small> approx</small></span></div>
+        <div class="fld ok"><span class="lab">Status</span><span class="val">Live</span></div>
+      </div>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span>
+      <span>Gar Walsh · Bhargav Chintam</span><span class="pg">1 / 10</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 1</span><h2>The problem</h2>
+      <span class="form">Why this matters</span></div>
+    <div class="body">
+      <p class="lede">USCIS forms are long, in English, and one wrong box costs months.</p>
+      <ul>
+        <li><span class="m">→</span><span>They are hardest for exactly the people the system already fails:
+          <b>disabled, elderly, low-literacy, and non-English-speaking applicants.</b></span></li>
+        <li><span class="m">→</span><span>The alternative is a lawyer at roughly <b>$2,000</b>, or filing
+          alone and hoping.<span class="note">A rejected filing is not a retry. It is months of waiting,
+            and sometimes a status that lapses in between.</span></span></li>
+        <li><span class="m">→</span><span>The information is not the hard part. <b>The form is.</b></span></li>
+      </ul>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">2 / 10</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 2</span><h2>How a call works</h2>
+      <span class="form">Orchestrator-driven</span></div>
+    <div class="body">
+      <p class="sub">The applicant says <b>“I need my work permit”</b> — never “I-765”. The voice
+        agent knows nothing about any specific form; it asks what the orchestrator hands it.</p>
+      <div class="flow">
+        <div class="step"><span class="n">01</span><span class="t">Listen</span>
+          <span class="d">ElevenLabs, in the caller’s own language</span></div>
+        <div class="step"><span class="n">02</span><span class="t">Identify</span>
+          <span class="d">Plain words or a pasted URL → the right form</span></div>
+        <div class="step"><span class="n">03</span><span class="t">Ask</span>
+          <span class="d">One question at a time, read back for confirmation</span></div>
+        <div class="step"><span class="n">04</span><span class="t">Fill</span>
+          <span class="d">The official AcroForm PDF</span></div>
+        <div class="step"><span class="n">05</span><span class="t">Hand over</span>
+          <span class="d">Completed form plus the documents to attach</span></div>
+      </div>
+      <div class="fields" style="max-width:640px">
+        <div class="fld ok"><span class="lab">Answer stored in</span><span class="val">0.03<small> ms</small></span></div>
+        <div class="fld"><span class="lab">Model on the live path</span><span class="val">None</span></div>
+      </div>
+      <p class="sub">A human is mid-sentence while those endpoints run, so nothing slow is
+        allowed on that path. Mapping and PDF work happen off it.</p>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">3 / 10</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 3</span><h2>Why the second call is short</h2>
+      <span class="form">mem0 · three tiers</span></div>
+    <div class="body">
+      <p class="lede">A returning caller answers four questions instead of thirty-three.</p>
+      <div class="flow">
+        <div class="step"><span class="n">Semantic</span><span class="t">Facts</span>
+          <span class="d">Name, date of birth, passport number</span></div>
+        <div class="step"><span class="n">Episodic</span><span class="t">Past calls</span>
+          <span class="d">Which form, how many answers, whether it finished</span></div>
+        <div class="step"><span class="n">Procedural</span><span class="t">Learned rules</span>
+          <span class="d">Speaks Spanish · has no SSN, stop asking</span></div>
+      </div>
+      <div class="fields" style="max-width:840px">
+        <div class="fld"><span class="lab">First call</span><span class="val">33<small> questions</small></span></div>
+        <div class="fld ok"><span class="lab">Second call</span><span class="val">4<small> questions</small></span></div>
+        <div class="fld"><span class="lab">Caller identity</span><span class="val">SHA-256</span></div>
+      </div>
+      <p class="sub">Tiers are stored separately, so an applicant can delete their call history and
+        keep the profile that saves them an hour. Sensitive values are not persisted at all
+        unless explicitly opted in, and the store never holds a raw phone number.</p>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">4 / 10</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 4</span><h2>A form is data, not code</h2>
+      <span class="form">Twelve forms, none hand-written</span></div>
+    <div class="body">
+      <p class="sub">Adding a form is one request. Zuzu fetches the fillable PDF, extracts its
+        AcroForm inventory, and writes the questions from the document’s own screen-reader labels.</p>
+      <div class="fields">
+        <div class="fld"><span class="lab">I-765</span><span class="val">32<small> fields</small></span></div>
+        <div class="fld"><span class="lab">N-400</span><span class="val">273</span></div>
+        <div class="fld"><span class="lab">I-130</span><span class="val">344</span></div>
+        <div class="fld"><span class="lab">I-485</span><span class="val">367</span></div>
+        <div class="fld"><span class="lab">I-589</span><span class="val">361</span></div>
+        <div class="fld"><span class="lab">+ 7 more</span><span class="val">I-90 · I-131 · I-751 · I-864 · I-821D · G-28 · I-539</span></div>
+      </div>
+      <p class="sub"><b>Field names are extracted, never recalled by a model.</b> A hallucinated field
+        name is an application that silently loses half your answers — so the model only writes the
+        wording, and every reference is validated back against the real document.</p>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">5 / 10</span></div>
+  </section>
+
+  <!-- 6 — the strongest slide -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 5</span><h2>What the real document taught us</h2>
+      <span class="form">Edition 08/21/25</span></div>
+    <div class="body">
+      <p class="lede">We built against the actual USCIS PDF. It disagreed with our own spec four times.</p>
+      <div class="wrap">
+        <table>
+          <caption>Spec said → document said</caption>
+          <thead><tr><th style="width:34%">Our spec</th><th>The form</th></tr></thead>
+          <tbody>
+            <tr><td class="was">Part 1: Initial / Renewal / Replacement</td>
+              <td class="now">Initial / <b>Replacement</b> / <b>Renewal</b>
+                <span class="note">Taking the spec literally checks “replacement” for every renewal applicant — the most common category.</span></td></tr>
+            <tr><td class="was">Collect parents’ names and the SSA-card request</td>
+              <td class="now">Neither exists on this edition
+                <span class="note">Three questions we would have asked with nowhere to put the answers.</span></td></tr>
+            <tr><td class="was">Fill the AcroForm fields</td>
+              <td class="now">Hybrid AcroForm + XFA, AES-encrypted
+                <span class="note">Fill it naively and the applicant opens a <b>blank form</b> that reported success.</span></td></tr>
+            <tr><td class="was">Checkboxes share export values</td>
+              <td class="now">Every box is independent
+                <span class="note">Including unit selectors whose names carry leading <em>and</em> trailing spaces.</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">6 / 10</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 6</span><h2>The pipeline, and its paper trail</h2>
+      <span class="form">Band agent identities</span></div>
+    <div class="body">
+      <div class="flow">
+        <div class="step"><span class="n">Extractor</span><span class="t">Provenance</span>
+          <span class="d">Where each value came from</span></div>
+        <div class="step"><span class="n">Mapper</span><span class="t">Placement</span>
+          <span class="d">Onto this form’s fields</span></div>
+        <div class="step"><span class="n">Validator</span><span class="t">Cross-checks</span>
+          <span class="d">What no single field can show</span></div>
+        <div class="step"><span class="n">Filler</span><span class="t">The PDF</span>
+          <span class="d">Refuses on a blocking finding</span></div>
+        <div class="step"><span class="n">Auditor</span><span class="t">The record</span>
+          <span class="d">Sealed, per application</span></div>
+      </div>
+      <p class="sub">In a legal-filing domain the trail <b>is</b> the product. When a form comes back
+        rejected months later, someone has to work out why — so every entry records which agent set
+        which field, from voice or from memory.</p>
+      <ul>
+        <li><span class="m">✓</span><span>Arrival in the U.S. dated before the date of birth</span></li>
+        <li><span class="m">✓</span><span>A student category with no SEVIS number
+          <span class="note">The most common avoidable I-765 rejection.</span></span></li>
+        <li><span class="m">✓</span><span>A value that will overflow its printed box —
+          measured on what actually gets written<span class="note">A validator that cries wolf is
+            worse than no validator.</span></span></li>
+      </ul>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">7 / 10</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 7</span><h2>The stack</h2>
+      <span class="form">What each one actually does</span></div>
+    <div class="body">
+      <div class="wrap">
+        <table>
+          <thead><tr><th style="width:20%">Tool</th><th>Job</th></tr></thead>
+          <tbody>
+            <tr><td class="now">ElevenLabs</td><td>The whole interface. Five server tools; knows no specific form.</td></tr>
+            <tr><td class="now">mem0</td><td>Semantic, episodic and procedural memory, keyed by hashed caller id.</td></tr>
+            <tr><td class="now">rtrvr.ai</td><td>Reads uscis.gov, which returns <b>403</b> to scripted requests. 17 live document requirements.</td></tr>
+            <tr><td class="now">RocketRide</td><td>Pipeline-as-JSON for form intake <b>and</b> model selection — config is the source of truth.</td></tr>
+            <tr><td class="now">TokenRouter</td><td>MiniMax, routed inside that pipeline. Spoken-value normalisation and translation.</td></tr>
+            <tr><td class="now">Band</td><td>Agent identities for the five pipeline stages, on every audit entry.</td></tr>
+            <tr><td class="now">Render</td><td>One blueprint, one live URL.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub">Prompt Driven Development throughout: <b>prompts are source, <code>api/</code> is
+        output</b>, and <code>architecture.json</code> declares the module graph.</p>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">8 / 10</span></div>
+  </section>
+
+  <!-- 9 — the honesty slide -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 8</span><h2>What we are not claiming</h2>
+      <span class="form">Stated before you ask</span></div>
+    <div class="body">
+      <span class="stamp">Verified · not overstated</span>
+      <ul>
+        <li><span class="m">—</span><span><b>Cerebras.</b> The account returns 402 Payment Required and
+          the model our docs named does not exist on it. It never ran, so we do not submit that track.
+          <span class="note">The inference lane is provider-agnostic, so it is a config flip if credits arrive.</span></span></li>
+        <li><span class="m">—</span><span><b>Band dispatch.</b> Five stage identities are registered and
+          verified live, but the stages execute in-process. Band dispatch needs agents running as
+          WebSocket processes.<span class="note">The seam is built and named. Only the transport is missing.</span></span></li>
+        <li><span class="m">—</span><span><b>Email delivery.</b> The RocketRide pipeline runs, but Gmail
+          has no credentials configured, so nothing is sent — and the code returns
+          <code>delivered: false</code> rather than a green tick nobody can find in an inbox.</span></li>
+        <li><span class="m">—</span><span><b>All-generated code.</b> Two of ten modules came from
+          <code>pdd --local generate</code>; the rest are hand-written to the same prompts. The README
+          says so, per module.</span></li>
+      </ul>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">9 / 10</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide">
+    <div class="hdr"><span class="part">Part 9</span><h2>Where it stands</h2>
+      <span class="form">Live now</span></div>
+    <div class="body">
+      <div class="fields">
+        <div class="fld ok"><span class="lab">Deployed</span><span class="val">Live</span></div>
+        <div class="fld"><span class="lab">Tests</span><span class="val">46<small> passing</small></span></div>
+        <div class="fld"><span class="lab">Forms</span><span class="val">12</span></div>
+        <div class="fld"><span class="lab">Save latency</span><span class="val">0.03<small> ms</small></span></div>
+      </div>
+      <h1 style="font-size:clamp(26px,3.6vw,50px)">It fills.<br><em>You sign.</em></h1>
+      <p class="sub">Zuzu fills to the review step. It does not submit, does not pay fees, and cannot
+        sign — the signature fields are read-only by design. The applicant reviews, signs, and files.</p>
+    </div>
+    <div class="foot"><span class="url">zuzu-orchestrator.onrender.com/dashboard</span>
+      <span>github.com/garwalsh/zuzu</span><span class="pg">10 / 10</span></div>
+  </section>
+</div>
+
+<nav class="nav" id="nav" aria-label="Slides"></nav>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const nav = document.getElementById('nav');
+  let at = 0;
+
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.className = 'dot' + (i === 0 ? ' on' : '');
+    b.type = 'button';
+    b.setAttribute('aria-label', `Slide ${i + 1}`);
+    b.onclick = () => go(i);
+    nav.appendChild(b);
+  });
+  const dots = [...nav.children];
+
+  // Every slide gets the same keyboard affordance, placed in its footer rather
+  // than repeated ten times in the markup.
+  document.querySelectorAll('.foot').forEach(foot => {
+    const keys = document.createElement('span');
+    keys.className = 'keys';
+    keys.textContent = '← → or space';
+    foot.insertBefore(keys, foot.querySelector('.pg'));
+  });
+
+  function go(i){
+    at = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, n) => s.classList.toggle('on', n === at));
+    dots.forEach((d, n) => d.classList.toggle('on', n === at));
+    location.hash = at + 1;
+  }
+
+  addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); go(at + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); go(at - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+  addEventListener('click', e => { if (!e.target.closest('.nav')) go(at + 1); });
+
+  const start = parseInt(location.hash.slice(1), 10);
+  if (start) go(start - 1);
+</script>
+</body>
+</html>

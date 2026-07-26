@@ -9,6 +9,18 @@ conversation. If you can talk, you can file.
 
 **Live:** https://zuzu-orchestrator.onrender.com/dashboard
 
+| | |
+|---|---|
+| **Dashboard** | [`/dashboard?secret=…`](https://zuzu-orchestrator.onrender.com/dashboard) — the live form filling in |
+| **Presentation mode** | [`/dashboard?present=1`](https://zuzu-orchestrator.onrender.com/dashboard?present=1) — drives the whole demo end to end with captions, hands-off |
+| **Slides** | [`/deck`](https://zuzu-orchestrator.onrender.com/deck) — arrow keys or click |
+
+Presentation mode runs the full arc on its own: the problem, a call filling I-765,
+a mid-call switch to N-400 carrying the answers across, the memory tiers, the
+finished form, and the sponsor list. Open it two minutes early — Render's free
+tier cold-starts in about fifty seconds — and give it a window at least 1440px
+wide so the layout does not stack.
+
 **12 USCIS forms**, ~1,900 questions, none of them hand-written.
 
 ---

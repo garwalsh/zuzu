@@ -862,6 +862,15 @@ async def dashboard() -> FileResponse:
     return FileResponse(page, media_type="text/html")
 
 
+@app.get("/deck")
+async def deck() -> FileResponse:
+    """The presentation. Same no-build-step rule as the dashboard."""
+    page = REPO_ROOT / "dashboard" / "deck.html"
+    if not page.exists():
+        raise HTTPException(status_code=404, detail="deck not found")
+    return FileResponse(page, media_type="text/html")
+
+
 @app.post("/session/forget")
 async def session_forget(
     caller_id: str = Query(...),
