@@ -250,8 +250,9 @@ def main() -> int:
         return 1
 
     result = resp.json()
+    tools = payload["conversation_config"]["agent"]["prompt"]["tools"]
     print(f"agent {'updated' if args.update else 'created'}: {result.get('agent_id', agent_id)}")
-    print(f"tools: {', '.join(t['name'] for t in payload['conversation_config']['agent']['prompt']['tools'])}")
+    print(f"tools: {', '.join(t['name'] for t in tools)}")
     return 0
 
 
