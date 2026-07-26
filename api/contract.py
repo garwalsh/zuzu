@@ -99,6 +99,10 @@ class GetMissingFieldsResponse(StrictModel):
     next_field: NextField | None
     remaining_count: int
     known_count: int
+    #: The form these counts and this question belong to. The session decides
+    #: which form is being filled, so echoing it back lets the agent notice when
+    #: what it thinks it is filling and what Zuzu is filling have diverged.
+    form_id: str = ""
 
 
 class SaveFieldRequest(InboundModel):

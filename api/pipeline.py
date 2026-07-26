@@ -175,6 +175,29 @@ def _strip_reasoning(text: str) -> str:
     return text.strip()
 
 
+def _well_formed_question(text: str) -> bool:
+    """Whether a model-written line is safe to read aloud to an applicant.
+
+    This guard exists because of an observed failure, not a theoretical one.
+    MiniMax closes its reasoning block mid-sentence: the tail of the thought and
+    the head of the first real answer end up on the same side of `</think>`, so
+    stripping the block leaves "your last name?" where "What's your last name?"
+    was meant. The line count is still right, so a count check waves it through
+    and the applicant is asked a truncated question.
+
+    A question that reads wrongly is worse than the plain derived label it was
+    meant to improve, so anything that does not look like a whole spoken
+    question is refused and the deterministic wording kept.
+    """
+    text = text.strip()
+    if not text.endswith("?") or not (8 <= len(text) <= 200):
+        return False
+    first = text[0]
+    # A real question opens with a capital or a digit. A lowercase opening is
+    # the signature of a sentence that lost its head.
+    return first.isupper() or first.isdigit()
+
+
 async def polish_questions(labels: list[str], form_id: str) -> dict[str, str]:
     """Improve the wording of derived questions, through the pipeline.
 
@@ -203,7 +226,21 @@ async def polish_questions(labels: list[str], form_id: str) -> dict[str, str]:
     if len(lines) < len(batch):
         logger.info("%s: polish returned %d of %d lines, skipping", form_id, len(lines), len(batch))
         return {}
-    return dict(zip(batch, lines[: len(batch)], strict=False))
+
+    # Take the batch or nothing. A partial accept would leave the form asking a
+    # mix of polished and mangled questions with no way to tell which is which.
+    chosen = lines[: len(batch)]
+    bad = [line for line in chosen if not _well_formed_question(line)]
+    if bad:
+        logger.info(
+            "%s: polish rejected, %d of %d lines malformed (first: %r)",
+            form_id,
+            len(bad),
+            len(chosen),
+            bad[0][:60],
+        )
+        return {}
+    return dict(zip(batch, chosen, strict=False))
 
 
 async def read_document(path: str, form_id: str) -> str:

@@ -68,6 +68,43 @@ _MIRROR: dict[str, list[dict[str, Any]]] = {}
 MIRROR_LIMIT = 200
 
 
+def _trim_mirror(entries: list[dict[str, Any]]) -> None:
+    """Hold the mirror under its cap without discarding who the applicant is.
+
+    A flat FIFO cap looks reasonable until you run a long form through it. The
+    N-400 writes 269 non-sensitive fields in page order, so a 200-entry cap
+    evicts the first 69 -- which, because the form opens with the applicant's
+    name, means the mirror silently forgets `family_name` and `given_name` while
+    faithfully keeping their mailing zip.
+
+    Semantic facts are therefore trimmed last: they are the whole reason the
+    mirror exists. Episodes are events and the oldest genuinely matter least.
+    Procedural rules are few and each one is load-bearing.
+    """
+    surplus = len(entries) - MIRROR_LIMIT
+    if surplus <= 0:
+        return
+    # Give up the least precious tier first, oldest within it.
+    doomed: set[int] = set()
+    for tier in (Tier.EPISODIC, Tier.PROCEDURAL, Tier.SEMANTIC):
+        for index, entry in enumerate(entries):
+            if len(doomed) >= surplus:
+                break
+            if (entry.get("metadata") or {}).get("tier") == tier:
+                doomed.add(index)
+        if len(doomed) >= surplus:
+            break
+    entries[:] = [e for i, e in enumerate(entries) if i not in doomed]
+
+
+class DeletionUnverifiable(RuntimeError):
+    """Raised when a deletion cannot be confirmed, rather than reported as done.
+
+    A "your data is deleted" that was never carried out is worse than an error,
+    because the applicant stops asking.
+    """
+
+
 class Tier(StrEnum):
     SEMANTIC = "semantic"
     EPISODIC = "episodic"
@@ -138,6 +175,23 @@ def _user_key(caller_id: str) -> str:
     return f"zuzu_{digest[:20]}"
 
 
+def identifies_a_caller(caller_id: str) -> bool:
+    """Whether this id names a person, as opposed to naming nobody.
+
+    A session opened lazily -- the widget path, where the conversation-init
+    webhook never fires -- carries no caller id at all. Hashing "" is perfectly
+    stable, which is the danger: every anonymous caller hashes to the same key,
+    so without this check they would all read and write one shared profile and
+    each would be greeted with the last stranger's name, date of birth and
+    passport number.
+
+    Anonymous calls therefore get no memory in either direction. Losing the
+    returning-caller greeting for a session we cannot identify is the correct
+    trade; the alternative is disclosing one applicant's identity to the next.
+    """
+    return bool(caller_id and caller_id.strip())
+
+
 def _log_id(caller_id: str) -> str:
     return _user_key(caller_id)[:12]
 
@@ -157,6 +211,11 @@ class ApplicantMemory:
 
     async def _write(self, caller_id: str, text: str, metadata: dict[str, Any]) -> bool:
         """One mem0 write. Never raises into the caller."""
+        if not identifies_a_caller(caller_id):
+            # Every anonymous session hashes to the same key. Writing here would
+            # file this applicant's facts into a bucket the next one reads.
+            logger.info("mem0 skip write tier=%s: session has no caller", metadata.get("tier"))
+            return False
         body = {
             "messages": [{"role": "user", "content": text}],
             "user_id": _user_key(caller_id),
@@ -205,8 +264,7 @@ class ApplicantMemory:
                 )
             ]
         entries.append({"memory": text, "metadata": dict(metadata)})
-        if len(entries) > MIRROR_LIMIT:
-            del entries[: len(entries) - MIRROR_LIMIT]
+        _trim_mirror(entries)
 
     async def _read_all(self, caller_id: str) -> tuple[list[dict[str, Any]], str, str]:
         """Every memory for this caller, across tiers, with its provenance.
@@ -217,6 +275,11 @@ class ApplicantMemory:
         memory" and "this caller is new" are different answers and only one of
         them should make Zuzu ask thirty-three questions again.
         """
+        if not identifies_a_caller(caller_id):
+            # Not "this caller has nothing" -- "there is no caller here". Reading
+            # the shared empty-string bucket would hand the previous anonymous
+            # applicant's profile to this one.
+            return ([], "anonymous", "this session has no caller id, so nothing is recalled")
         mirrored = list(_MIRROR.get(_user_key(caller_id), []))
         if not self.enabled:
             return (mirrored, "mirror" if mirrored else "none", "mem0 is not configured")
@@ -442,18 +505,24 @@ class ApplicantMemory:
         The pitch promises an applicant can say "delete my data". Tier-scoped
         deletion means they can drop their call history without losing the
         profile that saves them an hour next time.
+
+        Raises DeletionUnverifiable when the store cannot be enumerated, because
+        the caller has to be told the difference between "deleted" and "we could
+        not tell what there was to delete".
         """
-        if not self.enabled:
+        if not self.enabled or not identifies_a_caller(caller_id):
             return 0
-        entries, _source, _reason = await self._read_all(caller_id)
-        # Forget the mirror too, whatever happens at mem0 -- a deletion request
-        # that leaves the copy this process is holding is not a deletion.
-        mirror = _MIRROR.get(_user_key(caller_id))
-        if mirror is not None:
-            if tier is None:
-                _MIRROR.pop(_user_key(caller_id), None)
-            else:
-                mirror[:] = [e for e in mirror if (e.get("metadata") or {}).get("tier") != tier]
+        entries, source, reason = await self._read_all(caller_id)
+        if source != "mem0":
+            # Deletion works by listing what exists and deleting each id. With
+            # recall unavailable there is no list, so nothing would be deleted
+            # remotely -- and clearing the local mirror here would destroy the
+            # only remaining evidence of what is still held, while reporting
+            # success. Refuse instead, and leave the mirror intact so a retry
+            # once recall returns can still find and delete the real records.
+            raise DeletionUnverifiable(
+                reason or "memory cannot be read, so deletion cannot be confirmed"
+            )
         removed = 0
         try:
             async with httpx.AsyncClient(timeout=WRITE_TIMEOUT_SECONDS) as client:
@@ -474,6 +543,13 @@ class ApplicantMemory:
                 "mem0 forget failed caller=%s: %s", _log_id(caller_id), type(exc).__name__
             )
             return removed
+        # Only once the remote deletion actually ran does the local copy go.
+        mirror = _MIRROR.get(_user_key(caller_id))
+        if mirror is not None:
+            if tier is None:
+                _MIRROR.pop(_user_key(caller_id), None)
+            else:
+                mirror[:] = [e for e in mirror if (e.get("metadata") or {}).get("tier") != tier]
         logger.info(
             "mem0 forgot caller=%s tier=%s entries=%d", _log_id(caller_id), tier or "all", removed
         )

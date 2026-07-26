@@ -129,12 +129,36 @@ def test_full_call_produces_a_downloadable_pdf(client):
 
     assert result["status"] == "complete", result
     assert result["missing"] == []
-    assert result["pdf_url"].endswith(f"/forms/{conversation_id}.pdf")
+    assert f"/forms/{conversation_id}.pdf" in result["pdf_url"]
 
-    download = client.get(f"/forms/{conversation_id}.pdf")
+    # The link works for whoever was given it -- the applicant has no secret.
+    download = client.get(result["pdf_url"].replace("http://testserver", ""))
     assert download.status_code == 200
     assert download.headers["content-type"] == "application/pdf"
     assert download.content[:5] == b"%PDF-"
+
+
+def test_a_completed_form_is_not_served_to_a_guessed_session_id(client):
+    """The PDF carries a name, a date of birth and usually an SSN.
+
+    Session ids are guessable -- a demo run is `web_maria_<unix seconds>` -- so
+    knowing the id must not be enough to fetch someone's completed application.
+    """
+    conversation_id = start_session(client, "conv_guessable")
+    result = run_full_call(client, conversation_id)
+    assert result["status"] == "complete"
+
+    assert client.get(f"/forms/{conversation_id}.pdf").status_code == 404
+    assert client.get(f"/forms/{conversation_id}.pdf?t=").status_code == 404
+    assert client.get(f"/forms/{conversation_id}.pdf?t=1.deadbeef").status_code == 404
+    # A token minted for one session must not open another.
+    other = start_session(client, "conv_other")
+    run_full_call(client, other)
+    stolen = result["pdf_url"].split("t=")[1]
+    assert client.get(f"/forms/{other}.pdf?t={stolen}").status_code == 404
+
+    # An operator holding the shared secret still gets through.
+    assert client.get(f"/forms/{conversation_id}.pdf", headers=auth()).status_code == 200
 
 
 def test_interview_terminates_and_counts_go_down(client):
@@ -382,7 +406,7 @@ def test_a_whole_call_works_without_session_init(client):
     conversation_id = "conv_widget_only"
     result = run_full_call(client, conversation_id)
     assert result["status"] == "complete", result
-    assert client.get(f"/forms/{conversation_id}.pdf").status_code == 200
+    assert client.get(result["pdf_url"].replace("http://testserver", "")).status_code == 200
 
 
 def test_read_paths_stay_strict_about_unknown_sessions(client):
@@ -395,11 +419,34 @@ def test_read_paths_stay_strict_about_unknown_sessions(client):
 def test_unknown_form_is_404(client):
     conversation_id = start_session(client, "conv_badform")
     resp = client.post(
-        "/tools/get_missing_fields",
+        "/session/set_form",
         json={"session_id": conversation_id, "form_id": "I-999"},
         headers=auth(),
     )
     assert resp.status_code == 404
+
+
+def test_the_session_decides_which_form_is_being_filled(client):
+    """Not the form_id the agent happens to be carrying.
+
+    The agent keeps sending the form it confirmed earlier in the conversation.
+    After a mid-call switch that is the *previous* form, so honouring it meant
+    asking questions from one form while save_field and generate_form worked on
+    another -- with nothing anywhere reporting a problem.
+    """
+    conversation_id = start_session(client, "conv_switch")
+    client.post(
+        "/session/set_form",
+        json={"session_id": conversation_id, "form_id": "N-400"},
+        headers=auth(),
+    )
+    resp = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": conversation_id, "form_id": "I-765"},
+        headers=auth(),
+    ).json()
+    assert resp["form_id"] == "N-400"
+    assert resp["remaining_count"] > 40, "these are N-400 counts, not I-765's"
 
 
 # --------------------------------------------------------------------------

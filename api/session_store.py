@@ -9,6 +9,7 @@ be, so the Layer 2 Redis store is a drop-in and no call site changes.
 from __future__ import annotations
 
 import asyncio
+import logging
 import os
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
@@ -16,6 +17,8 @@ from typing import Protocol
 
 from api.contract import FieldValue
 from api.i765_schema import SKIP_SENTINEL, FormField, FormSchema
+
+logger = logging.getLogger(__name__)
 
 
 class SessionNotFoundError(KeyError):
@@ -87,7 +90,34 @@ class InMemorySessionStore:
     async def create(
         self, session_id: str, caller_id: str, form_id: str, **kwargs: object
     ) -> Session:
+        """Open a session, or adopt the one already under this id.
+
+        Creating unconditionally used to discard whatever was there. Two ordinary
+        things trigger that. The widget opens a session lazily on the first tool
+        call and the conversation-init webhook lands afterwards; and ElevenLabs
+        retries that webhook. Either way a second create wiped answers the
+        applicant had already given, and the interview silently restarted from
+        the top with no error anywhere.
+
+        Adopting instead is safe because the fields a late init carries -- who is
+        calling, what language, whether they are returning -- are exactly the
+        ones a lazily-opened session lacks.
+        """
         async with self._lock:
+            existing = self._sessions.get(session_id)
+            if existing is not None:
+                if caller_id and not existing.caller_id:
+                    existing.caller_id = caller_id
+                if "preferred_language" in kwargs:
+                    existing.preferred_language = str(kwargs["preferred_language"])
+                if kwargs.get("is_returning"):
+                    existing.is_returning = True
+                logger.info(
+                    "session adopted rather than recreated, %d answer(s) kept",
+                    len(existing.values),
+                    extra={"session_id": session_id},
+                )
+                return existing
             session = Session(
                 session_id=session_id,
                 caller_id=caller_id,

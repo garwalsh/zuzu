@@ -347,31 +347,49 @@ const SKIP = '__skip__';
 const RING = 2 * Math.PI * 48;
 
 let schema = null, byId = {}, ws = null, sessionId = null, saves = [], seen = {}, turns = 0;
+let wsRetry = 0, wsRetryTimer = null;
 const el = id => document.getElementById(id);
 const pretty = s => s.replace(/_/g,' ');
+// Answers, labels and memory values are all caller-controlled and end up in innerHTML,
+// so nothing that came from the server is interpolated without going through here.
+const ESCAPES = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ESCAPES[c]);
 
 // ---- every form Zuzu can fill, selectable -------------------------------
 async function loadForms(){
-  const d = await (await fetch('/forms')).json();
+  const r = await fetch('/forms');
+  if (!r.ok) throw new Error(`forms ${r.status}`);
+  const d = await r.json();
   const ready = new Set(d.ready.map(f => f.toUpperCase()));
   const meta = Object.fromEntries(d.catalog.map(c => [c.form_id.toUpperCase(), c]));
   const readyOpts = d.ready.map(fid => {
     const m = meta[fid.toUpperCase()];
-    return `<option value="${fid}">${fid} — ${m ? m.title : 'USCIS form'}</option>`;
+    return `<option value="${esc(fid)}">${esc(fid)} — ${esc(m ? m.title : 'USCIS form')}</option>`;
   }).join('');
   const pending = d.catalog.filter(c => !ready.has(c.form_id.toUpperCase()));
   el('formpick').innerHTML =
     `<optgroup label="Ready now (${d.ready.length})">${readyOpts}</optgroup>` +
     (pending.length ? `<optgroup label="Added on request">${
-      pending.map(c => `<option value="${c.form_id}">${c.form_id} — ${c.title}</option>`).join('')
+      pending.map(c => `<option value="${esc(c.form_id)}">${esc(c.form_id)} — ${esc(c.title)}</option>`).join('')
     }</optgroup>` : '');
   if (schema) el('formpick').value = schema.form_id;
 }
 
+// True only when `schema` ends up holding the form that was asked for.
 async function loadSchema(formId){
   const target = formId || 'I-765';
-  const r = await fetch(`/forms/${target}/schema`);
-  if (!r.ok) return;
+  let r = null;
+  try{ r = await fetch(`/forms/${target}/schema`); } catch(e){}
+  if (!r || !r.ok){
+    // A bad ?form= or a cold backend used to leave `schema` null, and every later
+    // event threw against it -- fall back to a form we have, then say what happened
+    // (in that order, because the fallback's render() rewrites the status line).
+    const why = `Could not load ${target}${r ? ` (${r.status})` : ''}.`;
+    const fellBack = target !== 'I-765' && await loadSchema('I-765');
+    el('statuslbl').textContent = 'Form unavailable';
+    el('statusq').textContent = why + (fellBack ? ' Showing I-765 instead.' : '');
+    return false;
+  }
   schema = await r.json();
   byId = Object.fromEntries(schema.fields.map(f => [f.id, f]));
   document.title = `${schema.form_id} — ${schema.title} · Zuzu`;
@@ -383,18 +401,19 @@ async function loadSchema(formId){
   el('grid').innerHTML = Object.entries(groups).map(([g, fs]) => `
     <div class="grp">
       <div class="grphead">
-        <span class="name">${pretty(g)}</span>
-        <span class="bar"><i id="bar-${g}"></i></span>
-        <span class="n" id="n-${g}">0/${fs.length}</span>
+        <span class="name">${esc(pretty(g))}</span>
+        <span class="bar"><i id="bar-${esc(g)}"></i></span>
+        <span class="n" id="n-${esc(g)}">0/${fs.length}</span>
       </div>
       <div class="fields">${fs.map(f => `
-        <div class="f" id="f-${f.id}">
-          <div class="k"><span>${f.label || pretty(f.id)}</span>${
+        <div class="f" id="f-${esc(f.id)}">
+          <div class="k"><span>${esc(f.label || pretty(f.id))}</span>${
             f.sensitive ? '<span class="tag">private</span>' : ''}</div>
-          <div class="v" id="v-${f.id}"></div>
+          <div class="v" id="v-${esc(f.id)}"></div>
         </div>`).join('')}</div>
     </div>`).join('');
   render({});
+  return true;
 }
 
 el('formpick').onchange = async (e) => {
@@ -403,12 +422,11 @@ el('formpick').onchange = async (e) => {
     // Mid-call: switching keeps whatever the applicant has already told us.
     await fetch('/session/set_form', {method:'POST', headers:H,
       body: JSON.stringify({session_id: sessionId, form_id: formId})});
-    await loadSchema(formId);
+    if (!await loadSchema(formId)) return;
     clearPreviousForm(`Switched to ${formId}`);
     await hydrate(sessionId);
   } else {
-    await loadSchema(formId);
-    clearPreviousForm('Ready');
+    if (await loadSchema(formId)) clearPreviousForm('Ready');
   }
 };
 
@@ -417,17 +435,18 @@ function addTurn(field, value){
   const skipped = value === SKIP;
   const ask = document.createElement('div');
   ask.className = 'turn ask';
-  ask.innerHTML = `<span class="who">Zuzu</span><div class="bubble">${field.question}</div>`;
+  ask.innerHTML = `<span class="who">Zuzu</span><div class="bubble">${esc(field.question)}</div>`;
   const ans = document.createElement('div');
   ans.className = 'turn ans' + (skipped ? ' skip' : '');
   ans.innerHTML = `<span class="who">Applicant</span><div class="bubble">${
-    skipped ? 'skipped' : value}</div>`;
+    skipped ? 'skipped' : esc(value)}</div>`;
   el('convo').append(ask, ans);
   el('convo').scrollTop = el('convo').scrollHeight;
   el('turncount').textContent = `${++turns} answered`;
 }
 
 function render(values, sources){
+  if (!schema) return;
   values = values || {}; sources = sources || {};
   let known = 0; const per = {};
   schema.fields.forEach(f => {
@@ -470,16 +489,35 @@ function render(values, sources){
 
 function clearPreviousForm(label){
   // The previous form's PDF, latency and transcript do not belong to this form.
+  resetProgress(`<div class="big">${esc(label)}</div>
+    Answers already given have been carried over.`);
+}
+
+// A new session is a different caller, so their memory and the returning-applicant
+// pill are stale too -- resetting only seen/turns left the last applicant on screen.
+function resetForSession(){
+  resetProgress(`<div class="big">No active call</div>
+    Questions and answers appear here.`);
+  el('p-mem').style.display = 'none';
+  el('memcount').textContent = '';
+  el('memory').innerHTML =
+    `<p class="muted" style="padding:0">Nothing stored for this caller yet.</p>`;
+}
+
+function resetProgress(emptyHtml){
+  // resetGrid() only touches the boxes; the group bars, the ring and the "now
+  // asking" cursor are redrawn by rendering an empty set of values.
   resetGrid();
-  el('dl').style.display = 'none';
+  render({});
+  hidePdf();
   el('p-latency').textContent = '— ms';
   seen = {}; turns = 0;
   el('turncount').textContent = '';
-  el('convo').innerHTML = `<div class="empty"><div class="big">${label}</div>
-    Answers already given have been carried over.</div>`;
+  el('convo').innerHTML = `<div class="empty">${emptyHtml}</div>`;
 }
 
 function resetGrid(){
+  if (!schema) return;
   schema.fields.forEach(f => {
     const box = el(`f-${f.id}`);
     if (!box) return;
@@ -500,6 +538,7 @@ async function loadMemory(id){
     // All three tiers are always drawn, even at zero. Hiding an empty tier made
     // it look as though Zuzu had only one kind of memory -- the point is that
     // there are three, kept apart, and that you can see into each of them.
+    // Rows arrive as markup whose caller-supplied parts are already escaped.
     const tier = (cls,name,why,rows) => `
       <div class="tier ${cls}"><div class="head"><span class="nm">${name}</span>
       <span class="why">${why}</span><span class="why tally">${rows.length}</span></div>
@@ -509,21 +548,21 @@ async function loadMemory(id){
 
     el('memory').innerHTML =
       tier('semantic','Semantic','facts that outlive the call',
-        sem.map(x => `<b>${x.label}</b> — ${x.value}`)) +
+        sem.map(x => `<b>${esc(x.label)}</b> — ${esc(x.value)}`)) +
       tier('episodic','Episodic','calls that happened',
-        epi.map(x => `<b>${x.form_id}</b> on ${String(x.at).slice(0,10)} — ${x.fields_collected} answers, ${x.completed?'completed':'unfinished'}`)) +
+        epi.map(x => `<b>${esc(x.form_id)}</b> on ${esc(String(x.at).slice(0,10))} — ${esc(x.fields_collected)} answers, ${x.completed?'completed':'unfinished'}`)) +
       tier('procedural','Procedural','rules learned about this caller',
-        pro.map(x => `<b>${x.kind}</b> — ${x.value}`)) +
+        pro.map(x => `<b>${esc(x.kind)}</b> — ${esc(x.value)}`)) +
       (m.caller_key ? `<p class="muted" style="padding:0;font-size:11px">
-        Keyed by <code>${m.caller_key}</code> — a hash, never the phone number.</p>` : '') +
+        Keyed by <code>${esc(m.caller_key)}</code> — a hash, never the phone number.</p>` : '') +
       (m.source && m.source !== 'mem0' ? `<p class="muted" style="padding:0;font-size:11px">
-        Recall degraded: ${m.degraded_reason || m.source}. Showing what this
+        Recall degraded: ${esc(m.degraded_reason || m.source)}. Showing what this
         process stored; writes to mem0 are unaffected.</p>` : '');
   } catch(e){
     // Silence here is why an empty panel looked like an empty caller.
     el('memcount').textContent = 'unavailable';
     el('memory').innerHTML =
-      `<p class="muted" style="padding:0">Memory unavailable: ${e.message}</p>`;
+      `<p class="muted" style="padding:0">Memory unavailable: ${esc(e.message)}</p>`;
   }
 }
 
@@ -543,25 +582,49 @@ async function hydrate(id){
   });
   render(d.values, d.sources);
   if (d.is_returning) el('p-mem').style.display = '';
-  if (d.has_pdf) showPdf(id);
+  // Symmetric on purpose: a link left over from the previous caller would hand
+  // this one someone else's completed form.
+  if (d.has_pdf && d.pdf_url) showPdf(d.pdf_url); else hidePdf();
   loadMemory(id);
 }
 
-function showPdf(id){
+function showPdf(url){
+  // The link must carry the signed token the server issued: the completed form
+  // holds an SSN, so a session id alone no longer opens it.
+  if (!url) return hidePdf();
   const a = el('dl');
-  a.href = `/forms/${id}.pdf`;
+  a.href = url;
   a.textContent = `Download completed ${schema ? schema.form_id : 'form'}`;
   a.style.display = 'block';
 }
 
+function hidePdf(){
+  const a = el('dl');
+  a.removeAttribute('href');
+  a.style.display = 'none';
+}
+
 function connect(id){
-  if (ws) ws.close();
+  if (ws){ ws.onclose = null; ws.close(); }
+  clearTimeout(wsRetryTimer); wsRetryTimer = null; wsRetry = 0;
   sessionId = id; saves = [];
+  el('p-session').classList.remove('live');
   el('p-session').textContent = id.length > 24 ? id.slice(0,24)+'…' : id;
-  ws = new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`);
-  ws.onopen = () => el('p-session').classList.add('live');
-  ws.onclose = () => el('p-session').classList.remove('live');
-  ws.onmessage = ev => {
+  resetForSession();
+  openSocket(id);
+}
+
+// The socket dies on idle proxy timeouts and worker restarts, and nothing used to
+// bring it back: the dashboard stayed frozen for the rest of the call.
+function openSocket(id){
+  clearTimeout(wsRetryTimer); wsRetryTimer = null;
+  const sock = new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`);
+  ws = sock;
+  sock.onopen = () => { wsRetry = 0; el('p-session').classList.add('live'); };
+  sock.onclose = () => { el('p-session').classList.remove('live'); scheduleReconnect(id); };
+  // An error is always followed by a close, so onclose owns the retry.
+  sock.onerror = () => sock.close();
+  sock.onmessage = ev => {
     const e = JSON.parse(ev.data);
     if (e.type === 'session_started'){ if (e.data.is_returning) el('p-mem').style.display=''; hydrate(id); }
     if (e.type === 'field_saved'){
@@ -573,16 +636,24 @@ function connect(id){
       if (box){ box.classList.add('flash'); setTimeout(()=>box.classList.remove('flash'),800); }
       hydrate(id);
     }
-    if (e.type === 'form_ready') showPdf(id);
-    if (e.type === 'form_changed') loadSchema(e.data.form_id).then(() => hydrate(id));
+    if (e.type === 'form_ready') showPdf(e.data.pdf_url);
+    if (e.type === 'form_changed') loadSchema(e.data.form_id).then(ok => { if (ok) hydrate(id); });
   };
+}
+
+function scheduleReconnect(id){
+  // Never drag a caller the user has already moved away from back onto the screen.
+  if (id !== sessionId) return;
+  clearTimeout(wsRetryTimer);
+  wsRetryTimer = setTimeout(() => {
+    if (id === sessionId){ openSocket(id); hydrate(id); }
+  }, Math.min(15000, 600 * 2 ** wsRetry++));
 }
 
 el('run').onclick = async () => {
   el('run').disabled = true; el('run').textContent = 'Filling…';
   try{
     const d = await (await fetch('/demo/run', {method:'POST', headers:H})).json();
-    seen = {}; turns = 0;
     connect(d.session_id);
     setTimeout(() => hydrate(d.session_id), 250);
   } catch(e){ el('statusq').textContent = 'Could not start: ' + e.message; }
@@ -592,7 +663,6 @@ el('run').onclick = async () => {
 el('attach').onclick = async () => {
   const d = await (await fetch('/sessions/recent', {headers:H})).json();
   if (!d.sessions.length){ el('statusq').textContent = 'No active call.'; return; }
-  seen = {}; turns = 0;
   connect(d.sessions[0].session_id); hydrate(d.sessions[0].session_id);
 };
 
@@ -624,9 +694,13 @@ function followNewestSession(){
     try{
       const d = await (await fetch('/sessions/recent', {headers:H})).json();
       const newest = d.sessions?.[0];
-      if (newest && newest.session_id !== sessionId){
-        seen = {}; turns = 0;
+      if (!newest) return;
+      if (newest.session_id !== sessionId){
         connect(newest.session_id); hydrate(newest.session_id);
+      } else if (!wsRetryTimer && (!ws || ws.readyState > WebSocket.OPEN)){
+        // Same call, dead socket, nothing scheduled to fix it: the poll is the
+        // safety net, so the page never sits silent on a session that is live.
+        openSocket(sessionId); hydrate(sessionId);
       }
     } catch(e){}
   }, 2500);
@@ -675,9 +749,18 @@ async function present(){
 }
 
 (async () => {
-  await loadSchema(qs.get('form') || 'I-765');
-  await loadForms();
-  mountVoice();
+  // Every step stands alone: one rejection here (a cold instance answering 502 to
+  // /forms) used to kill the IIFE before followNewestSession() ever ran, and the
+  // page then never attached to a call for the rest of its life.
+  try{ await loadSchema(qs.get('form') || 'I-765'); }
+  catch(e){ console.error('schema unavailable:', e); }
+  try{ await loadForms(); }
+  catch(e){ console.error('form list unavailable:', e); }
+  mountVoice().catch(e => {
+    el('vstate').textContent = 'Unavailable';
+    el('vdot').style.background = 'var(--warn)';
+    el('widgethint').textContent = `Could not reach /config: ${e.message}`;
+  });
   followNewestSession();
   if (qs.get('present') === '1') present();
 })();

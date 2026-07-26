@@ -1,8 +1,10 @@
 # shared_secret_auth.py
 from __future__ import annotations
 
+import hashlib
 import hmac
 import os
+import time
 
 from fastapi import Header, HTTPException, status
 
@@ -39,3 +41,41 @@ async def require_shared_secret(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=_INVALID_SECRET_DETAIL,
         )
+
+
+#: How long a completed-form link stays good. Long enough to survive an email
+#: sitting unread over a weekend, short enough that a forwarded link does not
+#: work forever.
+DOWNLOAD_TTL_SECONDS = 7 * 24 * 60 * 60
+
+
+def sign_download(session_id: str, expires_at: int) -> str:
+    """A token proving the bearer was told about this specific form."""
+    configured = _get_configured_secret()
+    message = f"{session_id}:{expires_at}".encode()
+    digest = hmac.new(configured.encode("utf-8"), message, hashlib.sha256).hexdigest()[:32]
+    return f"{expires_at}.{digest}"
+
+
+def verify_download(session_id: str, token: str | None) -> bool:
+    """Whether this token really was issued for this session, and still stands.
+
+    The completed form carries the applicant's name, date of birth and often
+    their SSN, and the link goes in an email to someone who has no shared
+    secret. Session ids are guessable -- `web_maria_<unix seconds>` for a demo
+    run -- so the id alone cannot be what authorises the download.
+    """
+    if not token or "." not in token:
+        return False
+    stamp, _, digest = token.partition(".")
+    if not stamp.isdigit() or len(digest) != 32:
+        return False
+    expires_at = int(stamp)
+    if expires_at < int(time.time()):
+        return False
+    return hmac.compare_digest(sign_download(session_id, expires_at), token)
+
+
+def download_token(session_id: str) -> str:
+    """Mint a fresh token for a newly generated form."""
+    return sign_download(session_id, int(time.time()) + DOWNLOAD_TTL_SECONDS)

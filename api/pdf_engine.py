@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import logging
 import re
+from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 from pypdf import PdfReader, PdfWriter
@@ -23,6 +25,24 @@ logger = logging.getLogger(__name__)
 _ELIGIBILITY_RE = re.compile(r"^\(?([A-Za-z])\)?\s*\(?(\d{1,2})\)?\s*\(?([A-Za-z])?\)?$")
 
 _DATE_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})$")
+
+#: The forms print dates as mm/dd/yyyy. These are the shapes an answer arrives
+#: in: the schema's ISO, and what people and transcription actually produce.
+_DATE_INPUTS = ("%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y/%m/%d", "%B %d, %Y", "%d %B %Y")
+
+
+def _as_mm_dd_yyyy(text: str) -> str | None:
+    """The date as the box wants it, or None if it cannot be read."""
+    match = _DATE_RE.match(text)
+    if match:
+        year, month, day = match.groups()
+        return f"{month}/{day}/{year}"
+    for fmt in _DATE_INPUTS:
+        try:
+            return datetime.strptime(text, fmt).strftime("%m/%d/%Y")
+        except ValueError:
+            continue
+    return None
 
 
 class PdfFillError(RuntimeError):
@@ -47,10 +67,14 @@ def _normalize(value: str, form_field: FormField, schema_options: list[str]) -> 
             logger.warning("field=%s rejected: not a valid state export code", form_field.id)
             return None
     elif kind == "date":
-        match = _DATE_RE.match(text)
-        if match:
-            year, month, day = match.groups()
-            text = f"{month}/{day}/{year}"
+        text = _as_mm_dd_yyyy(text)
+        if text is None:
+            # Anything unreadable used to be written through untouched, so
+            # "April twelfth, nineteen ninety-eight" -- exactly what a voice
+            # caller says -- was printed into a date box verbatim. Refusing puts
+            # it in front of the applicant instead of onto the filing.
+            logger.warning("field=%s rejected: not a readable date", form_field.id)
+            return None
 
     if not text:
         return None
@@ -83,12 +107,27 @@ def missing_required(values: dict[str, str], schema: FormSchema | None = None) -
     return [f.id for f in schema.fields if f.required and _usable(values, f.id) is None]
 
 
-def fill_i765(
+@dataclass(frozen=True)
+class FillReport:
+    """What the engine actually wrote, and what it refused to.
+
+    `dropped` is the important half: an answer the applicant gave that no box
+    would accept. It used to be logged and otherwise forgotten, so the applicant
+    was told the form was complete while the value was missing from the page --
+    the exact failure this product exists to prevent.
+    """
+
+    path: Path
+    filled: list[str]
+    dropped: dict[str, str]
+
+
+def fill_form(
     values: dict[str, str],
     out_path: str | Path,
     schema: FormSchema | None = None,
-) -> Path:
-    """Write a filled I-765 to `out_path` and return it.
+) -> FillReport:
+    """Write a filled form to `out_path` and report what happened.
 
     `values` is keyed by schema field id, never by PDF field name.
     """
@@ -150,6 +189,9 @@ def fill_i765(
     button_updates: dict[str, str] = {}
     filled_ids: list[str] = []
     skipped_ids: list[str] = []
+    # Supplied by the applicant and then discarded by normalisation. Distinct
+    # from skipped_ids, which is mostly fields nobody answered.
+    dropped: dict[str, str] = {}
 
     for form_field in schema.fields:
         raw = _usable(values, form_field.id)
@@ -161,6 +203,7 @@ def fill_i765(
             option = form_field.option_for(raw)
             if option is None:
                 logger.warning("field=%s rejected: not a known option", form_field.id)
+                dropped[form_field.id] = f"{raw!r} is not one of this field's options"
                 skipped_ids.append(form_field.id)
                 continue
             for candidate in form_field.options:
@@ -176,6 +219,7 @@ def fill_i765(
                 # A wrong eligibility category is the most consequential error
                 # on this form. Leave all three boxes blank rather than guess.
                 logger.warning("field=%s unparseable; leaving blank", form_field.id)
+                dropped[form_field.id] = f"{raw!r} is not a readable eligibility category"
                 skipped_ids.append(form_field.id)
                 continue
             for name, part in zip(form_field.pdf_field_parts, parts, strict=False):
@@ -186,6 +230,7 @@ def fill_i765(
 
         normalized = _normalize(raw, form_field, valid_states)
         if normalized is None:
+            dropped[form_field.id] = f"{raw!r} is not a value this box accepts"
             skipped_ids.append(form_field.id)
             continue
         if form_field.pdf_field:
@@ -216,7 +261,18 @@ def fill_i765(
         len(skipped_ids),
         destination.name,
     )
-    return destination
+    if dropped:
+        logger.warning("form=%s values discarded: %s", schema.form_id, sorted(dropped))
+    return FillReport(path=destination, filled=filled_ids, dropped=dropped)
+
+
+def fill_i765(
+    values: dict[str, str],
+    out_path: str | Path,
+    schema: FormSchema | None = None,
+) -> Path:
+    """Write a filled form and return its path, discarding the report."""
+    return fill_form(values, out_path, schema).path
 
 
 def _qualified_name(obj: DictionaryObject) -> str:

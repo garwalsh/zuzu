@@ -17,7 +17,16 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from fastapi import Depends, FastAPI, HTTPException, Query, Response, WebSocket, WebSocketDisconnect
+from fastapi import (
+    Depends,
+    FastAPI,
+    Header,
+    HTTPException,
+    Query,
+    Response,
+    WebSocket,
+    WebSocketDisconnect,
+)
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
@@ -49,11 +58,16 @@ from api.form_finder import identify
 from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
-from api.memory import Tier, _user_key, get_memory, summarize
-from api.orchestrator import registered_agents, run_pipeline
+from api.memory import DeletionUnverifiable, Tier, _user_key, get_memory, summarize
+from api.orchestrator import note_intake, registered_agents, run_pipeline
 from api.pdf_engine import missing_required
 from api.retrieval import applicable_items, fetch_document_checklist
-from api.security import require_shared_secret, verify_secret
+from api.security import (
+    download_token,
+    require_shared_secret,
+    verify_download,
+    verify_secret,
+)
 from api.session_store import (
     Session,
     SessionNotFoundError,
@@ -255,7 +269,12 @@ async def get_missing_fields(
 ) -> GetMissingFieldsResponse:
     started = time.perf_counter()
     session = await _load_or_open_session(payload.session_id)
-    schema = _resolve_form(payload.form_id)
+    # The session owns which form is being filled, not the caller of this
+    # endpoint. The agent carries the form_id it confirmed earlier in the
+    # conversation, so after a mid-call switch it asks for the previous form
+    # while save_field and generate_form use the new one -- questions from one
+    # form, answers filed against another, and no error to show for it.
+    schema = _resolve_form(session.form_id)
 
     field = next_missing_field(session, schema)
     remaining, known = counts(session, schema)
@@ -263,6 +282,14 @@ async def get_missing_fields(
         NextField(id=field.id, question=field.question, type=field.type, sensitive=field.sensitive)
         if field
         else None
+    )
+    # Attribute the choice to Intake. Appending to a list is all this does; the
+    # applicant is mid-sentence and nothing slow belongs on this path.
+    note_intake(
+        payload.session_id,
+        "asked" if field else "interview complete",
+        field.id if field else None,
+        f"{remaining} of {remaining + known} remaining" if field else f"{known} answers collected",
     )
     logger.info(
         "next field resolved",
@@ -273,7 +300,10 @@ async def get_missing_fields(
         },
     )
     return GetMissingFieldsResponse(
-        next_field=next_field, remaining_count=remaining, known_count=known
+        next_field=next_field,
+        remaining_count=remaining,
+        known_count=known,
+        form_id=schema.form_id,
     )
 
 
@@ -376,21 +406,37 @@ async def generate_form(
         return GenerateFormResponse(status="incomplete", pdf_url=None, missing=blocking)
     await get_session_store().set_pdf_path(payload.session_id, str(out_path))
 
-    pdf_url = f"{os.environ.get('PUBLIC_BASE_URL', '').rstrip('/')}/forms/{payload.session_id}.pdf"
+    # The link is emailed to someone with no shared secret, so it carries a
+    # signed, expiring token rather than relying on the session id.
+    _base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
+    pdf_url = f"{_base}/forms/{payload.session_id}.pdf?t={download_token(payload.session_id)}"
     await _publish(FORM_READY, payload.session_id, {"pdf_url": pdf_url})
     logger.info("form ready", extra={"session_id": payload.session_id, "form_id": schema.form_id})
     return GenerateFormResponse(status="complete", pdf_url=pdf_url, missing=[])
 
 
 @app.get("/forms/{session_id}.pdf")
-async def download_form(session_id: str) -> FileResponse:
+async def download_form(
+    session_id: str,
+    t: str = Query(default="", description="download token issued with the form"),
+    x_zuzu_secret: str | None = Header(default=None, alias="X-Zuzu-Secret"),
+) -> FileResponse:
+    """The completed form, to whoever was given the link.
+
+    This file holds the applicant's name, date of birth and usually their SSN,
+    and it used to be served to anyone who could name the session -- which for a
+    demo run is `web_maria_<unix seconds>`. The link still has to work for an
+    applicant who has no shared secret, so it carries a signed token instead.
+    """
+    if not verify_download(session_id, t) and not verify_secret(x_zuzu_secret):
+        raise HTTPException(status_code=404, detail="no generated form for this session yet")
     session = await _load_session(session_id)
     if not session.pdf_path or not Path(session.pdf_path).exists():
         raise HTTPException(status_code=404, detail="no generated form for this session yet")
     return FileResponse(
         session.pdf_path,
         media_type="application/pdf",
-        filename=f"I-765_{session_id}.pdf",
+        filename=f"{session.form_id}_{session_id}.pdf",
     )
 
 
@@ -487,6 +533,17 @@ async def demo_run(
         field = next_missing_field(session, schema)
         if field is None:
             break
+        # Intake chose this question. The demo drives the loop directly rather
+        # than through /tools/get_missing_fields, so it records the same thing
+        # that endpoint would -- otherwise the audit trail of a demo call has no
+        # account of anything being asked.
+        remaining_before, known_before = counts(session, schema)
+        note_intake(
+            session_id,
+            "asked",
+            field.id,
+            f"{remaining_before} of {remaining_before + known_before} remaining",
+        )
         # Only ever answer from the persona. Never synthesize.
         started = time.perf_counter()
         await store.save_field(
@@ -589,6 +646,33 @@ async def session_checklist(
     }
 
 
+#: What each role looks like across forms. The I-765 calls the applicant's
+#: address `email`; the N-400 calls it `p14_line5_email_address`. Field ids are
+#: derived per form from that form's own PDF, so nothing outside I-765 can be
+#: addressed by a literal id.
+_ROLE_PATTERNS: dict[str, tuple[str, ...]] = {
+    "email": ("email",),
+    "given_name": ("given_name", "first_name"),
+}
+
+
+def _field_by_role(session: Session, schema: Any, role: str) -> str:
+    """Find a value by what it means rather than by what this form calls it.
+
+    Delivery used to read `values["email"]`, which exists on the I-765 and on no
+    other onboarded form, so emailing an N-400 packet reported "no usable email
+    address" while the address sat in the session under a different id.
+    """
+    by_type = [f for f in schema.fields if getattr(f, "type", "") == role]
+    patterns = _ROLE_PATTERNS.get(role, (role,))
+    by_name = [f for f in schema.fields if any(p in f.id for p in patterns)]
+    for form_field in [*by_type, *by_name]:
+        value = session.usable_value(form_field.id)
+        if value:
+            return value
+    return ""
+
+
 @app.post("/sessions/{session_id}/deliver")
 async def session_deliver(
     session_id: str, _: None = Depends(require_shared_secret)
@@ -607,11 +691,11 @@ async def session_deliver(
     checklist = await fetch_document_checklist(schema.form_id)
     base = os.environ.get("PUBLIC_BASE_URL", "").rstrip("/")
     result = await deliver_packet(
-        to_email=plain.get("email", ""),
+        to_email=_field_by_role(session, schema, "email"),
         form_id=schema.form_id,
-        pdf_url=f"{base}/forms/{session_id}.pdf",
+        pdf_url=f"{base}/forms/{session_id}.pdf?t={download_token(session_id)}",
         checklist=applicable_items(checklist, plain),
-        applicant_name=plain.get("given_name", ""),
+        applicant_name=_field_by_role(session, schema, "given_name"),
     )
     return {"session_id": session_id, **result}
 
@@ -871,6 +955,12 @@ async def session_values(
         "remaining_count": remaining,
         "known_count": known,
         "has_pdf": bool(session.pdf_path),
+        # The download is token-authorised now, and a plain <a href> cannot send
+        # a header -- so the dashboard is handed the signed link rather than
+        # building one from the session id and getting a 404.
+        "pdf_url": (
+            f"/forms/{session_id}.pdf?t={download_token(session_id)}" if session.pdf_path else None
+        ),
         # Sensitive values are masked here too: this feeds a projected screen.
         # The skip sentinel is passed through untouched so the dashboard can
         # render "not provided" rather than a masked-looking fake value.
@@ -926,7 +1016,15 @@ async def session_forget(
     an hour on the next form.
     """
     scope = Tier(tier) if tier else None
-    removed = await get_memory().forget(caller_id, scope)
+    try:
+        removed = await get_memory().forget(caller_id, scope)
+    except DeletionUnverifiable as exc:
+        # Never answer "ok" to a deletion that did not happen. Someone who is
+        # told their data is gone stops asking, which is the worst outcome here.
+        raise HTTPException(
+            status_code=503,
+            detail=f"deletion could not be carried out or confirmed: {exc}",
+        ) from exc
     return {"ok": True, "entries_removed": removed, "tier": tier or "all"}
 
 

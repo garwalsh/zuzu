@@ -172,8 +172,32 @@ async def test_episodes_accumulate(schema):
 
 
 @pytest.mark.asyncio
-async def test_forget_clears_the_mirror_too(monkeypatch, schema):
-    """A deletion that leaves our own copy behind is not a deletion."""
+async def test_forget_refuses_rather_than_reporting_a_deletion_it_cannot_make(monkeypatch, schema):
+    """Deleting works by listing what exists and deleting each id.
+
+    With recall unavailable there is no list, so nothing is deleted remotely.
+    Clearing the local mirror at that point would destroy the only remaining
+    record of what is still held out there, and report success while doing it --
+    the applicant would believe their data was gone and stop asking.
+    """
+    store = ApplicantMemory(api_key="k")
+    store._mirror_put(
+        CALLER, "dob", {"tier": Tier.SEMANTIC, "field_id": "date_of_birth", "value": "1998-04-12"}
+    )
+    monkeypatch.setattr(
+        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
+    )
+
+    with pytest.raises(memory.DeletionUnverifiable):
+        await store.forget(CALLER)
+
+    # Nothing was thrown away on the strength of a deletion that never happened.
+    assert memory._MIRROR[memory._user_key(CALLER)]
+
+
+@pytest.mark.asyncio
+async def test_forget_clears_the_mirror_once_the_deletion_really_ran(monkeypatch, schema):
+    """A deletion that leaves our own copy behind is not a deletion either."""
     store = ApplicantMemory(api_key="k")
     store._mirror_put(
         CALLER, "dob", {"tier": Tier.SEMANTIC, "field_id": "date_of_birth", "value": "1998-04-12"}
@@ -182,13 +206,57 @@ async def test_forget_clears_the_mirror_too(monkeypatch, schema):
         CALLER, "called", {"tier": Tier.EPISODIC, "session_id": "s1", "form_id": "I-765"}
     )
 
-    monkeypatch.setattr(
-        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
-    )
-    await store.forget(CALLER, tier=Tier.EPISODIC)
+    class _Resp:
+        status_code = 204
 
+    async def ok_get(self, url, **kwargs):
+        request = httpx.Request("GET", url)
+        return httpx.Response(200, request=request, json={"results": []})
+
+    async def ok_delete(self, url, **kwargs):
+        return _Resp()
+
+    monkeypatch.setattr(httpx.AsyncClient, "get", ok_get)
+    monkeypatch.setattr(httpx.AsyncClient, "delete", ok_delete)
+
+    await store.forget(CALLER, tier=Tier.EPISODIC)
     remaining = memory._MIRROR[memory._user_key(CALLER)]
     assert [e["metadata"]["tier"] for e in remaining] == [Tier.SEMANTIC]
 
     await store.forget(CALLER)
     assert memory._user_key(CALLER) not in memory._MIRROR
+
+
+@pytest.mark.asyncio
+async def test_an_anonymous_session_gets_no_memory_at_all(monkeypatch, schema):
+    """Every caller-less session hashes to the same key.
+
+    Reading or writing that shared bucket would hand one applicant's name, date
+    of birth and passport number to the next anonymous caller.
+    """
+    store = ApplicantMemory(api_key="k")
+
+    # Patch the transport, not _write -- the guard lives in _write, and stubbing
+    # it out would be testing the stub.
+    posted: list[str] = []
+
+    async def spy_post(self, url, **kwargs):
+        posted.append(url)
+        request = httpx.Request("POST", url)
+        return httpx.Response(200, request=request, json={})
+
+    monkeypatch.setattr(httpx.AsyncClient, "post", spy_post)
+    monkeypatch.setattr(
+        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
+    )
+    for blank in ("", "   "):
+        assert await store.save_field(blank, "given_name", "Maria", schema) is False
+        profile = await store.load_profile(blank, schema)
+        assert profile.known_values == {}
+        assert profile.is_returning is False
+        assert profile.source == "anonymous"
+    assert posted == [], "nothing may be written under an empty caller id"
+
+    # And a real caller is unaffected by the guard.
+    assert await store.save_field(CALLER, "given_name", "Maria", schema) is True
+    assert posted, "a session with a caller must still write"

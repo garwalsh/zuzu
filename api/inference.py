@@ -133,7 +133,16 @@ async def complete(
     except Exception as exc:
         raise InferenceUnavailable(f"{model} unreachable: {type(exc).__name__}") from exc
 
-    return _strip_reasoning(data["choices"][0]["message"]["content"])
+    # Parsed here, inside the same failure contract as the request. A gateway out
+    # of credit answers 200 with {"error": ...} and no "choices", and reaching
+    # into that outside the guard raised KeyError -- an exception every caller of
+    # this module is written to let through, so an ordinary billing problem
+    # surfaced as a 500 instead of the graceful fallback each caller already has.
+    try:
+        return _strip_reasoning(data["choices"][0]["message"]["content"])
+    except (KeyError, IndexError, TypeError) as exc:
+        detail = str(data.get("error") or data)[:200] if isinstance(data, dict) else str(data)[:200]
+        raise InferenceUnavailable(f"{model} returned no completion: {detail}") from exc
 
 
 async def complete_json(prompt: str, system: str | None = None, **kwargs: Any) -> Any:
