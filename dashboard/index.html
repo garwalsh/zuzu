@@ -176,6 +176,8 @@
   .tier .head{display:flex;align-items:baseline;gap:8px}
   .tier .nm{font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;font-weight:750}
   .tier .why{font-size:11px;color:var(--faint)}
+  .tier .tally{margin-left:auto;font-variant-numeric:tabular-nums}
+  .memrow.empty{color:var(--faint);font-style:italic}
   .tier.semantic .nm{color:var(--ok)}
   .tier.episodic .nm{color:var(--accent)}
   .tier.procedural .nm{color:var(--mem)}
@@ -488,26 +490,41 @@ function resetGrid(){
 
 async function loadMemory(id){
   try{
-    const m = await (await fetch(`/sessions/${id}/memory`, {headers:H})).json();
-    const total = m.semantic.length + m.episodic.length + m.procedural.length;
-    el('memcount').textContent = total ? `${total} stored` : '';
-    if (!total){
-      el('memory').innerHTML =
-        `<p class="muted" style="padding:0">Nothing stored for this caller yet.</p>`;
-      return;
-    }
-    const tier = (cls,name,why,rows) => rows.length ? `
+    const r = await fetch(`/sessions/${id}/memory`, {headers:H});
+    if (!r.ok) throw new Error(`memory ${r.status}`);
+    const m = await r.json();
+    const sem = m.semantic || [], epi = m.episodic || [], pro = m.procedural || [];
+    const total = sem.length + epi.length + pro.length;
+    el('memcount').textContent = total ? `${total} stored` : 'empty';
+
+    // All three tiers are always drawn, even at zero. Hiding an empty tier made
+    // it look as though Zuzu had only one kind of memory -- the point is that
+    // there are three, kept apart, and that you can see into each of them.
+    const tier = (cls,name,why,rows) => `
       <div class="tier ${cls}"><div class="head"><span class="nm">${name}</span>
-      <span class="why">${why}</span></div>
-      ${rows.map(r => `<div class="memrow">${r}</div>`).join('')}</div>` : '';
+      <span class="why">${why}</span><span class="why tally">${rows.length}</span></div>
+      ${rows.length
+        ? rows.map(r => `<div class="memrow">${r}</div>`).join('')
+        : `<div class="memrow empty">Nothing yet</div>`}</div>`;
+
     el('memory').innerHTML =
-      tier('semantic','Semantic','facts',
-        m.semantic.map(x => `<b>${x.label}</b> — ${x.value}`)) +
-      tier('episodic','Episodic','past calls',
-        m.episodic.map(x => `<b>${x.form_id}</b> on ${String(x.at).slice(0,10)} — ${x.fields_collected} answers, ${x.completed?'completed':'unfinished'}`)) +
-      tier('procedural','Procedural','learned rules',
-        m.procedural.map(x => `<b>${x.kind}</b> — ${x.value}`));
-  } catch(e){}
+      tier('semantic','Semantic','facts that outlive the call',
+        sem.map(x => `<b>${x.label}</b> — ${x.value}`)) +
+      tier('episodic','Episodic','calls that happened',
+        epi.map(x => `<b>${x.form_id}</b> on ${String(x.at).slice(0,10)} — ${x.fields_collected} answers, ${x.completed?'completed':'unfinished'}`)) +
+      tier('procedural','Procedural','rules learned about this caller',
+        pro.map(x => `<b>${x.kind}</b> — ${x.value}`)) +
+      (m.caller_key ? `<p class="muted" style="padding:0;font-size:11px">
+        Keyed by <code>${m.caller_key}</code> — a hash, never the phone number.</p>` : '') +
+      (m.source && m.source !== 'mem0' ? `<p class="muted" style="padding:0;font-size:11px">
+        Recall degraded: ${m.degraded_reason || m.source}. Showing what this
+        process stored; writes to mem0 are unaffected.</p>` : '');
+  } catch(e){
+    // Silence here is why an empty panel looked like an empty caller.
+    el('memcount').textContent = 'unavailable';
+    el('memory').innerHTML =
+      `<p class="muted" style="padding:0">Memory unavailable: ${e.message}</p>`;
+  }
 }
 
 async function hydrate(id){
@@ -596,9 +613,13 @@ async function mountVoice(){
   el('vstate').textContent = 'Voice agent connected';
   el('widgethint').textContent =
     'Use “Start a call” at the bottom of the screen.';
+}
 
-  // Follow the newest session even while connected, or the page latches onto a
-  // stale one and ignores the real call.
+// Follow the newest session, always. This used to live inside mountVoice(),
+// which returns early when no agent id is configured -- so on any deployment
+// without the widget the page never attached to a session at all, and every
+// panel including memory sat on its placeholder looking broken.
+function followNewestSession(){
   setInterval(async () => {
     try{
       const d = await (await fetch('/sessions/recent', {headers:H})).json();
@@ -657,6 +678,7 @@ async function present(){
   await loadSchema(qs.get('form') || 'I-765');
   await loadForms();
   mountVoice();
+  followNewestSession();
   if (qs.get('present') === '1') present();
 })();
 </script>

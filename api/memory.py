@@ -48,6 +48,25 @@ MEM0_BASE_URL = "https://api.mem0.ai/v1"
 LOOKUP_TIMEOUT_SECONDS = 3.0
 WRITE_TIMEOUT_SECONDS = 5.0
 
+#: Write-through mirror of everything this process has stored, keyed by the same
+#: hashed user key mem0 is given.
+#:
+#: mem0's read and write quotas are metered separately, and the read quota is the
+#: one that runs out first: writes keep returning 200 while every recall comes
+#: back 429. The old behaviour swallowed that and returned an empty profile,
+#: which is indistinguishable from a caller who has never called before -- so a
+#: caller with a full memory silently looked like a stranger, on the live path
+#: and on screen.
+#:
+#: The mirror is not a second source of truth and is not durable: it is what this
+#: process wrote, held so the tiers can still be shown and a returning caller
+#: still recognised while recall is unavailable. Reads always prefer mem0, and
+#: anything served from here is labelled as such rather than passed off as mem0.
+_MIRROR: dict[str, list[dict[str, Any]]] = {}
+#: Per-caller cap. Far above a real applicant's footprint, low enough that a
+#: long-running process cannot grow without bound.
+MIRROR_LIMIT = 200
+
 
 class Tier(StrEnum):
     SEMANTIC = "semantic"
@@ -86,6 +105,13 @@ class ApplicantProfile(BaseModel):
     episodes: list[Episode] = Field(default_factory=list)
     procedures: list[Procedure] = Field(default_factory=list)
     is_returning: bool = False
+    #: Where this profile was actually read from: `mem0`, the in-process
+    #: `mirror` when recall was unavailable, or `none`. Displayed, not decorative
+    #: -- an operator has to be able to tell a real empty profile from a
+    #: recall outage.
+    source: str = "mem0"
+    #: Why recall fell back, when it did. Empty on the healthy path.
+    degraded_reason: str = ""
 
     @property
     def last_episode(self) -> Episode | None:
@@ -150,12 +176,50 @@ class ApplicantMemory:
                 type(exc).__name__,
             )
             return False
+        self._mirror_put(caller_id, text, metadata)
         return True
 
-    async def _read_all(self, caller_id: str) -> list[dict[str, Any]]:
-        """Every memory for this caller, across tiers. Never raises."""
+    @staticmethod
+    def _mirror_put(caller_id: str, text: str, metadata: dict[str, Any]) -> None:
+        """Record a successful write so it can still be shown if recall fails."""
+        entries = _MIRROR.setdefault(_user_key(caller_id), [])
+        tier = metadata.get("tier")
+        # A semantic fact and a procedural rule are corrections of the previous
+        # value for the same key, not additions to it. Episodes are events and
+        # accumulate.
+        identity = (
+            ("field_id", metadata.get("field_id"))
+            if tier == Tier.SEMANTIC
+            else ("key", metadata.get("key"))
+            if tier == Tier.PROCEDURAL
+            else None
+        )
+        if identity is not None and identity[1]:
+            key, value = identity
+            entries[:] = [
+                e
+                for e in entries
+                if not (
+                    (e.get("metadata") or {}).get("tier") == tier
+                    and (e.get("metadata") or {}).get(key) == value
+                )
+            ]
+        entries.append({"memory": text, "metadata": dict(metadata)})
+        if len(entries) > MIRROR_LIMIT:
+            del entries[: len(entries) - MIRROR_LIMIT]
+
+    async def _read_all(self, caller_id: str) -> tuple[list[dict[str, Any]], str, str]:
+        """Every memory for this caller, across tiers, with its provenance.
+
+        Returns (entries, source, reason). Never raises: a memory outage must
+        not stop someone filing their form. When recall fails, the in-process
+        mirror is served instead of an empty list, because "we cannot reach the
+        memory" and "this caller is new" are different answers and only one of
+        them should make Zuzu ask thirty-three questions again.
+        """
+        mirrored = list(_MIRROR.get(_user_key(caller_id), []))
         if not self.enabled:
-            return []
+            return (mirrored, "mirror" if mirrored else "none", "mem0 is not configured")
         try:
             async with httpx.AsyncClient(timeout=LOOKUP_TIMEOUT_SECONDS) as client:
                 resp = await client.get(
@@ -166,12 +230,17 @@ class ApplicantMemory:
                 resp.raise_for_status()
                 payload = resp.json()
         except Exception as exc:
-            # A memory outage must not stop someone filing their form.
-            logger.warning(
-                "mem0 lookup failed caller=%s: %s", _log_id(caller_id), type(exc).__name__
-            )
-            return []
-        return payload if isinstance(payload, list) else payload.get("results", [])
+            reason = type(exc).__name__
+            if isinstance(exc, httpx.HTTPStatusError):
+                reason = f"mem0 recall HTTP {exc.response.status_code}"
+                if exc.response.status_code == 429:
+                    # mem0 meters reads and writes separately, so this says
+                    # nothing about whether the writes landed.
+                    reason = "mem0 read quota exhausted for this billing period"
+            logger.warning("mem0 lookup failed caller=%s: %s", _log_id(caller_id), reason)
+            return (mirrored, "mirror" if mirrored else "none", reason)
+        entries = payload if isinstance(payload, list) else payload.get("results", [])
+        return (entries, "mem0", "")
 
     # ---- reads -----------------------------------------------------------
 
@@ -179,7 +248,7 @@ class ApplicantMemory:
         self, caller_id: str, schema: FormSchema | None = None
     ) -> ApplicantProfile:
         """Assemble all three tiers into one profile. Never raises."""
-        entries = await self._read_all(caller_id)
+        entries, source, degraded_reason = await self._read_all(caller_id)
         known: dict[str, str] = {}
         episodes: list[Episode] = []
         procedures: list[Procedure] = []
@@ -240,14 +309,18 @@ class ApplicantMemory:
             episodes=episodes[:10],
             procedures=procedures,
             is_returning=bool(known or episodes),
+            source=source,
+            degraded_reason=degraded_reason,
         )
         logger.info(
-            "mem0 recall caller=%s returning=%s semantic=%d episodic=%d procedural=%d",
+            "mem0 recall caller=%s source=%s returning=%s semantic=%d episodic=%d procedural=%d%s",
             _log_id(caller_id),
+            source,
             profile.is_returning,
             len(known),
             len(episodes),
             len(procedures),
+            f" degraded={degraded_reason}" if degraded_reason else "",
         )
         return profile
 
@@ -372,7 +445,15 @@ class ApplicantMemory:
         """
         if not self.enabled:
             return 0
-        entries = await self._read_all(caller_id)
+        entries, _source, _reason = await self._read_all(caller_id)
+        # Forget the mirror too, whatever happens at mem0 -- a deletion request
+        # that leaves the copy this process is holding is not a deletion.
+        mirror = _MIRROR.get(_user_key(caller_id))
+        if mirror is not None:
+            if tier is None:
+                _MIRROR.pop(_user_key(caller_id), None)
+            else:
+                mirror[:] = [e for e in mirror if (e.get("metadata") or {}).get("tier") != tier]
         removed = 0
         try:
             async with httpx.AsyncClient(timeout=WRITE_TIMEOUT_SECONDS) as client:

@@ -27,6 +27,8 @@ htmlcov/
 .pdd/cache/
 .pdd/worktrees/
 .pdd/backups/
+.pdd/locks/
+.pdd/transactions/
 litellm_cache.sqlite/
 litellm_cache.sqlite
 

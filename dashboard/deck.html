@@ -104,6 +104,20 @@
   .step .t{font-size:14px;font-weight:640}
   .step .d{font-size:11.5px;color:var(--pencil);line-height:1.4}
 
+  /* the three memory tiers, shown as three columns of actual rows */
+  .mem{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .tier{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .tier .th{display:flex;align-items:baseline;gap:7px;padding-bottom:4px;
+    border-bottom:1px solid var(--rule)}
+  .tier .tn{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--stamp);font-weight:700}
+  .tier .tw{font-size:11px;color:var(--pencil)}
+  .tier .tc{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--pencil);
+    font-variant-numeric:tabular-nums}
+  .mrow{border:1px solid var(--box-line);background:var(--box);padding:7px 10px;
+    font-size:12.5px;line-height:1.35;color:var(--pencil)}
+  .mrow b{color:var(--ink);font-weight:640}
+
   .stamp{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
     border:2px solid var(--stamp);color:var(--stamp);padding:7px 14px;
     font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
@@ -200,22 +214,31 @@
       <span class="form">mem0 · three tiers</span></div>
     <div class="body">
       <p class="lede">A returning caller answers four questions instead of thirty-three.</p>
-      <div class="flow">
-        <div class="step"><span class="n">Semantic</span><span class="t">Facts</span>
-          <span class="d">Name, date of birth, passport number</span></div>
-        <div class="step"><span class="n">Episodic</span><span class="t">Past calls</span>
-          <span class="d">Which form, how many answers, whether it finished</span></div>
-        <div class="step"><span class="n">Procedural</span><span class="t">Learned rules</span>
-          <span class="d">Speaks Spanish · has no SSN, stop asking</span></div>
+      <div class="mem">
+        <div class="tier"><div class="th"><span class="tn">Semantic</span>
+          <span class="tw">facts that outlive the call</span><span class="tc">25</span></div>
+          <div class="mrow">country of citizenship — <b>Mexico</b></div>
+          <div class="mrow">date of birth — <b>1998-04-12</b></div>
+          <div class="mrow">eligibility category — <b>(c)(3)(B)</b></div></div>
+        <div class="tier"><div class="th"><span class="tn">Episodic</span>
+          <span class="tw">calls that happened</span><span class="tc">2</span></div>
+          <div class="mrow"><b>I-765</b> on 2026-07-26 — 32 answers, completed</div>
+          <div class="mrow"><b>I-765</b> on 2026-07-24 — 11 answers, unfinished</div></div>
+        <div class="tier"><div class="th"><span class="tn">Procedural</span>
+          <span class="tw">rules learned about this caller</span><span class="tc">4</span></div>
+          <div class="mrow">speak <b>es</b> with this applicant</div>
+          <div class="mrow">no SSN — <b>ask late or not at all</b></div>
+          <div class="mrow">category is (c)(3)(B) — <b>confirm, do not re-derive</b></div></div>
       </div>
       <div class="fields" style="max-width:840px">
         <div class="fld"><span class="lab">First call</span><span class="val">33<small> questions</small></span></div>
         <div class="fld ok"><span class="lab">Second call</span><span class="val">4<small> questions</small></span></div>
         <div class="fld"><span class="lab">Caller identity</span><span class="val">SHA-256</span></div>
       </div>
-      <p class="sub">Tiers are stored separately, so an applicant can delete their call history and
-        keep the profile that saves them an hour. Sensitive values are not persisted at all
-        unless explicitly opted in, and the store never holds a raw phone number.</p>
+      <p class="sub">All three are on screen during the call, counts included. They are stored
+        separately, so an applicant can delete their call history and keep the profile that saves
+        them an hour. Sensitive values are not persisted unless explicitly opted in, and the store
+        is keyed by a hash — never a raw phone number.</p>
     </div>
     <div class="foot"><span class="url">zuzu-orchestrator.onrender.com</span><span class="pg">4 / 10</span></div>
   </section>

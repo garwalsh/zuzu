@@ -496,6 +496,18 @@ async def demo_run(
             source="demo",
         )
         duration_ms = round((time.perf_counter() - started) * 1000, 2)
+        # SEMANTIC write. The loop above talks to the session store directly
+        # rather than to /tools/save_field, so without this a demo call left
+        # mem0 completely empty and the memory panel had nothing to show.
+        _spawn_background(
+            get_memory().save_field(
+                caller_id=profile["caller_id"],
+                field_id=field.id,
+                value=answers.get(field.id, SKIP_SENTINEL),
+                schema=schema,
+                language=profile.get("preferred_language", "en"),
+            )
+        )
         asked.append(field.id)
         remaining, _k = counts(await store.get(session_id), schema)
         await _publish(
@@ -512,6 +524,31 @@ async def demo_run(
         await asyncio.sleep(0.05)  # let the dashboard animate
 
     result = await generate_form(GenerateFormRequest(session_id=session_id))
+
+    # EPISODIC + PROCEDURAL writes. A real call gets these from
+    # /session/complete when the agent hangs up; a demo call never reaches that
+    # endpoint, so it has to close its own record or two of the three tiers
+    # stay permanently empty.
+    final = await store.get(session_id)
+    _spawn_background(
+        get_memory().record_episode(
+            caller_id=profile["caller_id"],
+            session_id=session_id,
+            form_id=schema.form_id,
+            fields_collected=len(final.values),
+            completed=result.status == "complete",
+            language=profile.get("preferred_language", "en"),
+        )
+    )
+    _spawn_background(
+        get_memory().learn_from_session(
+            caller_id=profile["caller_id"],
+            values={fid: fv.value for fid, fv in final.values.items()},
+            schema=schema,
+            language=profile.get("preferred_language", "en"),
+        )
+    )
+
     return {
         "session_id": session_id,
         "persona": profile["display_name"],
@@ -719,6 +756,11 @@ async def session_memory(
     return {
         "caller_key": _user_key(session.caller_id) if session.caller_id else None,
         "is_returning": profile.is_returning,
+        # Where these tiers were actually read from. Three empty tiers because
+        # the caller is new and three empty tiers because recall is down look
+        # identical on screen unless the panel is told which it is.
+        "source": profile.source,
+        "degraded_reason": profile.degraded_reason,
         "summary": summarize(profile, schema),
         "semantic": [
             {
