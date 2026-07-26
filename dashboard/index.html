@@ -183,6 +183,13 @@
     background:#fbfcfe;border:1px solid var(--line2)}
   .memrow b{color:var(--ink);font-weight:620}
 
+  #caption{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    z-index:60;max-width:min(860px,92vw);padding:14px 22px;border-radius:14px;
+    background:rgba(22,32,46,.94);color:#fff;font-size:16px;line-height:1.5;
+    box-shadow:0 12px 34px rgba(22,32,46,.3);opacity:0;pointer-events:none;
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.8,.3,1);text-align:center}
+  #caption.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  #caption b{color:#7fb2ff}
   .voicerow{display:flex;align-items:center;gap:10px;padding:16px 18px 6px}
   .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none;
     box-shadow:0 0 0 4px var(--ok-soft)}
@@ -195,6 +202,7 @@
 </head>
 <body>
 <div id="bg-fallback"></div>
+<div id="caption"></div>
 <canvas id="bg-canvas"></canvas>
 
 <header>
@@ -603,10 +611,53 @@ async function mountVoice(){
   }, 2500);
 }
 
+// ---- presentation mode: ?present=1 --------------------------------------
+// Drives the whole demo end to end with captions, so recording is one take and
+// nobody has to remember an order while a camera is running.
+const caption = (html, ms) => new Promise(r => {
+  const c = el('caption');
+  c.innerHTML = html; c.classList.add('on');
+  setTimeout(() => { c.classList.remove('on'); setTimeout(r, 450); }, ms);
+});
+const hold = ms => new Promise(r => setTimeout(r, ms));
+
+async function present(){
+  await hold(700);
+  await caption('USCIS forms are long, in English, and one wrong box costs you months.', 5200);
+  await caption('Zuzu is a phone call. <b>If you can talk, you can file.</b>', 4600);
+
+  await caption('An applicant says <b>“I need my work permit”</b> — not “I-765”.', 4600);
+  el('run').click();
+  await caption('Zuzu picks the form and asks one plain question at a time.', 5200);
+  await hold(2200);
+  await caption('Every answer lands in under a millisecond. <b>No model on the path where a human is waiting.</b>', 5400);
+
+  await caption('Now she says <b>“actually, I want to become a citizen”</b>…', 4200);
+  const pick = el('formpick');
+  pick.value = 'N-400'; pick.dispatchEvent(new Event('change'));
+  await hold(1400);
+  await caption('…and the page follows. <b>273 questions</b>, with her answers carried across.', 5400);
+
+  pick.value = 'I-765'; pick.dispatchEvent(new Event('change'));
+  await hold(900);
+  el('run').click();
+  await hold(2500);
+  await caption('Memory has three tiers: <b>facts</b>, <b>past calls</b>, and <b>learned rules</b>.', 5200);
+  await caption('A first-time caller answers <b>33 questions</b>. She comes back and answers <b>four</b>.', 5400);
+
+  await caption('The result is the real USCIS form, filled and ready to <b>review and sign</b>.', 5000);
+  await caption('Zuzu never submits it and cannot sign it. The signature fields are read-only by design.', 5200);
+
+  await caption('A form is data, not code — <b>twelve forms</b>, none hand-written.', 5000);
+  await caption('Built against the real document, which disagreed with our spec <b>four times</b>.', 5200);
+  await caption('ElevenLabs · mem0 · TokenRouter · rtrvr.ai · RocketRide · Band · Render', 6000);
+}
+
 (async () => {
   await loadSchema(qs.get('form') || 'I-765');
   await loadForms();
   mountVoice();
+  if (qs.get('present') === '1') present();
 })();
 </script>
 </body>
