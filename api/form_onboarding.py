@@ -25,6 +25,8 @@ import httpx
 
 from api.form_builder import derive_schema, save_schema, slugify
 from api.i765_schema import REPO_ROOT
+from api.pipeline import is_available as pipeline_available
+from api.pipeline import polish_questions
 
 logger = logging.getLogger(__name__)
 
@@ -158,6 +160,21 @@ async def onboard(form_id: str, pdf_url: str | None = None, title: str = "") -> 
     schema = derive_schema(inventory, form_id.upper(), str(pdf_path.relative_to(REPO_ROOT)), title)
     if not schema["fields"]:
         raise OnboardingError(f"{form_id}: no askable fields survived derivation")
+
+    # Improve the wording through the RocketRide pipeline, where the model is
+    # chosen in configuration. Entirely optional: the tooltip-derived questions
+    # already work, so a failure here changes nothing.
+    if pipeline_available():
+        labels = [f["question"] for f in schema["fields"]]
+        improved = await polish_questions(labels, form_id.upper())
+        if improved:
+            changed = 0
+            for field in schema["fields"]:
+                better = improved.get(field["question"])
+                if better and better != field["question"]:
+                    field["question"] = better
+                    changed += 1
+            logger.info("%s: %d question(s) polished via pipeline", form_id, changed)
 
     inv_path = REPO_ROOT / "data" / f"{slugify(form_id)}_acroform_fields.json"
     inv_path.write_text(json.dumps(inventory, indent=2) + "\n", encoding="utf-8")
