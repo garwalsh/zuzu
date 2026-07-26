@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "description": "Ownership for tracked paths that are not PDD-managed units. Patterns are fnmatch and '*' crosses directory separators, so 'api/*' is the whole subtree; overlapping rules that disagree are an error, so keep them disjoint. Architecture outputs are classified MANAGED before this file is consulted, so 'api/*' does not reclassify the nine prompt-backed modules -- it covers only the ones with no prompt behind them, which is what they are. There is deliberately NO rule for prompts/: a HUMAN_OWNED rule on a .prompt path makes PDD skip it as a unit entirely, so every prompt would stop being managed and every architecture mapping would resolve to nothing.",
+  "rules": [
+    {
+      "pattern": ".env.example",
+      "inventory": "HUMAN_OWNED",
+      "role": "config",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": ".gitignore",
+      "inventory": "HUMAN_OWNED",
+      "role": "config",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": ".pddrc",
+      "inventory": "HUMAN_OWNED",
+      "role": "config",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": "pyproject.toml",
+      "inventory": "HUMAN_OWNED",
+      "role": "config",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": "render.yaml",
+      "inventory": "HUMAN_OWNED",
+      "role": "config",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": "uv.lock",
+      "inventory": "HUMAN_OWNED",
+      "role": "lockfile",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": "README.md",
+      "inventory": "HUMAN_OWNED",
+      "role": "docs",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": "architecture.json",
+      "inventory": "HUMAN_OWNED",
+      "role": "pdd-architecture",
+      "owner": "zuzu-maintainers",
+      "preauthorize_absent": true
+    },
+    {
+      "pattern": ".github/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "ci",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": ".pdd/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "pdd-state",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "api/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "hand-written-module",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "assets/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "asset",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "dashboard/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "frontend",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "data/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "form-data",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "docs/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "docs",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "mocks/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "mock",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "stories/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "user-story",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "tests/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "test",
+      "owner": "zuzu-maintainers"
+    },
+    {
+      "pattern": "tools/*",
+      "inventory": "HUMAN_OWNED",
+      "role": "build-tool",
+      "owner": "zuzu-maintainers"
+    }
+  ]
+}
