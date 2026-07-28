@@ -31,8 +31,10 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from api.band.credentials import agent_ids
 from api.band.fleet import get_fleet
 from api.band.roles import ROLES as BAND_ROLES
+from api.band.tools import SessionTools
 from api.contract import (
     FIELD_SAVED,
     FORM_CHANGED,
@@ -62,7 +64,6 @@ from api.form_onboarding import OnboardingError, load_catalog, onboard
 from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import DeletionUnverifiable, Tier, _user_key, get_memory, summarize
-from api.orchestrator import BAND_AGENTS, note_intake, registered_agents, run_pipeline
 from api.pdf_engine import missing_required
 from api.retrieval import applicable_items, fetch_document_checklist
 from api.security import (
@@ -86,9 +87,6 @@ from api.tenancy import Principal, Tenant, guard_session, require_tenant
 TenantDep = Annotated[Tenant, Depends(require_tenant)]
 
 CONFIDENCE_CONFIRM_THRESHOLD = 0.85
-#: Audit records from the most recent pipeline run per session. In Layer 2 this
-#: belongs in Redis alongside the session it describes.
-_AUDIT: dict[str, dict[str, Any]] = {}
 OUT_DIR = REPO_ROOT / "out"
 PERSONA_PATH = REPO_ROOT / "data" / "demo_personas.json"
 
@@ -326,14 +324,6 @@ async def get_missing_fields(
         if field
         else None
     )
-    # Attribute the choice to Intake. Appending to a list is all this does; the
-    # applicant is mid-sentence and nothing slow belongs on this path.
-    note_intake(
-        payload.session_id,
-        "asked" if field else "interview complete",
-        field.id if field else None,
-        f"{remaining} of {remaining + known} remaining" if field else f"{known} answers collected",
-    )
     logger.info(
         "next field resolved",
         extra={
@@ -422,6 +412,7 @@ async def save_field(
 @app.post("/tools/generate_form", response_model=GenerateFormResponse)
 async def generate_form(
     payload: GenerateFormRequest,
+    tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> GenerateFormResponse:
     session = await _load_or_open_session(payload.session_id)
@@ -436,18 +427,25 @@ async def generate_form(
         )
         return GenerateFormResponse(status="incomplete", pdf_url=None, missing=missing)
 
-    out_path = OUT_DIR / f"{payload.session_id}.pdf"
-    sources = {fid: fv.source for fid, fv in session.values.items()}
-    # Extractor -> Mapper -> Validator -> Filler -> Auditor. Off the event loop:
-    # the call is still live and other tool calls must land.
-    written, record = await asyncio.to_thread(
-        run_pipeline, payload.session_id, schema, plain, sources, out_path
-    )
-    _AUDIT[payload.session_id] = record
-    if written is None:
-        blocking = [f["field_id"] for f in record["findings"] if f["severity"] == "error"]
-        return GenerateFormResponse(status="incomplete", pdf_url=None, missing=blocking)
-    await get_session_store().set_pdf_path(payload.session_id, str(out_path))
+    # The same two operations the Validator and Filler agents call, and the same
+    # code -- there is no second implementation of what a valid filing is. The
+    # difference is only who decided to run them: here the voice agent asked
+    # directly, because the applicant is still on the phone and a full agent
+    # collaboration takes a minute and a half.
+    principal = Principal(tenant=tenant, user_id=session.caller_id)
+    tools = SessionTools(payload.session_id, principal, OUT_DIR)
+    checked = await tools.cross_check()
+    if checked["blocking"]:
+        return GenerateFormResponse(
+            status="incomplete",
+            pdf_url=None,
+            missing=[f["field_id"] for f in checked["findings"] if f["severity"] == "error"],
+        )
+    result = await tools.write_form()
+    if not result["written"]:
+        return GenerateFormResponse(
+            status="incomplete", pdf_url=None, missing=result.get("fields", [])
+        )
 
     # The link is emailed to someone with no shared secret, so it carries a
     # signed, expiring token rather than relying on the session id.
@@ -577,17 +575,6 @@ async def demo_run(
         field = next_missing_field(session, schema)
         if field is None:
             break
-        # Intake chose this question. The demo drives the loop directly rather
-        # than through /tools/get_missing_fields, so it records the same thing
-        # that endpoint would -- otherwise the audit trail of a demo call has no
-        # account of anything being asked.
-        remaining_before, known_before = counts(session, schema)
-        note_intake(
-            session_id,
-            "asked",
-            field.id,
-            f"{remaining_before} of {remaining_before + known_before} remaining",
-        )
         # Only ever answer from the persona. Never synthesize.
         started = time.perf_counter()
         await store.save_field(
@@ -624,7 +611,7 @@ async def demo_run(
         )
         await asyncio.sleep(0.05)  # let the dashboard animate
 
-    result = await generate_form(GenerateFormRequest(session_id=session_id))
+    result = await generate_form(GenerateFormRequest(session_id=session_id), tenant)
 
     # EPISODIC + PROCEDURAL writes. A real call gets these from
     # /session/complete when the agent hangs up; a demo call never reaches that
@@ -874,23 +861,27 @@ async def orchestrate(
 
 @app.get("/agents")
 async def agents_index() -> dict[str, Any]:
-    """The pipeline's stages and their Band agent identities, checked live."""
-    agents = await registered_agents()
+    """The fleet: who is connected, what each may touch, and how they run."""
     fleet = get_fleet()
+    ids = agent_ids()
     return {
         "fleet_running": fleet.is_running,
         "connected": sorted(fleet.agents),
-        "roles": [{"key": r.key, "name": r.agent_name, "tools": list(r.tools)} for r in BAND_ROLES],
-        # Derived, not restated. This list was written out by hand and had
-        # already drifted: Intake was added to the pipeline and stamped on the
-        # audit trail while this endpoint went on advertising five stages.
-        "stages": list(BAND_AGENTS),
-        "agents": agents,
-        "dispatch": "in-process",
+        "roles": [
+            {
+                "key": r.key,
+                "name": r.agent_name,
+                "agent_id": ids.get(r.key, ""),
+                "does": r.description,
+                "tools": list(r.tools),
+            }
+            for r in BAND_ROLES
+        ],
+        "transport": "band",
+        "runs": "in-process; each agent holds its own WebSocket to Band",
         "note": (
-            "Stage identities are registered on Band and appear on every audit "
-            "entry. Execution is in-process: Band dispatch requires agents "
-            "running as WebSocket-connected processes with per-agent keys."
+            "Agents address each other by Band mention. The order work happens "
+            "in emerges from that conversation rather than from a fixed loop."
         ),
     }
 
@@ -899,16 +890,25 @@ async def agents_index() -> dict[str, Any]:
 async def session_audit(
     session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
-    """Who set which field, from where, and what the Validator objected to.
+    """Which agent did what, in what order, and why.
 
-    In a legal-filing domain this is the point of separating the stages: when a
-    form comes back rejected, someone has to be able to work out why.
+    In a legal-filing domain this is the point of the whole arrangement: when a
+    form comes back rejected months later, somebody has to reconstruct it. The
+    record is the collaboration -- every turn, the tools it ran, and whether the
+    model or the fallback decided it.
     """
     await _load_session(session_id, tenant)
-    record = _AUDIT.get(session_id)
-    if record is None:
-        raise HTTPException(status_code=404, detail="no pipeline run for this session yet")
-    return record
+    fleet = get_fleet()
+    for collab in fleet.by_room.values():
+        if collab.session_id == session_id:
+            return collab.as_dict()
+    raise HTTPException(
+        status_code=404,
+        detail=(
+            "no collaboration for this session yet -- POST "
+            f"/sessions/{session_id}/orchestrate to run one"
+        ),
+    )
 
 
 @app.get("/sessions/{session_id}/memory")

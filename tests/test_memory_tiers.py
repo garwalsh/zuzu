@@ -1,32 +1,25 @@
-"""The three memory tiers, and what happens when recall is unavailable.
+"""The profile layer: three tiers assembled into something a greeting can use.
 
-These exist because of a real failure, not a hypothetical one. mem0 meters reads
-and writes separately; the read quota ran out first, so every write kept
-returning 200 while every recall came back 429. The old read path swallowed that
-and returned an empty profile -- which is exactly what a brand-new caller looks
-like. A caller with a full history was silently treated as a stranger, on the
-live call path and on screen, and nothing anywhere said so.
+This file used to test an in-process mirror that covered for hosted mem0's read
+quota. Both are gone -- the mirror was a second copy of the truth, and while it
+existed the Band agents had their own memory tools writing somewhere else
+entirely, so an applicant had two memories that never saw each other.
 
-The rule these lock down: an outage must never be reported as an absence.
+There is one store now, and these are the behaviours that survive that change:
+what a returning caller looks like, what an anonymous one must not, and which
+records correct a previous value versus accumulate beside it.
 """
 
 from __future__ import annotations
 
-import httpx
 import pytest
 
 from api import memory
 from api.form_registry import get_form
-from api.memory import ApplicantMemory, Tier
+from api.i765_schema import SKIP_SENTINEL
+from api.memory import Tier, get_memory, summarize
 
 CALLER = "+14155550142"
-
-
-@pytest.fixture(autouse=True)
-def _clear_mirror():
-    memory._MIRROR.clear()
-    yield
-    memory._MIRROR.clear()
 
 
 @pytest.fixture
@@ -34,229 +27,138 @@ def schema():
     return get_form("I-765")
 
 
-def _quota_error() -> httpx.HTTPStatusError:
-    request = httpx.Request("GET", f"{memory.MEM0_BASE_URL}/memories/")
-    response = httpx.Response(429, request=request, json={"error": "quota exceeded"})
-    return httpx.HTTPStatusError("429", request=request, response=response)
+@pytest.fixture
+def store():
+    return get_memory()
 
 
 @pytest.mark.asyncio
-async def test_successful_write_is_mirrored(monkeypatch, schema):
-    """Anything accepted by mem0 is also held locally, so it can still be shown."""
-    store = ApplicantMemory(api_key="k")
-    monkeypatch.setattr(ApplicantMemory, "_write", ApplicantMemory._write)
-
-    async def ok(self, caller_id, text, metadata):
-        self._mirror_put(caller_id, text, metadata)
-        return True
-
-    monkeypatch.setattr(ApplicantMemory, "_write", ok)
-    await store.save_field(CALLER, "given_name", "Maria", schema)
-
-    mirrored = memory._MIRROR[memory._user_key(CALLER)]
-    assert len(mirrored) == 1
-    assert mirrored[0]["metadata"]["field_id"] == "given_name"
+async def test_a_caller_with_nothing_stored_is_not_returning(store, schema):
+    profile = await store.load_profile(CALLER, schema)
+    assert profile.is_returning is False
+    assert profile.known_values == {}
 
 
 @pytest.mark.asyncio
-async def test_failed_write_is_not_mirrored(monkeypatch, schema):
-    """A write that mem0 rejected must not be shown as though it were stored."""
-
-    async def boom(self, caller_id, text, metadata):
-        return False
-
-    monkeypatch.setattr(ApplicantMemory, "_write", boom)
-    store = ApplicantMemory(api_key="k")
-    await store.save_field(CALLER, "given_name", "Maria", schema)
-
-    assert memory._user_key(CALLER) not in memory._MIRROR
-
-
-@pytest.mark.asyncio
-async def test_recall_outage_is_reported_not_swallowed(monkeypatch, schema):
-    """A 429 on recall must surface as degraded, never as a caller with no history."""
-    store = ApplicantMemory(api_key="k")
-    store._mirror_put(
-        CALLER,
-        "family name is Reyes",
-        {"tier": Tier.SEMANTIC, "field_id": "family_name", "value": "Reyes"},
-    )
-
-    # Fail the recall the way mem0 does, and let the real error handling run.
-    monkeypatch.setattr(
-        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
-    )
+async def test_a_saved_fact_comes_back(store, schema):
+    assert await store.save_field(CALLER, "given_name", "Maria", schema) is True
 
     profile = await store.load_profile(CALLER, schema)
-
-    assert profile.source == "mirror"
-    assert "quota" in profile.degraded_reason.lower()
-    # The whole point: the caller is still recognised.
     assert profile.is_returning is True
-    assert profile.known_values["family_name"] == "Reyes"
+    assert profile.known_values["given_name"] == "Maria"
+    assert profile.display_name == "Maria"
 
 
 @pytest.mark.asyncio
-async def test_all_three_tiers_survive_an_outage(monkeypatch, schema):
-    """Semantic, episodic and procedural each come back from the mirror."""
-    store = ApplicantMemory(api_key="k")
-    store._mirror_put(
-        CALLER, "dob", {"tier": Tier.SEMANTIC, "field_id": "date_of_birth", "value": "1998-04-12"}
-    )
-    store._mirror_put(
-        CALLER,
-        "called",
-        {
-            "tier": Tier.EPISODIC,
-            "session_id": "s1",
-            "form_id": "I-765",
-            "at": "2026-07-26T00:00:00+00:00",
-            "fields_collected": 32,
-            "completed": True,
-        },
-    )
-    store._mirror_put(
-        CALLER,
-        "speaks es",
-        {"tier": Tier.PROCEDURAL, "key": "language", "value": "speak es with this applicant"},
-    )
+async def test_an_anonymous_session_gets_no_memory_in_either_direction(store, schema):
+    """Every caller-less session derives the same key.
 
-    monkeypatch.setattr(
-        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
-    )
+    Reading or writing that shared bucket would hand one applicant's name and
+    date of birth to the next anonymous caller.
+    """
+    for blank in ("", "   "):
+        assert await store.save_field(blank, "given_name", "Maria", schema) is False
+        profile = await store.load_profile(blank, schema)
+        assert profile.is_returning is False
+        assert profile.source == "anonymous"
+        assert profile.known_values == {}
+
+
+@pytest.mark.asyncio
+async def test_a_skipped_answer_is_never_a_remembered_fact(store, schema):
+    assert await store.save_field(CALLER, "middle_name", SKIP_SENTINEL, schema) is False
+
+
+@pytest.mark.asyncio
+async def test_sensitive_values_are_not_persisted_unless_opted_in(store, schema):
+    assert await store.save_field(CALLER, "ssn", "123456789", schema) is False
     profile = await store.load_profile(CALLER, schema)
+    assert "ssn" not in profile.known_values
 
-    assert profile.known_values["date_of_birth"] == "1998-04-12"
+
+@pytest.mark.asyncio
+async def test_all_three_tiers_assemble_into_one_profile(store, schema):
+    await store.save_field(CALLER, "given_name", "Maria", schema)
+    await store.record_episode(CALLER, "s1", "I-765", 32, True, "es")
+    await store.learn(CALLER, "language", "speak es with this applicant")
+
+    profile = await store.load_profile(CALLER, schema)
+    assert profile.known_values["given_name"] == "Maria"
     assert [e.form_id for e in profile.episodes] == ["I-765"]
     assert [p.key for p in profile.procedures] == ["language"]
+    # A procedural language rule outranks anything else.
     assert profile.preferred_language == "es"
 
 
 @pytest.mark.asyncio
-async def test_semantic_and_procedural_are_corrected_not_appended(schema):
-    """Re-answering a question replaces the fact; it does not stack up beside it."""
-    store = ApplicantMemory(api_key="k")
-    for value in ("Reyes", "Reyes-Lopez"):
-        store._mirror_put(
-            CALLER, "n", {"tier": Tier.SEMANTIC, "field_id": "family_name", "value": value}
-        )
-    store._mirror_put(
-        CALLER, "l", {"tier": Tier.PROCEDURAL, "key": "language", "value": "speak es"}
-    )
-    store._mirror_put(
-        CALLER, "l", {"tier": Tier.PROCEDURAL, "key": "language", "value": "speak en"}
-    )
+async def test_a_fact_corrects_and_a_call_accumulates(store, schema):
+    await store.save_field(CALLER, "given_name", "Maria", schema)
+    await store.save_field(CALLER, "given_name", "Maria Elena", schema)
+    await store.record_episode(CALLER, "s1", "I-765", 10, False)
+    await store.record_episode(CALLER, "s2", "I-765", 32, True)
 
-    entries = memory._MIRROR[memory._user_key(CALLER)]
-    assert len(entries) == 2
-    assert entries[0]["metadata"]["value"] == "Reyes-Lopez"
-    assert entries[1]["metadata"]["value"] == "speak en"
+    profile = await store.load_profile(CALLER, schema)
+    assert profile.known_values["given_name"] == "Maria Elena", "a fact is a correction"
+    assert len(profile.episodes) == 2, "two calls are two events"
 
 
 @pytest.mark.asyncio
-async def test_episodes_accumulate(schema):
-    """Calls are events. A second call does not overwrite the first."""
-    store = ApplicantMemory(api_key="k")
-    for session in ("s1", "s2"):
-        store._mirror_put(
-            CALLER,
-            "called",
-            {
-                "tier": Tier.EPISODIC,
-                "session_id": session,
-                "form_id": "I-765",
-                "at": f"2026-07-2{session[-1]}T00:00:00+00:00",
-            },
-        )
-    assert len(memory._MIRROR[memory._user_key(CALLER)]) == 2
+async def test_what_is_learned_from_a_call_is_conservative(store, schema):
+    """A wrong rule is worse than no rule: it skips a question they could answer."""
+    learned = await store.learn_from_session(
+        CALLER,
+        {"ssn": SKIP_SENTINEL, "eligibility_category": "(c)(3)(B)"},
+        schema,
+        language="es",
+    )
+    assert learned >= 3
+
+    profile = await store.load_profile(CALLER, schema)
+    rules = {p.key: p.value for p in profile.procedures}
+    assert "speak es" in rules["language"]
+    assert "do not have a ssn" in rules["no_ssn"]
+    assert "(c)(3)(B)" in rules["eligibility_category"]
 
 
 @pytest.mark.asyncio
-async def test_forget_refuses_rather_than_reporting_a_deletion_it_cannot_make(monkeypatch, schema):
-    """Deleting works by listing what exists and deleting each id.
+async def test_forgetting_one_tier_keeps_the_others(store, schema):
+    """The whole point of separating them: drop your history, keep the profile."""
+    await store.save_field(CALLER, "given_name", "Maria", schema)
+    await store.record_episode(CALLER, "s1", "I-765", 32, True)
 
-    With recall unavailable there is no list, so nothing is deleted remotely.
-    Clearing the local mirror at that point would destroy the only remaining
-    record of what is still held out there, and report success while doing it --
-    the applicant would believe their data was gone and stop asking.
-    """
-    store = ApplicantMemory(api_key="k")
-    store._mirror_put(
-        CALLER, "dob", {"tier": Tier.SEMANTIC, "field_id": "date_of_birth", "value": "1998-04-12"}
-    )
-    monkeypatch.setattr(
-        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
-    )
+    await store.forget(CALLER, Tier.EPISODIC)
 
-    with pytest.raises(memory.DeletionUnverifiable):
-        await store.forget(CALLER)
-
-    # Nothing was thrown away on the strength of a deletion that never happened.
-    assert memory._MIRROR[memory._user_key(CALLER)]
-
-
-@pytest.mark.asyncio
-async def test_forget_clears_the_mirror_once_the_deletion_really_ran(monkeypatch, schema):
-    """A deletion that leaves our own copy behind is not a deletion either."""
-    store = ApplicantMemory(api_key="k")
-    store._mirror_put(
-        CALLER, "dob", {"tier": Tier.SEMANTIC, "field_id": "date_of_birth", "value": "1998-04-12"}
-    )
-    store._mirror_put(
-        CALLER, "called", {"tier": Tier.EPISODIC, "session_id": "s1", "form_id": "I-765"}
-    )
-
-    class _Resp:
-        status_code = 204
-
-    async def ok_get(self, url, **kwargs):
-        request = httpx.Request("GET", url)
-        return httpx.Response(200, request=request, json={"results": []})
-
-    async def ok_delete(self, url, **kwargs):
-        return _Resp()
-
-    monkeypatch.setattr(httpx.AsyncClient, "get", ok_get)
-    monkeypatch.setattr(httpx.AsyncClient, "delete", ok_delete)
-
-    await store.forget(CALLER, tier=Tier.EPISODIC)
-    remaining = memory._MIRROR[memory._user_key(CALLER)]
-    assert [e["metadata"]["tier"] for e in remaining] == [Tier.SEMANTIC]
+    profile = await store.load_profile(CALLER, schema)
+    assert profile.episodes == []
+    assert profile.known_values["given_name"] == "Maria"
 
     await store.forget(CALLER)
-    assert memory._user_key(CALLER) not in memory._MIRROR
+    assert (await store.load_profile(CALLER, schema)).is_returning is False
 
 
 @pytest.mark.asyncio
-async def test_an_anonymous_session_gets_no_memory_at_all(monkeypatch, schema):
-    """Every caller-less session hashes to the same key.
+async def test_two_tenants_never_share_a_caller(schema):
+    """The disclosure the tenancy design exists to prevent."""
+    a = memory.ApplicantMemory(tenant_id="clinic-a")
+    b = memory.ApplicantMemory(tenant_id="clinic-b")
+    await a.save_field(CALLER, "given_name", "Maria", schema)
 
-    Reading or writing that shared bucket would hand one applicant's name, date
-    of birth and passport number to the next anonymous caller.
-    """
-    store = ApplicantMemory(api_key="k")
+    assert (await a.load_profile(CALLER, schema)).is_returning is True
+    assert (await b.load_profile(CALLER, schema)).is_returning is False
 
-    # Patch the transport, not _write -- the guard lives in _write, and stubbing
-    # it out would be testing the stub.
-    posted: list[str] = []
 
-    async def spy_post(self, url, **kwargs):
-        posted.append(url)
-        request = httpx.Request("POST", url)
-        return httpx.Response(200, request=request, json={})
+@pytest.mark.asyncio
+async def test_the_greeting_draws_on_every_tier(store, schema):
+    await store.save_field(CALLER, "given_name", "Maria", schema)
+    await store.record_episode(CALLER, "s1", "I-765", 32, True)
+    await store.learn(CALLER, "language", "speak es with this applicant")
 
-    monkeypatch.setattr(httpx.AsyncClient, "post", spy_post)
-    monkeypatch.setattr(
-        httpx.AsyncClient, "get", lambda *a, **k: (_ for _ in ()).throw(_quota_error())
-    )
-    for blank in ("", "   "):
-        assert await store.save_field(blank, "given_name", "Maria", schema) is False
-        profile = await store.load_profile(blank, schema)
-        assert profile.known_values == {}
-        assert profile.is_returning is False
-        assert profile.source == "anonymous"
-    assert posted == [], "nothing may be written under an empty caller id"
+    spoken = summarize(await store.load_profile(CALLER, schema), schema)
+    assert "I-765" in spoken
+    assert "given name" in spoken
+    assert "how you like to work" in spoken
 
-    # And a real caller is unaffected by the guard.
-    assert await store.save_field(CALLER, "given_name", "Maria", schema) is True
-    assert posted, "a session with a caller must still write"
+
+@pytest.mark.asyncio
+async def test_a_greeting_for_someone_new_says_nothing(store, schema):
+    assert summarize(await store.load_profile(CALLER, schema), schema) == ""

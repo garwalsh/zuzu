@@ -15,10 +15,13 @@ import tempfile
 
 import pytest
 
+from api.band.tools import SessionTools
 from api.form_registry import get_form
 from api.i765_schema import get_i765_schema
-from api.orchestrator import _as_date, run_pipeline
 from api.pdf_engine import _normalize, fill_form
+from api.session_store import get_session_store, reset_session_store
+from api.tenancy import Principal, Tenant
+from api.validation import as_date
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 ANSWERS = json.loads((REPO_ROOT / "data" / "demo_personas.json").read_text())["personas"]["maria"][
@@ -36,26 +39,46 @@ def out(tmp_path):
     return tmp_path / "filled.pdf"
 
 
-def test_a_complete_application_still_fills(schema, out):
+@pytest.fixture(autouse=True)
+def _store(monkeypatch):
+    monkeypatch.setenv("STORE_BACKEND", "memory")
+    reset_session_store()
+    yield
+    reset_session_store()
+
+
+async def _run(session_id: str, values: dict, out_dir) -> tuple[bool, list[dict]]:
+    """Validate and fill exactly as the Validator and Filler agents do."""
+    store = get_session_store()
+    await store.create(session_id, "+14155550142", "I-765", tenant_id="t")
+    for field_id, value in values.items():
+        await store.save_field(session_id=session_id, field_id=field_id, value=value)
+    tools = SessionTools(
+        session_id, Principal(tenant=Tenant(id="t", name="T"), user_id="+14155550142"), out_dir
+    )
+    checked = await tools.cross_check()
+    written = await tools.write_form()
+    return bool(written.get("written")), checked["findings"]
+
+
+@pytest.mark.asyncio
+async def test_a_complete_application_still_fills(out):
     """The guards must not block the ordinary case."""
-    written, record = run_pipeline("s-ok", schema, dict(ANSWERS), {}, out)
-    assert written is not None
-    assert [f for f in record["findings"] if f["severity"] == "error"] == []
+    written, findings = await _run("s-ok", dict(ANSWERS), out.parent)
+    assert written is True
+    assert [f for f in findings if f["severity"] == "error"] == []
 
 
-def test_a_state_the_box_will_not_take_blocks_the_form(schema, out):
+@pytest.mark.asyncio
+async def test_a_state_the_box_will_not_take_blocks_the_form(out):
     """ "Texas" is not an export code on the state combo; "TX" is.
 
     The viewer discards anything outside /Opt, so this used to produce a form
     reporting success with the state line blank.
     """
-    values = dict(ANSWERS) | {"mailing_state": "Texas"}
-    written, record = run_pipeline("s-tx", schema, values, {}, out)
-
-    assert written is None, "a required value that cannot be written must block"
-    errors = [f for f in record["findings"] if f["severity"] == "error"]
-    assert any(f["field_id"] == "mailing_state" for f in errors)
-    assert not out.exists(), "no half-filled file may be left behind"
+    written, _ = await _run("s-tx", dict(ANSWERS) | {"mailing_state": "Texas"}, out.parent)
+    assert written is False, "a required value that cannot be written must block"
+    assert not (out.parent / "s-tx.pdf").exists(), "no half-filled file may be left behind"
 
 
 def test_a_spoken_date_never_reaches_a_date_box(schema):
@@ -68,30 +91,29 @@ def test_a_spoken_date_never_reaches_a_date_box(schema):
     assert _normalize("April 12, 1998", field, []) == "04/12/1998"
 
 
-def test_a_us_style_date_does_not_block_the_form(schema, out):
+@pytest.mark.asyncio
+async def test_a_us_style_date_does_not_block_the_form(out):
     """Dates were compared as strings.
 
     "09/03/2023" sorts before "1998-04-12" character by character, so an
     ordinary US-style arrival date raised "arrival before date of birth" -- a
     blocking error no answer could clear, with nothing explaining why.
     """
-    values = dict(ANSWERS) | {"date_of_last_entry": "09/03/2023"}
-    written, record = run_pipeline("s-date", schema, values, {}, out)
-
-    assert written is not None
-    assert [f for f in record["findings"] if f["severity"] == "error"] == []
-
-
-def test_a_genuinely_impossible_date_order_still_blocks(schema, out):
-    """The check has to keep working once it compares real dates."""
-    values = dict(ANSWERS) | {"date_of_last_entry": "1990-01-01"}
-    written, record = run_pipeline("s-impossible", schema, values, {}, out)
-
-    assert written is None
-    assert any(
-        f["field_id"] == "date_of_last_entry" and f["severity"] == "error"
-        for f in record["findings"]
+    written, findings = await _run(
+        "s-date", dict(ANSWERS) | {"date_of_last_entry": "09/03/2023"}, out.parent
     )
+    assert written is True
+    assert [f for f in findings if f["severity"] == "error"] == []
+
+
+@pytest.mark.asyncio
+async def test_a_genuinely_impossible_date_order_still_blocks(out):
+    """The check has to keep working once it compares real dates."""
+    written, findings = await _run(
+        "s-impossible", dict(ANSWERS) | {"date_of_last_entry": "1990-01-01"}, out.parent
+    )
+    assert written is False
+    assert any(f["field_id"] == "date_of_last_entry" and f["severity"] == "error" for f in findings)
 
 
 @pytest.mark.parametrize(
@@ -107,7 +129,7 @@ def test_a_genuinely_impossible_date_order_still_blocks(schema, out):
     ],
 )
 def test_date_reading_is_explicit_about_what_it_cannot_read(text, expected):
-    result = _as_date(text)
+    result = as_date(text)
     assert (result is None) == (expected is None)
     if expected:
         assert (result.year, result.month, result.day) == expected

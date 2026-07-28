@@ -21,7 +21,6 @@ from pathlib import Path
 from typing import Any
 
 from api.i765_schema import SKIP_SENTINEL
-from api.orchestrator import _as_date  # noqa: F401  (date reading is shared)
 from api.tenancy import Principal
 
 logger = logging.getLogger(__name__)
@@ -147,14 +146,12 @@ class SessionTools:
 
     async def cross_check(self) -> dict[str, Any]:
         """Run the Validator's checks and remember what they found."""
-        from api.orchestrator import Run, validate
+        from api.validation import cross_check
 
         schema = await self._schema()
         session = await self._session()
         values = self._mapped or {k: v.value for k, v in session.values.items()}
-        run = Run(self.session_id, schema)
-        findings = validate(run, values)
-        self._findings = [f.as_dict() for f in findings]
+        self._findings = [f.as_dict() for f in cross_check(schema, values)]
         errors = [f for f in self._findings if f["severity"] == "error"]
         return {
             "findings": self._findings,
