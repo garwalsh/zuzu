@@ -16,12 +16,24 @@ conversation. If you can talk, you can file.
 | **Presentation mode** | [`/dashboard?present=1`](https://zuzu-orchestrator.onrender.com/dashboard?present=1) — drives the whole demo end to end with captions, hands-off |
 | **Slides** | [`/deck`](https://zuzu-orchestrator.onrender.com/deck) — arrow keys, click, or the theme toggle |
 
-Opened with no credentials the dashboard runs the **public demo**: its own
-tenant, holding one synthetic applicant, put through the real interview loop.
-That is isolation rather than a courtesy — scope keys hash the tenant id, so
-public-demo memory is unreachable from any real organisation's and vice versa,
-the public routes check a session's own `tenant_id` rather than trusting its
-name, and there is no public write path. See `api/public_demo.py`.
+Opened with no credentials the dashboard runs the **public demo**, and it is not
+a restricted view — it is a second organisation, and inside it a visitor has
+every capability a paying tenant has. Start a call, talk to it, switch forms
+mid-sentence, watch the six agents work, read all three memory tiers, download
+the finished PDF.
+
+`/config` hands the browser `ZUZU_DEMO_SECRET` on purpose. It is **not** the
+deployment's shared secret: `tenant_for_request` maps it to the `public-demo`
+tenant *before* it reads any tenant key, so presenting it alongside a real
+clinic's key still resolves to the sandbox — the credential decides which
+organisation you are, not the header that accompanies it. Isolation is then the
+same tenancy that keeps two clinics apart: scope keys hash the tenant id,
+sessions record who opened them, every read and write is checked.
+
+What that means in practice: everything inside the sandbox is shared between
+visitors, because that is what a public demo is, and identifiers (SSN, A-number,
+passport) are never persisted under it. Leave `ZUZU_DEMO_SECRET` unset on a
+deployment serving real applicants. See `api/public_demo.py`.
 
 Presentation mode runs the full arc on its own: the problem, a call filling I-765,
 a mid-call switch to N-400 carrying the answers across, the memory tiers, the
@@ -131,6 +143,15 @@ it gets the page. Two uses:
    filer sees 4 items, (c)(33) sees 5, a (c)(3)(B) renewal sees 6.
 2. **Unknown forms** — paste any USCIS URL and rtrvr reads the page to identify
    which form it is, even one Zuzu has never seen.
+
+**Working out which form somebody means** runs cheapest-first: an explicit form
+number, then a URL, then a phrase table, and only if all of those miss does the
+intent go to MiniMax with the catalog and one instruction — pick a form from
+this list or say none. The model's answer is validated against the catalog, so a
+form the deployment does not have is discarded rather than filed, and its
+confidence is deliberately below the read-back threshold so the agent says the
+form's name before switching. This is off the live answer path: identifying the
+form happens once per call, not once per question.
 
 ### RocketRide — pipeline-as-JSON for form intake and model selection
 
@@ -387,9 +408,7 @@ subprotocol, because a browser cannot set request headers on one.
 | `GET /sessions/{id}/room` | The same conversation, read back out of Band's own API |
 | `GET /forms` | What is ready, and what can be learned |
 | `GET /ws/{session_id}` | Live event stream |
-| `POST /demo/public` | Start (or re-serve) the public demo. No credential |
-| `GET /demo/public/{id}/values` | The demo session's answers. Public sessions only |
-| `GET /demo/public/{id}/memory` | The demo caller's three tiers. Public sessions only |
+| `POST /demo/run` | Drive a sample application through the real contract |
 
 ## How this was built
 
