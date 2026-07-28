@@ -143,11 +143,22 @@ class TenantRegistry:
         self.reload()
 
     def reload(self) -> None:
+        # A registry is deployment configuration that happens to contain key
+        # hashes, so it is supplied as a secret rather than committed. Having it
+        # in the repo also silently flips every checkout -- and the whole test
+        # suite -- into multi-tenant mode, which is how this arrived: 23 tests
+        # that send no tenant key started failing the moment the file existed.
+        if inline := os.environ.get("ZUZU_TENANTS_JSON", "").strip():
+            self._load(json.loads(inline))
+            logger.info("tenant registry loaded from the environment")
+            return
         if not self._path.exists():
             logger.info("no tenant registry at %s; running single-tenant", self._path)
             self._tenants, self._by_key_hash = {}, {}
             return
-        raw = json.loads(self._path.read_text(encoding="utf-8"))
+        self._load(json.loads(self._path.read_text(encoding="utf-8")))
+
+    def _load(self, raw: dict[str, Any]) -> None:
         tenants: dict[str, Tenant] = {}
         by_key: dict[str, str] = {}
         for entry in raw.get("tenants", []):
