@@ -232,16 +232,25 @@ class RoleAgent:
 
         band_names = {(s.get("function") or {}).get("name") for s in band_schemas}
 
+        # Whether the model posted to the room itself this turn. It has
+        # band_send_message, and when it uses it the fleet ALSO sent the same
+        # sentence as the hand-off -- so the transcript carried the Validator's
+        # clearance twice and the Filler's three times. A room that repeats
+        # itself is not a record of what happened.
+        spoke_itself: list[str] = []
+
         async def run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             """Whatever the model asked for, if this agent is allowed it."""
             if name in band_names and band_tools is not None:
                 try:
-                    return {
-                        "ok": True,
-                        "result": str(await band_tools.execute_tool_call(name, args))[:800],
-                    }
+                    result = str(await band_tools.execute_tool_call(name, args))[:800]
                 except Exception as exc:
+                    # A send that failed is a message that is NOT in the room,
+                    # so the hand-off still has to carry it.
                     return {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
+                if name == "band_send_message":
+                    spoke_itself.append(str(args.get("content") or ""))
+                return {"ok": True, "result": result}
             try:
                 return {
                     "ok": True,
@@ -294,6 +303,12 @@ class RoleAgent:
             ran = ", ".join(dict.fromkeys(str(r.get("tool", "?")) for r in results))
             said = f"{said}\n[ran: {ran}]"
 
+        # If the agent already said this in the room with Band's own tool, the
+        # hand-off must not say it again. Compared on the first sixty
+        # characters: the model does not reproduce its own sentence byte for
+        # byte when it also returns it in the decision.
+        already_said = any(sent.strip()[:60] and sent.strip()[:60] in said for sent in spoke_itself)
+
         collab.turns.append(
             Turn(
                 role=self.role.key,
@@ -308,6 +323,13 @@ class RoleAgent:
 
         targets = self._fleet.ids_for(decision.to)
         if targets and not decision.done:
+            if already_said:
+                # It has already reached the room, addressed by the agent
+                # itself. Saying it again would post a duplicate AND wake the
+                # recipient twice, so the next agent would take two turns on
+                # one hand-off.
+                logger.info("%s already posted its own message; not repeating", self.role.key)
+                return
             try:
                 await self.client.say(room_id, said, targets)
             except protocol.BandError as exc:

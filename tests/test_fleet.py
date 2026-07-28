@@ -621,3 +621,64 @@ def test_writing_the_pdf_does_not_stall_the_event_loop(tmp_path, monkeypatch):
         f"the event loop only ran {ticks} times during a {BLOCK}s PDF write -- "
         "it is blocked, and every concurrent caller is waiting on it"
     )
+
+
+def test_an_agent_that_posted_for_itself_is_not_echoed_by_the_hand_off(tmp_path, monkeypatch):
+    """The model has band_send_message. When it used it, the fleet also sent the
+    same sentence as the hand-off, so the transcript carried the Validator's
+    clearance twice and the Filler's three times -- and the recipient was woken
+    twice for one hand-off, taking two turns on it.
+    """
+    from api.band import brain as brain_mod
+
+    said_calls: list[tuple[str, list[str]]] = []
+
+    class Client:
+        agent_id = "a"
+
+        async def say(self, room_id, content, to):
+            said_calls.append((content, to))
+
+        async def open_room(self, title):
+            return "room-1"
+
+        async def invite(self, *a):
+            return None
+
+    f = fleet.Fleet()
+    for role in ROLES:
+        agent = fleet.RoleAgent.__new__(fleet.RoleAgent)
+        agent.role = role
+        agent.agent_id = f"agent-{role.key}"
+        agent.client = Client()
+        agent._fleet = f
+        agent._agent = None
+        f.agents[role.key] = agent
+
+    collab = _collab("sess-echo", "room-1")
+    f.by_room["room-1"] = collab
+
+    message = "Cross-check ran clean: 0 findings, nothing blocking. @Filler is clear to write."
+
+    async def decide(system, context, roster, tools=None, execute=None):
+        # The model posts for itself, exactly as it does in production.
+        await execute("band_send_message", {"content": message})
+        return brain_mod.Decision(say=message, to=["Filler"], because="clean")
+
+    monkeypatch.setattr(brain_mod, "decide", decide)
+
+    class FakeBandTools:
+        """Stands in for the SDK's tool adapter, including its schema list."""
+
+        def get_openai_tool_schemas(self, include_contacts=False):
+            return [{"type": "function", "function": {"name": "band_send_message"}}]
+
+        async def execute_tool_call(self, name, args):
+            return "sent"
+
+    validator = f.agents["validator"]
+    asyncio.run(validator._handle("your turn", "room-1", band_tools=FakeBandTools()))
+
+    assert not said_calls, (
+        f"the hand-off repeated a message the agent had already posted: {said_calls}"
+    )
