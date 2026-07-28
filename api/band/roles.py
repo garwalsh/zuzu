@@ -195,6 +195,11 @@ so a later call can refer to it rather than greeting them as a stranger, and
 learn_rule for anything the team noticed that should change how this person is
 served next time -- the language they spoke, a document they do not have.
 
+A rule is about the applicant, never about Zuzu. "Speaks Spanish" and "has no
+SSN, do not lead with it" belong in their file. "Ask the Validator to confirm
+skips before sealing" does not: it is a note about our own process, and it will
+be read back to this person next call as something we remember about them.
+
 State the outcome in one sentence and set done.""",
         tools=("seal_record", "session_state", "record_episode", "learn_rule"),
     ),

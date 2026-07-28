@@ -34,6 +34,34 @@ class ToolFailed(RuntimeError):
     """The tool ran and could not do the thing."""
 
 
+#: Vocabulary that means a "rule" is really an observation about the pipeline.
+#: A prompt asking for applicant rules is a request; this is the rule.
+_MACHINERY = (
+    "validator",
+    "mapper",
+    "filler",
+    "auditor",
+    "extractor",
+    "intake",
+    "tool",
+    "seal",
+    "mapped count",
+    "written count",
+    "collected_values",
+    "cross_check",
+    "write_form",
+    "session_state",
+    "agent",
+    "pipeline",
+)
+
+
+def _is_about_the_machinery(rule: str) -> bool:
+    """Whether this reads as a note about Zuzu rather than about a person."""
+    lowered = rule.lower()
+    return any(term in lowered for term in _MACHINERY)
+
+
 class SessionTools:
     """Deterministic operations over one session, for one principal.
 
@@ -294,7 +322,7 @@ class SessionTools:
         return {"stored": ok, "tier": "episodic", "session_id": self.session_id}
 
     async def learn_rule(self, rule: str = "", about: str = "applicant") -> dict[str, Any]:
-        """PROCEDURAL. Something worth applying on every later call.
+        """PROCEDURAL. Something about this applicant worth applying next time.
 
         "Speaks Spanish." "Has no SSN, stop asking." Unlike the other two this
         is the agent's own words, because a rule is a judgement rather than a
@@ -305,6 +333,19 @@ class SessionTools:
         rule = (rule or "").strip()
         if not 4 <= len(rule) <= 240:
             return {"stored": False, "reason": "a rule must be a short sentence"}
+        if _is_about_the_machinery(rule):
+            # Observed: the Auditor filed "when written count is lower than
+            # mapped count, ask Validator to confirm skips before sealing".
+            # A true and useful thought -- about Zuzu, not about a person -- and
+            # it lands in an applicant's file to be read back to them next call
+            # as something we remember about how they like to work.
+            return {
+                "stored": False,
+                "reason": (
+                    "this is about how Zuzu works, not about the applicant. "
+                    "Procedural memory is for facts about serving this person."
+                ),
+            }
         ok = await get_backend().put(
             self.principal.scope_key,
             Record(

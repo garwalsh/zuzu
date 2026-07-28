@@ -179,3 +179,34 @@ async def test_a_working_store_is_not_reported_as_degraded():
     status = await memory_store.check_backend()
     assert status["reachable"] is True
     assert "degraded_from" not in status
+
+
+@pytest.mark.asyncio
+async def test_a_note_about_zuzu_is_not_a_fact_about_the_applicant():
+    """Observed in production, and it is worse than useless.
+
+    The Auditor filed "when written count is lower than mapped count, ask
+    Validator to confirm skips before sealing" into an applicant's procedural
+    memory. True, useful, and about Zuzu -- so on their next call it is read
+    back to them as something we remember about how they like to work.
+    """
+    tools = await _session("s13", CLINIC_A)
+    for internal in (
+        "when written count is lower than mapped count, investigate the gap",
+        "ask the Validator to confirm skips before sealing",
+        "call collected_values before write_form",
+    ):
+        result = await tools.learn_rule(rule=internal)
+        assert result["stored"] is False, internal
+        assert "not about the applicant" in result["reason"]
+
+
+@pytest.mark.asyncio
+async def test_a_real_fact_about_the_applicant_is_still_kept():
+    tools = await _session("s14", CLINIC_A)
+    for good in (
+        "speaks Spanish",
+        "has no SSN, do not lead with it",
+        "prefers numbers read back slowly",
+    ):
+        assert (await tools.learn_rule(rule=good))["stored"] is True, good
