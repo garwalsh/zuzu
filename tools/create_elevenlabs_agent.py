@@ -256,8 +256,16 @@ def main() -> int:
     if base.startswith("http://localhost"):
         sys.exit(f"PUBLIC_BASE_URL is {base} -- ElevenLabs webhooks cannot reach localhost")
 
-    if os.environ.get("ZUZU_TENANT_KEY"):
-        print("tenant key present: the agent will identify its organisation")
+    # Report the credential that was actually configured, not the env var that
+    # happens to be set. This printed "tenant key present" while the tools were
+    # being built with the demo secret and no tenant key at all.
+    configured = _webhook_headers(secret)
+    if configured["X-Zuzu-Secret"] == os.environ.get("ZUZU_DEMO_SECRET", "").strip():
+        print("public demo agent: its calls land in the `public-demo` organisation")
+    elif "X-Zuzu-Tenant-Key" in configured:
+        print("tenant-scoped agent: its calls carry a tenant key")
+    else:
+        print("single-tenant agent: no registry configured")
     payload = build_payload(base, secret)
     headers = {"xi-api-key": api_key, "Content-Type": "application/json"}
 

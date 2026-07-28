@@ -340,3 +340,88 @@ def test_the_public_budget_is_finite(client):
     allowed = sum(1 for _ in range(public_demo.BUDGET + 5) if public_demo.take_budget())
     assert allowed == public_demo.BUDGET
     assert public_demo.take_budget() is False
+
+
+# ---------------------------------------------------------------------------
+# Choosing the form from what somebody actually said.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "said,expect",
+    [
+        ("I need my work permit", "I-765"),
+        ("permiso de trabajo", "I-765"),
+        ("I want to become a citizen", "N-400"),
+        ("I need to renew my green card", "I-90"),
+        ("I want to bring my wife to America", "I-130"),
+        ("bring my husband here", "I-130"),
+        ("I need to travel and come back", None),
+        ("advance parole", "I-131"),
+        ("form I-485", "I-485"),
+        ("i 765", "I-765"),
+    ],
+)
+def test_plain_words_reach_the_right_form(said, expect):
+    """Nobody says "I-765". The deterministic paths have to carry most of this,
+    because they are the ones that run when the model is unreachable."""
+    from api.form_finder import from_form_number, from_intent
+
+    hit = from_form_number(said) or from_intent(said)
+    got = hit["form_id"] if hit else None
+    if expect is None:
+        return  # only asserts the ones that must match deterministically
+    assert got == expect, f"{said!r} -> {got}"
+
+
+@pytest.mark.asyncio
+async def test_the_model_only_ever_answers_with_a_form_we_have(monkeypatch):
+    """The guard that makes asking a model safe here: a form the deployment does
+    not have is not a form, whatever the model called it."""
+    import api.form_finder as finder
+
+    monkeypatch.setenv("TOKENROUTER_API_KEY", "sk-test")
+
+    async def hallucinate(prompt, system=None, **kw):
+        return {"form_id": "I-9999", "why": "made up"}
+
+    monkeypatch.setattr(finder, "load_catalog", finder.load_catalog)
+    monkeypatch.setattr("api.inference.complete_json", hallucinate)
+    assert await finder.from_model("something unusual") is None
+
+    async def real(prompt, system=None, **kw):
+        return {"form_id": "i-589", "why": "asylum"}
+
+    monkeypatch.setattr("api.inference.complete_json", real)
+    hit = await finder.from_model("I am afraid to go home")
+    assert hit is not None
+    assert hit["form_id"] == "I-589"
+    assert hit["confidence"] < 0.9, "a judgement must be read back before switching"
+
+
+@pytest.mark.asyncio
+async def test_the_model_is_never_asked_when_a_phrase_already_matched(monkeypatch):
+    """It costs a round trip and it cannot beat an exact match."""
+    import api.form_finder as finder
+
+    called = []
+
+    async def spy(text):
+        called.append(text)
+        return None
+
+    monkeypatch.setattr(finder, "from_model", spy)
+    hit = await finder.identify(text="I need my work permit")
+    assert hit["form_id"] == "I-765"
+    assert not called, "the phrase table already answered"
+
+
+@pytest.mark.asyncio
+async def test_an_unreachable_model_costs_nothing(monkeypatch):
+    """No model configured is the normal case for a fresh checkout."""
+    import api.form_finder as finder
+
+    monkeypatch.delenv("TOKENROUTER_API_KEY", raising=False)
+    monkeypatch.delenv("CEREBRAS_API_KEY", raising=False)
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    assert await finder.from_model("something nobody wrote a phrase for") is None

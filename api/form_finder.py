@@ -18,6 +18,7 @@ wastes an hour of a stressed person's time.
 
 from __future__ import annotations
 
+import json
 import logging
 import re
 from typing import Any
@@ -58,6 +59,24 @@ INTENT_SYNONYMS: dict[str, tuple[str, ...]] = {
         "petition my mother",
         "petition my father",
         "relative visa",
+        # People name the person, not the category. "Bring my family" was in the
+        # table; "bring my wife" -- which is what somebody actually says -- was
+        # not, and fell through to no match at all.
+        "bring my wife",
+        "bring my husband",
+        "bring my spouse",
+        "bring my mother",
+        "bring my father",
+        "bring my son",
+        "bring my daughter",
+        "bring my child",
+        "bring my parents",
+        "bring my brother",
+        "bring my sister",
+        "reunite with my family",
+        "green card for my wife",
+        "green card for my husband",
+        "green card for my spouse",
     ),
     "I-485": (
         "green card",
@@ -178,6 +197,69 @@ async def from_url_content(url: str) -> dict[str, Any] | None:
     return None
 
 
+#: What the model is allowed to answer with. Anything else is discarded.
+_CLASSIFIER_SYSTEM = """You route a person to the right USCIS form.
+
+You are given what they said, in their own words and possibly not in English,
+and the list of forms this system can actually file. Choose the one form that
+matches, or say none.
+
+Rules that do not bend:
+- Answer only with a form_id from the list you were given. Never invent one.
+- If nothing in the list clearly matches, answer {"form_id": null}.
+- A wrong form wastes an hour of a stressed person's time and can cost them a
+  filing fee, so a confident wrong answer is far worse than "none"."""
+
+
+async def from_model(text: str) -> dict[str, Any] | None:
+    """Ask the model, when the phrase table has nothing.
+
+    The table is exact-substring matching over phrases somebody thought of in
+    advance, which is fine until a person says "I want to bring my wife to
+    America" and no phrase contains it. This is the case the inference lane
+    genuinely earns: an intent that is obvious to a human and invisible to a
+    substring match.
+
+    Safe to be wrong: the answer is validated against the catalog so a
+    hallucinated form id is discarded rather than filed, the confidence is low
+    enough that the voice agent reads the form name back before switching, and
+    nothing here is on the live answer path -- identifying the form happens once
+    per call, not once per question.
+    """
+    from api.inference import InferenceUnavailable, complete_json, is_available
+
+    if not is_available() or not (text or "").strip():
+        return None
+
+    catalog = [{"form_id": e["form_id"], "title": e.get("title", "")} for e in load_catalog()]
+    prompt = (
+        f"The person said: {text.strip()!r}\n\n"
+        f"Forms available:\n{json.dumps(catalog, indent=1)}\n\n"
+        'Reply with one JSON object: {"form_id": "<id or null>", "why": "<a few words>"}'
+    )
+    try:
+        answer = await complete_json(prompt, system=_CLASSIFIER_SYSTEM)
+    except (InferenceUnavailable, Exception) as exc:  # noqa: B014 - never fatal
+        logger.info("model could not classify the intent: %s", type(exc).__name__)
+        return None
+
+    if not isinstance(answer, dict):
+        return None
+    form_id = str(answer.get("form_id") or "").strip().upper()
+    # The guard that makes this safe: a form the deployment does not have is not
+    # a form, whatever the model called it.
+    if not form_id or not catalog_entry(form_id):
+        return None
+    why = str(answer.get("why") or "").strip()[:80]
+    return {
+        "form_id": form_id,
+        # Lower than the phrase table on purpose. This is a judgement, and the
+        # agent must read the form name back before it switches.
+        "confidence": 0.6,
+        "matched_on": f"the model read this as {why or form_id}",
+    }
+
+
 async def identify(text: str = "", url: str = "") -> dict[str, Any] | None:
     """Best guess at the form being asked for, cheapest strategy first."""
     for candidate in (
@@ -188,6 +270,12 @@ async def identify(text: str = "", url: str = "") -> dict[str, Any] | None:
         if candidate:
             logger.info("form identified: %s via %s", candidate["form_id"], candidate["matched_on"])
             return candidate
+    # Only once the cheap, deterministic paths have all missed.
+    if text:
+        hit = await from_model(text)
+        if hit:
+            logger.info("form identified: %s via %s", hit["form_id"], hit["matched_on"])
+            return hit
     if url:
         return await from_url_content(url)
     return None
