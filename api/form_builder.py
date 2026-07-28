@@ -1,7 +1,5 @@
 """Turn any USCIS AcroForm PDF into a Zuzu form schema.
 
-Spec: prompts/form_builder_Python.prompt
-
 This is the module that makes the product claim literal. Zuzu says a form is
 data, not code; that is only true if adding a form does not require a person to
 hand-write 32 field mappings the way I-765's were written.

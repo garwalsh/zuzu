@@ -42,7 +42,7 @@ Call back next month and it already knows you.
         │  server tool calls
         ▼
  Orchestrator (FastAPI on Render)
-        ├──► mem0          three memory tiers, keyed by hashed caller id
+        ├──► Supabase      three memory tiers, keyed by a hash of tenant+caller
         ├──► TokenRouter   spoken-value normalisation · translation · schema polish
         ├──► rtrvr.ai      reads uscis.gov for document requirements and new forms
         └──► RocketRide    declarative pipeline that delivers the finished packet
@@ -67,11 +67,12 @@ whatever question the orchestrator hands it and reports the answer back. All the
 decisions live in one place.
 
 `tools/create_elevenlabs_agent.py` registers the agent, its system prompt, and
-three server tools pointed at the deployment. `session_id` is bound to
+five server tools pointed at the deployment — `identify_form`, `set_form`,
+`get_missing_fields`, `save_field`, `generate_form`. `session_id` is bound to
 `system__conversation_id`, so the id the dashboard subscribes to and the id the
 agent sends are the same by construction.
 
-### mem0 — three memory tiers
+### Memory — three tiers, in Postgres
 
 A flat store is the wrong shape. Remembering a passport number, remembering that
 someone called last Tuesday, and remembering that they need Spanish are three
@@ -83,14 +84,16 @@ different kinds of knowledge with three different lifetimes.
 | **Episodic** | Which form, how many answers, whether a PDF came out, when | Lets Zuzu say *"last time we filed your renewal on the 25th"* |
 | **Procedural** | *Speak French* · *no SSN, stop asking* · *category is (c)(3)(B)* | Learned once, applied on every later call |
 
-Measured on a live call: a cold caller answers **33 questions**; the same number
-calling back answers **4**, with 17 fields recalled.
+Measured against the live service: I-765 has **32** fields, so a cold caller is
+asked at most 32 questions. A returning caller in the same run was asked **7**,
+with 25 recalled — the interview only covers what is genuinely new.
 
-Tiers live in mem0 metadata, so each is independently forgettable —
+Each tier is a row kind in one table, so each is independently forgettable —
 `POST /session/forget?caller_id=…&tier=episodic` drops call history while keeping
 the profile that saves an hour. **User-level isolation:** caller ids are
-SHA-256 hashed before they reach mem0, so the store never holds a raw phone
-number and one caller's memory is unreachable from another's session.
+SHA-256 hashed together with the tenant id before they reach the store, so it
+never holds a raw phone number and one caller's memory is unreachable both from
+another caller's session and from another organisation's.
 Sensitive values are **not persisted at all** unless `ZUZU_MEMORY_STORE_SENSITIVE`
 is explicitly set.
 
@@ -162,9 +165,10 @@ the deterministic wording in place rather than blocking a form from loading.
 
 ### Band — six agents, actually talking to each other
 
-Six agents are registered on Band with distinct, non-overlapping jobs. Each one
-runs as its own process holding its own WebSocket to Band, under its own
-per-agent API key, and they address each other by Band mention:
+Six agents are registered on Band with distinct, non-overlapping jobs. Each holds
+its own WebSocket to Band under its own per-agent API key, and they address each
+other by Band mention. They run as asyncio tasks inside the API process — one
+service, one deploy — not as six separate processes:
 
 ```
 Auditor opens the room
@@ -245,12 +249,19 @@ exact AcroForm field it fills. Nothing in `api/` names a specific form.
 Adding a form is one request:
 
 ```bash
-curl -X POST "$BASE/forms/onboard?form_id=I-129" -H "X-Zuzu-Secret: $SECRET"
+# A form already in data/form_catalog.json:
+curl -X POST "$BASE/forms/onboard?form_id=I-539" \
+  -H "X-Zuzu-Secret: $SECRET" -H "X-Zuzu-Tenant-Key: $TENANT_KEY"
+
+# Anything else needs the PDF url, and it must be a USCIS https url:
+curl -X POST "$BASE/forms/onboard?form_id=I-129&pdf_url=https://www.uscis.gov/sites/default/files/document/forms/i-129.pdf" \
+  -H "X-Zuzu-Secret: $SECRET" -H "X-Zuzu-Tenant-Key: $TENANT_KEY"
 ```
 
 That fetches the fillable PDF, extracts its AcroForm inventory, derives questions
 from the PDF's own screen-reader tooltips, and registers it — **no deploy, no code
-change**. Pass `&pdf_url=…` for a form outside the catalog.
+change**. A form id not in the catalog and with no `pdf_url` answers 422 rather
+than guessing at a URL.
 
 **Field names are extracted, never recalled by a model.** Names, types, checkbox
 export values, and length limits are facts; a model asked to remember them is how
@@ -296,9 +307,10 @@ document. See [`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md).
   account number are logged by field id only.
 - **Fail closed.** An unset `ZUZU_SHARED_SECRET` returns 500 rather than
   accepting a blank header.
-- **The call survives its dependencies.** mem0 lookups time out at 3s and degrade
-  to an empty profile. A missing conversation-init webhook opens the session
-  lazily instead of 404-ing every tool call.
+- **The call survives its dependencies.** A memory store that cannot be reached
+  degrades to SQLite and says so in `/health`, rather than quietly answering
+  "no history" for every caller. A missing conversation-init webhook opens the
+  session lazily instead of 404-ing every tool call.
 - **Human in the loop.** Zuzu fills to the review step. It does not submit, does
   not pay fees, and cannot sign — the signature fields are read-only by design.
 
@@ -309,6 +321,11 @@ document. See [`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md).
 ```bash
 uv sync --extra dev
 cp .env.example .env          # set ZUZU_SHARED_SECRET
+
+# Nothing in the code reads .env -- no dotenv, and `uv run` does not source it.
+# Export it, or every request answers 500 "ZUZU_SHARED_SECRET is not set".
+set -a && . ./.env && set +a
+
 uv run uvicorn api.main:app --port 8000
 ```
 
@@ -324,8 +341,15 @@ Dashboard at `/dashboard?secret=$ZUZU_SHARED_SECRET`.
 
 ## HTTP contract
 
-`session_id` is always the ElevenLabs `conversation_id`. Every endpoint except
-`/health` requires `X-Zuzu-Secret`.
+`session_id` is always the ElevenLabs `conversation_id`. Every endpoint that
+touches a session or a caller requires `X-Zuzu-Secret`, and — once a tenant
+registry is configured — `X-Zuzu-Tenant-Key` as well.
+
+Public, by design: `/health`, `/forms`, `/forms/{id}/schema`, `/config`, `/`,
+`/dashboard`, `/deck` and the OpenAPI pages. None of them names a session or a
+caller; they describe what the deployment can do, not who used it. The
+websocket takes the secret as a query parameter and the tenant key as a
+subprotocol, because a browser cannot set request headers on one.
 
 | Endpoint | Purpose |
 |---|---|

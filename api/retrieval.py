@@ -1,7 +1,5 @@
 """Fetch form requirements and supporting-document lists from the web.
 
-Spec: prompts/retrieval_Python.prompt
-
 Zuzu produces a completed form, but a completed form is only half of what an
 applicant has to put in the envelope. USCIS wants photos, a copy of the prior
 EAD, the I-94, proof of status -- and which documents apply depends on the

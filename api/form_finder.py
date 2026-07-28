@@ -1,7 +1,5 @@
 """Work out which immigration form someone is asking for.
 
-Spec: prompts/form_finder_Python.prompt
-
 An applicant on the phone does not say "I-765". They say "I need my work
 permit", "my green card is expiring", "I want to become a citizen". And someone
 at a keyboard may just paste a uscis.gov link. Both have to land on the right

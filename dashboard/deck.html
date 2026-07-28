@@ -231,8 +231,8 @@
           <div class="mrow">category is (c)(3)(B) — <b>confirm, do not re-derive</b></div></div>
       </div>
       <div class="fields" style="max-width:840px">
-        <div class="fld"><span class="lab">First call</span><span class="val">33<small> questions</small></span></div>
-        <div class="fld ok"><span class="lab">Second call</span><span class="val">4<small> questions</small></span></div>
+        <div class="fld"><span class="lab">First call</span><span class="val">32<small> questions</small></span></div>
+        <div class="fld ok"><span class="lab">Second call</span><span class="val">7<small> questions</small></span></div>
         <div class="fld"><span class="lab">Caller identity</span><span class="val">SHA-256</span></div>
       </div>
       <p class="sub">All three are on screen during the call, counts included. They are stored
@@ -314,7 +314,7 @@
         <div class="step"><span class="n">Auditor</span><span class="t">The record</span>
           <span class="d">Sealed, per application</span></div>
       </div>
-      <p class="sub">Each runs as its own process on its own Band WebSocket and addresses the others
+      <p class="sub">Each holds its own Band WebSocket under its own per-agent key and addresses the others
         by mention. Each decides for itself what to do next — MiniMax-M3, given Band’s own tool
         schemas. The model chooses <b>who acts next</b>; every applicant value, every check and every
         byte of the PDF comes from a deterministic tool.</p>

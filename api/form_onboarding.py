@@ -1,7 +1,5 @@
 """Onboard any USCIS form at runtime, from a catalog entry or a URL.
 
-Spec: prompts/form_onboarding_Python.prompt
-
 "A form is data, not code" only means something if a form nobody anticipated
 can be added while the service is running. This module does that: fetch the
 fillable PDF, extract its AcroForm inventory, derive a schema from the PDF's

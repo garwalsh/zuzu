@@ -112,7 +112,7 @@ Click **Download completed I-765**. Open the PDF.
 >
 > Immigration is the beachhead. Forms are the market."
 
-**Name the sponsors:** ElevenLabs, mem0, TokenRouter, rtrvr.ai, RocketRide,
+**Name the sponsors:** ElevenLabs, Supabase, TokenRouter, rtrvr.ai, RocketRide,
 Band, Render.
 
 ---

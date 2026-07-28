@@ -1,7 +1,5 @@
 """The inference lane: one OpenAI-compatible client, provider-agnostic.
 
-Spec: prompts/inference_Python.prompt
-
 Deliberately not tied to a vendor. Base URL, model, and key are configuration,
 so TokenRouter (the working default), Cerebras, Groq, or anything else
 OpenAI-shaped is a config flip rather than a code change. Cerebras is the

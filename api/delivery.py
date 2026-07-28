@@ -1,7 +1,5 @@
 """Outbound delivery: get the finished packet to the applicant.
 
-Spec: prompts/delivery_Python.prompt
-
 Zuzu ends with a completed PDF sitting on a dashboard. That is useless to
 someone who called from a phone and has now hung up. This module hands the
 packet -- the filled form plus the document checklist -- to RocketRide, which

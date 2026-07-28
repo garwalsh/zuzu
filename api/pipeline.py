@@ -1,7 +1,5 @@
 """Form intake as a declarative RocketRide pipeline.
 
-Spec: prompts/pipeline_Python.prompt
-
 Onboarding a USCIS form has two jobs a pipeline is genuinely better at than
 Python: reading a document, and choosing a model to phrase its questions. Both
 are now one JSON document sent to RocketRide, which means the *shape* of form
