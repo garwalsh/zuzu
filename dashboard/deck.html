@@ -297,10 +297,12 @@
 
   <!-- 7 -->
   <section class="slide">
-    <div class="hdr"><span class="part">Part 6</span><h2>The pipeline, and its paper trail</h2>
-      <span class="form">Band agent identities</span></div>
+    <div class="hdr"><span class="part">Part 6</span><h2>Six agents, talking to each other</h2>
+      <span class="form">Band · MiniMax-M3</span></div>
     <div class="body">
       <div class="flow">
+        <div class="step"><span class="n">Intake</span><span class="t">The conversation</span>
+          <span class="d">What to ask next, and when it is done</span></div>
         <div class="step"><span class="n">Extractor</span><span class="t">Provenance</span>
           <span class="d">Where each value came from</span></div>
         <div class="step"><span class="n">Mapper</span><span class="t">Placement</span>
@@ -312,9 +314,13 @@
         <div class="step"><span class="n">Auditor</span><span class="t">The record</span>
           <span class="d">Sealed, per application</span></div>
       </div>
-      <p class="sub">In a legal-filing domain the trail <b>is</b> the product. When a form comes back
-        rejected months later, someone has to work out why — so every entry records which agent set
-        which field, from voice or from memory.</p>
+      <p class="sub">Each runs as its own process on its own Band WebSocket and addresses the others
+        by mention. Each decides for itself what to do next — MiniMax-M3, given Band’s own tool
+        schemas. The model chooses <b>who acts next</b>; every applicant value, every check and every
+        byte of the PDF comes from a deterministic tool.</p>
+      <p class="sub">In a legal-filing domain the trail <b>is</b> the product. Every turn records the
+        tools it ran, who it addressed, and which of the two decided it — the model, or the
+        deterministic fallback that takes over when the model cannot be reached.</p>
       <ul>
         <li><span class="m">✓</span><span>Arrival in the U.S. dated before the date of birth</span></li>
         <li><span class="m">✓</span><span>A student category with no SEVIS number
@@ -368,6 +374,10 @@
           <code>403 plan_required</code> and needs Enterprise.
           <span class="note">Band's own memory tools are gated the same way: ff_memory is
             false on Free, so the three tiers are ours, in Postgres.</span></span></li>
+        <li><span class="m">—</span><span><b>Fully emergent routing.</b> An agent chooses who to
+          address, and does so over Band. But when it declares its own part finished, the fixed role
+          order picks who goes next — not its choice.
+          <span class="note">So: the agents decide, within an order that still has a floor.</span></span></li>
         <li><span class="m">—</span><span><b>Email delivery.</b> The RocketRide pipeline runs, but Gmail
           has no credentials configured, so nothing is sent — and the code returns
           <code>delivered: false</code> rather than a green tick nobody can find in an inbox.</span></li>
@@ -386,7 +396,7 @@
     <div class="body">
       <div class="fields">
         <div class="fld ok"><span class="lab">Deployed</span><span class="val">Live</span></div>
-        <div class="fld"><span class="lab">Tests</span><span class="val">46<small> passing</small></span></div>
+        <div class="fld"><span class="lab">Tests</span><span class="val">187<small> passing</small></span></div>
         <div class="fld"><span class="lab">Forms</span><span class="val">12</span></div>
         <div class="fld"><span class="lab">Save latency</span><span class="val">0.03<small> ms</small></span></div>
       </div>
