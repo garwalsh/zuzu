@@ -31,6 +31,7 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from api import public_demo
 from api.band import ledger
 from api.band.credentials import agent_ids
 from api.band.fleet import get_fleet
@@ -657,6 +658,24 @@ async def session_events(websocket: WebSocket, session_id: str, secret: str = Qu
     the completed application with no credential at all. Every careful ownership
     check on the HTTP routes was reachable around, over a socket.
     """
+    # The public demo needs no credential, because it is a different
+    # organisation holding one synthetic applicant. guard_public checks the
+    # session's own tenant_id, not just the id it was asked for, so naming a
+    # real session `pubdemo_...` does not make it readable.
+    if public_demo.is_public_session(session_id):
+        try:
+            await public_demo.guard_public(session_id)
+        except HTTPException:
+            await websocket.close(code=1008)
+            return
+        await websocket.accept()
+        try:
+            async for event in get_event_bus().subscribe(session_id):
+                await websocket.send_text(event.model_dump_json())
+        except WebSocketDisconnect:
+            pass
+        return
+
     if not verify_secret(secret):
         await websocket.close(code=1008)
         return
@@ -685,27 +704,31 @@ async def session_events(websocket: WebSocket, session_id: str, secret: str = Qu
         pass
 
 
-@app.post("/demo/run")
-async def demo_run(
-    tenant: TenantDep,
-    persona: str = Query(default="maria"),
-    _: None = Depends(require_shared_secret),
+async def _run_demo(
+    tenant: Tenant,
+    persona: str,
+    session_id: str,
+    caller_id: str = "",
 ) -> dict[str, Any]:
     """Drive a full application through this same contract.
 
     Runs the real interview loop against a sample applicant, so the product can
     be shown end to end without a microphone or a working widget -- and so the
     contract itself stays exercised in CI.
+
+    Shared by the authenticated demo and the public one. A second copy of this
+    loop would drift, and the public page would slowly stop demonstrating the
+    product it claims to.
     """
     personas = json.loads(PERSONA_PATH.read_text(encoding="utf-8"))["personas"]
     if persona not in personas:
         raise HTTPException(status_code=404, detail=f"unknown persona {persona!r}")
     profile = personas[persona]
     answers: dict[str, str] = profile["answers"]
+    caller_id = caller_id or profile["caller_id"]
 
-    session_id = f"web_{persona}_{int(time.time())}"
     store = get_session_store()
-    await store.create(session_id, profile["caller_id"], DEFAULT_FORM_ID, tenant_id=tenant.id)
+    await store.create(session_id, caller_id, DEFAULT_FORM_ID, tenant_id=tenant.id)
     await _publish(SESSION_STARTED, session_id, {"demo": True})
 
     schema = get_form(DEFAULT_FORM_ID)
@@ -729,7 +752,7 @@ async def demo_run(
         # mem0 completely empty and the memory panel had nothing to show.
         _spawn_background(
             get_memory(tenant.id).save_field(
-                caller_id=profile["caller_id"],
+                caller_id=caller_id,
                 field_id=field.id,
                 value=answers.get(field.id, SKIP_SENTINEL),
                 schema=schema,
@@ -760,7 +783,7 @@ async def demo_run(
     final = await store.get(session_id)
     _spawn_background(
         get_memory(tenant.id).record_episode(
-            caller_id=profile["caller_id"],
+            caller_id=caller_id,
             session_id=session_id,
             form_id=schema.form_id,
             fields_collected=len(final.values),
@@ -770,7 +793,7 @@ async def demo_run(
     )
     _spawn_background(
         get_memory(tenant.id).learn_from_session(
-            caller_id=profile["caller_id"],
+            caller_id=caller_id,
             values={fid: fv.value for fid, fv in final.values.items()},
             schema=schema,
             language=profile.get("preferred_language", "en"),
@@ -785,6 +808,66 @@ async def demo_run(
         "pdf_url": result.pdf_url,
         "missing": result.missing,
     }
+
+
+@app.post("/demo/run")
+async def demo_run(
+    tenant: TenantDep,
+    persona: str = Query(default="maria"),
+    _: None = Depends(require_shared_secret),
+) -> dict[str, Any]:
+    """Run the sample application inside the caller's own organisation."""
+    return await _run_demo(tenant, persona, f"web_{persona}_{int(time.time())}")
+
+
+# ---------------------------------------------------------------------------
+# The public demo. No shared secret, no tenant key, its own organisation.
+# See api/public_demo.py for why this is isolation rather than a hole.
+# ---------------------------------------------------------------------------
+
+
+@app.post("/demo/public")
+async def demo_public() -> dict[str, Any]:
+    """Start, or re-serve, the demo anyone can watch.
+
+    Cached deliberately: a page load must not be able to trigger a 32-field
+    interview and a PDF write, or the public link becomes a way to exhaust a
+    free instance from a browser tab.
+    """
+    async with public_demo._lock:
+        existing = public_demo.cached()
+        if existing is not None:
+            try:
+                await get_session_store().get(existing)
+                return {"session_id": existing, "reused": True}
+            except SessionNotFoundError:
+                # The process restarted and took its sessions with it.
+                public_demo.forget()
+
+        session_id = public_demo.new_session_id()
+        result = await _run_demo(
+            public_demo.PUBLIC_TENANT,
+            "maria",
+            session_id,
+            caller_id=public_demo.DEMO_CALLER,
+        )
+        public_demo.remember(session_id)
+        return {**result, "reused": False}
+
+
+@app.get("/demo/public/{session_id}/values")
+async def demo_public_values(session_id: str) -> dict[str, Any]:
+    """The demo session's answers. Public sessions only."""
+    await public_demo.guard_public(session_id)
+    return await _values_for(session_id)
+
+
+@app.get("/demo/public/{session_id}/memory")
+async def demo_public_memory(session_id: str) -> dict[str, Any]:
+    """The demo caller's three memory tiers. Public sessions only."""
+    await public_demo.guard_public(session_id)
+    session = await get_session_store().get(session_id)
+    return await _memory_for(session, public_demo.PUBLIC_TENANT)
 
 
 def _display_value(field_id: str, value: str, schema: Any) -> str:
@@ -1156,7 +1239,12 @@ async def session_memory(
     applicant is entitled to see exactly what is held about them.
     """
     session = await _load_session(session_id, tenant)
-    schema = _resolve_form(session.form_id)
+    return await _memory_for(session, tenant)
+
+
+async def _memory_for(session: Session, tenant: Tenant) -> dict[str, Any]:
+    """The body of /sessions/{id}/memory, without the ownership check."""
+    schema = _resolve_form(session.form_id, tenant)
     profile = await get_memory(session.tenant_id).load_profile(session.caller_id, schema)
     return {
         "caller_key": (
@@ -1288,7 +1376,18 @@ async def session_values(
 ) -> dict[str, Any]:
     """Current values for a session, so a dashboard opened mid-call can paint
     the fields already collected instead of starting blank."""
-    session = await _load_session(session_id, tenant)
+    await _load_session(session_id, tenant)
+    return await _values_for(session_id)
+
+
+async def _values_for(session_id: str) -> dict[str, Any]:
+    """The body of /sessions/{id}/values, without the ownership check.
+
+    Shared with the public demo so the two views cannot drift -- a public page
+    that renders a different shape from the real one stops being a demo of the
+    real one. The caller is responsible for having authorised the read.
+    """
+    session = await get_session_store().get(session_id)
     schema = _resolve_form(session.form_id)
     remaining, known = counts(session, schema)
     return {

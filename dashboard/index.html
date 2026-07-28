@@ -59,7 +59,8 @@
     font-variant-numeric:tabular-nums;box-shadow:var(--sh-sm)}
   .pill b{color:var(--ink);font-weight:650}
   .pill.live{border-color:#b7e6d2;color:var(--ok);background:var(--ok-soft)}
-  .pill.mem{border-color:#ded0ff;color:var(--mem);background:var(--mem-soft)}
+  .pill.demo{background:#eef2ff;color:#4338ca;border-color:#c7d2fe;font-weight:600}
+.pill.mem{border-color:#ded0ff;color:var(--mem);background:var(--mem-soft)}
   .actions{display:flex;gap:9px;justify-self:end}
 
   button{font:inherit;font-size:13px;font-weight:620;border-radius:10px;padding:9px 16px;
@@ -219,6 +220,9 @@
       <span class="pill mem" id="p-mem" style="display:none">returning applicant</span>
     </div>
     <div class="actions">
+      <span class="pill demo" id="publicnote" style="display:none"
+        title="Runs as its own tenant, holding one synthetic applicant. No real filing is reachable from this page.">
+        Public demo &middot; read only</span>
       <button id="run">Start a sample application</button>
       <button id="attach" class="ghost">Follow the active call</button>
     </div>
@@ -347,6 +351,14 @@ const SECRET = qs.get('secret') || '';
 const TENANT_KEY = qs.get('tenant') || '';
 const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json',
   ...(TENANT_KEY ? {'X-Zuzu-Tenant-Key': TENANT_KEY} : {})};
+
+// Opened with no credentials -> the public demo. It runs as its own tenant on
+// the server holding one synthetic applicant, so a visitor sees the real thing
+// without anyone handing out the key that protects real filings. Everything
+// below routes through these two helpers so there is one place that decides.
+const PUBLIC = !SECRET;
+const valuesUrl = id => PUBLIC ? `/demo/public/${id}/values` : `/sessions/${id}/values`;
+const memoryUrl = id => PUBLIC ? `/demo/public/${id}/memory` : `/sessions/${id}/memory`;
 const SKIP = '__skip__';
 const RING = 2 * Math.PI * 48;
 
@@ -532,7 +544,7 @@ function resetGrid(){
 
 async function loadMemory(id){
   try{
-    const r = await fetch(`/sessions/${id}/memory`, {headers:H});
+    const r = await fetch(memoryUrl(id), {headers: PUBLIC ? {} : H});
     if (!r.ok) throw new Error(`memory ${r.status}`);
     const m = await r.json();
     const sem = m.semantic || [], epi = m.episodic || [], pro = m.procedural || [];
@@ -576,7 +588,7 @@ async function loadMemory(id){
 }
 
 async function hydrate(id){
-  const r = await fetch(`/sessions/${id}/values`, {headers:H});
+  const r = await fetch(valuesUrl(id), {headers: PUBLIC ? {} : H});
   if (!r.ok) return;
   const d = await r.json();
   // Follow the session's form: the applicant may have asked for something other
@@ -631,8 +643,10 @@ function openSocket(id){
   // the browser sends it as a header, so it stays out of proxy logs, browser
   // history and Referer. The socket is refused without it.
   const url = `${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`;
-  const sock = TENANT_KEY
-    ? new WebSocket(url, ['zuzu-tenant', TENANT_KEY])
+  // A public-demo session needs no credential at all; the server recognises it
+  // by its own tenant, not by anything the browser claims.
+  const sock = PUBLIC ? new WebSocket(url)
+    : TENANT_KEY ? new WebSocket(url, ['zuzu-tenant', TENANT_KEY])
     : new WebSocket(url);
   ws = sock;
   sock.onopen = () => { wsRetry = 0; el('p-session').classList.add('live'); };
@@ -704,6 +718,22 @@ async function mountVoice(){
 // which returns early when no agent id is configured -- so on any deployment
 // without the widget the page never attached to a session at all, and every
 // panel including memory sat on its placeholder looking broken.
+// The public path. One request, then the same rendering everything else uses.
+async function startPublicDemo(){
+  el('run').style.display = 'none';
+  el('attach').style.display = 'none';
+  el('statusq').textContent = 'Starting the sample application…';
+  try{
+    const d = await (await fetch('/demo/public', {method:'POST'})).json();
+    if (!d.session_id) throw new Error('no session');
+    connect(d.session_id);
+    await hydrate(d.session_id);
+    el('publicnote').style.display = '';
+  } catch(e){
+    el('statusq').textContent = 'The demo could not start: ' + e.message;
+  }
+}
+
 function followNewestSession(){
   setInterval(async () => {
     try{
@@ -776,7 +806,7 @@ async function present(){
     el('vdot').style.background = 'var(--warn)';
     el('widgethint').textContent = `Could not reach /config: ${e.message}`;
   });
-  followNewestSession();
+  if (PUBLIC) startPublicDemo(); else followNewestSession();
   if (qs.get('present') === '1') present();
 })();
 </script>
