@@ -198,8 +198,9 @@ a{color:var(--accent)}
   </div>
   <div class="body" style="justify-content:center; gap:clamp(18px,2.4vw,34px)">
     <h1>If you can talk,<br>you can <em>file</em>.</h1>
-    <p class="lead">Call a number. Speak your own language. Zuzu asks one plain
-      question at a time and fills the official USCIS PDF as you answer.</p>
+    <p class="lead" style="max-width:46ch">Call a number. Speak your own
+      language. Zuzu asks one plain question at a time and fills the official
+      USCIS PDF as you answer.</p>
     <div class="fields" style="max-width:900px">
       <div class="field"><span class="lab">Forms supported</span><span class="val">12</span></div>
       <div class="field"><span class="lab">Questions mapped</span><span class="val">2,281</span></div>
@@ -648,14 +649,20 @@ a{color:var(--accent)}
   const slides = [...document.querySelectorAll('.slide')];
   const dots = document.getElementById('dots');
 
+  // scrollTo, not scrollIntoView. A smooth scrollIntoView inside a
+  // `scroll-snap-type: mandatory` container is cancelled by the snap the moment
+  // it starts, so the arrow keys silently did nothing -- on a deck, whose only
+  // job is to advance when you press the arrow key.
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const goto = el => window.scrollTo({top: el.offsetTop, behavior: calm ? 'auto' : 'smooth'});
+
   slides.forEach((s, i) => {
     const d = document.createElement('i');
     d.setAttribute('role', 'tab');
     d.setAttribute('aria-label', `Slide ${i + 1}`);
     d.tabIndex = 0;
-    const go = () => s.scrollIntoView({behavior: 'smooth'});
-    d.onclick = go;
-    d.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
+    d.onclick = () => goto(s);
+    d.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goto(s); } };
     dots.appendChild(d);
   });
 
@@ -681,15 +688,22 @@ a{color:var(--accent)}
   const step = n => {
     const i = current();
     const next = slides[Math.min(slides.length - 1, Math.max(0, (i < 0 ? 0 : i) + n))];
-    if (next) next.scrollIntoView({behavior: 'smooth'});
+    if (next) goto(next);
   };
+
+  // Click to advance, the way a presenter actually drives a deck. Anything
+  // interactive keeps its own behaviour.
+  addEventListener('click', e => {
+    if (e.target.closest('#dots, #theme, a, button')) return;
+    step(1);
+  });
 
   addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); step(1); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); step(-1); }
-    else if (e.key === 'Home') { e.preventDefault(); slides[0].scrollIntoView({behavior: 'smooth'}); }
-    else if (e.key === 'End') { e.preventDefault(); slides.at(-1).scrollIntoView({behavior: 'smooth'}); }
+    else if (e.key === 'Home') { e.preventDefault(); goto(slides[0]); }
+    else if (e.key === 'End') { e.preventDefault(); goto(slides.at(-1)); }
   });
 
   // Presented in whatever room we get. The toggle wins over the OS preference
