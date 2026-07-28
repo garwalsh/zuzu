@@ -46,21 +46,51 @@ services:
         value: MiniMax-M3
 
       # --- Band: the agents' chat room --------------------------------------
-      # BAND_USER_API_KEY registers the fleet; each agent then holds its own
-      # per-agent key, written to BAND_CREDENTIALS_PATH by
-      # `tools/register_band_agents.py`. Render's disk is ephemeral, so that
-      # file does not survive a deploy -- re-run the registration tool, or the
-      # fleet starts empty and /sessions/{id}/orchestrate answers 503.
+      # Every agent runs on its OWN key, not the account key. Band issues those
+      # once, at registration, and never shows them again:
+      #
+      #     uv run python tools/register_band_agents.py
+      #
+      # That writes .band-agents.json locally. Here they are env vars instead,
+      # because Render's disk is ephemeral -- a credentials file does not
+      # survive a deploy, and a fleet with no credentials starts empty and
+      # answers 503 rather than pretending. Miss one pair and the whole fleet
+      # declines: six agents or none, since a room with a hole in it is worse
+      # than the deterministic path.
       #
       # The namespace exists because Band agent names are unique per account
-      # and Band refuses to delete an agent with execution history: staging and
-      # production cannot both be "Zuzu-Intake".
+      # and Band refuses to delete an agent with execution history -- correctly,
+      # since its id is in audit trails that must stay resolvable. So staging
+      # and production cannot both be "Zuzu-Intake", and a botched registration
+      # burns the name for good.
       - key: BAND_USER_API_KEY
         sync: false
       - key: BAND_FLEET_NAMESPACE
         value: v2
-      - key: BAND_CREDENTIALS_PATH
-        value: /opt/render/project/src/.band-agents.json
+      - key: BAND_AGENT_INTAKE_ID
+        sync: false
+      - key: BAND_AGENT_INTAKE_KEY
+        sync: false
+      - key: BAND_AGENT_EXTRACTOR_ID
+        sync: false
+      - key: BAND_AGENT_EXTRACTOR_KEY
+        sync: false
+      - key: BAND_AGENT_MAPPER_ID
+        sync: false
+      - key: BAND_AGENT_MAPPER_KEY
+        sync: false
+      - key: BAND_AGENT_VALIDATOR_ID
+        sync: false
+      - key: BAND_AGENT_VALIDATOR_KEY
+        sync: false
+      - key: BAND_AGENT_FILLER_ID
+        sync: false
+      - key: BAND_AGENT_FILLER_KEY
+        sync: false
+      - key: BAND_AGENT_AUDITOR_ID
+        sync: false
+      - key: BAND_AGENT_AUDITOR_KEY
+        sync: false
 
       # --- Memory -----------------------------------------------------------
       # Unset, memory falls back to SQLite on an ephemeral disk: it works, and
