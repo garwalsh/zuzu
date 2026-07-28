@@ -37,7 +37,6 @@ import httpx
 logger = logging.getLogger(__name__)
 
 BAND_REST_URL = os.environ.get("BAND_REST_URL", "https://app.band.ai")
-BAND_WS_URL = os.environ.get("BAND_WS_URL", "wss://app.band.ai/api/v1/socket/websocket")
 API = f"{BAND_REST_URL}/api/v1"
 
 #: Band is a coordination surface, never the critical path of a call. Every

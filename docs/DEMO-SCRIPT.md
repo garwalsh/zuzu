@@ -134,17 +134,22 @@ Say: *"Same path, scripted — so a bad conference mic can't take the demo down.
 | `save_field` latency | 0.03–0.13 ms |
 | I-765 fields mapped | 32 logical → 43 PDF refs, machine-verified |
 | Document checklist | 17 requirements read live from uscis.gov |
-| Tests | 46, CI green |
+| Tests | 174, CI green |
 
 ## Do not claim
 
 - **Cerebras.** 402 Payment Required; it never ran. Don't submit that track.
-- **Band as an orchestrator.** Six agents are registered; Zuzu does not route
-  work through them. Say "agent identities registered", not "multi-agent".
+- **Band memory or Band-hosted tools.** The free tier has `ff_memory`,
+  `ff_create_tools` and `ff_mcp_servers` off. The three memory tiers are Zuzu's
+  own store, not Band's. Say "Band for orchestration", not "Band for memory".
+- **Fully emergent routing.** An agent chooses who to address and does so over
+  Band. But when it declares itself done, the fixed role order picks who goes
+  next, not its choice. Say "agents decide who to address", not "the order is
+  entirely emergent".
 - **Email delivery.** The RocketRide pipeline runs, but `tool_gmail` has no
   Google credentials, so nothing is sent. Say "pipeline built", not "delivered".
 - **All-generated code.** 2 of 10 modules came from `pdd --local generate`; the
   rest are hand-written to the same prompts. The README says so.
 
-Being straight about these four is worth more than the tracks they'd win. A
+Being straight about these is worth more than the tracks they'd win. A
 judge who catches one overstatement re-examines everything else you said.

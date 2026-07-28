@@ -32,15 +32,55 @@ services:
       # sync:false means "prompt me, do not read from the blueprint".
       - key: ZUZU_SHARED_SECRET
         sync: false
-      - key: MEM0_API_KEY
-        sync: false
-      - key: CEREBRAS_API_KEY
-        sync: false
-      - key: CEREBRAS_BASE_URL
-        value: https://api.cerebras.ai/v1
-      - key: CEREBRAS_MODEL
-        value: zai-glm-4.7
       - key: ELEVENLABS_API_KEY
+        sync: false
+
+      # --- Reasoning: MiniMax-M3 through TokenRouter -------------------------
+      # Without this the six agents still run, but on the deterministic
+      # fallback: fixed hand-off order, no judgement. /health reports which.
+      - key: TOKENROUTER_API_KEY
+        sync: false
+      - key: TOKENROUTER_BASE_URL
+        value: https://api.tokenrouter.com/v1
+      - key: TOKENROUTER_MODEL
+        value: MiniMax-M3
+
+      # --- Band: the agents' chat room --------------------------------------
+      # BAND_USER_API_KEY registers the fleet; each agent then holds its own
+      # per-agent key, written to BAND_CREDENTIALS_PATH by
+      # `tools/register_band_agents.py`. Render's disk is ephemeral, so that
+      # file does not survive a deploy -- re-run the registration tool, or the
+      # fleet starts empty and /sessions/{id}/orchestrate answers 503.
+      #
+      # The namespace exists because Band agent names are unique per account
+      # and Band refuses to delete an agent with execution history: staging and
+      # production cannot both be "Zuzu-Intake".
+      - key: BAND_USER_API_KEY
+        sync: false
+      - key: BAND_FLEET_NAMESPACE
+        value: v2
+      - key: BAND_CREDENTIALS_PATH
+        value: /opt/render/project/src/.band-agents.json
+
+      # --- Memory -----------------------------------------------------------
+      # Unset, memory falls back to SQLite on an ephemeral disk: it works, and
+      # it is gone on the next deploy. Set both and it is durable. The
+      # service_role key, not the publishable one -- the table denies anon by
+      # design. /health reports the backend actually in use.
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+      # --- Multi-tenant -----------------------------------------------------
+      # A JSON registry of organisations, holding only SHA-256 hashes of their
+      # keys. Unset means single-tenant: every caller is the default tenant.
+      # Mint keys with `tools/add_tenant.py`.
+      - key: ZUZU_TENANTS_JSON
+        sync: false
+
+      # --- Optional ---------------------------------------------------------
+      - key: RTRVR_API_KEY
         sync: false
 
 # --- Layer 2, Milestone 6 ---

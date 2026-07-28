@@ -35,7 +35,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from api.band import brain, protocol
+from api.band import brain, ledger, protocol
 from api.band.credentials import load_credentials
 from api.band.roles import ROLES, Role, role_for, roster
 from api.band.tools import SessionTools, ToolDenied, ToolFailed, schemas_for
@@ -43,6 +43,11 @@ from api.tenancy import Principal
 
 logger = logging.getLogger(__name__)
 
+
+#: How many finished collaborations stay in memory. Anything evicted is still
+#: readable -- it went to the ledger on close -- so this is a cache size, not a
+#: retention policy, and the retention policy is "durably, in the memory store".
+MAX_ROOMS_IN_MEMORY = 32
 
 #: A collaboration that has not finished in this many turns has stopped making
 #: progress. Six agents each acting twice is a generous ceiling for one filing.
@@ -173,6 +178,37 @@ class RoleAgent:
         await self._agent.start()
         logger.info("band agent up: %s", self.role.agent_name)
 
+    async def _verify_identities(self) -> None:
+        """Ask Band who each agent actually is, and say so if it disagrees.
+
+        A credentials file that has drifted from the account is not a failure
+        anything notices: the WebSocket connects, the room opens, and every
+        audit entry is attributed to an agent id that means something else now.
+        /agents once reported five of six roles unregistered for exactly this
+        reason, and it took a live run to find out.
+
+        Only ever a warning. A mismatch is worth knowing about; it is not worth
+        refusing to fill somebody's form over.
+        """
+        for key, agent in self.agents.items():
+            try:
+                me = await agent.client.whoami()
+            except Exception as exc:
+                logger.warning("could not confirm identity of %s: %s", key, exc)
+                continue
+            data = me.get("data", me)
+            claimed = str(data.get("id", ""))
+            if claimed and claimed != agent.agent_id:
+                logger.warning(
+                    "credential for %s belongs to agent %s, not %s -- the audit trail will "
+                    "attribute this role to the wrong agent",
+                    key,
+                    claimed,
+                    agent.agent_id,
+                )
+            else:
+                logger.info("%s connected as %s", key, data.get("name") or agent.agent_id)
+
     async def stop(self) -> None:
         if self._agent is not None:
             try:
@@ -243,6 +279,8 @@ class RoleAgent:
                 execute=run_tool,
             )
             results = decision.ran
+            if not decision.usable:
+                reasoner = brain.REASONER_UNUSABLE
         except brain.BrainUnavailable as exc:
             # The model is judgement, not capability. Losing it costs the room
             # its reasoning and nothing else: the agent still runs its own tools
@@ -305,6 +343,10 @@ class Fleet:
 
     def __init__(self) -> None:
         self.agents: dict[str, RoleAgent] = {}
+        #: Bounded. A finished collaboration is already in the ledger, so the
+        #: only thing evicting it costs is a dictionary lookup on the way to a
+        #: database read. Unbounded, this held every Principal and SessionTools
+        #: for the life of the process.
         self.by_room: dict[str, Collaboration] = {}
         self._started = False
 
@@ -336,6 +378,7 @@ class Fleet:
                 agent = RoleAgent(role, creds[role.key]["id"], creds[role.key]["api_key"], self)
                 await agent.start()
                 self.agents[role.key] = agent
+            await self._verify_identities()
         except Exception as exc:
             logger.warning("band fleet failed to start: %s: %s", type(exc).__name__, exc)
             await self.stop()
@@ -433,7 +476,21 @@ class Fleet:
                 reasoner="runtime",
             )
         )
+        # Written down before the waiter is released, so a caller that gets its
+        # response and immediately asks for the trail finds one. This is also
+        # the point where the record stops depending on this process staying up.
+        kept = await ledger.record(collab)
+        logger.info("audit trail persisted room=%s turns=%d", room_id, kept)
         collab.finished.set()
+        self._evict()
+
+    def _evict(self) -> None:
+        """Keep only the most recent finished rooms in memory."""
+        finished = [(c.started, rid) for rid, c in self.by_room.items() if c.finished.is_set()]
+        if len(finished) <= MAX_ROOMS_IN_MEMORY:
+            return
+        for _, room_id in sorted(finished)[: len(finished) - MAX_ROOMS_IN_MEMORY]:
+            self.by_room.pop(room_id, None)
 
 
 _fleet: Fleet | None = None

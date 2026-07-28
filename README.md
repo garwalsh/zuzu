@@ -160,20 +160,43 @@ the deterministic wording in place rather than blocking a form from loading.
 > configured, so `deliver_packet` returns `delivered: false` with that reason
 > rather than a green tick nobody can find in an inbox.
 
-### Band — agent identities, and a real audit trail
+### Band — six agents, actually talking to each other
 
-Six agents are registered on Band with distinct, non-overlapping jobs, and every
-one of them appears in the pipeline that produces a form:
+Six agents are registered on Band with distinct, non-overlapping jobs. Each one
+runs as its own process holding its own WebSocket to Band, under its own
+per-agent API key, and they address each other by Band mention:
 
 ```
-Extractor ──► Mapper ──► Validator ──► Filler ──► Auditor
+Auditor opens the room
+   └─► Intake ──► Extractor ──► Mapper ──► Validator ──► Filler ──► Auditor seals
 ```
 
-Each stage records what it did, tagged with its Band agent id, so a completed
-application carries a trail: which agent set which field, from voice or memory
-or a document, and what the Validator objected to. In a legal-filing domain that
-trail *is* the product — when a form comes back rejected months later, someone
-has to be able to work out why. `GET /sessions/{id}/audit` returns it.
+That arrow chain is where work usually goes, not a loop it is stepped through.
+Each agent decides for itself what to do and who to hand to — MiniMax-M3 through
+TokenRouter, given Band's own tool schemas so it can send a message, list the
+participants, or pull somebody else in. The Auditor opens the room because Band
+rejects a message whose only mention is its own sender, and because owning the
+record from before the first question is just true.
+
+What the model may decide and what it may assert are deliberately different
+things. It chooses **who acts next, what to say, and when the work is done**.
+Every applicant value, every validation outcome, and every byte of the PDF comes
+from a deterministic tool. A hallucinated hand-off wastes a round trip; a
+hallucinated date of birth is a rejected filing months later.
+
+Each turn is recorded with the tools it ran, who it addressed, why, and **which
+of the two decided it** — the model, the deterministic fallback, or an answer
+that came back unusable. A trail that blurs those is worse than no trail.
+
+- `GET /sessions/{id}/audit` — Zuzu's record, durable in the memory store, so it
+  survives the process that produced it
+- `GET /sessions/{id}/room` — the same conversation read back out of **Band's**
+  API, so "the agents really did talk over Band" is checkable without taking
+  this service's word for it
+
+Without `TOKENROUTER_API_KEY` the fleet still runs, on a deterministic hand-off
+in the fixed order above — the orchestration loses its judgement, nobody loses
+their filing. `/health` and every audit entry say which one is running.
 
 The Validator catches what no single field can show, because these mistakes only
 appear when you look at the answers together:
@@ -185,13 +208,17 @@ appear when you look at the answers together:
   written, since the engine strips punctuation first, because a validator that
   cries wolf is worse than none
 
-> **Status, stated precisely.** The five roles are registered Band identities and
-> their ids are on every audit entry, but the stages execute in this process.
-> Band's user API key is scoped to agent registration — every other endpoint
-> returns `insufficient_scope` — so dispatching work to those agents over Band's
-> own transport is not something this key can do. The seam is built and named;
-> only the transport is missing. Doing it properly needs the agents running as
-> WebSocket-connected processes with per-agent keys.
+> **Status, stated precisely.** Band has two API surfaces. The Human API
+> (`/api/v1/me/*`) answers `plan_required` on the free tier, which is what made
+> this look impossible at first. The Agent API (`/api/v1/agent/*`) works on the
+> free tier, and per-agent keys — issued once, at registration — are what the
+> agents actually run on. So the transport is real.
+>
+> Two things are honestly partial. Free-tier Band has `ff_memory`,
+> `ff_create_tools` and `ff_mcp_servers` off, so memory is Zuzu's own three-tier
+> store rather than Band's. And routing is emergent up to a point: an agent picks
+> who to address, but when it declares itself done, the fixed order decides who
+> goes next rather than its choice.
 
 ### Render — one blueprint
 

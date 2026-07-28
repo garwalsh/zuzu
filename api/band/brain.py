@@ -71,6 +71,8 @@ class Decision:
     ran: list[dict[str, Any]] = field(default_factory=list)
     #: Whether this agent considers its part done.
     done: bool = False
+    #: Whether the model produced something actionable at all.
+    usable: bool = True
     #: Free-text reason, kept for the audit trail.
     because: str = ""
 
@@ -159,6 +161,11 @@ Rules that do not bend:
 #: that blurs them is worse than no trail.
 REASONER_MODEL = "minimax-m3"
 REASONER_FALLBACK = "deterministic-fallback"
+#: The model was reached and said something, but not in a shape that could be
+#: acted on. Distinct from both of the above: the turn was neither reasoned nor
+#: deterministically chosen, it was salvaged. A trail that files this under
+#: "minimax-m3" is claiming a decision the model did not make.
+REASONER_UNUSABLE = "model-answered-unusably"
 
 
 def fallback_decision(

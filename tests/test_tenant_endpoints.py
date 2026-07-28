@@ -261,3 +261,109 @@ def test_the_interview_itself_is_not_readable_across_tenants(client):
         headers=_headers(KEY_B),
     )
     assert resp.status_code == 404, resp.text
+
+
+# ---------------------------------------------------------------------------
+# allowed_forms: a restriction nobody enforces is not a restriction.
+#
+# Tenant.may_file was defined, unit-tested, and had zero call sites anywhere in
+# the request path. A clinic restricted to I-765 could file an N-400 through
+# three different endpoints, and every test passed.
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def restricted(tmp_path, monkeypatch):
+    """clinic-a may only file I-765. clinic-b is unrestricted."""
+    registry_path = tmp_path / "tenants.json"
+    registry_path.write_text(
+        json.dumps(
+            {
+                "tenants": [
+                    {
+                        "id": "clinic-a",
+                        "name": "Clinic A",
+                        "api_key_hashes": [_digest(KEY_A)],
+                        "allowed_forms": ["I-765"],
+                    },
+                    {"id": "clinic-b", "name": "Clinic B", "api_key_hashes": [_digest(KEY_B)]},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("ZUZU_SHARED_SECRET", SECRET)
+    monkeypatch.setenv("STORE_BACKEND", "memory")
+    monkeypatch.setenv("TOKENROUTER_API_KEY", "")
+
+    tenancy.reset_registry()
+    monkeypatch.setattr(tenancy, "_registry", tenancy.TenantRegistry(registry_path))
+    session_store.reset_session_store()
+    memory.reset_memory()
+
+    from api.main import app
+
+    with TestClient(app) as c:
+        yield c
+
+    tenancy.reset_registry()
+    session_store.reset_session_store()
+    memory.reset_memory()
+
+
+def test_a_restricted_tenant_cannot_switch_to_a_form_it_may_not_file(restricted):
+    sid = _open_session(restricted, KEY_A, "conv-allow-1")
+    resp = restricted.post(
+        "/session/set_form",
+        json={"session_id": sid, "form_id": "N-400"},
+        headers=_headers(KEY_A),
+    )
+    assert resp.status_code == 403, resp.text
+    assert "not configured to file" in resp.text
+
+    state = restricted.get(f"/sessions/{sid}/values", headers=_headers(KEY_A)).json()
+    assert state["form_id"] == "I-765"
+
+
+def test_the_form_it_is_allowed_still_works(restricted):
+    """The check must not be a blanket denial -- that would pass just as well."""
+    sid = _open_session(restricted, KEY_A, "conv-allow-2")
+    resp = restricted.post(
+        "/session/set_form",
+        json={"session_id": sid, "form_id": "I-765"},
+        headers=_headers(KEY_A),
+    )
+    assert resp.status_code == 200, resp.text
+
+
+def test_an_unrestricted_tenant_is_not_affected(restricted):
+    """Empty allowed_forms means all forms, which is what most tenants want."""
+    sid = _open_session(restricted, KEY_B, "conv-allow-3")
+    resp = restricted.post(
+        "/session/set_form",
+        json={"session_id": sid, "form_id": "N-400"},
+        headers=_headers(KEY_B),
+    )
+    assert resp.status_code == 200, resp.text
+
+
+def test_the_interview_path_cannot_be_used_to_get_around_the_allowlist(restricted):
+    """get_missing_fields accepts a form_id, which looks like the way around
+    set_form. It is not: the session owns which form is being filled, and the
+    parameter is ignored -- so the questions still come from the allowed form
+    rather than the requested one."""
+    sid = _open_session(restricted, KEY_A, "conv-allow-4")
+    resp = restricted.post(
+        "/tools/get_missing_fields",
+        json={"session_id": sid, "form_id": "N-400"},
+        headers=_headers(KEY_A),
+    )
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["form_id"] == "I-765"
+
+
+def test_a_tenant_cannot_widen_its_own_deployment_by_onboarding(restricted):
+    """Onboarding a form it could not then file is pointless, and it adds the
+    form to the registry for every other organisation."""
+    resp = restricted.post("/forms/onboard", params={"form_id": "N-600"}, headers=_headers(KEY_A))
+    assert resp.status_code == 403, resp.text

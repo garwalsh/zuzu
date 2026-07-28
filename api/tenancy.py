@@ -148,15 +148,37 @@ class TenantRegistry:
         # in the repo also silently flips every checkout -- and the whole test
         # suite -- into multi-tenant mode, which is how this arrived: 23 tests
         # that send no tenant key started failing the moment the file existed.
-        if inline := os.environ.get("ZUZU_TENANTS_JSON", "").strip():
-            self._load(json.loads(inline))
-            logger.info("tenant registry loaded from the environment")
+        if configured := os.environ.get("ZUZU_TENANTS_JSON", "").strip():
+            # The name says JSON and the value is usually JSON, but "…_JSON" set
+            # to a file path is the obvious misreading and it used to crash with
+            # a bare JSONDecodeError out of a dependency -- meaning a 500 on
+            # every request, with a traceback that never mentions tenancy. Both
+            # readings now work, and anything else fails by name.
+            source = "the environment"
+            if not configured.startswith("{"):
+                path = Path(configured)
+                if not path.exists():
+                    raise TenancyError(
+                        f"ZUZU_TENANTS_JSON is neither JSON nor a readable file: {configured!r}"
+                    )
+                configured = path.read_text(encoding="utf-8")
+                source = str(path)
+            try:
+                self._load(json.loads(configured))
+            except json.JSONDecodeError as exc:
+                raise TenancyError(
+                    f"tenant registry from {source} is not valid JSON: {exc}"
+                ) from exc
+            logger.info("tenant registry loaded from %s", source)
             return
         if not self._path.exists():
             logger.info("no tenant registry at %s; running single-tenant", self._path)
             self._tenants, self._by_key_hash = {}, {}
             return
-        self._load(json.loads(self._path.read_text(encoding="utf-8")))
+        try:
+            self._load(json.loads(self._path.read_text(encoding="utf-8")))
+        except json.JSONDecodeError as exc:
+            raise TenancyError(f"tenant registry at {self._path} is not valid JSON: {exc}") from exc
 
     def _load(self, raw: dict[str, Any]) -> None:
         tenants: dict[str, Tenant] = {}

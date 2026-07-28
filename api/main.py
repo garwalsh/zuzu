@@ -31,6 +31,7 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from api.band import ledger
 from api.band.credentials import agent_ids
 from api.band.fleet import get_fleet
 from api.band.roles import ROLES as BAND_ROLES
@@ -245,11 +246,23 @@ async def _load_or_open_session(
     return session
 
 
-def _resolve_form(form_id: str):
+def _resolve_form(form_id: str, tenant: Tenant | None = None):
+    """The schema for a form, if this organisation is allowed to file it.
+
+    Tenant.allowed_forms existed, was unit-tested, and was never consulted on a
+    single request -- a restriction nobody enforces is not a restriction. An
+    empty list still means all forms, which is what most tenants want.
+    """
     try:
-        return get_form(form_id or DEFAULT_FORM_ID)
+        schema = get_form(form_id or DEFAULT_FORM_ID)
     except UnknownFormError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    if tenant is not None and not tenant.may_file(schema.form_id):
+        raise HTTPException(
+            status_code=403,
+            detail=f"{tenant.name} is not configured to file {schema.form_id}",
+        )
+    return schema
 
 
 @app.get("/health")
@@ -824,6 +837,7 @@ async def identify_form(
         title = _resolve_form(form_id).title
     if session_id:
         await _load_or_open_session(session_id, tenant=tenant)
+        _resolve_form(form_id, tenant)  # refuse a form this tenant may not file
         try:
             await get_session_store().set_form(session_id, form_id)
         except SessionNotFoundError:
@@ -851,7 +865,7 @@ async def session_set_form(
         raise HTTPException(status_code=422, detail="session_id and form_id are required")
 
     await _load_or_open_session(session_id, tenant=tenant)
-    schema = _resolve_form(form_id)
+    schema = _resolve_form(form_id, tenant)
     session = await get_session_store().set_form(session_id, schema.form_id)
     remaining, known = counts(session, schema)
     await _publish(
@@ -912,8 +926,13 @@ async def orchestrate(
 
 
 @app.get("/agents")
-async def agents_index() -> dict[str, Any]:
-    """The fleet: who is connected, what each may touch, and how they run."""
+async def agents_index(_: None = Depends(require_shared_secret)) -> dict[str, Any]:
+    """The fleet: who is connected, what each may touch, and how they run.
+
+    Behind the shared secret. It was open, and it returns the Band agent ids
+    that every audit entry is attributed to -- not a catastrophe on its own, but
+    it is the fleet's identity roster and there is no reason for it to be public.
+    """
     fleet = get_fleet()
     ids = agent_ids()
     return {
@@ -948,12 +967,20 @@ async def session_audit(
     form comes back rejected months later, somebody has to reconstruct it. The
     record is the collaboration -- every turn, the tools it ran, and whether the
     model or the fallback decided it.
+
+    Read from memory while the room is still in the process, and from the
+    durable ledger after. "Months later" was the claim, and this used to answer
+    404 as soon as the service restarted -- which on a free instance is most of
+    the time.
     """
     await _load_session(session_id, tenant)
     fleet = get_fleet()
     for collab in fleet.by_room.values():
         if collab.session_id == session_id:
             return collab.as_dict()
+    stored = await ledger.replay(tenant.id, session_id)
+    if stored is not None:
+        return stored
     raise HTTPException(
         status_code=404,
         detail=(
@@ -961,6 +988,56 @@ async def session_audit(
             f"/sessions/{session_id}/orchestrate to run one"
         ),
     )
+
+
+@app.get("/sessions/{session_id}/room")
+async def session_room(
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """The same conversation, read back out of Band rather than out of Zuzu.
+
+    /audit is Zuzu's account of what its agents did. This is Band's, fetched
+    from Band's own API with an agent's own credentials: who is in the room, and
+    every message, in the order Band recorded them.
+
+    Two independent records of one conversation is the point. Zuzu's trail is
+    only trustworthy to whoever trusts Zuzu, and "the agents really did talk to
+    each other over Band" is a claim that should be checkable without taking
+    this service's word for it.
+
+    Only available while the room is still known to this process -- Band keys
+    the transcript by room id, and after eviction /audit is the durable record.
+    """
+    await _load_session(session_id, tenant)
+    fleet = get_fleet()
+    collab = next(
+        (c for c in fleet.by_room.values() if c.session_id == session_id),
+        None,
+    )
+    if collab is None:
+        raise HTTPException(
+            status_code=404,
+            detail=(
+                "no live room for this session -- "
+                f"GET /sessions/{session_id}/audit for the stored trail"
+            ),
+        )
+    reader = fleet.agents.get("auditor")
+    if reader is None:
+        raise HTTPException(status_code=503, detail="the fleet is not connected to Band")
+    try:
+        participants = await reader.client.participants(collab.room_id)
+        messages = await reader.client.transcript(collab.room_id)
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Band did not answer: {exc}") from exc
+    return {
+        "session_id": session_id,
+        "room_id": collab.room_id,
+        "source": "band",
+        "participants": participants,
+        "messages": messages,
+        "message_count": len(messages),
+    }
 
 
 @app.get("/sessions/{session_id}/memory")
@@ -1015,6 +1092,7 @@ async def forms_index() -> dict[str, Any]:
 
 @app.post("/forms/onboard")
 async def forms_onboard(
+    tenant: TenantDep,
     form_id: str = Query(..., description="e.g. N-400"),
     pdf_url: str | None = Query(
         default=None, description="fillable PDF url, if not in the catalog"
@@ -1023,11 +1101,19 @@ async def forms_onboard(
 ) -> dict[str, Any]:
     """Teach Zuzu a new USCIS form while it is running.
 
+    Scoped: a tenant restricted to a form list cannot widen the deployment by
+    onboarding something outside it.
+
     Fetches the fillable PDF, extracts its AcroForm inventory, derives the
     questions from the PDF's own screen-reader tooltips, and registers it. No
     deploy and no code change -- which is the whole "a form is data" claim,
     tested rather than asserted.
     """
+    if not tenant.may_file(form_id.upper()):
+        raise HTTPException(
+            status_code=403,
+            detail=f"{tenant.name} is not configured to file {form_id.upper()}",
+        )
     try:
         return await onboard(form_id, pdf_url)
     except OnboardingError as exc:
