@@ -82,7 +82,11 @@ body{
   color:var(--ink-3); letter-spacing:.06em;
 }
 
-.body{flex:1; min-height:0; display:flex; flex-direction:column; gap:clamp(12px,1.6vw,22px)}
+/* Centred, so a slide with less on it sits in the middle of the screen rather
+   than clinging to the top with a third of the page empty below it. A full
+   slide is unaffected. */
+.body{flex:1; min-height:0; display:flex; flex-direction:column;
+  justify-content:center; gap:clamp(12px,1.6vw,22px)}
 
 h1{
   margin:0; font-size:clamp(34px,6.6vw,88px); line-height:.98;
@@ -91,7 +95,8 @@ h1{
 h1 em{font-style:normal; color:var(--accent)}
 h3{margin:0 0 6px; font-size:clamp(14px,1.4vw,18px); font-weight:700}
 p{margin:0; font-size:clamp(14px,1.35vw,19px); line-height:1.5; color:var(--ink-2); max-width:62ch}
-p.lead{font-size:clamp(16px,1.75vw,25px); color:var(--ink); line-height:1.4; max-width:34ch}
+p.lead{font-size:clamp(16px,1.75vw,25px); color:var(--ink); line-height:1.35;
+  max-width:44ch; text-wrap:balance}
 b,strong{color:var(--ink); font-weight:700}
 code{font-family:var(--mono); font-size:.88em; background:var(--box);
   border:1px solid var(--rule); padding:1px 5px; border-radius:3px}
@@ -200,9 +205,9 @@ a{color:var(--accent)}
     <span class="part">Zuzu</span><h2>Voice-first U.S. immigration filing</h2>
     <span class="aside">Prompt Driven Development Hackathon</span>
   </div>
-  <div class="body" style="justify-content:center; gap:clamp(18px,2.4vw,34px)">
+  <div class="body" style="gap:clamp(18px,2.4vw,34px)">
     <h1>If you can talk,<br>you can <em>file</em>.</h1>
-    <p class="lead" style="max-width:46ch">Call a number. Speak your own
+    <p class="lead" style="max-width:52ch">Call a number. Speak your own
       language. Zuzu asks one plain question at a time and fills the official
       USCIS PDF as you answer.</p>
     <div class="fields" style="max-width:900px">
@@ -623,7 +628,7 @@ a{color:var(--accent)}
 <section class="slide">
   <div class="band"><span class="part">Part 9</span><h2>Where it stands</h2>
     <span class="aside">Open the link and try it</span></div>
-  <div class="body" style="justify-content:center; gap:clamp(18px,2.4vw,32px)">
+  <div class="body" style="gap:clamp(18px,2.4vw,32px)">
     <h1>It fills.<br><em>You sign.</em></h1>
     <p class="lead">Zuzu fills to the review step. It does not submit, does not pay
       fees, and cannot sign — the signature fields are left blank by design. The
