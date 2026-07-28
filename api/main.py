@@ -268,14 +268,30 @@ def _resolve_form(form_id: str, tenant: Tenant | None = None):
 @app.get("/health")
 async def health() -> dict[str, Any]:
     """Liveness, plus whether the things memory depends on are actually there."""
+    from api.band import brain
     from api.memory_store import check_backend
 
     memory_status = await check_backend()
+    fleet = get_fleet()
     return {
         "status": "ok" if memory_status["reachable"] else "degraded",
         "form_ids": list_forms(),
         "memory": memory_status,
-        "fleet_running": get_fleet().is_running,
+        # A bare boolean could not tell "six agents connected" from "one did".
+        # Both were reported as True, and the difference is whether a filing gets
+        # validated before it is written.
+        "fleet": {
+            "running": fleet.is_running,
+            "agents": len(fleet.agents),
+            "expected": len(BAND_ROLES),
+            "connected": sorted(fleet.agents),
+            "live_rooms": len(fleet.by_room),
+            # Which of the two is deciding. Without the model the agents still
+            # run, on the fixed hand-off order -- worth being able to see from
+            # outside rather than inferring it from an audit trail after a call.
+            "reasoner": brain.REASONER_MODEL if brain.is_available() else brain.REASONER_FALLBACK,
+        },
+        "fleet_running": fleet.is_running,
     }
 
 
