@@ -63,7 +63,13 @@ from api.delivery import deliver_packet
 from api.event_bus import get_event_bus
 from api.form_finder import identify
 from api.form_onboarding import OnboardingError, load_catalog, onboard
-from api.form_registry import DEFAULT_FORM_ID, UnknownFormError, get_form, list_forms
+from api.form_registry import (
+    DEFAULT_FORM_ID,
+    UnknownFormError,
+    get_form,
+    list_forms,
+    resolve_field_id,
+)
 from api.i765_schema import REPO_ROOT, SKIP_SENTINEL
 from api.memory import DeletionUnverifiable, Tier, _user_key, get_memory, summarize
 from api.pdf_engine import missing_required
@@ -413,6 +419,11 @@ async def get_missing_fields(
     schema = _resolve_form(session.form_id)
 
     field = next_missing_field(session, schema)
+    # Remember what we asked. An answer that arrives next is an answer to this,
+    # whatever id the agent decides to label it with.
+    if field is not None and field.id != session.last_asked:
+        session.last_asked = field.id
+
     remaining, known = counts(session, schema)
     next_field = (
         NextField(id=field.id, question=field.question, type=field.type, sensitive=field.sensitive)
@@ -446,7 +457,13 @@ async def save_field(
     session = await _load_or_open_session(payload.session_id, tenant=tenant)
     schema = _resolve_form(session.form_id)
 
-    form_field = schema.get_field(payload.field_id)
+    # The agent is told the field id and is supposed to send it back. Models do
+    # not reliably do that: a real simulated call against the deployed agent
+    # produced applicant_name, place_of_birth, gender and alien_number -- none
+    # of which exist on the I-765. Every one of those answers was correct and
+    # was thrown away with a 422, mid-call, with the applicant none the wiser.
+    field_id = resolve_field_id(schema, payload.field_id, session.last_asked)
+    form_field = schema.get_field(field_id) if field_id else None
     if form_field is None:
         # A value with nowhere to go on the form is a value we must not pretend
         # to have collected.
@@ -457,7 +474,7 @@ async def save_field(
 
     session = await get_session_store().save_field(
         session_id=payload.session_id,
-        field_id=payload.field_id,
+        field_id=field_id,
         value=payload.value,
         confidence=payload.confidence,
         language=payload.language,
@@ -471,7 +488,7 @@ async def save_field(
     _spawn_background(
         get_memory(session.tenant_id).save_field(
             caller_id=session.caller_id,
-            field_id=payload.field_id,
+            field_id=field_id,
             value=payload.value,
             schema=schema,
             language=payload.language,
@@ -483,7 +500,7 @@ async def save_field(
         FIELD_SAVED,
         payload.session_id,
         {
-            "field_id": payload.field_id,
+            "field_id": field_id,
             "group": form_field.group,
             "sensitive": form_field.sensitive,
             "confidence": payload.confidence,
@@ -496,12 +513,17 @@ async def save_field(
         "field saved",
         extra={
             "session_id": payload.session_id,
-            "field_id": payload.field_id,
+            "field_id": field_id,
             "duration_ms": duration_ms,
         },
     )
     return SaveFieldResponse(
-        ok=True, needs_confirmation=needs_confirmation, remaining_count=remaining
+        ok=True,
+        needs_confirmation=needs_confirmation,
+        remaining_count=remaining,
+        # Tell the agent which field this actually became, so a model that
+        # guessed can correct itself rather than guessing the same way again.
+        field_id=field_id,
     )
 
 

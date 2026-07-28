@@ -447,3 +447,100 @@ def test_the_widget_offers_typing_as_well_as_talking(client):
     widget = build_payload("https://example.test", "s")["platform_settings"]["widget"]
     assert widget["text_input_enabled"] is True
     assert widget["supports_text_only"] is True
+
+
+# ---------------------------------------------------------------------------
+# The voice agent guesses field ids. Found by simulating a real conversation
+# against the deployed ElevenLabs agent: it asked the right question, got the
+# right answer, and filed it under `applicant_name`, `place_of_birth`, `gender`
+# and `alien_number` -- none of which exist on the I-765. Every one of those
+# answers was correct and was thrown away with a 422, mid-call.
+# ---------------------------------------------------------------------------
+
+
+def _open(client, sid: str) -> None:
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+
+
+@pytest.mark.parametrize(
+    "guessed,becomes",
+    [
+        ("gender", "sex"),
+        ("alien_number", "a_number"),
+        ("dob", "date_of_birth"),
+        ("last_name", "family_name"),
+        ("first_name", "given_name"),
+        ("zip_code", "mailing_zip"),
+        ("nationality", "country_of_citizenship"),
+        ("GIVEN NAME", "given_name"),
+    ],
+)
+def test_a_guessed_field_id_still_lands_on_the_right_field(client, guessed, becomes):
+    sid = f"alias-{guessed.replace(' ', '-')}"
+    _open(client, sid)
+    r = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": guessed, "value": "Reyes"},
+        headers=visitor(),
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["field_id"] == becomes, "and the agent is told what it became"
+    values = client.get(f"/sessions/{sid}/values", headers=visitor()).json()["values"]
+    assert becomes in values
+
+
+def test_an_answer_is_attributed_to_the_question_that_was_just_asked(client):
+    """The rule that generalises: it needs no list of names anybody thought of
+    in advance. An answer arriving after a question is an answer to it."""
+    sid = "attributed"
+    _open(client, sid)
+    asked = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": sid, "form_id": "I-765"},
+        headers=visitor(),
+    ).json()["next_field"]["id"]
+
+    r = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "something_the_model_invented", "value": "renewal"},
+        headers=visitor(),
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["field_id"] == asked
+
+    values = client.get(f"/sessions/{sid}/values", headers=visitor()).json()["values"]
+    assert values.get(asked) == "renewal"
+    assert "something_the_model_invented" not in values
+
+
+def test_a_value_with_nowhere_to_go_is_still_refused(client):
+    """The fallback must not become "put it anywhere". With nothing asked and no
+    alias, an unknown id is still a value we must not pretend to have."""
+    sid = "nowhere"
+    _open(client, sid)
+    r = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "favourite_colour", "value": "blue"},
+        headers=visitor(),
+    )
+    assert r.status_code == 422, r.text
+    assert "unknown field_id" in r.text
+
+
+def test_the_resolved_id_is_what_gets_remembered_and_broadcast(client):
+    """Storing it under the guessed name would put it in memory, on the
+    dashboard and in the logs under a name the form does not have."""
+    sid = "resolved-everywhere"
+    _open(client, sid)
+    client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "gender", "value": "female"},
+        headers=visitor(),
+    )
+    values = client.get(f"/sessions/{sid}/values", headers=visitor()).json()["values"]
+    assert values.get("sex") == "female"
+    assert "gender" not in values

@@ -121,6 +121,10 @@ class SaveFieldResponse(StrictModel):
     ok: bool
     needs_confirmation: bool
     remaining_count: int
+    #: The field this answer actually became. Usually the one that was sent; it
+    #: differs when the agent guessed an id the form does not have and the
+    #: orchestrator worked out which question was really being answered.
+    field_id: str = ""
 
 
 class IdentifyFormRequest(InboundModel):

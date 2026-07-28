@@ -72,6 +72,11 @@ class Session:
     is_returning: bool = False
     created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
     pdf_path: str | None = None
+    #: The field id most recently handed to the voice agent by
+    #: get_missing_fields. The agent is supposed to send that exact id back with
+    #: the answer; when it invents one instead, this is what the answer was
+    #: actually a reply to.
+    last_asked: str = ""
 
     def answered(self, field_id: str) -> bool:
         """True once a field has been asked and resolved, skip included."""

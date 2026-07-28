@@ -108,3 +108,86 @@ def get_form(form_id: str) -> FormSchema:
 def list_forms() -> list[str]:
     _discover()
     return sorted(_loaders)
+
+
+# ---------------------------------------------------------------------------
+# Reconciling the id the voice agent sent with the id the form actually has.
+# ---------------------------------------------------------------------------
+
+#: Names a model reaches for instead of the schema's own. Each one was observed
+#: in a real simulated call against the deployed agent -- it asked the right
+#: question, got the right answer from the applicant, and then filed it under a
+#: field that does not exist, so the answer was rejected and lost.
+_ALIASES: dict[str, str] = {
+    "gender": "sex",
+    "alien_number": "a_number",
+    "alien_registration_number": "a_number",
+    "a_no": "a_number",
+    "uscis_account_number": "uscis_online_account_number",
+    "social_security_number": "ssn",
+    "dob": "date_of_birth",
+    "birth_date": "date_of_birth",
+    "birthdate": "date_of_birth",
+    "last_name": "family_name",
+    "surname": "family_name",
+    "first_name": "given_name",
+    "phone": "daytime_phone",
+    "phone_number": "daytime_phone",
+    "telephone": "daytime_phone",
+    "email_address": "email",
+    "street": "mailing_street",
+    "street_address": "mailing_street",
+    "city": "mailing_city",
+    "state": "mailing_state",
+    "zip": "mailing_zip",
+    "zip_code": "mailing_zip",
+    "postal_code": "mailing_zip",
+    "citizenship": "country_of_citizenship",
+    "nationality": "country_of_citizenship",
+    "passport_expiration": "passport_expiry",
+    "i94": "i94_number",
+    "sevis": "sevis_number",
+    "eligibility": "eligibility_category",
+    "category": "eligibility_category",
+}
+
+
+def _normalise(field_id: str) -> str:
+    return (field_id or "").strip().lower().replace("-", "_").replace(" ", "_")
+
+
+def resolve_field_id(schema: FormSchema, supplied: str, last_asked: str = "") -> str | None:
+    """The schema field an incoming answer belongs to, or None.
+
+    A voice agent is told the field id by `get_missing_fields` and is supposed
+    to send that exact id back. Models do not reliably do that -- a real
+    simulated call produced `applicant_name`, `place_of_birth`, `gender` and
+    `alien_number`, none of which exist on the I-765. Every one of those answers
+    was correct and was thrown away with a 422.
+
+    Three steps, most precise first:
+
+        1. The id as given, if the form has it.
+        2. A known alias -- `gender` is `sex`, `alien_number` is `a_number`.
+        3. The field we most recently ASKED for. An answer arriving right after
+           a question is an answer to that question; that is what a conversation
+           is. This is the one that generalises, because it needs no list of
+           names anybody thought of in advance.
+
+    Returns None when none of those hold, and the caller still refuses -- a
+    value with nowhere to go must not be pretended into the form.
+    """
+    if schema.get_field(supplied) is not None:
+        return supplied
+
+    normalised = _normalise(supplied)
+    if schema.get_field(normalised) is not None:
+        return normalised
+
+    aliased = _ALIASES.get(normalised)
+    if aliased and schema.get_field(aliased) is not None:
+        return aliased
+
+    if last_asked and schema.get_field(last_asked) is not None:
+        return last_asked
+    return None
