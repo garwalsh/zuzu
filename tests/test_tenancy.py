@@ -107,9 +107,7 @@ def test_a_key_resolves_only_its_own_tenant(tmp_path, monkeypatch):
         registry.resolve_key("key-c")
 
 
-def test_multi_tenant_refuses_a_request_that_names_a_tenant_without_a_key(
-    tmp_path, monkeypatch
-):
+def test_multi_tenant_refuses_a_request_that_names_a_tenant_without_a_key(tmp_path, monkeypatch):
     """Naming a tenant is not proof of belonging to it.
 
     Without this, anyone holding the service secret could read another

@@ -38,6 +38,10 @@ class Session:
     session_id: str
     caller_id: str
     form_id: str
+    #: The organisation this session belongs to. Set when the session is opened
+    #: and never changed: it is what every later request is checked against, so
+    #: a key for one tenant cannot read another tenant's call.
+    tenant_id: str = ""
     values: dict[str, FieldValue] = field(default_factory=dict)
     preferred_language: str = "en"
     is_returning: bool = False
@@ -108,6 +112,10 @@ class InMemorySessionStore:
             if existing is not None:
                 if caller_id and not existing.caller_id:
                     existing.caller_id = caller_id
+                # A lazily-opened session has no tenant yet; the init webhook is
+                # what supplies it. It is only ever filled in, never rewritten.
+                if kwargs.get("tenant_id") and not existing.tenant_id:
+                    existing.tenant_id = str(kwargs["tenant_id"])
                 if "preferred_language" in kwargs:
                     existing.preferred_language = str(kwargs["preferred_language"])
                 if kwargs.get("is_returning"):
@@ -122,6 +130,7 @@ class InMemorySessionStore:
                 session_id=session_id,
                 caller_id=caller_id,
                 form_id=form_id,
+                tenant_id=str(kwargs.get("tenant_id", "") or ""),
                 preferred_language=str(kwargs.get("preferred_language", "en")),
                 is_returning=bool(kwargs.get("is_returning", False)),
             )

@@ -207,15 +207,26 @@ def identifies_a_caller(caller_id: str) -> bool:
     return bool(caller_id and caller_id.strip())
 
 
-def _log_id(caller_id: str) -> str:
-    return _user_key(caller_id)[:12]
+def _log_id(caller_id: str, tenant_id: str | None = None) -> str:
+    return _user_key(caller_id, tenant_id)[:12]
 
 
 class ApplicantMemory:
     """Async mem0 wrapper, tier-aware."""
 
-    def __init__(self, api_key: str | None = None) -> None:
+    def __init__(self, api_key: str | None = None, tenant_id: str | None = None) -> None:
         self._api_key = api_key if api_key is not None else os.environ.get("MEM0_API_KEY", "")
+        #: Bound once, here, rather than passed to every method. Threading a
+        #: tenant through fifteen call sites is how one of them ends up without
+        #: it, and the one that forgets is a cross-organisation disclosure.
+        self._tenant_id = tenant_id
+
+    def _key(self, caller_id: str) -> str:
+        """This caller's storage key inside this store's tenant."""
+        return _user_key(caller_id, self._tenant_id)
+
+    def _log_key(self, caller_id: str) -> str:
+        return self._key(caller_id)[:12]
 
     @property
     def enabled(self) -> bool:
@@ -233,7 +244,7 @@ class ApplicantMemory:
             return False
         body = {
             "messages": [{"role": "user", "content": text}],
-            "user_id": _user_key(caller_id),
+            "user_id": self._key(caller_id),
             "metadata": metadata,
         }
         try:
@@ -246,17 +257,16 @@ class ApplicantMemory:
             logger.warning(
                 "mem0 write failed tier=%s caller=%s: %s",
                 metadata.get("tier"),
-                _log_id(caller_id),
+                self._log_key(caller_id),
                 type(exc).__name__,
             )
             return False
         self._mirror_put(caller_id, text, metadata)
         return True
 
-    @staticmethod
-    def _mirror_put(caller_id: str, text: str, metadata: dict[str, Any]) -> None:
+    def _mirror_put(self, caller_id: str, text: str, metadata: dict[str, Any]) -> None:
         """Record a successful write so it can still be shown if recall fails."""
-        entries = _MIRROR.setdefault(_user_key(caller_id), [])
+        entries = _MIRROR.setdefault(self._key(caller_id), [])
         tier = metadata.get("tier")
         # A semantic fact and a procedural rule are corrections of the previous
         # value for the same key, not additions to it. Episodes are events and
@@ -295,14 +305,14 @@ class ApplicantMemory:
             # the shared empty-string bucket would hand the previous anonymous
             # applicant's profile to this one.
             return ([], "anonymous", "this session has no caller id, so nothing is recalled")
-        mirrored = list(_MIRROR.get(_user_key(caller_id), []))
+        mirrored = list(_MIRROR.get(self._key(caller_id), []))
         if not self.enabled:
             return (mirrored, "mirror" if mirrored else "none", "mem0 is not configured")
         try:
             async with httpx.AsyncClient(timeout=LOOKUP_TIMEOUT_SECONDS) as client:
                 resp = await client.get(
                     f"{MEM0_BASE_URL}/memories/",
-                    params={"user_id": _user_key(caller_id)},
+                    params={"user_id": self._key(caller_id)},
                     headers=self._headers(),
                 )
                 resp.raise_for_status()
@@ -315,7 +325,7 @@ class ApplicantMemory:
                     # mem0 meters reads and writes separately, so this says
                     # nothing about whether the writes landed.
                     reason = "mem0 read quota exhausted for this billing period"
-            logger.warning("mem0 lookup failed caller=%s: %s", _log_id(caller_id), reason)
+            logger.warning("mem0 lookup failed caller=%s: %s", self._log_key(caller_id), reason)
             return (mirrored, "mirror" if mirrored else "none", reason)
         entries = payload if isinstance(payload, list) else payload.get("results", [])
         return (entries, "mem0", "")
@@ -392,7 +402,7 @@ class ApplicantMemory:
         )
         logger.info(
             "mem0 recall caller=%s source=%s returning=%s semantic=%d episodic=%d procedural=%d%s",
-            _log_id(caller_id),
+            self._log_key(caller_id),
             source,
             profile.is_returning,
             len(known),
@@ -419,7 +429,9 @@ class ApplicantMemory:
         if form_field is None:
             return False
         if form_field.sensitive and not _store_sensitive():
-            logger.info("mem0 skip sensitive field=%s caller=%s", field_id, _log_id(caller_id))
+            logger.info(
+                "mem0 skip sensitive field=%s caller=%s", field_id, self._log_key(caller_id)
+            )
             return False
 
         ok = await self._write(
@@ -437,7 +449,7 @@ class ApplicantMemory:
             },
         )
         if ok:
-            logger.info("mem0 stored field=%s caller=%s", field_id, _log_id(caller_id))
+            logger.info("mem0 stored field=%s caller=%s", field_id, self._log_key(caller_id))
         return ok
 
     async def record_episode(
@@ -555,18 +567,21 @@ class ApplicantMemory:
                         removed += 1
         except Exception as exc:
             logger.warning(
-                "mem0 forget failed caller=%s: %s", _log_id(caller_id), type(exc).__name__
+                "mem0 forget failed caller=%s: %s", self._log_key(caller_id), type(exc).__name__
             )
             return removed
         # Only once the remote deletion actually ran does the local copy go.
-        mirror = _MIRROR.get(_user_key(caller_id))
+        mirror = _MIRROR.get(self._key(caller_id))
         if mirror is not None:
             if tier is None:
-                _MIRROR.pop(_user_key(caller_id), None)
+                _MIRROR.pop(self._key(caller_id), None)
             else:
                 mirror[:] = [e for e in mirror if (e.get("metadata") or {}).get("tier") != tier]
         logger.info(
-            "mem0 forgot caller=%s tier=%s entries=%d", _log_id(caller_id), tier or "all", removed
+            "mem0 forgot caller=%s tier=%s entries=%d",
+            self._log_key(caller_id),
+            tier or "all",
+            removed,
         )
         return removed
 
@@ -603,16 +618,36 @@ def summarize(profile: ApplicantProfile, schema: FormSchema) -> str:
 
 
 _memory: ApplicantMemory | None = None
+#: One store per organisation; see get_memory.
+_by_tenant: dict[str, ApplicantMemory] = {}
 
 
-def get_memory() -> ApplicantMemory:
+def get_memory(tenant_id: str | None = None) -> ApplicantMemory:
+    """The memory store for one organisation.
+
+    One instance per tenant, cached, because the tenant is baked into every key
+    the store derives. Calling this without a tenant gives the deployment's own,
+    which is what a single-organisation install wants and what the ElevenLabs
+    webhook path uses before a tenant key has been resolved.
+    """
+    from api.tenancy import DEFAULT_TENANT
+
     global _memory
+    # The deployment's own tenant is not a separate store from the default one:
+    # they are the same organisation, so they must be the same object, or a
+    # single-tenant install would quietly keep two mirrors of the same caller.
+    if tenant_id and tenant_id != DEFAULT_TENANT.id:
+        store = _by_tenant.get(tenant_id)
+        if store is None:
+            store = _by_tenant[tenant_id] = ApplicantMemory(tenant_id=tenant_id)
+        return store
     if _memory is None:
         _memory = ApplicantMemory()
     return _memory
 
 
 def reset_memory() -> None:
-    """Drop the singleton. For tests only."""
+    """Drop the cached stores. For tests only."""
     global _memory
     _memory = None
+    _by_tenant.clear()

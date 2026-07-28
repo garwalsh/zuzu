@@ -16,7 +16,7 @@ import time
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import (
     Depends,
@@ -78,7 +78,12 @@ from api.session_store import (
     get_session_store,
     next_missing_field,
 )
-from api.tenancy import principal_for
+from api.tenancy import Tenant, guard_session, principal_for, require_tenant
+
+#: The organisation making this request. Annotated rather than a default value,
+#: which is the current FastAPI idiom and keeps the dependency out of the
+#: function signature's mutable-default territory.
+TenantDep = Annotated[Tenant, Depends(require_tenant)]
 
 CONFIDENCE_CONFIRM_THRESHOLD = 0.85
 #: Audit records from the most recent pipeline run per session. In Layer 2 this
@@ -172,12 +177,20 @@ def _spawn_background(coro: Any) -> None:
     task.add_done_callback(_background.discard)
 
 
-async def _load_session(session_id: str) -> Session:
-    """Strict lookup, for read paths where inventing a session would be a lie."""
+async def _load_session(session_id: str, tenant: Tenant | None = None) -> Session:
+    """Strict lookup, for read paths where inventing a session would be a lie.
+
+    When a tenant is supplied the session must belong to it. Holding a valid key
+    proves which organisation you are, not which sessions you may read, and
+    session ids are not secret -- a demo one is `web_maria_<unix seconds>`.
+    """
     try:
-        return await get_session_store().get(session_id)
+        session = await get_session_store().get(session_id)
     except SessionNotFoundError as exc:
         raise HTTPException(status_code=404, detail=f"unknown session: {session_id}") from exc
+    if tenant is not None:
+        guard_session(session.tenant_id, tenant)
+    return session
 
 
 async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session:
@@ -224,6 +237,7 @@ async def health() -> dict[str, Any]:
 @app.post("/session/init", response_model=SessionInitResponse)
 async def session_init(
     payload: SessionInitRequest,
+    tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> SessionInitResponse:
     """Create the session the whole call hangs off, and load what we know.
@@ -234,12 +248,13 @@ async def session_init(
     """
     session_id = payload.conversation_id
     schema = get_form(DEFAULT_FORM_ID)
-    profile = await get_memory().load_profile(payload.caller_id, schema)
+    profile = await get_memory(tenant.id).load_profile(payload.caller_id, schema)
 
     session = await get_session_store().create(
         session_id=session_id,
         caller_id=payload.caller_id,
         form_id=DEFAULT_FORM_ID,
+        tenant_id=tenant.id,
         preferred_language=profile.preferred_language,
         is_returning=profile.is_returning,
     )
@@ -368,7 +383,7 @@ async def save_field(
     # live human's latency budget; mem0 writes are queued server-side anyway, so
     # awaiting one would buy nothing but delay.
     _spawn_background(
-        get_memory().save_field(
+        get_memory(session.tenant_id).save_field(
             caller_id=session.caller_id,
             field_id=payload.field_id,
             value=payload.value,
@@ -492,7 +507,7 @@ async def session_complete(
     # and off the response path -- the agent is hanging up, not waiting on us.
     plain = {fid: fv.value for fid, fv in session.values.items()}
     _spawn_background(
-        get_memory().record_episode(
+        get_memory(session.tenant_id).record_episode(
             caller_id=session.caller_id,
             session_id=payload.conversation_id,
             form_id=schema.form_id,
@@ -502,7 +517,7 @@ async def session_complete(
         )
     )
     _spawn_background(
-        get_memory().learn_from_session(
+        get_memory(session.tenant_id).learn_from_session(
             caller_id=session.caller_id,
             values=plain,
             schema=schema,
@@ -534,6 +549,7 @@ async def session_events(websocket: WebSocket, session_id: str, secret: str = Qu
 
 @app.post("/demo/run")
 async def demo_run(
+    tenant: TenantDep,
     persona: str = Query(default="maria"),
     _: None = Depends(require_shared_secret),
 ) -> dict[str, Any]:
@@ -551,7 +567,7 @@ async def demo_run(
 
     session_id = f"web_{persona}_{int(time.time())}"
     store = get_session_store()
-    await store.create(session_id, profile["caller_id"], DEFAULT_FORM_ID)
+    await store.create(session_id, profile["caller_id"], DEFAULT_FORM_ID, tenant_id=tenant.id)
     await _publish(SESSION_STARTED, session_id, {"demo": True})
 
     schema = get_form(DEFAULT_FORM_ID)
@@ -585,7 +601,7 @@ async def demo_run(
         # rather than to /tools/save_field, so without this a demo call left
         # mem0 completely empty and the memory panel had nothing to show.
         _spawn_background(
-            get_memory().save_field(
+            get_memory(tenant.id).save_field(
                 caller_id=profile["caller_id"],
                 field_id=field.id,
                 value=answers.get(field.id, SKIP_SENTINEL),
@@ -616,7 +632,7 @@ async def demo_run(
     # stay permanently empty.
     final = await store.get(session_id)
     _spawn_background(
-        get_memory().record_episode(
+        get_memory(tenant.id).record_episode(
             caller_id=profile["caller_id"],
             session_id=session_id,
             form_id=schema.form_id,
@@ -626,7 +642,7 @@ async def demo_run(
         )
     )
     _spawn_background(
-        get_memory().learn_from_session(
+        get_memory(tenant.id).learn_from_session(
             caller_id=profile["caller_id"],
             values={fid: fv.value for fid, fv in final.values.items()},
             schema=schema,
@@ -656,14 +672,14 @@ def _display_value(field_id: str, value: str, schema: Any) -> str:
 
 @app.get("/sessions/{session_id}/checklist")
 async def session_checklist(
-    session_id: str, _: None = Depends(require_shared_secret)
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
     """Supporting documents this applicant still has to attach.
 
     The completed PDF is half the deliverable; USCIS also wants photos, the
     I-94, a copy of the prior EAD. Which ones apply depends on their answers.
     """
-    session = await _load_session(session_id)
+    session = await _load_session(session_id, tenant)
     schema = _resolve_form(session.form_id)
     checklist = await fetch_document_checklist(schema.form_id)
     plain = {fid: fv.value for fid, fv in session.values.items()}
@@ -703,14 +719,14 @@ def _field_by_role(session: Session, schema: Any, role: str) -> str:
 
 @app.post("/sessions/{session_id}/deliver")
 async def session_deliver(
-    session_id: str, _: None = Depends(require_shared_secret)
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
     """Email the finished packet to the applicant.
 
     The person called from a phone and hung up; a PDF on a dashboard they are
     not looking at is not a delivered outcome.
     """
-    session = await _load_session(session_id)
+    session = await _load_session(session_id, tenant)
     schema = _resolve_form(session.form_id)
     if not session.pdf_path:
         raise HTTPException(status_code=409, detail="no completed form for this session yet")
@@ -822,7 +838,9 @@ async def session_set_form(
 
 
 @app.post("/sessions/{session_id}/orchestrate")
-async def orchestrate(session_id: str, _: None = Depends(require_shared_secret)) -> dict[str, Any]:
+async def orchestrate(
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
     """Hand this filing to the Band agent fleet and return what they did.
 
     The agents open a room, address each other, run their own tools, and close
@@ -830,7 +848,7 @@ async def orchestrate(session_id: str, _: None = Depends(require_shared_secret))
     reasoner decided it -- a trail that does not say whether the model or the
     fallback chose is making a claim it cannot support.
     """
-    session = await _load_session(session_id)
+    session = await _load_session(session_id, tenant)
     fleet = get_fleet()
     if not fleet.is_running:
         raise HTTPException(
@@ -873,13 +891,14 @@ async def agents_index() -> dict[str, Any]:
 
 @app.get("/sessions/{session_id}/audit")
 async def session_audit(
-    session_id: str, _: None = Depends(require_shared_secret)
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
     """Who set which field, from where, and what the Validator objected to.
 
     In a legal-filing domain this is the point of separating the stages: when a
     form comes back rejected, someone has to be able to work out why.
     """
+    await _load_session(session_id, tenant)
     record = _AUDIT.get(session_id)
     if record is None:
         raise HTTPException(status_code=404, detail="no pipeline run for this session yet")
@@ -888,7 +907,7 @@ async def session_audit(
 
 @app.get("/sessions/{session_id}/memory")
 async def session_memory(
-    session_id: str, _: None = Depends(require_shared_secret)
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
     """Everything remembered about this caller, by tier.
 
@@ -896,11 +915,13 @@ async def session_memory(
     they are different kinds of knowledge with different lifetimes -- and an
     applicant is entitled to see exactly what is held about them.
     """
-    session = await _load_session(session_id)
+    session = await _load_session(session_id, tenant)
     schema = _resolve_form(session.form_id)
-    profile = await get_memory().load_profile(session.caller_id, schema)
+    profile = await get_memory(session.tenant_id).load_profile(session.caller_id, schema)
     return {
-        "caller_key": _user_key(session.caller_id) if session.caller_id else None,
+        "caller_key": (
+            _user_key(session.caller_id, session.tenant_id) if session.caller_id else None
+        ),
         "is_returning": profile.is_returning,
         # Where these tiers were actually read from. Three empty tiers because
         # the caller is new and three empty tiers because recall is down look
@@ -1001,11 +1022,11 @@ async def sessions_recent(_: None = Depends(require_shared_secret)) -> dict[str,
 
 @app.get("/sessions/{session_id}/values")
 async def session_values(
-    session_id: str, _: None = Depends(require_shared_secret)
+    session_id: str, tenant: TenantDep, _: None = Depends(require_shared_secret)
 ) -> dict[str, Any]:
     """Current values for a session, so a dashboard opened mid-call can paint
     the fields already collected instead of starting blank."""
-    session = await _load_session(session_id)
+    session = await _load_session(session_id, tenant)
     schema = _resolve_form(session.form_id)
     remaining, known = counts(session, schema)
     return {
@@ -1067,6 +1088,7 @@ async def deck() -> FileResponse:
 
 @app.post("/session/forget")
 async def session_forget(
+    tenant: TenantDep,
     caller_id: str = Query(...),
     tier: str | None = Query(default=None, description="semantic|episodic|procedural"),
     _: None = Depends(require_shared_secret),
@@ -1079,7 +1101,7 @@ async def session_forget(
     """
     scope = Tier(tier) if tier else None
     try:
-        removed = await get_memory().forget(caller_id, scope)
+        removed = await get_memory(tenant.id).forget(caller_id, scope)
     except DeletionUnverifiable as exc:
         # Never answer "ok" to a deletion that did not happen. Someone who is
         # told their data is gone stops asking, which is the worst outcome here.

@@ -42,6 +42,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from fastapi import Header, HTTPException
+
 logger = logging.getLogger(__name__)
 
 #: Where the tenant registry lives. A JSON file is honest about what this is:
@@ -246,6 +248,49 @@ def principal_for(
 ) -> Principal:
     """The principal for one caller. The only supported way to build one."""
     return Principal(tenant=resolve_tenant(tenant_key, tenant_id), user_id=user_id or "")
+
+
+#: The header a caller names its organisation with.
+TENANT_HEADER = "X-Zuzu-Tenant-Key"
+
+
+async def require_tenant(
+    x_zuzu_tenant_key: str | None = Header(default=None, alias=TENANT_HEADER),
+) -> Tenant:
+    """The organisation this request belongs to.
+
+    In a single-organisation install there is no registry and this resolves to
+    the deployment's own tenant, so nothing has to change to run Zuzu for one
+    clinic. As soon as a registry exists the key becomes mandatory, because at
+    that point "which organisation is this" has more than one answer and
+    guessing it wrong discloses somebody's immigration file.
+    """
+    try:
+        return resolve_tenant(x_zuzu_tenant_key)
+    except TenancyError as exc:
+        raise HTTPException(status_code=401, detail=str(exc)) from exc
+
+
+def guard_session(session_tenant_id: str, tenant: Tenant) -> None:
+    """Refuse a session that belongs to a different organisation.
+
+    Holding a valid key proves which tenant you are, not which sessions you may
+    read. Without this check any authenticated tenant could pull another
+    organisation's call by knowing its session id, and session ids are not
+    secret -- a demo one is `web_maria_<unix seconds>`.
+
+    A session with no tenant recorded predates this check or was opened lazily
+    before its init webhook landed. Those are readable by the deployment's own
+    tenant only, which is the same thing they were before.
+    """
+    if not session_tenant_id:
+        if tenant.id == DEFAULT_TENANT.id:
+            return
+        raise HTTPException(status_code=404, detail="no such session")
+    if session_tenant_id != tenant.id:
+        # 404 rather than 403: whether a session id exists in another
+        # organisation is itself information this caller is not entitled to.
+        raise HTTPException(status_code=404, detail="no such session")
 
 
 def as_dict(principal: Principal) -> dict[str, Any]:
