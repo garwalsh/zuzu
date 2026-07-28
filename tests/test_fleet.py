@@ -391,3 +391,124 @@ def _collab(
     if started is not None:
         collab.started = started
     return collab
+
+
+# ---------------------------------------------------------------------------
+# Fleet.start(), which nothing ever called.
+#
+# It shipped an AttributeError to production: a method that start() invokes was
+# defined on RoleAgent instead of Fleet, so every boot logged "band fleet failed
+# to start" and the service ran the deterministic path. Everything else passed
+# -- health was 200, forms were filled -- because the fleet failing is a
+# designed-for degradation, and a degradation nobody asserts is invisible.
+# ---------------------------------------------------------------------------
+
+
+class _FakeClient:
+    def __init__(self, agent_id: str, claims: str | None = None) -> None:
+        self.agent_id = agent_id
+        self._claims = claims if claims is not None else agent_id
+
+    async def whoami(self):
+        return {"data": {"id": self._claims, "name": f"Zuzu-{self.agent_id}"}}
+
+
+def _fake_credentials():
+    return {r.key: {"id": f"id-{r.key}", "api_key": f"key-{r.key}"} for r in ROLES}
+
+
+@pytest.fixture
+def startable(monkeypatch):
+    """A fleet whose agents connect instantly and answer whoami honestly."""
+    monkeypatch.setenv("TOKENROUTER_API_KEY", "sk-test")
+    monkeypatch.setattr(fleet, "load_credentials", _fake_credentials)
+
+    async def fake_start(self):
+        self.client = _FakeClient(self.agent_id)
+
+    monkeypatch.setattr(fleet.RoleAgent, "start", fake_start)
+    monkeypatch.setattr(fleet.RoleAgent, "stop", lambda self: _noop())
+    return fleet.Fleet()
+
+
+async def _noop():
+    return None
+
+
+def test_the_fleet_starts_all_six_agents(startable):
+    """The test that would have caught the AttributeError."""
+    assert asyncio.run(startable.start()) is True
+    assert startable.is_running is True
+    assert sorted(startable.agents) == sorted(r.key for r in ROLES)
+
+
+def test_starting_twice_is_a_no_op(startable):
+    assert asyncio.run(startable.start()) is True
+    assert asyncio.run(startable.start()) is True
+    assert len(startable.agents) == len(ROLES)
+
+
+def test_a_partial_credential_set_starts_nothing(monkeypatch):
+    """Six agents or none. A room with a hole in it is worse than the
+    deterministic path, because the missing role's job silently never happens."""
+    monkeypatch.setenv("TOKENROUTER_API_KEY", "sk-test")
+    partial = _fake_credentials()
+    partial.pop("auditor")
+    monkeypatch.setattr(fleet, "load_credentials", lambda: partial)
+    f = fleet.Fleet()
+    assert asyncio.run(f.start()) is False
+    assert f.agents == {}
+
+
+def test_an_agent_that_cannot_connect_takes_the_whole_fleet_down_cleanly(monkeypatch):
+    monkeypatch.setenv("TOKENROUTER_API_KEY", "sk-test")
+    monkeypatch.setattr(fleet, "load_credentials", _fake_credentials)
+
+    async def fails_on_the_fourth(self):
+        if self.role.key == "validator":
+            raise RuntimeError("Band refused the connection")
+        self.client = _FakeClient(self.agent_id)
+
+    monkeypatch.setattr(fleet.RoleAgent, "start", fails_on_the_fourth)
+    monkeypatch.setattr(fleet.RoleAgent, "stop", lambda self: _noop())
+    f = fleet.Fleet()
+    assert asyncio.run(f.start()) is False
+    assert f.is_running is False
+    assert f.agents == {}, "a half-connected fleet must not be left behind"
+
+
+def test_a_credential_pointing_at_the_wrong_agent_is_reported(startable, caplog, monkeypatch):
+    """A drifted credentials file connects fine and attributes every audit entry
+    to an agent that means something else now. Only a warning -- worth knowing,
+    not worth refusing to fill somebody's form over."""
+
+    async def wrong_identity(self):
+        claims = "someone-else" if self.role.key == "mapper" else self.agent_id
+        self.client = _FakeClient(self.agent_id, claims=claims)
+
+    import logging
+
+    monkeypatch.setattr(fleet.RoleAgent, "start", wrong_identity)
+    with caplog.at_level(logging.WARNING, logger="api.band.fleet"):
+        assert asyncio.run(startable.start()) is True
+
+    warned = [r.getMessage() for r in caplog.records]
+    assert any("someone-else" in m and "mapper" in m for m in warned), (
+        f"no mismatch warning in {warned}"
+    )
+    # It still runs: a mismatch is a provenance problem, not a filing problem.
+    assert startable.is_running is True
+
+
+def test_whoami_failing_does_not_stop_the_fleet(startable, monkeypatch):
+    """Band being slow to answer a courtesy call is not a reason to refuse work."""
+
+    async def start_with_broken_whoami(self):
+        class Broken(_FakeClient):
+            async def whoami(self):
+                raise RuntimeError("Band did not answer")
+
+        self.client = Broken(self.agent_id)
+
+    monkeypatch.setattr(fleet.RoleAgent, "start", start_with_broken_whoami)
+    assert asyncio.run(startable.start()) is True

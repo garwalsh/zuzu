@@ -178,37 +178,6 @@ class RoleAgent:
         await self._agent.start()
         logger.info("band agent up: %s", self.role.agent_name)
 
-    async def _verify_identities(self) -> None:
-        """Ask Band who each agent actually is, and say so if it disagrees.
-
-        A credentials file that has drifted from the account is not a failure
-        anything notices: the WebSocket connects, the room opens, and every
-        audit entry is attributed to an agent id that means something else now.
-        /agents once reported five of six roles unregistered for exactly this
-        reason, and it took a live run to find out.
-
-        Only ever a warning. A mismatch is worth knowing about; it is not worth
-        refusing to fill somebody's form over.
-        """
-        for key, agent in self.agents.items():
-            try:
-                me = await agent.client.whoami()
-            except Exception as exc:
-                logger.warning("could not confirm identity of %s: %s", key, exc)
-                continue
-            data = me.get("data", me)
-            claimed = str(data.get("id", ""))
-            if claimed and claimed != agent.agent_id:
-                logger.warning(
-                    "credential for %s belongs to agent %s, not %s -- the audit trail will "
-                    "attribute this role to the wrong agent",
-                    key,
-                    claimed,
-                    agent.agent_id,
-                )
-            else:
-                logger.info("%s connected as %s", key, data.get("name") or agent.agent_id)
-
     async def stop(self) -> None:
         if self._agent is not None:
             try:
@@ -386,6 +355,37 @@ class Fleet:
         self._started = True
         logger.info("band fleet running: %d agents", len(self.agents))
         return True
+
+    async def _verify_identities(self) -> None:
+        """Ask Band who each agent actually is, and say so if it disagrees.
+
+        A credentials file that has drifted from the account is not a failure
+        anything notices: the WebSocket connects, the room opens, and every
+        audit entry is attributed to an agent id that means something else now.
+        /agents once reported five of six roles unregistered for exactly this
+        reason, and it took a live run to find out.
+
+        Only ever a warning. A mismatch is worth knowing about; it is not worth
+        refusing to fill somebody's form over.
+        """
+        for key, agent in self.agents.items():
+            try:
+                me = await agent.client.whoami()
+            except Exception as exc:
+                logger.warning("could not confirm identity of %s: %s", key, exc)
+                continue
+            data = me.get("data", me)
+            claimed = str(data.get("id", ""))
+            if claimed and claimed != agent.agent_id:
+                logger.warning(
+                    "credential for %s belongs to agent %s, not %s -- the audit trail will "
+                    "attribute this role to the wrong agent",
+                    key,
+                    claimed,
+                    agent.agent_id,
+                )
+            else:
+                logger.info("%s connected as %s", key, data.get("name") or agent.agent_id)
 
     async def stop(self) -> None:
         for agent in list(self.agents.values()):
