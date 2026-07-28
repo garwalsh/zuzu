@@ -158,3 +158,106 @@ def test_orchestrate_resolves_its_principal_in_multi_tenant_mode(client):
     resp = client.post(f"/sessions/{sid}/orchestrate", headers=_headers(KEY_A))
     assert resp.status_code == 503, resp.text
     assert "fleet is not running" in resp.text
+
+
+# ---------------------------------------------------------------------------
+# The attacks an audit actually ran against this service. Every one of these
+# succeeded once. The suite passed throughout, because it only ever pointed a
+# second tenant at three read endpoints and never at the voice path.
+# ---------------------------------------------------------------------------
+
+
+def _fill(client, tenant_key: str, sid: str) -> None:
+    """Take a session far enough that it holds real answers."""
+    import json
+    import pathlib
+
+    answers = json.loads(
+        (pathlib.Path(__file__).resolve().parent.parent / "data" / "demo_personas.json").read_text()
+    )["personas"]["maria"]["answers"]
+    for field_id, value in answers.items():
+        client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": field_id, "value": value},
+            headers=_headers(tenant_key),
+        )
+
+
+def test_another_tenant_cannot_write_answers_into_your_filing(client):
+    """Proven: clinic-b injected given_name=ATTACKER into clinic-a's session."""
+    sid = _open_session(client, KEY_A, "conv-write")
+    resp = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "given_name", "value": "ATTACKER"},
+        headers=_headers(KEY_B),
+    )
+    assert resp.status_code == 404, resp.text
+
+    values = client.get(f"/sessions/{sid}/values", headers=_headers(KEY_A)).json()["values"]
+    assert values.get("given_name") != "ATTACKER"
+
+
+def test_another_tenant_cannot_generate_your_form_or_get_its_link(client):
+    """Proven: /tools/generate_form took a tenant and never applied it, so
+    clinic-b got back a valid signed pdf_url for clinic-a's applicant."""
+    sid = _open_session(client, KEY_A, "conv-gen")
+    _fill(client, KEY_A, sid)
+
+    resp = client.post("/tools/generate_form", json={"session_id": sid}, headers=_headers(KEY_B))
+    assert resp.status_code == 404, resp.text
+    assert "pdf_url" not in resp.text
+
+
+def test_the_shared_secret_alone_does_not_open_a_completed_form(client):
+    """There is one shared secret for the whole deployment, so accepting it in
+    place of the signed token let any tenant fetch any applicant's PDF."""
+    sid = _open_session(client, KEY_A, "conv-pdf")
+    _fill(client, KEY_A, sid)
+    client.post("/tools/generate_form", json={"session_id": sid}, headers=_headers(KEY_A))
+
+    # Secret but the wrong organisation.
+    assert client.get(f"/forms/{sid}.pdf", headers=_headers(KEY_B)).status_code == 404
+    # Secret and no organisation at all.
+    assert client.get(f"/forms/{sid}.pdf", headers={"X-Zuzu-Secret": SECRET}).status_code == 401
+    # The owner still gets it.
+    assert client.get(f"/forms/{sid}.pdf", headers=_headers(KEY_A)).status_code == 200
+
+
+def test_another_tenant_cannot_switch_the_form_out_from_under_your_call(client):
+    """Proven: identify_form on someone else's session reset form_id and threw
+    away the generated PDF."""
+    sid = _open_session(client, KEY_A, "conv-switch")
+    _fill(client, KEY_A, sid)
+    client.post("/tools/generate_form", json={"session_id": sid}, headers=_headers(KEY_A))
+
+    for path, body in (
+        ("/session/set_form", {"session_id": sid, "form_id": "N-400"}),
+        ("/tools/identify_form", {"session_id": sid, "text": "green card renewal"}),
+    ):
+        assert client.post(path, json=body, headers=_headers(KEY_B)).status_code == 404, path
+
+    state = client.get(f"/sessions/{sid}/values", headers=_headers(KEY_A)).json()
+    assert state["form_id"] == "I-765", "the form must not have been switched"
+    assert state["has_pdf"] is True, "and the filing must not have been discarded"
+
+
+def test_the_session_list_is_not_a_directory_of_every_organisation(client):
+    """Unfiltered, this turned every "if you know the session id" weakness into
+    something anybody holding the shared secret could simply look up."""
+    a = _open_session(client, KEY_A, "conv-list-a")
+    b = _open_session(client, KEY_B, "conv-list-b")
+
+    listed = client.get("/sessions/recent", headers=_headers(KEY_B)).json()["sessions"]
+    seen_by_b = {s["session_id"] for s in listed}
+    assert b in seen_by_b
+    assert a not in seen_by_b, "clinic-b must not be able to enumerate clinic-a's calls"
+
+
+def test_the_interview_itself_is_not_readable_across_tenants(client):
+    sid = _open_session(client, KEY_A, "conv-interview")
+    resp = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": sid, "form_id": "I-765"},
+        headers=_headers(KEY_B),
+    )
+    assert resp.status_code == 404, resp.text

@@ -36,7 +36,6 @@ path at /session/init, and a memory outage must never end a call.
 
 from __future__ import annotations
 
-import hashlib
 import logging
 from datetime import UTC, datetime
 from enum import StrEnum
@@ -106,20 +105,25 @@ class ApplicantProfile(BaseModel):
 
 
 def _user_key(caller_id: str, tenant_id: str | None = None) -> str:
-    """Stable pseudonymous key so no store holds a raw phone number.
+    """Where this caller's memory lives. One function, deliberately.
 
-    The tenant is part of the key, not decoration on it. Without it there is a
-    single global namespace: two organisations running Zuzu would share one
-    memory pool, and an applicant who called both would have their file merged
-    across two parties who are not permitted to see each other's clients.
+    This used to derive its own key -- `zuzu_` + sha256[:20] -- while the agent
+    tools used Principal.scope_key -- `zt_` + sha256[:24] -- over the same
+    material and the same table. Two namespaces, so the endpoints and the agents
+    were writing to different places and reading different halves of one
+    applicant's file.
+
+    The damage was not duplication. `/sessions/{id}/memory` showed the applicant
+    only what the endpoints had stored, and `/session/forget` deleted only that
+    half: a deletion request reported success while everything the agents had
+    learned about the person survived untouched. That is the exact failure
+    DeletionUnverifiable exists to prevent, arriving through a different door.
+
+    So there is now one derivation, in api/tenancy, and this delegates to it.
     """
-    from api.tenancy import DEFAULT_TENANT
+    from api.tenancy import DEFAULT_TENANT, scope_key
 
-    tenant = (tenant_id or DEFAULT_TENANT.id).strip()
-    # \x1f between the halves so tenant "ab" + user "c" cannot collide with
-    # tenant "a" + user "bc".
-    material = f"{tenant}\x1f{caller_id.strip()}".encode()
-    return f"zuzu_{hashlib.sha256(material).hexdigest()[:20]}"
+    return scope_key(tenant_id or DEFAULT_TENANT.id, caller_id)
 
 
 def identifies_a_caller(caller_id: str) -> bool:

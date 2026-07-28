@@ -16,6 +16,7 @@ import pytest
 
 from api import memory_store
 from api.band.tools import SessionTools
+from api.form_registry import get_form
 from api.i765_schema import SKIP_SENTINEL
 from api.session_store import get_session_store, reset_session_store
 from api.tenancy import Principal, Tenant
@@ -210,3 +211,45 @@ async def test_a_real_fact_about_the_applicant_is_still_kept():
         "prefers numbers read back slowly",
     ):
         assert (await tools.learn_rule(rule=good))["stored"] is True, good
+
+
+@pytest.mark.asyncio
+async def test_deleting_a_persons_data_also_deletes_what_the_agents_learned():
+    """The endpoints and the agents wrote to two different namespaces.
+
+    memory._user_key derived `zuzu_` + sha256[:20]; the agent tools used
+    Principal.scope_key, `zt_` + sha256[:24] — over identical material and the
+    same table. So /sessions/{id}/memory showed the applicant only half their
+    file, and /session/forget reported success while everything the agents had
+    learned about them survived. One derivation now, in api.tenancy.
+    """
+    from api.memory import get_memory
+
+    tools = await _session("s15", CLINIC_A, given_name="Maria")
+    await tools.remember_fact(field_id="given_name")
+    await tools.learn_rule(rule="speaks Spanish")
+    assert (await tools.recall_profile())["counts"]["semantic"] == 1
+
+    store = get_memory(CLINIC_A.id)
+    # What the applicant is shown must include what the agents stored.
+    profile = await store.load_profile(CALLER, get_form("I-765"))
+    assert profile.known_values.get("given_name") == "Maria"
+    assert any("Spanish" in p.value for p in profile.procedures)
+
+    removed = await store.forget(CALLER)
+    assert removed >= 2, "the deletion must reach the agents' records"
+    assert (await tools.recall_profile())["counts"] == {
+        "semantic": 0,
+        "episodic": 0,
+        "procedural": 0,
+    }
+
+
+@pytest.mark.asyncio
+async def test_the_agents_and_the_endpoints_use_one_namespace():
+    """A regression here is invisible until somebody asks to be forgotten."""
+    from api.memory import _user_key
+    from api.tenancy import Principal
+
+    principal = Principal(tenant=CLINIC_A, user_id=CALLER)
+    assert principal.scope_key == _user_key(CALLER, CLINIC_A.id)

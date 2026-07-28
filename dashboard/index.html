@@ -559,9 +559,14 @@ async function loadMemory(id){
         pro.map(x => `<b>${esc(x.kind)}</b> — ${esc(x.value)}`)) +
       (m.caller_key ? `<p class="muted" style="padding:0;font-size:11px">
         Keyed by <code>${esc(m.caller_key)}</code> — a hash, never the phone number.</p>` : '') +
-      (m.source && m.source !== 'mem0' ? `<p class="muted" style="padding:0;font-size:11px">
-        Recall degraded: ${esc(m.degraded_reason || m.source)}. Showing what this
-        process stored; writes to mem0 are unaffected.</p>` : '');
+      // "degraded" is what the server says, not something the panel infers from
+      // the store's name. It used to treat anything that was not mem0 as a
+      // failure, so once memory moved to Supabase the healthy state was
+      // reported as an outage.
+      (m.degraded_reason ? `<p class="muted" style="padding:0;font-size:11px">
+        Recall degraded: ${esc(m.degraded_reason)}</p>`
+       : m.source ? `<p class="muted" style="padding:0;font-size:11px">
+        Recalled from <b>${esc(m.source)}</b>.</p>` : '');
   } catch(e){
     // Silence here is why an empty panel looked like an empty caller.
     el('memcount').textContent = 'unavailable';
@@ -749,7 +754,7 @@ async function present(){
 
   await caption('A form is data, not code — <b>twelve forms</b>, none hand-written.', 5000);
   await caption('Built against the real document, which disagreed with our spec <b>four times</b>.', 5200);
-  await caption('ElevenLabs · mem0 · TokenRouter · rtrvr.ai · RocketRide · Band · Render', 6000);
+  await caption('ElevenLabs · Band · TokenRouter · Supabase · rtrvr.ai · RocketRide · Render', 6000);
 }
 
 (async () => {

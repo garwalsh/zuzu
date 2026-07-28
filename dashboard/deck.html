@@ -211,7 +211,7 @@
   <!-- 4 -->
   <section class="slide">
     <div class="hdr"><span class="part">Part 3</span><h2>Why the second call is short</h2>
-      <span class="form">mem0 · three tiers</span></div>
+      <span class="form">Supabase · three tiers</span></div>
     <div class="body">
       <p class="lede">A returning caller answers four questions instead of thirty-three.</p>
       <div class="mem">
@@ -337,11 +337,11 @@
           <thead><tr><th style="width:20%">Tool</th><th>Job</th></tr></thead>
           <tbody>
             <tr><td class="now">ElevenLabs</td><td>The whole interface. Five server tools; knows no specific form.</td></tr>
-            <tr><td class="now">mem0</td><td>Semantic, episodic and procedural memory, keyed by hashed caller id.</td></tr>
+            <tr><td class="now">Supabase</td><td>Semantic, episodic and procedural memory in Postgres, keyed by a hash of tenant and caller. Row level security denies everything but the service key.</td></tr>
             <tr><td class="now">rtrvr.ai</td><td>Reads uscis.gov, which returns <b>403</b> to scripted requests. 17 live document requirements.</td></tr>
             <tr><td class="now">RocketRide</td><td>Pipeline-as-JSON for form intake <b>and</b> model selection — config is the source of truth.</td></tr>
             <tr><td class="now">TokenRouter</td><td>MiniMax, routed inside that pipeline. Spoken-value normalisation and translation.</td></tr>
-            <tr><td class="now">Band</td><td>Agent identities for the five pipeline stages, on every audit entry.</td></tr>
+            <tr><td class="now">Band</td><td>The agents' actual transport. Six external agents, each on its own WebSocket, addressing each other by Band mention. Band's own tools are offered to the model alongside ours.</td></tr>
             <tr><td class="now">Render</td><td>One blueprint, one live URL.</td></tr>
           </tbody>
         </table>
@@ -362,9 +362,12 @@
         <li><span class="m">—</span><span><b>Cerebras.</b> The account returns 402 Payment Required and
           the model our docs named does not exist on it. It never ran, so we do not submit that track.
           <span class="note">The inference lane is provider-agnostic, so it is a config flip if credits arrive.</span></span></li>
-        <li><span class="m">—</span><span><b>Band dispatch.</b> Five stage identities are registered and
-          verified live, but the stages execute in-process. Band dispatch needs agents running as
-          WebSocket processes.<span class="note">The seam is built and named. Only the transport is missing.</span></span></li>
+        <li><span class="m">—</span><span><b>Band chat, the human side.</b> Agents open rooms
+          and address each other over Band's Agent API, which works on the free plan. The
+          Human API -- a person reading those rooms through the API -- answers
+          <code>403 plan_required</code> and needs Enterprise.
+          <span class="note">Band's own memory tools are gated the same way: ff_memory is
+            false on Free, so the three tiers are ours, in Postgres.</span></span></li>
         <li><span class="m">—</span><span><b>Email delivery.</b> The RocketRide pipeline runs, but Gmail
           has no credentials configured, so nothing is sent — and the code returns
           <code>delivered: false</code> rather than a green tick nobody can find in an inbox.</span></li>

@@ -79,7 +79,16 @@ from api.session_store import (
     get_session_store,
     next_missing_field,
 )
-from api.tenancy import Principal, Tenant, guard_session, require_tenant
+from api.tenancy import (
+    DEFAULT_TENANT,
+    TENANT_HEADER,
+    Principal,
+    TenancyError,
+    Tenant,
+    guard_session,
+    require_tenant,
+    resolve_tenant,
+)
 
 #: The organisation making this request. Annotated rather than a default value,
 #: which is the current FastAPI idiom and keeps the dependency out of the
@@ -198,7 +207,9 @@ async def _load_session(session_id: str, tenant: Tenant | None = None) -> Sessio
     return session
 
 
-async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session:
+async def _load_or_open_session(
+    session_id: str, caller_id: str = "", tenant: Tenant | None = None
+) -> Session:
     """Lookup for the live tool path, creating the session if it is missing.
 
     The conversation-initiation webhook is an optimisation, not a precondition.
@@ -212,7 +223,7 @@ async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session
     """
     store = get_session_store()
     try:
-        return await store.get(session_id)
+        session = await store.get(session_id)
     except SessionNotFoundError:
         logger.warning(
             "session opened lazily -- conversation-init webhook did not fire",
@@ -222,9 +233,16 @@ async def _load_or_open_session(session_id: str, caller_id: str = "") -> Session
             session_id=session_id,
             caller_id=caller_id,
             form_id=DEFAULT_FORM_ID,
+            # Owned from the moment it exists. A session created without one
+            # can never be checked against anybody afterwards, and the
+            # deployment's own tenant reads all of them.
+            tenant_id=tenant.id if tenant else "",
         )
         await _publish(SESSION_STARTED, session_id, {"is_returning": False, "lazy": True})
         return session
+    if tenant is not None:
+        guard_session(session.tenant_id, tenant)
+    return session
 
 
 def _resolve_form(form_id: str):
@@ -322,10 +340,11 @@ async def session_init(
 @app.post("/tools/get_missing_fields", response_model=GetMissingFieldsResponse)
 async def get_missing_fields(
     payload: GetMissingFieldsRequest,
+    tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> GetMissingFieldsResponse:
     started = time.perf_counter()
-    session = await _load_or_open_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id, tenant=tenant)
     # The session owns which form is being filled, not the caller of this
     # endpoint. The agent carries the form_id it confirmed earlier in the
     # conversation, so after a mid-call switch it asks for the previous form
@@ -359,11 +378,12 @@ async def get_missing_fields(
 @app.post("/tools/save_field", response_model=SaveFieldResponse)
 async def save_field(
     payload: SaveFieldRequest,
+    tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> SaveFieldResponse:
     """Store one answer. No LLM, no filesystem, no PDF work happens here."""
     started = time.perf_counter()
-    session = await _load_or_open_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id, tenant=tenant)
     schema = _resolve_form(session.form_id)
 
     form_field = schema.get_field(payload.field_id)
@@ -431,7 +451,7 @@ async def generate_form(
     tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> GenerateFormResponse:
-    session = await _load_or_open_session(payload.session_id)
+    session = await _load_or_open_session(payload.session_id, tenant=tenant)
     schema = _resolve_form(session.form_id)
 
     plain = {fid: fv.value for fid, fv in session.values.items()}
@@ -477,6 +497,7 @@ async def download_form(
     session_id: str,
     t: str = Query(default="", description="download token issued with the form"),
     x_zuzu_secret: str | None = Header(default=None, alias="X-Zuzu-Secret"),
+    x_zuzu_tenant_key: str | None = Header(default=None, alias=TENANT_HEADER),
 ) -> FileResponse:
     """The completed form, to whoever was given the link.
 
@@ -485,9 +506,20 @@ async def download_form(
     demo run is `web_maria_<unix seconds>`. The link still has to work for an
     applicant who has no shared secret, so it carries a signed token instead.
     """
-    if not verify_download(session_id, t) and not verify_secret(x_zuzu_secret):
-        raise HTTPException(status_code=404, detail="no generated form for this session yet")
-    session = await _load_session(session_id)
+    # The signed token is the only credential that opens this without naming an
+    # organisation. The shared secret used to be accepted instead, and it is one
+    # value for the whole deployment -- so any tenant holding it could fetch any
+    # other tenant's completed form, SSN and all, by session id alone.
+    if not verify_download(session_id, t):
+        if not verify_secret(x_zuzu_secret):
+            raise HTTPException(status_code=404, detail="no generated form for this session yet")
+        try:
+            tenant = resolve_tenant(x_zuzu_tenant_key)
+        except TenancyError as exc:
+            raise HTTPException(status_code=401, detail=str(exc)) from exc
+        session = await _load_session(session_id, tenant)
+    else:
+        session = await _load_session(session_id)
     if not session.pdf_path or not Path(session.pdf_path).exists():
         raise HTTPException(status_code=404, detail="no generated form for this session yet")
     return FileResponse(
@@ -500,9 +532,10 @@ async def download_form(
 @app.post("/session/complete", response_model=SessionCompleteResponse)
 async def session_complete(
     payload: SessionCompleteRequest,
+    tenant: TenantDep,
     _: None = Depends(require_shared_secret),
 ) -> SessionCompleteResponse:
-    session = await _load_or_open_session(payload.conversation_id)
+    session = await _load_or_open_session(payload.conversation_id, tenant=tenant)
     schema = _resolve_form(session.form_id)
 
     reconciled = 0
@@ -749,6 +782,7 @@ async def session_deliver(
 
 @app.post("/tools/identify_form")
 async def identify_form(
+    tenant: TenantDep,
     payload: IdentifyFormRequest | None = None,
     text: str = Query(default="", description="what the applicant said"),
     url: str = Query(default="", description="a uscis.gov link they pasted"),
@@ -789,6 +823,7 @@ async def identify_form(
     if ready:
         title = _resolve_form(form_id).title
     if session_id:
+        await _load_or_open_session(session_id, tenant=tenant)
         try:
             await get_session_store().set_form(session_id, form_id)
         except SessionNotFoundError:
@@ -798,6 +833,7 @@ async def identify_form(
 
 @app.post("/session/set_form")
 async def session_set_form(
+    tenant: TenantDep,
     payload: SetFormRequest | None = None,
     session_id: str = Query(default=""),
     form_id: str = Query(default=""),
@@ -814,7 +850,7 @@ async def session_set_form(
     if not session_id or not form_id:
         raise HTTPException(status_code=422, detail="session_id and form_id are required")
 
-    await _load_or_open_session(session_id)
+    await _load_or_open_session(session_id, tenant=tenant)
     schema = _resolve_form(form_id)
     session = await get_session_store().set_form(session_id, schema.form_id)
     remaining, known = counts(session, schema)
@@ -1021,12 +1057,25 @@ async def form_schema(form_id: str) -> dict[str, Any]:
 
 
 @app.get("/sessions/recent")
-async def sessions_recent(_: None = Depends(require_shared_secret)) -> dict[str, Any]:
-    """Most recent sessions, so the dashboard can attach to a live voice call
-    without anyone copying a conversation id by hand mid-demo."""
+async def sessions_recent(
+    tenant: TenantDep, _: None = Depends(require_shared_secret)
+) -> dict[str, Any]:
+    """Most recent sessions for THIS organisation, so the dashboard can attach
+    to a live call without anyone copying a conversation id by hand mid-demo.
+
+    Filtered by tenant. Unfiltered this was a directory listing of every
+    organisation's sessions -- which turned every "if you know the session id"
+    weakness elsewhere into something anybody could simply look up.
+    """
     store = get_session_store()
     sessions = getattr(store, "_sessions", {})
-    ordered = sorted(sessions.values(), key=lambda s: s.created_at, reverse=True)
+    mine = [
+        session
+        for session in sessions.values()
+        if session.tenant_id == tenant.id
+        or (not session.tenant_id and tenant.id == DEFAULT_TENANT.id)
+    ]
+    ordered = sorted(mine, key=lambda s: s.created_at, reverse=True)
     return {
         "sessions": [
             {
