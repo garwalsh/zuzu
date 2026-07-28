@@ -1069,9 +1069,17 @@ async def session_audit(
     """
     await _load_session(session_id, tenant)
     fleet = get_fleet()
-    for collab in fleet.by_room.values():
-        if collab.session_id == session_id:
-            return collab.as_dict()
+    # The MOST RECENT run. Iterating and returning the first match gave whichever
+    # room was inserted first, so orchestrating a session twice served the older
+    # collaboration -- and the newer one, the one the caller had just asked for,
+    # was unreachable until eviction pushed it to the ledger.
+    live = [c for c in fleet.by_room.values() if c.session_id == session_id]
+    if live:
+        latest = max(live, key=lambda c: c.started)
+        record = latest.as_dict()
+        if len(live) > 1:
+            record["collaborations"] = len(live)
+        return record
     stored = await ledger.replay(tenant.id, session_id)
     if stored is not None:
         return stored
@@ -1104,10 +1112,8 @@ async def session_room(
     """
     await _load_session(session_id, tenant)
     fleet = get_fleet()
-    collab = next(
-        (c for c in fleet.by_room.values() if c.session_id == session_id),
-        None,
-    )
+    live = [c for c in fleet.by_room.values() if c.session_id == session_id]
+    collab = max(live, key=lambda c: c.started) if live else None
     if collab is None:
         raise HTTPException(
             status_code=404,

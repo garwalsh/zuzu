@@ -130,7 +130,10 @@ class Collaboration:
             "session_id": self.session_id,
             "room_id": self.room_id,
             "tenant_id": self.principal.tenant_id,
-            "turns": [t.as_dict() for t in self.turns],
+            # room_id on every turn, matching what the ledger replays. Without
+            # it a live record and a stored one had different shapes, and only
+            # the stored one could be checked for turns from another room.
+            "turns": [{**t.as_dict(), "room_id": self.room_id} for t in self.turns],
             "turn_count": len(self.turns),
             "seconds": round(time.time() - self.started, 2),
             "finished": self.finished.is_set(),
