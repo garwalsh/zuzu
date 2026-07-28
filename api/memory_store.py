@@ -254,6 +254,7 @@ class SupabaseMemory:
                 resp = await c.post(
                     f"{self._url}/rest/v1/{self._table}",
                     headers={**self._headers, "Prefer": "resolution=merge-duplicates"},
+                    params={"on_conflict": "scope,tier,key"},
                     json=row,
                 )
             return resp.status_code < 300
@@ -341,6 +342,29 @@ def get_backend() -> MemoryBackend:
         _backend = SqliteMemory()
         logger.info("memory backend: sqlite at %s", DB_PATH)
     return _backend
+
+
+async def check_backend() -> dict[str, Any]:
+    """Whether the configured store can actually be reached.
+
+    Called at startup, because a misconfigured Supabase is indistinguishable
+    from an applicant with no history: every read returns an empty list and
+    every caller looks new. That failure has already happened twice in this
+    codebase under different names, so the store now says so out loud instead
+    of quietly answering nothing.
+    """
+    backend = get_backend()
+    ok, detail = await backend.healthy()
+    if not ok:
+        logger.error(
+            "memory backend %s is NOT reachable (%s) -- every caller will look "
+            "new until this is fixed",
+            backend.name,
+            detail,
+        )
+    else:
+        logger.info("memory backend %s ready: %s", backend.name, detail)
+    return {"backend": backend.name, "reachable": ok, "detail": detail}
 
 
 def reset_backend() -> None:

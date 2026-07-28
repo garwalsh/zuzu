@@ -136,7 +136,14 @@ async def lifespan(_: FastAPI):
     except Exception as exc:
         logger.warning("band fleet did not start: %s", type(exc).__name__)
         started = False
-    logger.info("startup complete; band fleet %s", "up" if started else "off")
+    from api.memory_store import check_backend
+
+    memory_status = await check_backend()
+    logger.info(
+        "startup complete; band fleet %s, memory %s",
+        "up" if started else "off",
+        memory_status["backend"] if memory_status["reachable"] else "UNREACHABLE",
+    )
     try:
         yield
     finally:
@@ -229,7 +236,16 @@ def _resolve_form(form_id: str):
 
 @app.get("/health")
 async def health() -> dict[str, Any]:
-    return {"status": "ok", "form_ids": list_forms()}
+    """Liveness, plus whether the things memory depends on are actually there."""
+    from api.memory_store import check_backend
+
+    memory_status = await check_backend()
+    return {
+        "status": "ok" if memory_status["reachable"] else "degraded",
+        "form_ids": list_forms(),
+        "memory": memory_status,
+        "fleet_running": get_fleet().is_running,
+    }
 
 
 @app.post("/session/init", response_model=SessionInitResponse)
