@@ -11,9 +11,17 @@ conversation. If you can talk, you can file.
 
 | | |
 |---|---|
-| **Dashboard** | [`/dashboard?secret=…`](https://zuzu-orchestrator.onrender.com/dashboard) — the live form filling in |
+| **Dashboard** | [`/dashboard`](https://zuzu-orchestrator.onrender.com/dashboard) — **no credential needed.** Starts a real filing and fills the form in front of you |
+| **Operator view** | `/dashboard?secret=…&tenant=…` — the same page following a real call, for whoever runs the deployment |
 | **Presentation mode** | [`/dashboard?present=1`](https://zuzu-orchestrator.onrender.com/dashboard?present=1) — drives the whole demo end to end with captions, hands-off |
-| **Slides** | [`/deck`](https://zuzu-orchestrator.onrender.com/deck) — arrow keys or click |
+| **Slides** | [`/deck`](https://zuzu-orchestrator.onrender.com/deck) — arrow keys, click, or the theme toggle |
+
+Opened with no credentials the dashboard runs the **public demo**: its own
+tenant, holding one synthetic applicant, put through the real interview loop.
+That is isolation rather than a courtesy — scope keys hash the tenant id, so
+public-demo memory is unreachable from any real organisation's and vice versa,
+the public routes check a session's own `tenant_id` rather than trusting its
+name, and there is no public write path. See `api/public_demo.py`.
 
 Presentation mode runs the full arc on its own: the problem, a call filling I-765,
 a mid-call switch to N-400 carrying the answers across, the memory tiers, the
@@ -189,8 +197,9 @@ from a deterministic tool. A hallucinated hand-off wastes a round trip; a
 hallucinated date of birth is a rejected filing months later.
 
 Each turn is recorded with the tools it ran, who it addressed, why, and **which
-of the two decided it** — the model, the deterministic fallback, or an answer
-that came back unusable. A trail that blurs those is worse than no trail.
+of three decided it** — the model, the deterministic fallback, or an answer that
+came back unusable. Those are different claims, and a trail that blurs them is
+worse than no trail.
 
 - `GET /sessions/{id}/audit` — Zuzu's record, durable in the memory store, so it
   survives the process that produced it
@@ -311,6 +320,16 @@ document. See [`docs/SPEC-CORRECTIONS.md`](docs/SPEC-CORRECTIONS.md).
   degrades to SQLite and says so in `/health`, rather than quietly answering
   "no history" for every caller. A missing conversation-init webhook opens the
   session lazily instead of 404-ing every tool call.
+- **Whose data it is, derived rather than checked.** Every stored row is scoped
+  by `SHA-256(tenant ␟ caller)`, so isolation is a property of the key rather
+  than of a check somebody can forget to write. A caller with no id gets no
+  memory in either direction, because every anonymous caller would otherwise
+  hash to one shared key.
+- **Nothing slow on the live path.** `save_field` and `get_missing_fields` answer
+  in under a millisecond: no model call, no schema re-read, and the PDF write
+  runs off the event loop so one applicant's form never stalls another's call.
+- **The audit trail cannot rewrite itself.** Turn keys are per-room, so a retried
+  filing is a second record rather than an overwrite of the first.
 - **Human in the loop.** Zuzu fills to the review step. It does not submit, does
   not pay fees, and cannot sign — the signature fields are read-only by design.
 
@@ -365,8 +384,12 @@ subprotocol, because a browser cannot set request headers on one.
 | `GET /sessions/{id}/checklist` | Documents to attach |
 | `POST /sessions/{id}/deliver` | Email the packet via RocketRide |
 | `POST /forms/onboard` | Teach Zuzu a new form at runtime |
+| `GET /sessions/{id}/room` | The same conversation, read back out of Band's own API |
 | `GET /forms` | What is ready, and what can be learned |
 | `GET /ws/{session_id}` | Live event stream |
+| `POST /demo/public` | Start (or re-serve) the public demo. No credential |
+| `GET /demo/public/{id}/values` | The demo session's answers. Public sessions only |
+| `GET /demo/public/{id}/memory` | The demo caller's three tiers. Public sessions only |
 
 ## How this was built
 
