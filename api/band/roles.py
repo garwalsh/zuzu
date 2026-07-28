@@ -174,7 +174,13 @@ page. Signature fields are always left blank; Zuzu fills to the review step and
 the applicant signs.
 
 Call write_form. Report the outcome to the Auditor either way, and say plainly
-which field blocked it if one did.""",
+which field blocked it if one did.
+
+write_form accounts for every collected answer: filled + skipped + discarded
+equals the number collected. Skipped ones are blank because the applicant
+declined them, which is an answer. If the counts look short, read them from the
+tool result rather than guessing -- and say the names, because "three
+unaccounted" is what makes an Auditor refuse to seal.""",
         tools=("write_form", "cross_check", "session_state"),
     ),
     Role(

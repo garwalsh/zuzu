@@ -234,10 +234,29 @@ class SessionTools:
         from api.session_store import get_session_store
 
         await get_session_store().set_pdf_path(self.session_id, str(out_path))
+
+        # The arithmetic has to close, or the Auditor cannot seal.
+        #
+        # This used to report filled=29 and discarded=[] against 32 collected
+        # answers, and the three-value gap was invisible. In a real room the
+        # Auditor spotted it, refused to seal an unexplained discrepancy --
+        # exactly its job -- and then spent the rest of the turn budget asking
+        # the Filler to account for it. The Filler could not: no tool exposed
+        # which fields the applicant had declined.
+        #
+        # They are the skipped ones. 29 filled + 3 skipped + 0 discarded = 32.
+        skipped = sorted(fid for fid, value in values.items() if value == SKIP_SENTINEL)
         return {
             "written": True,
             "filled": len(report.filled),
+            #: Left blank because the applicant declined them, which is a
+            #: legitimate answer and not a failure to record one.
+            "skipped": skipped,
+            #: Answers the page would not take. A real problem, and separate.
             "discarded": list(report.dropped),
+            "collected": len(values),
+            "accounts_for_all": len(report.filled) + len(skipped) + len(report.dropped)
+            == len(values),
         }
 
     async def seal_record(self) -> dict[str, Any]:

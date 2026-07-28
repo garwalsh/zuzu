@@ -682,3 +682,46 @@ def test_an_agent_that_posted_for_itself_is_not_echoed_by_the_hand_off(tmp_path,
     assert not said_calls, (
         f"the hand-off repeated a message the agent had already posted: {said_calls}"
     )
+
+
+def test_write_form_accounts_for_every_answer(tmp_path, monkeypatch):
+    """The Auditor cannot seal a discrepancy it cannot explain.
+
+    write_form reported filled=29 against 32 collected and said nothing about
+    the other three, so in a real room the Auditor spotted the gap, refused to
+    seal -- correctly -- and then spent the rest of the turn budget asking the
+    Filler to account for it. The Filler could not: no tool exposed which
+    fields the applicant had declined. They are the skipped ones.
+    """
+    import json as _json
+    import pathlib as _pathlib
+
+    from api.band.tools import SessionTools
+    from api.session_store import get_session_store, reset_session_store
+
+    async def scenario():
+        reset_session_store()
+        store = get_session_store()
+        await store.create("acct", "+14155550142", "I-765")
+        answers = _json.loads(
+            (
+                _pathlib.Path(__file__).resolve().parent.parent / "data" / "demo_personas.json"
+            ).read_text()
+        )["personas"]["maria"]["answers"]
+        for field_id, value in answers.items():
+            await store.save_field(session_id="acct", field_id=field_id, value=value)
+        tools = SessionTools("acct", _principal(), tmp_path)
+        return await tools.write_form(), answers
+
+    report, answers = asyncio.run(scenario())
+
+    assert report["written"] is True
+    assert report["collected"] == len(answers)
+    assert report["accounts_for_all"] is True, (
+        f"filled {report['filled']} + skipped {len(report['skipped'])} + discarded "
+        f"{len(report['discarded'])} != collected {report['collected']}"
+    )
+    # Named, not just counted -- "three unaccounted" is what makes an Auditor
+    # refuse to seal, and a number does not answer it.
+    assert "ssn" in report["skipped"]
+    assert "middle_name" in report["skipped"]
