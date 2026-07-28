@@ -28,7 +28,6 @@ where it is.
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import time
 from dataclasses import dataclass, field
@@ -287,7 +286,13 @@ class RoleAgent:
 
         said = decision.say or f"{self.role.display} acted."
         if results:
-            said = f"{said}\n[tools: {json.dumps(results, default=str)[:600]}]"
+            # Which tools ran, not what they returned. Six hundred characters of
+            # JSON in a shared room is noise every other agent then reads and
+            # pays for, and the full payload is already on the Turn below --
+            # structured, and served by /audit. A transcript a person cannot
+            # read is not much of an audit trail either.
+            ran = ", ".join(dict.fromkeys(str(r.get("tool", "?")) for r in results))
+            said = f"{said}\n[ran: {ran}]"
 
         collab.turns.append(
             Turn(

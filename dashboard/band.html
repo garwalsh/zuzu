@@ -314,6 +314,12 @@ const DECIDE_TOOLS = ['cross_check','next_question','collected_values','session_
 
 // Classify a turn by what it actually did. Rule-based on purpose: an opinion
 // about what an agent "meant" is not evidence of anything.
+// The turn text carries a trailing "[ran: ...]" line for the trail. The tools
+// are rendered separately below it, so showing it twice is just noise.
+function said(turn){
+  return String(turn.said || '').split(/\n\[(?:ran|tools):/)[0].trim();
+}
+
 function tagsFor(turn){
   const ran = (turn.tool_calls || []).map(t => t.tool);
   const out = [];
@@ -338,7 +344,7 @@ function renderTurns(audit){
         ${tagsFor(t).map(([c,l]) => `<span class="tag ${c}">${l}</span>`).join('')}
         <span class="rsn">${esc(t.reasoner || '')}</span>
       </div>
-      <div class="said">${esc((t.said || '').split('\\n[tools:')[0])}</div>
+      <div class="said">${esc(said(t))}</div>
       ${t.because ? `<div class="why">${esc(t.because)}</div>` : ''}
       ${ran.length ? `<div class="ran"><b>ran</b> ${ran.map(esc).join(' · ')}</div>` : ''}
     </div>`;
