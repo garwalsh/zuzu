@@ -146,3 +146,36 @@ async def test_an_agent_cannot_call_a_tool_outside_its_whitelist():
         await tools.call("remember_fact", ("session_state",), field_id="given_name")
     # And the whitelist is what permits it, not the prompt.
     assert (await tools.call("remember_fact", ("remember_fact",), field_id="given_name"))["stored"]
+
+
+@pytest.mark.asyncio
+async def test_an_unreachable_store_degrades_loudly_rather_than_silently(monkeypatch, caplog):
+    """Neither extreme is acceptable.
+
+    Failing hard means one wrong character in a key takes memory down for
+    everybody. Failing quietly is the bug this codebase has already had twice --
+    every read returns empty and every caller looks new. So it falls back to
+    SQLite and says so, in the log and in the status.
+    """
+    import logging
+
+    monkeypatch.setenv("SUPABASE_URL", "https://nonexistent-project.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "not-a-real-key")
+    memory_store.reset_backend()
+
+    with caplog.at_level(logging.ERROR):
+        status = await memory_store.check_backend()
+
+    assert status["backend"] == "sqlite", "the service must keep working"
+    assert status["reachable"] is True
+    assert status["degraded_from"] == "supabase", "and must say what it lost"
+    assert status["degraded_reason"]
+    assert any("NOT reachable" in r.message for r in caplog.records)
+
+
+@pytest.mark.asyncio
+async def test_a_working_store_is_not_reported_as_degraded():
+    memory_store.reset_backend()
+    status = await memory_store.check_backend()
+    assert status["reachable"] is True
+    assert "degraded_from" not in status

@@ -345,26 +345,42 @@ def get_backend() -> MemoryBackend:
 
 
 async def check_backend() -> dict[str, Any]:
-    """Whether the configured store can actually be reached.
+    """Whether the configured store can be reached, falling back if it cannot.
 
-    Called at startup, because a misconfigured Supabase is indistinguishable
-    from an applicant with no history: every read returns an empty list and
-    every caller looks new. That failure has already happened twice in this
-    codebase under different names, so the store now says so out loud instead
-    of quietly answering nothing.
+    A misconfigured Supabase is indistinguishable from an applicant with no
+    history: every read returns an empty list and every caller looks new. That
+    failure has already happened twice here under different names, so it is
+    never allowed to be silent.
+
+    Neither extreme is right, though. Failing hard means one wrong character in
+    a key takes memory down for everybody; failing quietly is the bug itself.
+    So a store that cannot be reached is swapped for SQLite -- which always
+    works -- and both the log and /health say what happened and why. Somebody
+    gets a working service and an accurate reason, rather than one or the other.
     """
+    global _backend
     backend = get_backend()
     ok, detail = await backend.healthy()
-    if not ok:
-        logger.error(
-            "memory backend %s is NOT reachable (%s) -- every caller will look "
-            "new until this is fixed",
-            backend.name,
-            detail,
-        )
-    else:
+    if ok:
         logger.info("memory backend %s ready: %s", backend.name, detail)
-    return {"backend": backend.name, "reachable": ok, "detail": detail}
+        return {"backend": backend.name, "reachable": True, "detail": detail}
+
+    logger.error(
+        "memory backend %s is NOT reachable (%s) -- falling back to sqlite. "
+        "Recall will not survive a redeploy until this is fixed.",
+        backend.name,
+        detail,
+    )
+    failed, failed_detail = backend.name, detail
+    _backend = SqliteMemory()
+    fell_back_ok, fell_back_detail = await _backend.healthy()
+    return {
+        "backend": _backend.name,
+        "reachable": fell_back_ok,
+        "detail": fell_back_detail,
+        "degraded_from": failed,
+        "degraded_reason": failed_detail,
+    }
 
 
 def reset_backend() -> None:
