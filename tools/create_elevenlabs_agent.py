@@ -88,6 +88,12 @@ FIRST_MESSAGE = (
 def _tool(
     name: str, description: str, url: str, secret: str, props: dict[str, Any], required: list[str]
 ) -> dict[str, Any]:
+    # The tenant key says which organisation this call belongs to. On a
+    # single-organisation install the header is ignored; once a registry exists
+    # every request needs it, and the voice agent is a request like any other.
+    headers = {"X-Zuzu-Secret": secret}
+    if tenant_key := os.environ.get("ZUZU_TENANT_KEY", ""):
+        headers["X-Zuzu-Tenant-Key"] = tenant_key
     return {
         "type": "webhook",
         "name": name,
@@ -95,7 +101,7 @@ def _tool(
         "api_schema": {
             "url": url,
             "method": "POST",
-            "request_headers": {"X-Zuzu-Secret": secret},
+            "request_headers": headers,
             "request_body_schema": {
                 "type": "object",
                 "description": f"Request body for {name}",
@@ -195,6 +201,13 @@ def build_tools(base: str, secret: str) -> list[dict[str, Any]]:
     ]
 
 
+def _webhook_headers(secret: str) -> dict[str, str]:
+    headers = {"X-Zuzu-Secret": secret}
+    if tenant_key := os.environ.get("ZUZU_TENANT_KEY", ""):
+        headers["X-Zuzu-Tenant-Key"] = tenant_key
+    return headers
+
+
 def build_payload(base: str, secret: str) -> dict[str, Any]:
     return {
         "name": "Zuzu — U.S. immigration form assistant",
@@ -209,7 +222,7 @@ def build_payload(base: str, secret: str) -> dict[str, Any]:
             "workspace_overrides": {
                 "conversation_initiation_client_data_webhook": {
                     "url": f"{base}/session/init",
-                    "request_headers": {"X-Zuzu-Secret": secret},
+                    "request_headers": _webhook_headers(secret),
                 }
             }
         },
@@ -230,6 +243,8 @@ def main() -> int:
     if base.startswith("http://localhost"):
         sys.exit(f"PUBLIC_BASE_URL is {base} -- ElevenLabs webhooks cannot reach localhost")
 
+    if os.environ.get("ZUZU_TENANT_KEY"):
+        print("tenant key present: the agent will identify its organisation")
     payload = build_payload(base, secret)
     headers = {"xi-api-key": api_key, "Content-Type": "application/json"}
 

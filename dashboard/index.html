@@ -342,7 +342,11 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 <script>
 const qs = new URLSearchParams(location.search);
 const SECRET = qs.get('secret') || '';
-const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json'};
+// The tenant key names the organisation. Absent on a single-organisation
+// install, where the server resolves to its own tenant and ignores it.
+const TENANT_KEY = qs.get('tenant') || '';
+const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json',
+  ...(TENANT_KEY ? {'X-Zuzu-Tenant-Key': TENANT_KEY} : {})};
 const SKIP = '__skip__';
 const RING = 2 * Math.PI * 48;
 

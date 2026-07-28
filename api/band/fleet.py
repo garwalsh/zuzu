@@ -51,6 +51,15 @@ MAX_TURNS = 18
 #: is a leak.
 MAX_SECONDS = 300.0
 
+#: Band tools the agents are offered, by name. Not the whole surface: contacts
+#: and room creation belong to the fleet rather than to an agent mid-filing, and
+#: an agent that can remove a participant can end a collaboration by accident.
+BAND_TOOLS_OFFERED = {
+    "list_chat_participants_service",
+    "list_available_participants_service",
+    "send_direct_message_service",
+}
+
 
 @dataclass
 class Turn:
@@ -141,7 +150,9 @@ class RoleAgent:
                 is_session_bootstrap: bool,
                 room_id: str,
             ) -> None:
-                await outer._handle(str(getattr(msg, "content", msg) or ""), room_id)
+                await outer._handle(
+                    str(getattr(msg, "content", msg) or ""), room_id, band_tools=tools
+                )
 
         self._agent = Agent.create(adapter=Adapter(), agent_id=self.agent_id, api_key=self._api_key)
         await self._agent.start()
@@ -155,7 +166,7 @@ class RoleAgent:
                 logger.info("agent %s stop: %s", self.role.key, type(exc).__name__)
             self._agent = None
 
-    async def _handle(self, content: str, room_id: str) -> None:
+    async def _handle(self, content: str, room_id: str, band_tools: Any = None) -> None:
         """A peer addressed this agent. Decide, act, and pass the work on."""
         collab = self._fleet.by_room.get(room_id)
         if collab is None or collab.finished.is_set():
@@ -172,8 +183,33 @@ class RoleAgent:
             f"What has been said so far:\n{transcript}"
         )
 
+        # Band describes its own tools in OpenAI format, so the model can be
+        # given Band's real vocabulary -- addressing a peer, pulling somebody
+        # into the room, seeing who is here -- rather than a paraphrase of it.
+        # Domain tools stay ours; nobody else knows how to fill an I-765.
+        band_schemas: list[dict[str, Any]] = []
+        if band_tools is not None:
+            try:
+                band_schemas = [
+                    schema
+                    for schema in band_tools.get_openai_tool_schemas(include_contacts=False)
+                    if (schema.get("function") or {}).get("name") in BAND_TOOLS_OFFERED
+                ]
+            except Exception as exc:
+                logger.info("band tool schemas unavailable: %s", type(exc).__name__)
+
+        band_names = {(s.get("function") or {}).get("name") for s in band_schemas}
+
         async def run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
             """Whatever the model asked for, if this agent is allowed it."""
+            if name in band_names and band_tools is not None:
+                try:
+                    return {
+                        "ok": True,
+                        "result": str(await band_tools.execute_tool_call(name, args))[:800],
+                    }
+                except Exception as exc:
+                    return {"ok": False, "error": f"{type(exc).__name__}: {exc}"}
             try:
                 return {
                     "ok": True,
@@ -188,7 +224,7 @@ class RoleAgent:
                 self.role.system_prompt,
                 context,
                 roster=roster(),
-                tools=schemas_for(self.role.tools),
+                tools=[*schemas_for(self.role.tools), *band_schemas],
                 execute=run_tool,
             )
             results = decision.ran
