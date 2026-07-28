@@ -48,3 +48,6 @@ out/memory.db
 
 # tenant registry: deployment config with key hashes, supplied as a secret
 data/tenants.json
+
+# Scratch worktrees created by audit agents.
+wt*/
