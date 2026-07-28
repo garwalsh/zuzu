@@ -144,3 +144,17 @@ def test_two_tenants_store_the_same_caller_under_different_keys(client):
     assert a["caller_key"] != b["caller_key"], (
         "the same caller id at two tenants must not share a memory namespace"
     )
+
+
+def test_orchestrate_resolves_its_principal_in_multi_tenant_mode(client):
+    """A 503 means "no fleet"; a 500 means we broke before getting there.
+
+    This endpoint built its principal by re-deriving the tenant from nothing,
+    which is the default in a single-organisation install and an error once a
+    registry exists -- so it worked everywhere except production. Resolving the
+    principal before the capability check is what makes that reachable here.
+    """
+    sid = _open_session(client, KEY_A, "conv-a-orch")
+    resp = client.post(f"/sessions/{sid}/orchestrate", headers=_headers(KEY_A))
+    assert resp.status_code == 503, resp.text
+    assert "fleet is not running" in resp.text

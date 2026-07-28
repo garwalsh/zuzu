@@ -78,7 +78,7 @@ from api.session_store import (
     get_session_store,
     next_missing_field,
 )
-from api.tenancy import Tenant, guard_session, principal_for, require_tenant
+from api.tenancy import Principal, Tenant, guard_session, require_tenant
 
 #: The organisation making this request. Annotated rather than a default value,
 #: which is the current FastAPI idiom and keeps the dependency out of the
@@ -849,6 +849,13 @@ async def orchestrate(
     fallback chose is making a claim it cannot support.
     """
     session = await _load_session(session_id, tenant)
+    # Resolved before the capability check, so that getting it wrong shows up
+    # wherever this endpoint is exercised rather than only where a fleet happens
+    # to be running. Built from the tenant this request already proved, because
+    # deriving one from nothing raises the moment a registry exists -- which is
+    # why the previous version failed in production and nowhere else.
+    principal = Principal(tenant=tenant, user_id=session.caller_id)
+
     fleet = get_fleet()
     if not fleet.is_running:
         raise HTTPException(
@@ -859,7 +866,6 @@ async def orchestrate(
                 "/tools/generate_form still fills this form."
             ),
         )
-    principal = principal_for(session.caller_id)
     collab = await fleet.collaborate(session_id, principal, OUT_DIR)
     if collab is None:
         raise HTTPException(status_code=503, detail="the fleet declined the work")
