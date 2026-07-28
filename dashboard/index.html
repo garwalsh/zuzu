@@ -627,7 +627,13 @@ function connect(id){
 // bring it back: the dashboard stayed frozen for the rest of the call.
 function openSocket(id){
   clearTimeout(wsRetryTimer); wsRetryTimer = null;
-  const sock = new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`);
+  // The tenant key rides as a WebSocket subprotocol, not a query parameter:
+  // the browser sends it as a header, so it stays out of proxy logs, browser
+  // history and Referer. The socket is refused without it.
+  const url = `${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`;
+  const sock = TENANT_KEY
+    ? new WebSocket(url, ['zuzu-tenant', TENANT_KEY])
+    : new WebSocket(url);
   ws = sock;
   sock.onopen = () => { wsRetry = 0; el('p-session').classList.add('live'); };
   sock.onclose = () => { el('p-session').classList.remove('live'); scheduleReconnect(id); };

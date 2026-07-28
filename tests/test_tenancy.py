@@ -153,3 +153,49 @@ def test_form_allowlisting_is_per_tenant():
     assert limited.may_file("i-765"), "case must not decide access"
     assert not limited.may_file("N-400")
     assert Tenant(id="clinic-b", name="B").may_file("N-400"), "empty means all"
+
+
+# ---------------------------------------------------------------------------
+# A session id is caller-supplied and becomes a filename.
+# ---------------------------------------------------------------------------
+
+
+def test_a_session_id_that_is_a_path_is_refused():
+    """`../assets/i_765` wrote a filled application over the blank master form.
+
+    Every later applicant is filled from that template, so one crafted id
+    corrupts everybody's filing -- and nothing would have looked wrong until a
+    form came back rejected.
+    """
+    import pytest
+
+    from api.session_store import InvalidSessionId, safe_session_id
+
+    for hostile in (
+        "../assets/i_765",
+        "../../etc/passwd",
+        "a/b",
+        "a\\b",
+        "..",
+        "",
+        "   ",
+        ".hidden",
+        "x" * 200,
+    ):
+        with pytest.raises(InvalidSessionId):
+            safe_session_id(hostile)
+
+
+def test_the_ids_real_callers_send_are_accepted():
+    """The check must not be a blanket refusal. These are the actual shapes:
+    an ElevenLabs conversation id, the widget's, and the demo's."""
+    from api.session_store import safe_session_id
+
+    for good in (
+        "web_maria_1785216930",
+        "conv_01k8xw5r7ae9t8b3n2v6qz4m1c",
+        "verify_1785220621",
+        "a",
+        "A-1.2_3",
+    ):
+        assert safe_session_id(good) == good

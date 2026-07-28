@@ -74,6 +74,7 @@ from api.security import (
     verify_secret,
 )
 from api.session_store import (
+    InvalidSessionId,
     Session,
     SessionNotFoundError,
     counts,
@@ -161,6 +162,22 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(title="Zuzu orchestrator", version="0.1.0", lifespan=lifespan)
+
+
+@app.exception_handler(InvalidSessionId)
+async def _invalid_session_id(_: Any, exc: InvalidSessionId) -> Response:
+    """A caller-supplied id that cannot be a filename is a bad request.
+
+    It reached the caller as a 500 with a traceback, which reads as "we broke"
+    rather than "you sent something we will not accept".
+    """
+    return Response(
+        content=json.dumps({"detail": str(exc)}),
+        status_code=400,
+        media_type="application/json",
+    )
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -308,6 +325,19 @@ async def session_init(
     failing the call -- see api/memory.py.
     """
     session_id = payload.conversation_id
+
+    # An id that is already in use must still belong to whoever is naming it.
+    # Without this, /session/init on somebody else's conversation id simply
+    # created over the top of it: the session's tenant_id became the caller's,
+    # and with it every ownership check downstream -- the answers, the PDF, the
+    # audit trail. A session id is not a secret; a demo one is a timestamp.
+    try:
+        existing = await get_session_store().get(session_id)
+    except SessionNotFoundError:
+        existing = None
+    if existing is not None:
+        guard_session(existing.tenant_id, tenant)
+
     schema = get_form(DEFAULT_FORM_ID)
     profile = await get_memory(tenant.id).load_profile(payload.caller_id, schema)
 
@@ -609,12 +639,44 @@ async def session_complete(
     return SessionCompleteResponse(ok=True, fields_reconciled=reconciled)
 
 
+#: How a browser proves which organisation it is on a WebSocket. The browser
+#: WebSocket API cannot set request headers, and the tenant key is a credential
+#: that has no business in a URL -- it lands in proxy logs, browser history and
+#: Referer. Sec-WebSocket-Protocol is a header the browser WILL send, so the key
+#: travels there.
+TENANT_SUBPROTOCOL = "zuzu-tenant"
+
+
 @app.websocket("/ws/{session_id}")
 async def session_events(websocket: WebSocket, session_id: str, secret: str = Query(default="")):
+    """Live events for one session, for whoever owns that session.
+
+    This used to take the deployment-wide shared secret and nothing else. Any
+    holder of it could subscribe to any session id and receive that filing's
+    events -- including form.ready, which carries a signed pdf_url that opens
+    the completed application with no credential at all. Every careful ownership
+    check on the HTTP routes was reachable around, over a socket.
+    """
     if not verify_secret(secret):
         await websocket.close(code=1008)
         return
-    await websocket.accept()
+
+    # ["zuzu-tenant", "<key>"] -- the key rides as the second offered protocol.
+    offered = list(websocket.scope.get("subprotocols") or [])
+    tenant_key = offered[1] if len(offered) > 1 and offered[0] == TENANT_SUBPROTOCOL else ""
+    try:
+        tenant = resolve_tenant(tenant_key)
+        session = await get_session_store().get(session_id)
+        guard_session(session.tenant_id, tenant)
+    except (TenancyError, HTTPException, SessionNotFoundError):
+        # One code for all three. Which of "no key", "wrong key", "not yours"
+        # and "no such session" applies is itself something an unauthorised
+        # caller should not be able to learn by trying ids.
+        await websocket.close(code=1008)
+        return
+
+    accepted = TENANT_SUBPROTOCOL if tenant_key else None
+    await websocket.accept(subprotocol=accepted)
     try:
         async for event in get_event_bus().subscribe(session_id):
             await websocket.send_text(event.model_dump_json())
@@ -840,6 +902,22 @@ async def identify_form(
         return {"found": False, "known_forms": list_forms()}
 
     form_id = hit["form_id"]
+    # The allowlist has to hold on the path an applicant actually reaches, not
+    # only on /forms/onboard. This endpoint identifies a form AND onboards it,
+    # so a tenant restricted to I-765 could say "certificate of citizenship" and
+    # get N-600 registered for the whole deployment. Telling them what it is
+    # remains fine -- refusing to name a form nobody may file helps no one.
+    if not tenant.may_file(form_id):
+        return {
+            "found": True,
+            "form_id": form_id,
+            "ready": False,
+            "confidence": hit.get("confidence", 0.0),
+            "why": hit.get("why", ""),
+            "refused": f"{tenant.name} is not configured to file {form_id}",
+            "known_forms": list_forms(),
+        }
+
     ready = form_id.upper() in {f.upper() for f in list_forms()}
     if not ready:
         try:
@@ -1043,7 +1121,7 @@ async def session_room(
         raise HTTPException(status_code=503, detail="the fleet is not connected to Band")
     try:
         participants = await reader.client.participants(collab.room_id)
-        messages = await reader.client.transcript(collab.room_id)
+        messages = await fleet.room_transcript(collab.room_id)
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Band did not answer: {exc}") from exc
     return {
@@ -1053,6 +1131,11 @@ async def session_room(
         "participants": participants,
         "messages": messages,
         "message_count": len(messages),
+        "note": (
+            "Band's own record, read back with the agents' own credentials. "
+            "Every message carries its sender, its mentions, and Band's delivery "
+            "status per recipient."
+        ),
     }
 
 

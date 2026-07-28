@@ -11,6 +11,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
+import re
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Protocol
@@ -19,6 +20,30 @@ from api.contract import FieldValue
 from api.i765_schema import SKIP_SENTINEL, FormField, FormSchema
 
 logger = logging.getLogger(__name__)
+
+
+#: A session id is chosen by the caller -- ElevenLabs supplies a conversation
+#: id, and the widget path lets one be invented -- and it is used as a FILENAME
+#: for the generated PDF. `../assets/i_765` therefore wrote a filled application
+#: over the blank master form, corrupting the template every later applicant is
+#: filled from. One place to check it, because there is one place it becomes a
+#: path and several that reach it.
+_SESSION_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+
+
+def safe_session_id(session_id: str) -> str:
+    """The id, if it can be used as a filename. Raises if it cannot."""
+    candidate = (session_id or "").strip()
+    if not _SESSION_ID_RE.match(candidate) or ".." in candidate:
+        raise InvalidSessionId(
+            "a session id must be 1-128 characters of letters, digits, dot, dash "
+            f"or underscore, and cannot contain '..': {session_id!r}"
+        )
+    return candidate
+
+
+class InvalidSessionId(ValueError):
+    """The caller supplied a session id that cannot be used safely."""
 
 
 class SessionNotFoundError(KeyError):
@@ -107,6 +132,9 @@ class InMemorySessionStore:
         calling, what language, whether they are returning -- are exactly the
         ones a lazily-opened session lacks.
         """
+        # Checked at the one door every session comes through, rather than at
+        # each of the several places the id later becomes a filename.
+        session_id = safe_session_id(session_id)
         async with self._lock:
             existing = self._sessions.get(session_id)
             if existing is not None:

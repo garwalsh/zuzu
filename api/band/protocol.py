@@ -126,18 +126,28 @@ class BandAgentClient:
             )
 
     async def transcript(self, room_id: str, page_size: int = 100) -> list[dict[str, Any]]:
-        """Everything said in the room, oldest first."""
+        """This agent's view of the room, oldest first.
+
+        `/context`, not `/messages`. The messages route answers 200 with an
+        empty list for an agent key -- no error, nothing to notice -- which is
+        the worst way for an endpoint to be wrong: it looked exactly like a room
+        where nothing had been said.
+
+        Band scopes this to what the agent sent or was mentioned in, which is
+        the right default for an agent rebuilding its own state and the wrong
+        one for reading a whole conversation. `Fleet.room_transcript` unions the
+        six views to get that.
+        """
         async with httpx.AsyncClient(timeout=TIMEOUT) as c:
             body = _raise_for(
                 await c.get(
-                    f"{API}/agent/chats/{room_id}/messages",
+                    f"{API}/agent/chats/{room_id}/context",
                     headers=self._headers,
                     params={"page_size": page_size},
                 ),
                 "transcript",
             )
-        msgs = body.get("data", [])
-        return list(reversed(msgs)) if msgs else []
+        return body.get("data") or []
 
 
 async def register_agent(user_api_key: str, name: str, description: str) -> dict[str, str]:

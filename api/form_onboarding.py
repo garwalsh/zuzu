@@ -20,6 +20,7 @@ import json
 import logging
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import httpx
 
@@ -112,8 +113,38 @@ async def _get_via_curl(url: str) -> bytes | None:
     return out
 
 
+#: Hosts a form PDF may be fetched from. USCIS publishes on uscis.gov and
+#: serves the files from its own CDN; nothing else is a source of an official
+#: immigration form.
+ALLOWED_PDF_HOSTS = ("uscis.gov", "www.uscis.gov", "egov.uscis.gov")
+
+
+def check_source(url: str) -> str:
+    """The URL to fetch, or a refusal naming why.
+
+    `pdf_url` is caller-supplied and this process fetches it, follows redirects,
+    and reports what came back. Unrestricted, that is a request forgery with a
+    read channel: `http://127.0.0.1:9/` or a cloud metadata endpoint would be
+    fetched from inside the deployment, and the first forty bytes of the answer
+    came back in the error message.
+
+    So: https only, and only from where USCIS actually publishes.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme != "https":
+        scheme = parsed.scheme or "nothing"
+        raise OnboardingError(f"a form PDF must be fetched over https, not {scheme!r}")
+    host = (parsed.hostname or "").lower()
+    if host not in ALLOWED_PDF_HOSTS:
+        raise OnboardingError(
+            f"{host or 'that host'} is not a USCIS source; allowed: {', '.join(ALLOWED_PDF_HOSTS)}"
+        )
+    return url
+
+
 async def download_pdf(url: str, form_id: str) -> Path:
     """Fetch a fillable PDF to assets/, verifying it really is one."""
+    check_source(url)
     dest = ASSETS_DIR / f"{slugify(form_id)}.pdf"
     dest.parent.mkdir(parents=True, exist_ok=True)
 
@@ -124,7 +155,10 @@ async def download_pdf(url: str, form_id: str) -> Path:
     if content is None:
         raise OnboardingError(f"could not download {url}")
     if not content.startswith(b"%PDF"):
-        raise OnboardingError(f"{url} did not return a PDF (got {content[:40]!r})")
+        # What came back is NOT echoed. It was, and that turned a fetch into a
+        # read channel for whatever the response body happened to contain.
+        logger.warning("%s returned %d bytes that are not a PDF", url, len(content))
+        raise OnboardingError(f"{url} did not return a PDF")
 
     dest.write_bytes(content)
     logger.info("downloaded %s (%d bytes)", dest.name, len(content))

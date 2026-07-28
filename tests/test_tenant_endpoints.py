@@ -367,3 +367,126 @@ def test_a_tenant_cannot_widen_its_own_deployment_by_onboarding(restricted):
     form to the registry for every other organisation."""
     resp = restricted.post("/forms/onboard", params={"form_id": "N-600"}, headers=_headers(KEY_A))
     assert resp.status_code == 403, resp.text
+
+
+# ---------------------------------------------------------------------------
+# Holes an adversarial audit found after the first round was declared clean.
+# Every one of these passed the whole suite while being exploitable.
+# ---------------------------------------------------------------------------
+
+
+def test_a_session_id_in_use_cannot_be_taken_over(client):
+    """/session/init created over the top of an existing session, and the new
+    tenant_id became the owner -- taking the answers, the PDF and the audit
+    trail with it. Session ids are not secret; a demo one is a timestamp."""
+    sid = _open_session(client, KEY_A, "conv-adopt")
+    client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "given_name", "value": "MARIA"},
+        headers=_headers(KEY_A),
+    )
+
+    resp = client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=_headers(KEY_B),
+    )
+    assert resp.status_code == 404, resp.text
+
+    owner = client.get(f"/sessions/{sid}/values", headers=_headers(KEY_A))
+    assert owner.status_code == 200, "the owner must still own it"
+    assert owner.json()["values"]["given_name"] == "MARIA"
+
+
+def test_the_event_stream_is_not_readable_by_another_tenant(client):
+    """The websocket took the deployment-wide shared secret and nothing else,
+    so any holder could subscribe to any session id -- and form.ready carries a
+    signed pdf_url that opens the completed application with no credential at
+    all. Every ownership check on the HTTP routes was reachable around."""
+    import pytest as _pytest
+    from starlette.websockets import WebSocketDisconnect as _Disconnect
+
+    sid = _open_session(client, KEY_A, "conv-ws-scope")
+
+    # The shared secret alone.
+    with _pytest.raises(_Disconnect):
+        with client.websocket_connect(f"/ws/{sid}?secret={SECRET}") as ws:
+            ws.receive_text()
+
+    # The secret plus another organisation's key.
+    with _pytest.raises(_Disconnect):
+        with client.websocket_connect(
+            f"/ws/{sid}?secret={SECRET}", subprotocols=["zuzu-tenant", KEY_B]
+        ) as ws:
+            ws.receive_text()
+
+
+def test_the_owner_can_still_watch_their_own_call(client):
+    """The guard must not be a blanket refusal -- that would pass just as well."""
+    sid = _open_session(client, KEY_A, "conv-ws-owner")
+    with client.websocket_connect(
+        f"/ws/{sid}?secret={SECRET}", subprotocols=["zuzu-tenant", KEY_A]
+    ) as ws:
+        client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": "given_name", "value": "Maria"},
+            headers=_headers(KEY_A),
+        )
+        event = json.loads(ws.receive_text())
+        assert event["session_id"] == sid
+
+
+def test_identify_form_cannot_onboard_around_the_allowlist(restricted, monkeypatch):
+    """/forms/onboard refused N-600 for a restricted tenant. identify_form
+    onboards too, and did not -- so saying "certificate of citizenship" out loud
+    registered N-600 for the whole deployment."""
+    called: list[str] = []
+
+    async def fake_onboard(form_id, pdf_url=None, title=""):
+        called.append(form_id)
+        return {"form_id": form_id, "fields": 0}
+
+    async def fake_identify(text="", url=""):
+        return {"form_id": "N-600", "confidence": 0.99, "why": "test"}
+
+    import api.main as main_mod
+
+    monkeypatch.setattr(main_mod, "onboard", fake_onboard)
+    monkeypatch.setattr(main_mod, "identify", fake_identify)
+
+    resp = restricted.post(
+        "/tools/identify_form",
+        json={"text": "certificate of citizenship"},
+        headers=_headers(KEY_A),
+    )
+    assert resp.status_code == 200, resp.text
+    assert not called, "a tenant restricted to I-765 caused N-600 to be onboarded"
+    body = resp.json()
+    assert body["ready"] is False
+    assert "not configured to file" in body["refused"]
+
+
+def test_an_unrestricted_tenant_can_still_identify_and_onboard(restricted, monkeypatch):
+    called: list[str] = []
+
+    async def fake_onboard(form_id, pdf_url=None, title=""):
+        called.append(form_id)
+        return {"form_id": form_id, "fields": 0}
+
+    async def fake_identify(text="", url=""):
+        return {"form_id": "N-600", "confidence": 0.99, "why": "test"}
+
+    import api.main as main_mod
+
+    monkeypatch.setattr(main_mod, "onboard", fake_onboard)
+    monkeypatch.setattr(main_mod, "identify", fake_identify)
+
+    restricted.post(
+        "/tools/identify_form",
+        json={"text": "certificate of citizenship"},
+        headers=_headers(KEY_B),
+    )
+    # The onboard call is the assertion. What follows it 404s here only because
+    # the stub does not really register the form -- the allowlist is what this
+    # test is about, and it let the unrestricted tenant through.
+    assert called == ["N-600"]

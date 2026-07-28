@@ -461,6 +461,29 @@ class Fleet:
             await self.close(room_id, "collaboration timed out")
         return collab
 
+    async def room_transcript(self, room_id: str) -> list[dict[str, Any]]:
+        """The whole conversation, as Band recorded it.
+
+        Band scopes an agent's context to what it sent or was mentioned in, so
+        no single agent can see the room. Six partial views, unioned by message
+        id, is the whole of it -- and the mention-only scoping is exactly why
+        that works: every message has a sender and at least one mention, so it
+        appears in at least two views.
+
+        Errors from one agent are skipped rather than fatal: five sixths of an
+        independent record still beats none.
+        """
+        seen: dict[str, dict[str, Any]] = {}
+        for key, agent in self.agents.items():
+            try:
+                for message in await agent.client.transcript(room_id):
+                    message_id = str(message.get("id") or "")
+                    if message_id and message_id not in seen:
+                        seen[message_id] = message
+            except Exception as exc:
+                logger.warning("could not read %s's view of room %s: %s", key, room_id, exc)
+        return sorted(seen.values(), key=lambda m: str(m.get("inserted_at") or ""))
+
     async def close(self, room_id: str, why: str) -> None:
         collab = self.by_room.get(room_id)
         if collab is None or collab.finished.is_set():
