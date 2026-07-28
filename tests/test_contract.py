@@ -537,7 +537,13 @@ def test_returning_caller_gets_a_language_override(client, monkeypatch):
             is_returning=True,
         )
 
-    monkeypatch.setattr(main_mod.get_memory(), "load_profile", fake_profile)
+    # The instance the endpoint actually uses. It used to be reachable as
+    # get_memory() with no argument, because an id equal to the default tenant's
+    # was aliased onto the shared singleton -- and that alias is exactly what
+    # made a tenant's sensitive-value policy unreachable, so it is gone.
+    from api.tenancy import DEFAULT_TENANT
+
+    monkeypatch.setattr(main_mod.get_memory(DEFAULT_TENANT.id), "load_profile", fake_profile)
     resp = client.post(
         "/session/init",
         json={"caller_id": "+15551234567", "conversation_id": "conv_es"},

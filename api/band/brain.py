@@ -193,6 +193,10 @@ def fallback_decision(
 #: round is a round trip the applicant is not waiting on but the room is.
 MAX_TOOL_ROUNDS = 3
 
+#: How many of a round's tool calls are executed. A model that asks for twenty
+#: things at once is not being helped by all twenty.
+MAX_CALLS_PER_ROUND = 4
+
 
 async def decide(
     system: str,
@@ -232,6 +236,11 @@ async def decide(
 
         # Record the assistant turn verbatim: an OpenAI-shaped exchange is only
         # valid if every tool result answers a call the assistant actually made.
+        # Truncate BEFORE announcing them. Appending the full list and then
+        # executing only four leaves an assistant turn claiming N tool calls
+        # with four replies -- exactly the invariant this block exists to keep,
+        # violated by the block itself. The gateway then rejects the next turn.
+        calls = calls[:MAX_CALLS_PER_ROUND]
         messages.append(
             {
                 "role": "assistant",
@@ -239,7 +248,7 @@ async def decide(
                 "tool_calls": calls,
             }
         )
-        for call in calls[:4]:
+        for call in calls:
             name = (call.get("function") or {}).get("name", "")
             try:
                 args = json.loads((call.get("function") or {}).get("arguments") or "{}")
@@ -280,7 +289,11 @@ async def decide(
     parsed = _extract_json(raw)
     if parsed is None:
         logger.info("agent returned no usable decision: %r", raw[:160])
-        return Decision(ran=ran, because="the model did not answer in the required shape")
+        return Decision(
+            ran=ran,
+            usable=False,
+            because="the model did not answer in the required shape",
+        )
 
     # Only names actually in the room survive. This is the guard that keeps a
     # hallucinated peer from becoming a dropped message.

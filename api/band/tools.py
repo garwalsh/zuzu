@@ -16,6 +16,7 @@ agent cannot reach another organisation's applicant even if it were asked to.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 from pathlib import Path
 from typing import Any
@@ -206,7 +207,15 @@ class SessionTools:
             }
 
         out_path = self.out_dir / f"{self.session_id}.pdf"
-        report = fill_form(values, out_path, schema)
+        # Off the event loop. fill_form opens, decrypts and rewrites a 720 KB
+        # AES-encrypted AcroForm -- ~150 ms of pure CPU and blocking file I/O --
+        # and generate_form is an `async def`, so FastAPI runs it directly on
+        # the loop rather than in its sync-handler threadpool. Every other
+        # applicant mid-sentence on that worker stalled for the duration, on the
+        # one path the whole design promises never to block: save_field and
+        # get_missing_fields answer in tens of milliseconds because a human is
+        # waiting to be asked the next question.
+        report = await asyncio.to_thread(fill_form, values, out_path, schema)
         if report.dropped:
             required = [
                 fid
@@ -245,6 +254,23 @@ class SessionTools:
 
     # ---- memory: the tiers, as things an agent does --------------------
 
+    #: What every memory tool answers when there is nobody to remember.
+    #:
+    #: An anonymous principal has user_id "", and scope_key hashes that into one
+    #: perfectly valid-looking key -- the SAME key for every anonymous caller on
+    #: the tenant. Widget sessions are anonymous by default (the
+    #: conversation-init webhook does not fire for them), so without this the
+    #: agents would write one applicant's date of birth into a namespace the
+    #: next applicant reads back as their own. ApplicantMemory has guarded this
+    #: since it was written; the agent path never did.
+    _ANONYMOUS = {
+        "stored": False,
+        "reason": "this call has no caller id, so there is nobody to remember it against",
+    }
+
+    def _nobody_to_remember(self) -> bool:
+        return not self.principal.is_identified
+
     async def remember_fact(self, field_id: str = "", note: str = "") -> dict[str, Any]:
         """SEMANTIC. A stable fact about this applicant, for the next form.
 
@@ -252,6 +278,8 @@ class SessionTools:
         a model cannot write an applicant's date of birth by asserting one. It
         may decide *that* something is worth keeping; it never decides what it is.
         """
+        if self._nobody_to_remember():
+            return dict(self._ANONYMOUS)
         from api.memory_store import Record, get_backend
 
         session = await self._session()
@@ -280,6 +308,8 @@ class SessionTools:
 
     async def recall_profile(self) -> dict[str, Any]:
         """All three tiers for this applicant, as they stand now."""
+        if self._nobody_to_remember():
+            return dict(self._ANONYMOUS)
         from api.memory_store import get_backend
 
         schema = await self._schema()
@@ -301,6 +331,8 @@ class SessionTools:
 
     async def record_episode(self, outcome: str = "") -> dict[str, Any]:
         """EPISODIC. That this call happened, and how it went."""
+        if self._nobody_to_remember():
+            return dict(self._ANONYMOUS)
         from api.memory_store import Record, get_backend
 
         session = await self._session()
@@ -328,6 +360,8 @@ class SessionTools:
         is the agent's own words, because a rule is a judgement rather than a
         fact -- so it is stored as a rule and never as an answer to a field.
         """
+        if self._nobody_to_remember():
+            return dict(self._ANONYMOUS)
         from api.memory_store import Record, get_backend
 
         rule = (rule or "").strip()

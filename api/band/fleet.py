@@ -192,7 +192,17 @@ class RoleAgent:
         if collab is None or collab.finished.is_set():
             return
         if collab.expired:
-            await self._fleet.close(room_id, "turn budget exhausted")
+            # Which budget ran out. `expired` is a disjunction, and this used
+            # to say "turn budget exhausted" either way -- so a collaboration
+            # that hit the 300s wall was recorded, permanently, as having used
+            # up its turns. A caseworker reading that reaches for the wrong fix.
+            spent = len(collab.turns)
+            why = (
+                f"turn budget exhausted after {spent} turns"
+                if spent >= MAX_TURNS
+                else f"time budget exhausted after {MAX_SECONDS:.0f}s"
+            )
+            await self._fleet.close(room_id, why)
             return
 
         transcript = "\n".join(f"{t.role}: {t.said}" for t in collab.turns[-8:]) or "(nothing yet)"
@@ -259,7 +269,18 @@ class RoleAgent:
             nxt = self._fleet.next_after(self.role.key)
             nxt_display = role_for(nxt).display if nxt else None
             decision = brain.fallback_decision(self.role.key, nxt_display, self.role.tools)
-            results = [{"tool": name, **await run_tool(name, {})} for name in self.role.tools]
+            # Only the tools that take no arguments. remember_fact and
+            # learn_rule need the model to say WHICH field or WHAT rule, so
+            # calling them argument-less stored nothing while the trail showed
+            # a tool call that looked like it had. An absent call beats a
+            # silent no-op recorded as "ok": true.
+            from api.band.tools import TOOL_PARAMS
+
+            results = [
+                {"tool": name, **await run_tool(name, {})}
+                for name in self.role.tools
+                if not TOOL_PARAMS.get(name, {}).get("required")
+            ]
 
         said = decision.say or f"{self.role.display} acted."
         if results:
@@ -440,20 +461,32 @@ class Fleet:
         )
         self.by_room[room_id] = collab
 
-        for key, agent in self.agents.items():
-            if key != "auditor":
-                await opener.client.invite(room_id, agent.agent_id)
+        # Everything from here to the opening message can raise: invite is a
+        # network call and protocol._raise_for turns any status >= 300 into a
+        # BandError. Unguarded, the exception escaped with the room already
+        # registered and never finished -- so it was never persisted, never
+        # closed, and never evicted (eviction only considers finished rooms).
+        # A Band outage therefore leaked one Collaboration, with its Principal
+        # and SessionTools, per attempt, forever.
+        try:
+            for key, agent in self.agents.items():
+                if key != "auditor":
+                    await opener.client.invite(room_id, agent.agent_id)
 
-        state = await collab.tools.session_state()
-        await opener.client.say(
-            room_id,
-            (
-                f"Opening the file for {state['form_id']}: {state['answered']} answers "
-                f"collected, {state['remaining']} still missing. Intake, take it from here -- "
-                "establish whether the interview is complete, then hand on."
-            ),
-            [self.agents["intake"].agent_id],
-        )
+            state = await collab.tools.session_state()
+            await opener.client.say(
+                room_id,
+                (
+                    f"Opening the file for {state['form_id']}: {state['answered']} answers "
+                    f"collected, {state['remaining']} still missing. Intake, take it from here -- "
+                    "establish whether the interview is complete, then hand on."
+                ),
+                [self.agents["intake"].agent_id],
+            )
+        except Exception as exc:
+            logger.warning("could not open the room for %s: %s", session_id, exc)
+            await self.close(room_id, f"the room could not be opened: {exc}")
+            return collab
 
         try:
             await asyncio.wait_for(collab.finished.wait(), timeout=MAX_SECONDS)

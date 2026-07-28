@@ -33,7 +33,16 @@ SCOPE_PREFIX = "zaud_"
 
 #: Turn keys sort lexically, so a filing that ran the full turn budget still
 #: replays in the order it happened. Three digits is well past MAX_TURNS.
-_KEY = "turn-{:03d}"
+#:
+#: The room id leads, because the key was positional ONLY and both backends
+#: upsert on (scope, tier, key). A second collaboration on the same session --
+#: a retry after a 503, or after the 300s timeout -- overwrote turn-000 onward
+#: of the first and left its later turns behind, producing one record attributed
+#: to one room that contained turns from two and, in the case actually
+#: reproduced, both "collaboration timed out" and "auditor sealed the record".
+#: A trail that can be rewritten in place is not evidence of anything, which is
+#: what the docstring above already said.
+_KEY = "{room}/turn-{index:03d}"
 
 
 def scope_for(tenant_id: str, session_id: str) -> str:
@@ -60,15 +69,21 @@ async def record(collab: Any) -> int:
     try:
         await backend.put(
             scope,
-            Record(tier="semantic", key="collaboration", value=json.dumps(header), meta=header),
+            Record(
+                tier="semantic",
+                key=f"collaboration/{collab.room_id}",
+                value=json.dumps(header),
+                meta=header,
+            ),
         )
         for index, turn in enumerate(collab.turns):
             payload = turn.as_dict()
+            payload["room_id"] = collab.room_id
             ok = await backend.put(
                 scope,
                 Record(
                     tier="episodic",
-                    key=_KEY.format(index),
+                    key=_KEY.format(room=collab.room_id, index=index),
                     value=turn.said or turn.because,
                     meta=payload,
                     at=turn.at,
@@ -95,26 +110,55 @@ async def replay(tenant_id: str, session_id: str) -> dict[str, Any] | None:
     if not rows:
         return None
 
-    header: dict[str, Any] = {}
-    turns: list[tuple[str, dict[str, Any]]] = []
+    # Group by room. A session can be orchestrated more than once, and two runs
+    # are two collaborations -- merging them into one list produces a record
+    # that never happened.
+    headers: dict[str, dict[str, Any]] = {}
+    by_room: dict[str, list[tuple[str, dict[str, Any]]]] = {}
     for row in rows:
-        if row.tier == "semantic" and row.key == "collaboration":
-            header = row.meta or {}
+        if row.tier == "semantic" and row.key.startswith("collaboration"):
+            meta = row.meta or {}
+            headers[str(meta.get("room_id", ""))] = meta
         elif row.tier == "episodic":
-            turns.append((row.key, row.meta or {"said": row.value, "at": row.at}))
-    turns.sort(key=lambda item: item[0])
-    ordered = [turn for _, turn in turns]
+            meta = row.meta or {"said": row.value, "at": row.at}
+            room = str(meta.get("room_id") or row.key.rsplit("/", 1)[0])
+            by_room.setdefault(room, []).append((row.key, meta))
+    # A header with no turns is a collaboration that opened and recorded
+    # nothing. Rare -- close() always appends a closing turn -- but "it ran and
+    # produced nothing" and "it never ran" are different answers, and only one
+    # of them is a 404.
+    for room in headers:
+        by_room.setdefault(room, [])
+    if not by_room:
+        return None
 
-    started = float(header.get("started") or (ordered[0]["at"] if ordered else 0.0))
-    last = float(ordered[-1]["at"]) if ordered else started
+    # The most recent run is the one a caseworker means by "the audit trail";
+    # the earlier ones are still there under their own room ids.
+    def _started(room: str) -> float:
+        header = headers.get(room) or {}
+        turns = by_room[room]
+        if header.get("started"):
+            return float(header["started"])
+        return min((float(t[1].get("at") or 0.0) for t in turns), default=0.0)
+
+    room_id = max(by_room, key=_started)
+    turns = sorted(by_room[room_id], key=lambda item: item[0])
+    ordered = [turn for _, turn in turns]
+    header = headers.get(room_id, {})
+
+    started = float(header.get("started") or (ordered[0].get("at") if ordered else 0.0) or 0.0)
+    last = float((ordered[-1].get("at") if ordered else started) or started)
     return {
         "session_id": session_id,
-        "room_id": header.get("room_id", ""),
+        "room_id": room_id,
         "tenant_id": tenant_id,
         "turns": ordered,
         "turn_count": len(ordered),
         "seconds": round(last - started, 2),
         "finished": True,
+        # A session orchestrated more than once has more than one trail. Saying
+        # so beats silently presenting the latest as though it were the only.
+        "collaborations": len(by_room),
         # The caller is reading history, not watching a room. Saying so is the
         # difference between "nothing is happening" and "this already happened".
         "replayed": True,

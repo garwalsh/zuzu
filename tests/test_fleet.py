@@ -512,3 +512,112 @@ def test_whoami_failing_does_not_stop_the_fleet(startable, monkeypatch):
 
     monkeypatch.setattr(fleet.RoleAgent, "start", start_with_broken_whoami)
     assert asyncio.run(startable.start()) is True
+
+
+def test_two_runs_on_one_session_are_two_records_not_a_chimera(tmp_path, monkeypatch):
+    """A retry after a 503 or the 300s timeout used to rewrite the first run.
+
+    Turn keys were positional and both backends upsert on (scope, tier, key),
+    so run 2 overwrote turn-000 onward of run 1 and left run 1's later turns
+    behind. The replayed trail was attributed to one room and contained turns
+    from two -- in the case actually reproduced, carrying both "collaboration
+    timed out" and "auditor sealed the record" for what it presented as a single
+    collaboration.
+    """
+    _use_sqlite(tmp_path, monkeypatch)
+
+    first = _collab("sess-retry", "room-A", started=1000.0)
+    for role in ("intake", "extractor", "mapper", "validator", "filler", "auditor"):
+        first.turns.append(fleet.Turn(role=role, agent_id="a", said=f"{role} spoke in A"))
+    first.turns.append(fleet.Turn(role="fleet", agent_id="", said="Collaboration closed: sealed."))
+    asyncio.run(ledger.record(first))
+
+    second = _collab("sess-retry", "room-B", started=2000.0)
+    second.turns.append(fleet.Turn(role="intake", agent_id="a", said="intake spoke in B"))
+    second.turns.append(
+        fleet.Turn(role="fleet", agent_id="", said="Collaboration closed: timed out.")
+    )
+    asyncio.run(ledger.record(second))
+
+    replayed = asyncio.run(ledger.replay("clinic-a", "sess-retry"))
+    assert replayed is not None
+    assert replayed["collaborations"] == 2, "two runs happened and the record must say so"
+    assert replayed["room_id"] == "room-B", "the latest run is what /audit means"
+    assert replayed["turn_count"] == 2, f"room-B had 2 turns, got {replayed['turn_count']}"
+    said = " ".join(t.get("said", "") for t in replayed["turns"])
+    assert "in A" not in said, "room-A's turns must not appear inside room-B's record"
+    assert all(t.get("room_id") == "room-B" for t in replayed["turns"])
+
+
+def test_writing_the_pdf_does_not_stall_the_event_loop(tmp_path, monkeypatch):
+    """The one path the whole design promises never to block.
+
+    fill_form opens, decrypts and rewrites a 720 KB AES-encrypted AcroForm --
+    real CPU and blocking file I/O -- and generate_form is an `async def`, so
+    FastAPI runs it directly on the loop rather than in its sync-handler
+    threadpool. Every other applicant mid-sentence on that worker stalled for
+    the duration, while save_field's docstring said "No LLM, no filesystem, no
+    PDF work happens here."
+    """
+    import time as _time
+
+    import api.pdf_engine as pdf_engine
+
+    BLOCK = 0.30
+
+    def slow_fill(values, out_path, schema):
+        _time.sleep(BLOCK)
+        out_path.write_bytes(b"%PDF-1.7\n")
+
+        from api.pdf_engine import FillReport
+
+        return FillReport(path=out_path, filled=list(values), dropped={})
+
+    monkeypatch.setattr(pdf_engine, "fill_form", slow_fill)
+
+    async def scenario():
+        from api.session_store import get_session_store, reset_session_store
+
+        reset_session_store()
+        store = get_session_store()
+        await store.create("sess-block", "+14155550142", "I-765")
+        # It must actually reach the write. An incomplete session is refused
+        # before fill_form is ever called, which would pass this test for the
+        # wrong reason.
+        import json as _json
+        import pathlib as _pathlib
+
+        answers = _json.loads(
+            (
+                _pathlib.Path(__file__).resolve().parent.parent / "data" / "demo_personas.json"
+            ).read_text()
+        )["personas"]["maria"]["answers"]
+        for field_id, value in answers.items():
+            await store.save_field(session_id="sess-block", field_id=field_id, value=value)
+
+        from api.band.tools import SessionTools
+
+        tools = SessionTools("sess-block", _principal(), tmp_path)
+
+        ticks = 0
+
+        async def heartbeat():
+            nonlocal ticks
+            while True:
+                await asyncio.sleep(0.01)
+                ticks += 1
+
+        beat = asyncio.create_task(heartbeat())
+        try:
+            report = await tools.write_form()
+        finally:
+            beat.cancel()
+        assert report.get("written"), f"the write must actually happen: {report}"
+        return ticks
+
+    ticks = asyncio.run(scenario())
+    # A loop blocked for 300 ms gets ~0 ticks; a free one gets ~30.
+    assert ticks > 10, (
+        f"the event loop only ran {ticks} times during a {BLOCK}s PDF write -- "
+        "it is blocked, and every concurrent caller is waiting on it"
+    )

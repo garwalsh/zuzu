@@ -423,10 +423,22 @@ def get_memory(tenant_id: str | None = None) -> ApplicantMemory:
     it derives. The deployment's own tenant resolves to the same object as the
     default, so a single-organisation install keeps one view of a caller.
     """
-    from api.tenancy import DEFAULT_TENANT
 
     global _memory
-    if tenant_id and tenant_id != DEFAULT_TENANT.id:
+    # No special case for an id that happens to equal DEFAULT_TENANT.id.
+    #
+    # It used to alias onto the shared singleton, whose _tenant_id is None, and
+    # _store_sensitive() short-circuits on that to the ZUZU_MEMORY_STORE_SENSITIVE
+    # env var -- never reaching the registry. So a deployment whose tenant is
+    # named "zuzu-demo" (which is what tools/add_tenant.py produces) had its
+    # registry policy silently replaced by an environment variable, in BOTH
+    # directions: a tenant that had opted in was refused, and a tenant that had
+    # not was persisted anyway. That is an SSN in a third-party store against
+    # the organisation's stated policy.
+    #
+    # The alias also bought nothing: _user_key already falls back to
+    # DEFAULT_TENANT.id, so both paths derive byte-identical scope keys.
+    if tenant_id:
         store = _by_tenant.get(tenant_id)
         if store is None:
             store = _by_tenant[tenant_id] = ApplicantMemory(tenant_id=tenant_id)

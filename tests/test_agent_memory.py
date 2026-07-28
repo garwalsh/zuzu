@@ -164,14 +164,57 @@ async def test_an_unreachable_store_degrades_loudly_rather_than_silently(monkeyp
     monkeypatch.setenv("SUPABASE_SERVICE_KEY", "not-a-real-key")
     memory_store.reset_backend()
 
+    # A store is abandoned after FALLBACK_AFTER consecutive failures, not one.
+    # /health calls this on every poll and Render polls constantly, so a single
+    # transient timeout used to swap the process to SQLite permanently.
     with caplog.at_level(logging.ERROR):
-        status = await memory_store.check_backend()
+        for _ in range(memory_store.FALLBACK_AFTER):
+            status = await memory_store.check_backend()
 
     assert status["backend"] == "sqlite", "the service must keep working"
     assert status["reachable"] is True
     assert status["degraded_from"] == "supabase", "and must say what it lost"
     assert status["degraded_reason"]
     assert any("NOT reachable" in r.message for r in caplog.records)
+
+
+@pytest.mark.asyncio
+async def test_one_bad_probe_does_not_abandon_a_configured_store(monkeypatch):
+    """The blip that used to cost a deploy.
+
+    /health probes on every poll. One ConnectTimeout swapped the process-wide
+    backend to SQLite with no way back for the life of the process -- so the
+    applicant's real history sat in Postgres, unreachable, while Zuzu greeted
+    them as new and wrote a second divergent copy to a disk the next deploy
+    erases.
+    """
+    monkeypatch.setenv("SUPABASE_URL", "https://nonexistent-project.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "not-a-real-key")
+    memory_store.reset_backend()
+
+    status = await memory_store.check_backend()
+    assert status["backend"] == "supabase", "one failed probe is not an outage"
+    assert status["reachable"] is False, "but it is not reported as healthy either"
+
+
+@pytest.mark.asyncio
+async def test_a_recovered_store_is_picked_back_up(monkeypatch):
+    """The fallback has to be reversible, or it is just a slower outage."""
+    monkeypatch.setenv("SUPABASE_URL", "https://nonexistent-project.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "not-a-real-key")
+    memory_store.reset_backend()
+
+    for _ in range(memory_store.FALLBACK_AFTER):
+        status = await memory_store.check_backend()
+    assert status["backend"] == "sqlite"
+
+    async def healthy_again(self):
+        return True, "supabase HTTP 200"
+
+    monkeypatch.setattr(memory_store.SupabaseMemory, "healthy", healthy_again)
+    status = await memory_store.check_backend()
+    assert status["backend"] == "supabase", "it must come back once the store does"
+    assert status["reachable"] is True
 
 
 @pytest.mark.asyncio

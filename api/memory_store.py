@@ -324,6 +324,18 @@ class SupabaseMemory:
 _backend: MemoryBackend | None = None
 
 
+#: Consecutive failed probes before a configured store is abandoned. One blip
+#: is a blip; three in a row is an outage.
+FALLBACK_AFTER = 3
+
+_fallback_since = 0
+
+
+def _is_configured() -> bool:
+    """Whether a durable store was asked for at all."""
+    return bool(os.environ.get("SUPABASE_URL") and os.environ.get("SUPABASE_SERVICE_KEY"))
+
+
 def get_backend() -> MemoryBackend:
     """The store this deployment uses.
 
@@ -358,12 +370,62 @@ async def check_backend() -> dict[str, Any]:
     works -- and both the log and /health say what happened and why. Somebody
     gets a working service and an accurate reason, rather than one or the other.
     """
-    global _backend
+    global _backend, _fallback_since
     backend = get_backend()
+
+    # If we fell back but the configured store is reachable again, come back.
+    # Without this the swap is one-way for the life of the process, so a
+    # thirty-second blip becomes a deploy-long outage of the thing the whole
+    # returning-caller story rests on -- and the applicant's real history sits
+    # in Postgres, untouched, while a second divergent copy accumulates on a
+    # disk the next deploy erases.
+    if backend.name == "sqlite" and _is_configured():
+        candidate = SupabaseMemory(
+            os.environ["SUPABASE_URL"].strip(), os.environ["SUPABASE_SERVICE_KEY"].strip()
+        )
+        recovered, recovered_detail = await candidate.healthy()
+        if recovered:
+            logger.info("memory backend recovered: supabase is reachable again")
+            _backend = candidate
+            _fallback_since = 0
+            return {"backend": candidate.name, "reachable": True, "detail": recovered_detail}
+
     ok, detail = await backend.healthy()
     if ok:
         logger.info("memory backend %s ready: %s", backend.name, detail)
+        _fallback_since = 0
         return {"backend": backend.name, "reachable": True, "detail": detail}
+
+    # A configured store that answers one bad probe is not a broken store.
+    #
+    # /health calls this on every poll, and Render polls constantly, so a single
+    # transient ConnectTimeout used to swap the process-wide backend to SQLite
+    # PERMANENTLY -- nothing in production ever calls reset_backend, and
+    # get_backend returns the cached instance forever after. The applicant's
+    # real history stays in Postgres, unreachable, while Zuzu greets them as new
+    # and writes a second, divergent copy to a disk the next deploy erases.
+    #
+    # So: tolerate a blip, and swap only once the store has failed
+    # FALLBACK_AFTER consecutive probes. And when it is configured, keep
+    # re-probing so the swap is reversible -- the previous version had no way
+    # back at all.
+    if _is_configured() and backend.name != "sqlite":
+        _fallback_since += 1
+        if _fallback_since < FALLBACK_AFTER:
+            logger.warning(
+                "memory backend %s failed a probe (%s); %d of %d before falling back",
+                backend.name,
+                detail,
+                _fallback_since,
+                FALLBACK_AFTER,
+            )
+            return {
+                "backend": backend.name,
+                "reachable": False,
+                "detail": detail,
+                "degraded_reason": "",
+                "note": f"probe {_fallback_since} of {FALLBACK_AFTER}; not falling back yet",
+            }
 
     logger.error(
         "memory backend %s is NOT reachable (%s) -- falling back to sqlite. "
@@ -384,6 +446,12 @@ async def check_backend() -> dict[str, Any]:
 
 
 def reset_backend() -> None:
-    """Drop the cached backend. For tests and for a config change."""
-    global _backend
+    """Drop the cached backend. For tests and for a config change.
+
+    The consecutive-failure counter goes with it: leaving it set meant a fresh
+    backend inherited the previous one's strikes and fell back on its first
+    probe, which is the opposite of what the counter is for.
+    """
+    global _backend, _fallback_since
     _backend = None
+    _fallback_since = 0

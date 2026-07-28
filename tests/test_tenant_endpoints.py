@@ -490,3 +490,41 @@ def test_an_unrestricted_tenant_can_still_identify_and_onboard(restricted, monke
     # the stub does not really register the form -- the allowlist is what this
     # test is about, and it let the unrestricted tenant through.
     assert called == ["N-600"]
+
+
+def test_forgetting_with_a_bad_tier_is_a_bad_request_not_a_crash(client):
+    """`tier` is a free query string, so FastAPI never validated it and
+    Tier("all") raised ValueError straight into a 500 with a traceback -- on the
+    one endpoint whose entire job is to answer "is my data gone".
+
+    "all" is also the obvious thing to send, because the response echoes it.
+    """
+    _open_session(client, KEY_A, "conv-forget")
+
+    ok = client.post(
+        "/session/forget", params={"caller_id": "+14155550142"}, headers=_headers(KEY_A)
+    )
+    assert ok.status_code == 200, ok.text
+    assert ok.json()["tier"] == "all"
+
+    explicit = client.post(
+        "/session/forget",
+        params={"caller_id": "+14155550142", "tier": "all"},
+        headers=_headers(KEY_A),
+    )
+    assert explicit.status_code == 200, explicit.text
+
+    one = client.post(
+        "/session/forget",
+        params={"caller_id": "+14155550142", "tier": "semantic"},
+        headers=_headers(KEY_A),
+    )
+    assert one.status_code == 200, one.text
+
+    bad = client.post(
+        "/session/forget",
+        params={"caller_id": "+14155550142", "tier": "bogus"},
+        headers=_headers(KEY_A),
+    )
+    assert bad.status_code == 422, bad.text
+    assert "unknown tier" in bad.text

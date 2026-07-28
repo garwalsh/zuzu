@@ -1355,7 +1355,20 @@ async def session_forget(
     they can drop their call history without losing the profile that saves them
     an hour on the next form.
     """
-    scope = Tier(tier) if tier else None
+    # `tier` is a free string on the query, so FastAPI never validates it and
+    # Tier("all") raised ValueError straight into a 500 with a traceback -- on
+    # the one endpoint whose whole job is to answer "is my data gone". "all" is
+    # also the obvious thing to send, since the response already echoes it.
+    try:
+        scope = Tier(tier) if tier and tier != "all" else None
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"unknown tier {tier!r}; use one of "
+                f"{', '.join(t.value for t in Tier)}, or omit it for all"
+            ),
+        ) from exc
     try:
         removed = await get_memory(tenant.id).forget(caller_id, scope)
     except DeletionUnverifiable as exc:

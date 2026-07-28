@@ -37,15 +37,37 @@ _cache: dict[str, FormSchema] = {}
 FORMS_DIR = REPO_ROOT / "data" / "forms"
 
 
+#: Paths already registered, so a rediscovery does not re-read them.
+_seen_paths: set[str] = set()
+
+
 def _discover() -> None:
-    """Register every schema file present under data/forms/."""
+    """Register every schema file present under data/forms/.
+
+    The `key in _loaders` check used to come AFTER json.loads, so the cache
+    prevented re-registration but never the read: every call parsed all eleven
+    schema files -- 1.19 MB -- to learn what it already knew. get_form calls
+    this unconditionally and save_field calls get_form, so that happened on the
+    live voice path, on every single answer, inside an async handler with no
+    thread offload. save_field's own docstring says "No LLM, no filesystem, no
+    PDF work happens here."
+
+    Skipping by path also means a form registered under a name that differs from
+    its file's form_id is still only read once.
+    """
     if not FORMS_DIR.is_dir():
         return
     for path in sorted(FORMS_DIR.glob("*.json")):
+        name = str(path)
+        if name in _seen_paths:
+            continue
         try:
             form_id = json.loads(path.read_text(encoding="utf-8"))["form_id"]
         except Exception:
+            # Not marked seen: a half-written file should be picked up once it
+            # is complete, which is what /forms/onboard relies on.
             continue
+        _seen_paths.add(name)
         key = _normalize(form_id)
         if key in _loaders:
             continue
