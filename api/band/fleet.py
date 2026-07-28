@@ -30,26 +30,19 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
-import os
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 from api.band import brain, protocol
+from api.band.credentials import load_credentials
 from api.band.roles import ROLES, Role, role_for, roster
 from api.band.tools import SessionTools, ToolDenied, ToolFailed, schemas_for
 from api.tenancy import Principal
 
 logger = logging.getLogger(__name__)
 
-#: Where agent credentials live once registered. Not in the repo: these are
-#: per-agent secrets and each one can act as that agent.
-CREDENTIALS_PATH = Path(
-    os.environ.get(
-        "BAND_CREDENTIALS_PATH", Path(__file__).resolve().parent.parent.parent / ".band-agents.json"
-    )
-)
 
 #: A collaboration that has not finished in this many turns has stopped making
 #: progress. Six agents each acting twice is a generous ceiling for one filing.
@@ -115,25 +108,6 @@ class Collaboration:
         }
 
 
-def load_credentials() -> dict[str, dict[str, str]]:
-    """Agent ids and keys, by role key.
-
-    Environment first so a deployment can hold them as secrets; the file is the
-    developer convenience that `tools/register_band_agents.py` writes.
-    """
-    creds: dict[str, dict[str, str]] = {}
-    for role in ROLES:
-        env_id = os.environ.get(f"BAND_AGENT_{role.key.upper()}_ID")
-        env_key = os.environ.get(f"BAND_AGENT_{role.key.upper()}_KEY")
-        if env_id and env_key:
-            creds[role.key] = {"id": env_id, "api_key": env_key}
-    if len(creds) == len(ROLES):
-        return creds
-    if CREDENTIALS_PATH.exists():
-        stored = json.loads(CREDENTIALS_PATH.read_text(encoding="utf-8"))
-        for key, value in stored.get("agents", {}).items():
-            creds.setdefault(key, value)
-    return creds
 
 
 class RoleAgent:

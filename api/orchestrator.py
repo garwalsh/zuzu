@@ -40,16 +40,29 @@ from api.pdf_engine import fill_form, missing_required
 
 logger = logging.getLogger(__name__)
 
-#: Band agent identities for each stage. Registered on the Band platform; the
-#: ids are carried into the audit trail so a reviewer can attribute every value.
-BAND_AGENTS: dict[str, str] = {
-    "intake": os.environ.get("BAND_AGENT_INTAKE", "8e8c5b7e-aa98-4dc5-b5f5-5cf5cc01b856"),
-    "extractor": os.environ.get("BAND_AGENT_EXTRACTOR", "0098e4bd-74a3-4f14-b35a-a085a5368f15"),
-    "mapper": os.environ.get("BAND_AGENT_MAPPER", "88b43172-7d4d-4256-85d9-6ff74d4a30ef"),
-    "validator": os.environ.get("BAND_AGENT_VALIDATOR", "d71d3305-3967-42ab-94b7-660ff8d43975"),
-    "filler": os.environ.get("BAND_AGENT_FILLER", "2bcd4cdf-9ffa-4ecd-9ab9-054ca13f2812"),
-    "auditor": os.environ.get("BAND_AGENT_AUDITOR", "a9933561-4d8e-48eb-b201-fa7480bf5909"),
-}
+def _band_agents() -> dict[str, str]:
+    """The agent id for each stage, taken from the fleet that actually runs.
+
+    These ids were hardcoded here, and after the fleet was re-registered they
+    pointed at agents that no longer exist: /agents reported five of six as
+    unregistered with empty names, and every audit entry attributed its work to
+    a deleted identity. An id that cannot be resolved is worse than no id, since
+    the whole reason it is on the trail is so a reviewer can look it up.
+
+    There is now one source: the credentials the fleet connects with. If the
+    fleet is not configured this is empty, and an audit entry carries no agent
+    id rather than a wrong one.
+    """
+    from api.band.credentials import agent_ids
+
+    try:
+        return agent_ids()
+    except Exception:  # pragma: no cover - credentials are optional
+        return {}
+
+
+#: Band agent identities for each stage, resolved once at import from the fleet.
+BAND_AGENTS: dict[str, str] = _band_agents()
 
 #: Questions chosen during the call, per session, before the batch pipeline runs.
 #:
@@ -162,7 +175,7 @@ def note_intake(session_id: str, action: str, field_id: str | None, detail: str 
     trail.append(
         AuditEntry(
             stage="intake",
-            agent_id=BAND_AGENTS["intake"],
+            agent_id=BAND_AGENTS.get("intake", ""),
             action=action,
             field_id=field_id,
             detail=detail,

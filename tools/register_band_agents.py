@@ -28,7 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from api.band import protocol  # noqa: E402
-from api.band.fleet import CREDENTIALS_PATH  # noqa: E402
+from api.band.credentials import CREDENTIALS_PATH  # noqa: E402
 from api.band.roles import ROLES  # noqa: E402
 
 
