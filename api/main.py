@@ -462,7 +462,9 @@ async def save_field(
     # produced applicant_name, place_of_birth, gender and alien_number -- none
     # of which exist on the I-765. Every one of those answers was correct and
     # was thrown away with a 422, mid-call, with the applicant none the wiser.
-    field_id = resolve_field_id(schema, payload.field_id, session.last_asked)
+    field_id = resolve_field_id(
+        schema, payload.field_id, session.last_asked, answered=session.values
+    )
     form_field = schema.get_field(field_id) if field_id else None
     if form_field is None:
         # A value with nowhere to go on the form is a value we must not pretend

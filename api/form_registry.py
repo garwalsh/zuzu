@@ -9,7 +9,7 @@ USCIS form is an entry here plus a schema file.
 from __future__ import annotations
 
 import json
-from collections.abc import Callable
+from collections.abc import Callable, Container
 from functools import partial
 
 from api.i765_schema import REPO_ROOT, FormSchema, get_i765_schema, load_form_schema
@@ -156,7 +156,12 @@ def _normalise(field_id: str) -> str:
     return (field_id or "").strip().lower().replace("-", "_").replace(" ", "_")
 
 
-def resolve_field_id(schema: FormSchema, supplied: str, last_asked: str = "") -> str | None:
+def resolve_field_id(
+    schema: FormSchema,
+    supplied: str,
+    last_asked: str = "",
+    answered: Container[str] = (),
+) -> str | None:
     """The schema field an incoming answer belongs to, or None.
 
     A voice agent is told the field id by `get_missing_fields` and is supposed
@@ -169,10 +174,17 @@ def resolve_field_id(schema: FormSchema, supplied: str, last_asked: str = "") ->
 
         1. The id as given, if the form has it.
         2. A known alias -- `gender` is `sex`, `alien_number` is `a_number`.
-        3. The field we most recently ASKED for. An answer arriving right after
-           a question is an answer to that question; that is what a conversation
-           is. This is the one that generalises, because it needs no list of
-           names anybody thought of in advance.
+        3. The field we most recently asked for, AND ONLY WHILE IT IS STILL
+           UNANSWERED. An answer arriving right after a question is an answer to
+           that question; that is what a conversation is. This is the step that
+           generalises, because it needs no list of names anybody thought of in
+           advance.
+
+    The "still unanswered" half is not a detail. Without it the rule is "put it
+    wherever we last asked", and three unrelated values in a row all land on the
+    same field, each overwriting the last -- which is worse than refusing them,
+    because it looks like it worked. Once the outstanding question has an
+    answer, an unrecognised id has nowhere to go again.
 
     Returns None when none of those hold, and the caller still refuses -- a
     value with nowhere to go must not be pretended into the form.
@@ -188,6 +200,6 @@ def resolve_field_id(schema: FormSchema, supplied: str, last_asked: str = "") ->
     if aliased and schema.get_field(aliased) is not None:
         return aliased
 
-    if last_asked and schema.get_field(last_asked) is not None:
+    if last_asked and last_asked not in answered and schema.get_field(last_asked) is not None:
         return last_asked
     return None

@@ -544,3 +544,36 @@ def test_the_resolved_id_is_what_gets_remembered_and_broadcast(client):
     values = client.get(f"/sessions/{sid}/values", headers=visitor()).json()["values"]
     assert values.get("sex") == "female"
     assert "gender" not in values
+
+
+def test_the_fallback_fires_once_and_then_stops(client):
+    """Without this the rule is "put it wherever we last asked", and three
+    unrelated values in a row all land on the same field, each overwriting the
+    last -- worse than refusing them, because it looks like it worked."""
+    sid = "fallback-once"
+    _open(client, sid)
+    asked = client.post(
+        "/tools/get_missing_fields",
+        json={"session_id": sid, "form_id": "I-765"},
+        headers=visitor(),
+    ).json()["next_field"]["id"]
+
+    first = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "invented_one", "value": "renewal"},
+        headers=visitor(),
+    )
+    assert first.status_code == 200
+    assert first.json()["field_id"] == asked
+
+    # The question now has an answer, so there is nothing outstanding to
+    # attribute the next unrecognised id to.
+    second = client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "invented_two", "value": "Guadalajara"},
+        headers=visitor(),
+    )
+    assert second.status_code == 422, second.text
+
+    values = client.get(f"/sessions/{sid}/values", headers=visitor()).json()["values"]
+    assert values[asked] == "renewal", "the first answer must not have been overwritten"
