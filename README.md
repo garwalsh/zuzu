@@ -21,7 +21,7 @@ finished form, and the sponsor list. Open it two minutes early — Render's free
 tier cold-starts in about fifty seconds — and give it a window at least 1440px
 wide so the layout does not stack.
 
-**12 USCIS forms**, ~1,900 questions, none of them hand-written.
+**12 USCIS forms**, 2,281 questions, none of them hand-written.
 
 ---
 
