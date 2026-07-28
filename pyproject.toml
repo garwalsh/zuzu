@@ -13,6 +13,7 @@ dependencies = [
     "pypdf[crypto]>=5.1",
     "python-dotenv>=1.0",
     "websockets>=13.1",
+    "band-sdk>=1.4.2",
 ]
 
 [project.optional-dependencies]

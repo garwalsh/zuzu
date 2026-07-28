@@ -13,6 +13,7 @@ import json
 import logging
 import os
 import time
+from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -30,6 +31,8 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
+from api.band.fleet import get_fleet
+from api.band.roles import ROLES as BAND_ROLES
 from api.contract import (
     FIELD_SAVED,
     FORM_CHANGED,
@@ -75,6 +78,7 @@ from api.session_store import (
     get_session_store,
     next_missing_field,
 )
+from api.tenancy import principal_for
 
 CONFIDENCE_CONFIRM_THRESHOLD = 0.85
 #: Audit records from the most recent pipeline run per session. In Layer 2 this
@@ -112,7 +116,31 @@ def _configure_logging() -> logging.Logger:
 
 logger = _configure_logging()
 
-app = FastAPI(title="Zuzu orchestrator", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    """Bring the Band agent fleet up with the service, and down with it.
+
+    The agents are long-lived WebSocket connections, so they belong to the
+    process lifetime rather than to a request. Starting is deliberately
+    best-effort: if Band or the model is unreachable the service still serves
+    every endpoint and still fills forms, because orchestration is how the work
+    is coordinated and audited, not what makes a filing possible.
+    """
+    fleet = get_fleet()
+    try:
+        started = await fleet.start()
+    except Exception as exc:
+        logger.warning("band fleet did not start: %s", type(exc).__name__)
+        started = False
+    logger.info("startup complete; band fleet %s", "up" if started else "off")
+    try:
+        yield
+    finally:
+        await fleet.stop()
+
+
+app = FastAPI(title="Zuzu orchestrator", version="0.1.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -793,11 +821,42 @@ async def session_set_form(
     }
 
 
+@app.post("/sessions/{session_id}/orchestrate")
+async def orchestrate(session_id: str, _: None = Depends(require_shared_secret)) -> dict[str, Any]:
+    """Hand this filing to the Band agent fleet and return what they did.
+
+    The agents open a room, address each other, run their own tools, and close
+    the record. What comes back is the room id and every turn, including which
+    reasoner decided it -- a trail that does not say whether the model or the
+    fallback chose is making a claim it cannot support.
+    """
+    session = await _load_session(session_id)
+    fleet = get_fleet()
+    if not fleet.is_running:
+        raise HTTPException(
+            status_code=503,
+            detail=(
+                "the Band fleet is not running: agent credentials or the model "
+                "gateway are unavailable. The deterministic pipeline at "
+                "/tools/generate_form still fills this form."
+            ),
+        )
+    principal = principal_for(session.caller_id)
+    collab = await fleet.collaborate(session_id, principal, OUT_DIR)
+    if collab is None:
+        raise HTTPException(status_code=503, detail="the fleet declined the work")
+    return collab.as_dict()
+
+
 @app.get("/agents")
 async def agents_index() -> dict[str, Any]:
     """The pipeline's stages and their Band agent identities, checked live."""
     agents = await registered_agents()
+    fleet = get_fleet()
     return {
+        "fleet_running": fleet.is_running,
+        "connected": sorted(fleet.agents),
+        "roles": [{"key": r.key, "name": r.agent_name, "tools": list(r.tools)} for r in BAND_ROLES],
         # Derived, not restated. This list was written out by hand and had
         # already drifted: Intake was added to the pipeline and stamped on the
         # audit trail while this endpoint went on advertising five stages.

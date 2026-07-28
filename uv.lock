@@ -113,6 +113,39 @@ wheels = [
 ]
 
 [[package]]
+name = "band-client-rest"
+version = "0.0.10"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "httpx" },
+    { name = "pydantic" },
+    { name = "pydantic-core" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/21/e0/600527e9da77b0bda58ba6e48d16e6070ced930e699a656b609f360318b6/band_client_rest-0.0.10.tar.gz", hash = "sha256:d3a753d9cf479949264f7092b550b2616e93da68ab32f23acc2a06a6b69019c7", size = 106806, upload-time = "2026-06-12T15:26:44.651Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/73/2c/6c6d4a76d0bbe5a63103add4b50ebdc4184c28afe64b1f7271725087d4f1/band_client_rest-0.0.10-py3-none-any.whl", hash = "sha256:7b900a6fefd25f25677e20fb77378294d5f34e29d583ef5b197fe96724834d7a", size = 246079, upload-time = "2026-06-12T15:26:43.302Z" },
+]
+
+[[package]]
+name = "band-sdk"
+version = "1.4.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "band-client-rest" },
+    { name = "cryptography" },
+    { name = "filelock" },
+    { name = "phoenix-channels-python-client" },
+    { name = "pydantic-settings" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/75/45/0e2d4902222b79b198800395b5cc24f0705cf92864e6c4a2fb203251f303/band_sdk-1.4.2.tar.gz", hash = "sha256:576739353c5eca68f1a02ae0efc91cbd6995f534467ea2c49d64edc4dcebefde", size = 518085, upload-time = "2026-07-22T07:19:39.199Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/65/03/3655e5dc77e0a01ebba65ccad958fe9f53e0f9d7fc4952fcd27e4a83a88b/band_sdk-1.4.2-py3-none-any.whl", hash = "sha256:dd51a7b6054e02c7a23b66872d3c4bbb207210c2fd6e8b11e519d9c0e4e2f66c", size = 547318, upload-time = "2026-07-22T07:19:37.267Z" },
+]
+
+[[package]]
 name = "certifi"
 version = "2026.7.22"
 source = { registry = "https://pypi.org/simple" }
@@ -393,6 +426,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/0d/fb/fd7671137d9fa3df1d93a2f5111eb982709201724b29f211e4beb2d58688/fastapi-0.140.0.tar.gz", hash = "sha256:f338951b82fd74ca8f843163aec43ea1a1ce84d515415a50fa98fa25572a5544", size = 420968, upload-time = "2026-07-24T21:16:41.187Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/eb/76/6d9e25ad88da9d3ff744bcdbec4736e38c2288611d43f673a5d9bfa27c07/fastapi-0.140.0-py3-none-any.whl", hash = "sha256:e951c0a0d9540bf5d9a2a9e078fd415da2ab7e312d435139e7d9e2e7fe9f0b23", size = 130863, upload-time = "2026-07-24T21:16:42.89Z" },
+]
+
+[[package]]
+name = "filelock"
+version = "3.32.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/c0/80/8232b582c4b318b817cf1274ba74976b07b34d35ef439b3eb948f98645a1/filelock-3.32.0.tar.gz", hash = "sha256:7be2ad23a14607ccc71808e68fe30848aeace7058ace17852f68e2a68e310402", size = 213757, upload-time = "2026-07-21T13:17:42.898Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/06/79/b4c714bef36bc4ec2beeae1e0c124f0223888cd8c6feb1cdc56038116920/filelock-3.32.0-py3-none-any.whl", hash = "sha256:d396bea984af47333ef05e50eae7eff88c84256de6112aea0ec48a233c064fe3", size = 97732, upload-time = "2026-07-21T13:17:41.55Z" },
 ]
 
 [[package]]
@@ -1136,6 +1178,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/5a/82/42f767fc1c1143d6fd36efb827202a2d997a375e160a71eb2888a925aac1/pathspec-1.1.1.tar.gz", hash = "sha256:17db5ecd524104a120e173814c90367a96a98d07c45b2e10c2f3919fff91bf5a", size = 135180, upload-time = "2026-04-27T01:46:08.907Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/d9/7fb5aa316bc299258e68c73ba3bddbc499654a07f151cba08f6153988714/pathspec-1.1.1-py3-none-any.whl", hash = "sha256:a00ce642f577bf7f473932318056212bc4f8bfdf53128c78bbd5af0b9b20b189", size = 57328, upload-time = "2026-04-27T01:46:07.06Z" },
+]
+
+[[package]]
+name = "phoenix-channels-python-client"
+version = "0.2.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "websockets" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/c3/db/6d489bc1ebd2ebfd3705f8790123a571a371e0ef67a6cec055cc32d8fcf0/phoenix_channels_python_client-0.2.3.tar.gz", hash = "sha256:36b9747e2c5029c9095b4b8c95908ccfb636556b0122be4aaf6fd33a529427a6", size = 29485, upload-time = "2026-07-23T15:18:02.662Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a0/95/9cd4ae2708ce6890f0229cc2a6e4fdeb63d1cd1f158a35c37c556d4d30f8/phoenix_channels_python_client-0.2.3-py3-none-any.whl", hash = "sha256:34ff3f7151fd37d1a770558750f5793c3911bf0b264c8d3647b9412dfad05e20", size = 24196, upload-time = "2026-07-23T15:18:01.078Z" },
 ]
 
 [[package]]
@@ -1943,6 +1997,7 @@ name = "zuzu"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "band-sdk" },
     { name = "fastapi" },
     { name = "httpx" },
     { name = "pydantic" },
@@ -1971,6 +2026,7 @@ integrations = [
 [package.metadata]
 requires-dist = [
     { name = "arq", marker = "extra == 'distributed'", specifier = ">=0.26" },
+    { name = "band-sdk", specifier = ">=1.4.2" },
     { name = "fastapi", specifier = ">=0.115" },
     { name = "httpx", specifier = ">=0.27" },
     { name = "mem0ai", marker = "extra == 'integrations'", specifier = ">=0.1.40" },

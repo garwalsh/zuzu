@@ -169,10 +169,25 @@ def _store_sensitive() -> bool:
     )
 
 
-def _user_key(caller_id: str) -> str:
-    """Stable pseudonymous key so mem0 never holds a raw phone number."""
-    digest = hashlib.sha256(caller_id.strip().encode("utf-8")).hexdigest()
-    return f"zuzu_{digest[:20]}"
+def _user_key(caller_id: str, tenant_id: str | None = None) -> str:
+    """Stable pseudonymous key so mem0 never holds a raw phone number.
+
+    The tenant is part of the key, not decoration on it. Without it there is a
+    single global namespace: two organisations running Zuzu would share one
+    memory pool, and an applicant who called both would have their file merged
+    across two parties who are not permitted to see each other's clients.
+
+    The tenant defaults to this deployment's own, so a single-organisation
+    install keeps working and its keys are already derived the multi-tenant way
+    -- turning the registry on later renames nobody's data.
+    """
+    from api.tenancy import DEFAULT_TENANT
+
+    tenant = (tenant_id or DEFAULT_TENANT.id).strip()
+    # \x1f between the halves so tenant "ab" + user "c" cannot collide with
+    # tenant "a" + user "bc".
+    material = f"{tenant}\x1f{caller_id.strip()}".encode()
+    return f"zuzu_{hashlib.sha256(material).hexdigest()[:20]}"
 
 
 def identifies_a_caller(caller_id: str) -> bool:

@@ -21,7 +21,6 @@ improves their wording, so every failure here is silent and harmless.
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import os
 from typing import Any
@@ -95,33 +94,6 @@ def build_intake_pipeline(name: str) -> dict[str, Any]:
                 "provider": "response",
                 "config": {"laneName": "answers"},
                 "input": [{"lane": "answers", "from": "llm"}],
-            },
-        ],
-    }
-
-
-def build_document_pipeline(name: str) -> dict[str, Any]:
-    """A document in, its readable text out.
-
-    `parse` needs no credentials, which is why document intake can run on the
-    RocketRide key alone.
-    """
-    return {
-        "name": f"zuzu-doc-{name}",
-        "source": "in",
-        "components": [
-            {"id": "in", "provider": "webhook", "config": {}},
-            {
-                "id": "p",
-                "provider": "parse",
-                "config": {},
-                "input": [{"lane": "tags", "from": "in"}],
-            },
-            {
-                "id": "out",
-                "provider": "response",
-                "config": {"laneName": "text"},
-                "input": [{"lane": "text", "from": "p"}],
             },
         ],
     }
@@ -241,26 +213,3 @@ async def polish_questions(labels: list[str], form_id: str) -> dict[str, str]:
         )
         return {}
     return dict(zip(batch, chosen, strict=False))
-
-
-async def read_document(path: str, form_id: str) -> str:
-    """Extract a document's readable text through the pipeline.
-
-    Used for a form's instruction text -- fees, mailing address, who qualifies --
-    which lives in prose the AcroForm inventory says nothing about.
-    """
-    if not is_available():
-        return ""
-    try:
-        token = await _create(build_document_pipeline(form_id.lower()))
-        with open(path, "rb") as handle:
-            payload = await asyncio.wait_for(
-                _run(token, "file", (os.path.basename(path), handle.read())),
-                timeout=RUN_TIMEOUT,
-            )
-    except Exception as exc:
-        logger.info("document read unavailable for %s: %s", form_id, type(exc).__name__)
-        return ""
-    text = _first_text(payload, "text")
-    logger.info("rocketride parsed %s: %d chars", form_id, len(text))
-    return text

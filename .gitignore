@@ -39,3 +39,6 @@ dashboard/.vite/
 
 # --- os ---
 .DS_Store
+
+# per-agent Band credentials; each one can act as that agent
+.band-agents.json
