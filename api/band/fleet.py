@@ -51,13 +51,28 @@ MAX_TURNS = 18
 #: is a leak.
 MAX_SECONDS = 300.0
 
-#: Band tools the agents are offered, by name. Not the whole surface: contacts
-#: and room creation belong to the fleet rather than to an agent mid-filing, and
-#: an agent that can remove a participant can end a collaboration by accident.
+#: Band tools the agents are offered, by their real schema name.
+#:
+#: These are `band_`-prefixed, which is not what /me/agents/{id}/tools calls
+#: them -- that endpoint reports service names like
+#: `list_chat_participants_service`. Filtering on those matched nothing, so the
+#: agents were offered no Band tools at all while appearing to be.
+#:
+#: What is deliberately left out, and why:
+#:   band_send_event      422s on this plan.
+#:   band_*_memory        gated behind ff_memory, which is false on Free. Zuzu's
+#:                        own memory tools cover the three tiers anyway.
+#:   band_create_chatroom the fleet opens rooms; an agent opening another one
+#:                        mid-filing splits the record in half.
+#:   band_remove_participant  an agent that can remove a peer can end a
+#:                        collaboration by accident.
+#:   band_*_contact       a contact graph is an account-level concern, not
+#:                        something to change while filling somebody's form.
 BAND_TOOLS_OFFERED = {
-    "list_chat_participants_service",
-    "list_available_participants_service",
-    "send_direct_message_service",
+    "band_send_message",
+    "band_get_participants",
+    "band_lookup_peers",
+    "band_add_participant",
 }
 
 
