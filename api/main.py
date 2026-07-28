@@ -1375,6 +1375,21 @@ async def dashboard() -> FileResponse:
     return FileResponse(page, media_type="text/html")
 
 
+@app.get("/band")
+async def band_page() -> FileResponse:
+    """How Zuzu uses Band, with a real collaboration rendered from live data.
+
+    Separate from the deck because it is not slides: it reads the running
+    service, and the right-hand column is Band's own record of the same
+    conversation. A page that claims six agents talked to each other should be
+    able to show the receipts.
+    """
+    page = REPO_ROOT / "dashboard" / "band.html"
+    if not page.exists():
+        raise HTTPException(status_code=404, detail="band page not built")
+    return FileResponse(page, media_type="text/html")
+
+
 @app.get("/deck")
 async def deck() -> FileResponse:
     """The presentation. Same no-build-step rule as the dashboard."""

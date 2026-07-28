@@ -425,3 +425,25 @@ async def test_an_unreachable_model_costs_nothing(monkeypatch):
     monkeypatch.delenv("CEREBRAS_API_KEY", raising=False)
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     assert await finder.from_model("something nobody wrote a phrase for") is None
+
+
+def test_the_band_page_is_public_and_can_read_what_it_shows(client):
+    """It renders a real collaboration, so it needs the roster and the trail.
+    Both are behind the shared secret; the demo credential satisfies it."""
+    assert client.get("/band").status_code == 200
+
+    roster = client.get("/agents", headers=visitor())
+    assert roster.status_code == 200, roster.text
+    assert len(roster.json()["roles"]) == 6
+
+    assert client.get("/agents").status_code == 401, "still not open to nobody"
+
+
+def test_the_widget_offers_typing_as_well_as_talking(client):
+    """Half the people this is for will not say their A-number out loud in a
+    waiting room. The payload pins text input so a re-run cannot drop it."""
+    from tools.create_elevenlabs_agent import build_payload
+
+    widget = build_payload("https://example.test", "s")["platform_settings"]["widget"]
+    assert widget["text_input_enabled"] is True
+    assert widget["supports_text_only"] is True

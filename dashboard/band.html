@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zuzu on Band — six agents, and the record they leave</title>
+<style>
+/* Same furniture as the deck: this is the same argument, made with live data
+   instead of slides. Section bands, hairline rules, monospace for anything the
+   machine produced, sans for our own voice. No webfonts. */
+:root{
+  --paper:#f5f4f0; --card:#fffffe; --ink:#12141a; --ink-2:#43474f; --ink-3:#7c818b;
+  --rule:#d9d7d0; --band:#e7e5de; --box:#fbfaf7;
+  --accent:#1740c4; --ok:#12664a; --warn:#9a5309; --stop:#a32020;
+  --plan:#6d28d9; --decide:#1740c4; --act:#12664a; --mem:#9a5309;
+  --sans:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0e1014; --card:#15181e; --ink:#eceef2; --ink-2:#a8aeb9; --ink-3:#6f7681;
+    --rule:#2a2f38; --band:#1c2029; --box:#191d24;
+    --accent:#7f9cff; --ok:#4fc79a; --warn:#e0a44e; --stop:#f08a8a;
+    --plan:#b39bff; --decide:#7f9cff; --act:#4fc79a; --mem:#e0a44e;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0e1014; --card:#15181e; --ink:#eceef2; --ink-2:#a8aeb9; --ink-3:#6f7681;
+  --rule:#2a2f38; --band:#1c2029; --box:#191d24;
+  --accent:#7f9cff; --ok:#4fc79a; --warn:#e0a44e; --stop:#f08a8a;
+  --plan:#b39bff; --decide:#7f9cff; --act:#4fc79a; --mem:#e0a44e;
+}
+:root[data-theme="light"]{
+  --paper:#f5f4f0; --card:#fffffe; --ink:#12141a; --ink-2:#43474f; --ink-3:#7c818b;
+  --rule:#d9d7d0; --band:#e7e5de; --box:#fbfaf7;
+  --accent:#1740c4; --ok:#12664a; --warn:#9a5309; --stop:#a32020;
+  --plan:#6d28d9; --decide:#1740c4; --act:#12664a; --mem:#9a5309;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+  -webkit-font-smoothing:antialiased; line-height:1.5}
+.wrap{max-width:1180px; margin:0 auto; padding:26px 22px 90px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.band{background:var(--band); border:1px solid var(--rule); padding:10px 15px;
+  display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin:34px 0 16px}
+.band .part{font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-2)}
+.band h2{margin:0; font-size:19px; font-weight:700}
+.band .aside{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--ink-3)}
+
+h1{margin:0 0 10px; font-size:clamp(30px,4.6vw,52px); line-height:1.02;
+  letter-spacing:-.032em; font-weight:800; text-wrap:balance}
+h1 em{font-style:normal; color:var(--accent)}
+h3{margin:0 0 6px; font-size:15px; font-weight:700}
+p{margin:0 0 10px; color:var(--ink-2); max-width:74ch}
+p.lead{font-size:clamp(16px,1.7vw,21px); color:var(--ink); max-width:62ch}
+b{color:var(--ink)}
+code{font-family:var(--mono); font-size:.87em; background:var(--box);
+  border:1px solid var(--rule); padding:1px 5px; border-radius:3px}
+.small{font-size:12.5px; color:var(--ink-3)}
+.panel{border:1px solid var(--rule); background:var(--card); padding:15px 17px}
+.grid{display:grid; gap:12px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:880px){ .g2,.g3{grid-template-columns:1fr} }
+
+.roster{display:grid; grid-template-columns:repeat(6,1fr); gap:8px}
+@media (max-width:1080px){ .roster{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:620px){ .roster{grid-template-columns:repeat(2,1fr)} }
+.agent{border:1px solid var(--rule); background:var(--card); padding:10px 11px}
+.agent .who{font-weight:800; font-size:14px}
+.agent .owns{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:2px}
+.agent .does{font-size:12px; color:var(--ink-2); line-height:1.35; margin-top:4px}
+.agent .tools{font-family:var(--mono); font-size:9.5px; color:var(--ink-3);
+  margin-top:7px; padding-top:6px; border-top:1px solid var(--rule); word-break:break-word}
+
+.tag{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
+  padding:2px 7px; border:1px solid currentColor; border-radius:2px; white-space:nowrap}
+.tag.plan{color:var(--plan)} .tag.decide{color:var(--decide)}
+.tag.act{color:var(--act)} .tag.mem{color:var(--mem)}
+
+.turn{border:1px solid var(--rule); background:var(--card); padding:11px 13px; margin-bottom:8px}
+.turn .head{display:flex; gap:9px; align-items:center; flex-wrap:wrap; margin-bottom:6px}
+.turn .who{font-weight:800; font-size:14px}
+.turn .to{font-family:var(--mono); font-size:11.5px; color:var(--ink-3)}
+.turn .to b{color:var(--accent); font-weight:600}
+.turn .said{font-size:13.5px; color:var(--ink-2); white-space:pre-wrap; word-break:break-word}
+.turn .why{font-size:12px; color:var(--ink-3); margin-top:5px; font-style:italic}
+.turn .ran{font-family:var(--mono); font-size:11px; color:var(--ink-3); margin-top:7px;
+  padding-top:6px; border-top:1px dashed var(--rule); word-break:break-word}
+.turn .ran b{color:var(--ink-2); font-weight:600}
+.turn .rsn{margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--ink-3)}
+
+.msg{border:1px solid var(--rule); background:var(--box); padding:9px 11px; margin-bottom:7px}
+.msg .m1{display:flex; gap:8px; align-items:baseline; flex-wrap:wrap;
+  font-family:var(--mono); font-size:11px; color:var(--ink-3)}
+.msg .m1 b{color:var(--ink); font-size:12px; font-family:var(--sans)}
+.msg .body{font-size:12.5px; color:var(--ink-2); margin-top:5px; word-break:break-word}
+.msg .deliv{font-family:var(--mono); font-size:10px; color:var(--ok); margin-top:5px}
+
+button{font-family:inherit; font-size:13px; font-weight:600; padding:9px 15px;
+  border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; border-radius:3px}
+button.ghost{background:transparent; color:var(--ink); border-color:var(--rule)}
+button[disabled]{opacity:.55; cursor:progress}
+#theme{position:fixed; top:12px; right:14px; z-index:9; background:var(--card); color:var(--ink-2);
+  border:1px solid var(--rule); font-family:var(--mono); font-size:11px; padding:4px 9px}
+
+.stat{border:1px solid var(--rule); background:var(--box); padding:9px 12px}
+.stat .lab{font-family:var(--mono); font-size:9.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--ink-3); display:block}
+.stat .val{font-size:24px; font-weight:800; letter-spacing:-.02em}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:9px}
+.wrapx{overflow-x:auto}
+table{border-collapse:collapse; width:100%; font-size:13px}
+th,td{text-align:left; padding:7px 10px; border-bottom:1px solid var(--rule); vertical-align:top}
+th{font-family:var(--mono); font-size:10px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--ink-3); font-weight:600}
+td.k{font-weight:700; white-space:nowrap; width:1%}
+.muted{color:var(--ink-3)}
+</style>
+</head>
+<body>
+<button id="theme">theme</button>
+<div class="wrap">
+
+  <p class="small" style="font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; margin-bottom:14px">
+    Zuzu · built on Band</p>
+  <h1>Six agents, one room,<br>and a record <em>Band can confirm</em>.</h1>
+  <p class="lead">Zuzu fills United States immigration forms by voice. The work is
+    split across six agents that hold their own connections to Band and address
+    each other by mention. Everything below is read live from the running
+    service — and the right-hand column is read back out of Band's own API, so
+    none of it depends on trusting this page.</p>
+
+  <div class="stats" style="margin:18px 0 6px">
+    <div class="stat"><span class="lab">Agents on Band</span><span class="val" id="s-agents">—</span></div>
+    <div class="stat"><span class="lab">Reasoner</span><span class="val" id="s-model" style="font-size:17px">—</span></div>
+    <div class="stat"><span class="lab">Turns in this room</span><span class="val" id="s-turns">—</span></div>
+    <div class="stat"><span class="lab">Band messages</span><span class="val" id="s-msgs">—</span></div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <div class="band"><span class="part">1</span><h2>How Band is used</h2>
+    <span class="aside">Agent API · free plan</span></div>
+
+  <div class="grid g2">
+    <div class="panel">
+      <h3>One identity per agent, not one bot with six prompts</h3>
+      <p>Each role is a separately registered Band agent with its own API key,
+        issued once at registration. Each opens its own WebSocket
+        (<code>band-sdk</code>, Phoenix channels) and is a distinct participant
+        in the room. An agent's id is what every audit entry is attributed to,
+        which is why they are registered rather than simulated.</p>
+      <p class="small">Band refuses to delete an agent that has execution
+        history — correctly, since its id appears in trails that must stay
+        resolvable. So names are namespaced (<code>Zuzu-v2-Intake</code>) and a
+        deployment can be rebuilt without burning the good ones.</p>
+    </div>
+    <div class="panel">
+      <h3>The mention <em>is</em> the routing</h3>
+      <p>A Band message must carry at least one mention. That turned out to be
+        the useful constraint rather than a nuisance: an agent decides who should
+        act next by choosing who to address, and a message with no recipient
+        would be an agent talking to nobody — which is what a log line is for.</p>
+      <p class="small">The Auditor opens every room, because Band rejects a
+        message whose only mention is its own sender, and because owning the
+        record from before the first question happens to be true.</p>
+    </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:12px">
+    <div class="panel">
+      <h3>Band's own tool schemas, handed straight to the model</h3>
+      <p>The agents reason with MiniMax-M3 through TokenRouter, which is
+        OpenAI-compatible — so Band's tool definitions
+        (<code>band_send_message</code>, <code>band_get_participants</code>,
+        <code>band_lookup_peers</code>, <code>band_add_participant</code>) are
+        passed to the model unchanged. It talks to the other agents in Band's
+        vocabulary, not in a translation layer of ours.</p>
+      <p class="small">A test pins that set against the SDK's own
+        <code>ALL_TOOL_NAMES</code>. It was once populated from the REST service
+        names instead, matched nothing, and failed completely silently.</p>
+    </div>
+    <div class="panel">
+      <h3>What we found on the free plan</h3>
+      <div class="wrapx"><table>
+        <tbody>
+          <tr><td class="k">Agent API</td><td>Works. Rooms, participants,
+            mentions, messages, and per-room context.</td></tr>
+          <tr><td class="k">Human API</td><td><code>403 plan_required</code> —
+            a person reading these rooms through the API needs Enterprise.</td></tr>
+          <tr><td class="k">Reading a room</td><td><code>/messages</code> answers
+            <code>200</code> with an empty list for an agent key.
+            <code>/context</code> is the route that works, scoped to what each
+            agent sent or was mentioned in — so the six views are unioned to get
+            the whole conversation.</td></tr>
+          <tr><td class="k">ff_memory</td><td>Off, so the three memory tiers
+            below are ours, in Postgres. Band is orchestration here.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <div class="band"><span class="part">2</span><h2>Who is in the room</h2>
+    <span class="aside">and what each is allowed to touch</span></div>
+  <div class="roster" id="roster"></div>
+  <p class="small" style="margin-top:9px">The tool list under each name is the
+    security boundary. An agent cannot write a PDF because
+    <code>write_form</code> is not in its list — not because its prompt asked it
+    nicely. Five of the six physically cannot produce a filing.</p>
+
+  <!-- ------------------------------------------------------------------ -->
+  <div class="band"><span class="part">3</span><h2>A real collaboration</h2>
+    <span class="aside" id="roomlabel">loading…</span></div>
+
+  <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px">
+    <button id="run">Run a new collaboration</button>
+    <button id="reload" class="ghost">Load the latest</button>
+    <span class="small" id="status">Reading the most recent room…</span>
+  </div>
+
+  <div class="grid g2">
+    <div>
+      <h3 style="margin-bottom:8px">What each agent did, and why</h3>
+      <p class="small" style="margin-bottom:10px">Tagged by what the turn
+        actually consisted of: <span class="tag plan">plan</span> it handed the
+        work on, <span class="tag decide">decide</span> it ran a check or
+        declared its part finished, <span class="tag act">act</span> it changed
+        the filing, <span class="tag mem">memory</span> it read or wrote the
+        applicant's memory. Derived from the tools the turn called, not from an
+        opinion about it.</p>
+      <div id="turns"></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:8px">The same conversation, from Band</h3>
+      <p class="small" style="margin-bottom:10px">Fetched from
+        <code>/api/v1/agent/chats/{room}/context</code> with the agents' own
+        credentials. Sender, mentions and per-recipient delivery status are
+        Band's, not ours — this column is the reason the left-hand one can be
+        believed.</p>
+      <div id="msgs"></div>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <div class="band"><span class="part">4</span><h2>Memory the agents own</h2>
+    <span class="aside">three tiers, written mid-conversation</span></div>
+  <div class="grid g3">
+    <div class="panel"><h3 style="color:var(--ok)">Semantic</h3>
+      <p class="small">Facts that outlive the call. The <b>Extractor</b> decides
+        which answers are worth keeping and calls <code>remember_fact</code>. It
+        chooses which; it never supplies the value, because the value came from
+        what the applicant actually said.</p></div>
+    <div class="panel"><h3 style="color:var(--accent)">Episodic</h3>
+      <p class="small">Calls that happened. The <b>Auditor</b> closes the file
+        with <code>record_episode</code>, so a later call can refer to it rather
+        than greeting the person as a stranger.</p></div>
+    <div class="panel"><h3 style="color:var(--warn)">Procedural</h3>
+      <p class="small">Rules learned about this person — speaks Spanish, has no
+        SSN, do not lead with it. <code>learn_rule</code>, also the Auditor. A
+        guard rejects rules about Zuzu's own machinery, because those get read
+        back to the applicant next call as something we remember about them.</p></div>
+  </div>
+  <div class="panel" style="margin-top:12px">
+    <h3>Shared between agents, and between calls</h3>
+    <p>Every agent that needs context calls <code>recall_profile</code> and gets
+      the same three tiers — that is the sharing. It is not passed through the
+      room, because relaying an applicant's date of birth through a language
+      model is how a wrong value reaches a form.</p>
+    <p class="small">Scoped by <code>SHA-256(tenant ␟ caller)</code>, so the same
+      person at two organisations is two files and the store never holds a raw
+      phone number. A caller with no id gets no memory in either direction —
+      every anonymous caller would otherwise hash to one shared key.</p>
+    <div id="memtiers" class="stats" style="margin-top:11px"></div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <div class="band"><span class="part">5</span><h2>What we are not claiming</h2>
+    <span class="aside">stated before you ask</span></div>
+  <div class="panel">
+    <p><b>Routing is emergent up to a point.</b> An agent chooses who to address
+      and does so over Band. When it declares its own part finished, the fixed
+      role order picks who goes next rather than its choice.</p>
+    <p><b>Band's memory and hosted tools are not used.</b>
+      <code>ff_memory</code> and <code>ff_create_tools</code> are off on the free
+      plan, so the three tiers are ours in Postgres.</p>
+    <p style="margin-bottom:0"><b>The agents are asyncio tasks in one process</b>,
+      each with its own Band connection and key — not six deployments. One
+      service, one deploy.</p>
+  </div>
+
+  <p class="small" style="margin-top:26px">
+    <a href="/dashboard">Open the live product</a> ·
+    <a href="/deck">Slides</a> ·
+    <a href="https://github.com/garwalsh/zuzu">Source</a>
+  </p>
+</div>
+
+<script>
+const el = id => document.getElementById(id);
+const ESC = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+// Agent-authored text and applicant answers both land in innerHTML.
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ESC[c]);
+
+let H = {'Content-Type':'application/json'};
+
+const MEM_TOOLS = ['remember_fact','recall_profile','record_episode','learn_rule'];
+const ACT_TOOLS = ['write_form','map_values','seal_record'];
+const DECIDE_TOOLS = ['cross_check','next_question','collected_values','session_state'];
+
+// Classify a turn by what it actually did. Rule-based on purpose: an opinion
+// about what an agent "meant" is not evidence of anything.
+function tagsFor(turn){
+  const ran = (turn.tool_calls || []).map(t => t.tool);
+  const out = [];
+  if (ran.some(t => MEM_TOOLS.includes(t))) out.push(['mem','memory']);
+  if (ran.some(t => ACT_TOOLS.includes(t))) out.push(['act','act']);
+  if (turn.done || ran.some(t => DECIDE_TOOLS.includes(t))) out.push(['decide','decide']);
+  if ((turn.addressed || []).length) out.push(['plan','plan']);
+  return out.length ? out : [['decide','decide']];
+}
+
+function renderTurns(audit){
+  const box = el('turns');
+  const turns = audit.turns || [];
+  if (!turns.length){ box.innerHTML = '<p class="muted">No turns recorded.</p>'; return; }
+  box.innerHTML = turns.map(t => {
+    const ran = (t.tool_calls || []).map(c => c.tool).filter(Boolean);
+    const to = (t.addressed || []).map(a => `<b>@${esc(a)}</b>`).join(' ');
+    return `<div class="turn">
+      <div class="head">
+        <span class="who">${esc(t.role)}</span>
+        ${to ? `<span class="to">→ ${to}</span>` : '<span class="to muted">— no recipient</span>'}
+        ${tagsFor(t).map(([c,l]) => `<span class="tag ${c}">${l}</span>`).join('')}
+        <span class="rsn">${esc(t.reasoner || '')}</span>
+      </div>
+      <div class="said">${esc((t.said || '').split('\\n[tools:')[0])}</div>
+      ${t.because ? `<div class="why">${esc(t.because)}</div>` : ''}
+      ${ran.length ? `<div class="ran"><b>ran</b> ${ran.map(esc).join(' · ')}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderMessages(room){
+  const box = el('msgs');
+  const msgs = room.messages || [];
+  if (!msgs.length){ box.innerHTML = '<p class="muted">Band returned no messages for this room.</p>'; return; }
+  box.innerHTML = msgs.map(m => {
+    const meta = m.metadata || {};
+    const attempts = Object.values(meta.delivery_status || {})
+      .flatMap(d => d.attempts || []);
+    const ok = attempts.filter(a => a.status === 'success').length;
+    // Band writes the mention as @[[uuid]]; show it as a mention, not a uuid.
+    const body = String(m.content || '').replace(/@\[\[[0-9a-f-]+\]\]/gi, '@');
+    return `<div class="msg">
+      <div class="m1"><b>${esc(m.sender_name || m.sender_type || 'agent')}</b>
+        <span>${esc(String(m.inserted_at || '').slice(11,19))}</span>
+        <span>${esc(m.message_type || '')}</span>
+        <span>${(meta.mentions || []).length} mention(s)</span></div>
+      <div class="body">${esc(body)}</div>
+      ${attempts.length ? `<div class="deliv">Band delivered ${ok}/${attempts.length}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function loadRoster(){
+  try{
+    const r = await fetch('/agents', {headers:H});
+    if (!r.ok) return;
+    const d = await r.json();
+    el('s-agents').textContent = (d.connected || []).length;
+    el('roster').innerHTML = (d.roles || []).map(role => `
+      <div class="agent">
+        <span class="owns">${esc(role.key)}</span>
+        <span class="who">${esc(role.name || role.key)}</span>
+        <div class="does">${esc(role.does || '')}</div>
+        <div class="tools">${(role.tools || []).map(esc).join(' · ')}</div>
+      </div>`).join('');
+  } catch(e){}
+}
+
+async function newestWithAudit(){
+  const r = await fetch('/sessions/recent', {headers:H});
+  if (!r.ok) return null;
+  for (const s of (await r.json()).sessions || []){
+    const a = await fetch(`/sessions/${s.session_id}/audit`, {headers:H});
+    if (a.ok){
+      const j = await a.json();
+      if ((j.turn_count || 0) > 0) return {sid: s.session_id, audit: j};
+    }
+  }
+  return null;
+}
+
+async function paint(sid, audit){
+  el('roomlabel').textContent = `room ${String(audit.room_id || '').slice(0,8)} · ${sid}`;
+  el('s-turns').textContent = audit.turn_count || 0;
+  renderTurns(audit);
+
+  const rm = await fetch(`/sessions/${sid}/room`, {headers:H});
+  if (rm.ok){
+    const room = await rm.json();
+    el('s-msgs').textContent = room.message_count || 0;
+    renderMessages(room);
+  } else {
+    el('s-msgs').textContent = '—';
+    el('msgs').innerHTML = '<p class="muted">Band\u2019s copy is available while the room is still ' +
+      'held in the running process. This one has been evicted; the left-hand trail is the durable record.</p>';
+  }
+
+  const mm = await fetch(`/sessions/${sid}/memory`, {headers:H});
+  if (mm.ok){
+    const m = await mm.json();
+    el('memtiers').innerHTML = ['semantic','episodic','procedural'].map(t =>
+      `<div class="stat"><span class="lab">${t}</span><span class="val">${(m[t] || []).length}</span></div>`
+    ).join('') + `<div class="stat"><span class="lab">read from</span><span class="val" style="font-size:15px">${esc(m.source || '—')}</span></div>`;
+  }
+}
+
+async function load(){
+  el('status').textContent = 'Reading the most recent room…';
+  const hit = await newestWithAudit();
+  if (!hit){
+    el('status').textContent = 'No collaboration on record yet — run one.';
+    el('turns').innerHTML = '<p class="muted">Press “Run a new collaboration”.</p>';
+    return;
+  }
+  await paint(hit.sid, hit.audit);
+  el('status').textContent = 'Loaded.';
+}
+
+el('run').onclick = async () => {
+  const b = el('run'); b.disabled = true;
+  try{
+    el('status').textContent = 'Filling a sample application…';
+    const d = await (await fetch('/demo/run', {method:'POST', headers:H})).json();
+    if (!d.session_id) throw new Error(d.detail || 'could not start');
+    el('status').textContent = 'Six agents are talking on Band. This takes a minute…';
+    const r = await fetch(`/sessions/${d.session_id}/orchestrate`, {method:'POST', headers:H});
+    if (!r.ok) throw new Error((await r.json()).detail || `HTTP ${r.status}`);
+    await paint(d.session_id, await r.json());
+    el('status').textContent = 'Done — this room ran just now.';
+  } catch(e){
+    el('status').textContent = 'Could not run: ' + e.message;
+  }
+  b.disabled = false;
+};
+el('reload').onclick = load;
+
+const btn = el('theme');
+const saved = localStorage.getItem('zuzu-theme');
+if (saved) document.documentElement.setAttribute('data-theme', saved);
+btn.onclick = () => {
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+  const now = document.documentElement.getAttribute('data-theme') || (dark ? 'dark' : 'light');
+  const next = now === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('zuzu-theme', next);
+};
+
+(async () => {
+  try{
+    const cfg = await (await fetch('/config')).json();
+    if (cfg.public_demo) H['X-Zuzu-Secret'] = cfg.public_demo;
+    el('s-model').textContent = 'MiniMax-M3';
+  } catch(e){}
+  try{
+    const h = await (await fetch('/health')).json();
+    if (h.fleet){
+      el('s-agents').textContent = h.fleet.agents ?? '—';
+      el('s-model').textContent = h.fleet.reasoner === 'minimax-m3' ? 'MiniMax-M3' : (h.fleet.reasoner || '—');
+    }
+  } catch(e){}
+  await loadRoster();
+  await load();
+})();
+</script>
+</body>
+</html>

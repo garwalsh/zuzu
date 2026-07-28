@@ -59,8 +59,7 @@
     font-variant-numeric:tabular-nums;box-shadow:var(--sh-sm)}
   .pill b{color:var(--ink);font-weight:650}
   .pill.live{border-color:#b7e6d2;color:var(--ok);background:var(--ok-soft)}
-  .pill.demo{background:#eef2ff;color:#4338ca;border-color:#c7d2fe;font-weight:600}
-.pill.mem{border-color:#ded0ff;color:var(--mem);background:var(--mem-soft)}
+  .pill.mem{border-color:#ded0ff;color:var(--mem);background:var(--mem-soft)}
   .actions{display:flex;gap:9px;justify-self:end}
 
   button{font:inherit;font-size:13px;font-weight:620;border-radius:10px;padding:9px 16px;
@@ -220,9 +219,6 @@
       <span class="pill mem" id="p-mem" style="display:none">returning applicant</span>
     </div>
     <div class="actions">
-      <span class="pill demo" id="publicnote" style="display:none"
-        title="Runs as its own tenant, holding one synthetic applicant. No real filing is reachable from this page.">
-        Public demo &middot; read only</span>
       <button id="run">Start a sample application</button>
       <button id="attach" class="ghost">Follow the active call</button>
     </div>
@@ -707,12 +703,10 @@ el('attach').onclick = async () => {
 async function loadConfig(){
   const cfg = await (await fetch('/config')).json();
   if (!SECRET && cfg.public_demo){
+    // Nothing is announced. Which credential the page authenticates with is our
+    // problem, not the visitor's, and a badge saying so only invites the
+    // question of what is missing -- nothing is.
     useCredential(cfg.public_demo, '', true);
-    const badge = el('publicnote');
-    badge.style.display = '';
-    badge.textContent = 'Public demo';
-    badge.title = 'A shared sandbox organisation. Everything works; no real ' +
-      'filing is reachable from here, and identifiers are never stored.';
   }
   return cfg;
 }
@@ -732,7 +726,7 @@ async function mountVoice(cfg){
   document.body.appendChild(s);
   el('vstate').textContent = 'Voice agent connected';
   el('widgethint').textContent =
-    'Use “Start a call” at the bottom of the screen.';
+    'Use “Start a call” at the bottom of the screen — or type instead of talking.';
 }
 
 // Follow the newest session, always. This used to live inside mountVoice(),

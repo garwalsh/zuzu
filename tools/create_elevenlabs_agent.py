@@ -232,12 +232,23 @@ def build_payload(base: str, secret: str) -> dict[str, Any]:
             },
         },
         "platform_settings": {
+            # Typing is a first-class way in, not a fallback. An immigration
+            # clinic's waiting room is not a place people want to say their
+            # A-number out loud, and plenty of applicants would rather read a
+            # question than hear it. Pinned here so a re-run of this script
+            # cannot quietly drop it back to voice-only.
+            "widget": {
+                "variant": "full",
+                "text_input_enabled": True,
+                "supports_text_only": True,
+                "placement": "bottom-right",
+            },
             "workspace_overrides": {
                 "conversation_initiation_client_data_webhook": {
                     "url": f"{base}/session/init",
                     "request_headers": _webhook_headers(secret),
                 }
-            }
+            },
         },
     }
 
