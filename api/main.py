@@ -90,7 +90,7 @@ from api.tenancy import (
     Tenant,
     guard_session,
     require_tenant,
-    resolve_tenant,
+    tenant_for_request,
 )
 
 #: The organisation making this request. Annotated rather than a default value,
@@ -574,7 +574,7 @@ async def download_form(
         if not verify_secret(x_zuzu_secret):
             raise HTTPException(status_code=404, detail="no generated form for this session yet")
         try:
-            tenant = resolve_tenant(x_zuzu_tenant_key)
+            tenant = tenant_for_request(x_zuzu_secret, x_zuzu_tenant_key)
         except TenancyError as exc:
             raise HTTPException(status_code=401, detail=str(exc)) from exc
         session = await _load_session(session_id, tenant)
@@ -658,24 +658,6 @@ async def session_events(websocket: WebSocket, session_id: str, secret: str = Qu
     the completed application with no credential at all. Every careful ownership
     check on the HTTP routes was reachable around, over a socket.
     """
-    # The public demo needs no credential, because it is a different
-    # organisation holding one synthetic applicant. guard_public checks the
-    # session's own tenant_id, not just the id it was asked for, so naming a
-    # real session `pubdemo_...` does not make it readable.
-    if public_demo.is_public_session(session_id):
-        try:
-            await public_demo.guard_public(session_id)
-        except HTTPException:
-            await websocket.close(code=1008)
-            return
-        await websocket.accept()
-        try:
-            async for event in get_event_bus().subscribe(session_id):
-                await websocket.send_text(event.model_dump_json())
-        except WebSocketDisconnect:
-            pass
-        return
-
     if not verify_secret(secret):
         await websocket.close(code=1008)
         return
@@ -684,7 +666,7 @@ async def session_events(websocket: WebSocket, session_id: str, secret: str = Qu
     offered = list(websocket.scope.get("subprotocols") or [])
     tenant_key = offered[1] if len(offered) > 1 and offered[0] == TENANT_SUBPROTOCOL else ""
     try:
-        tenant = resolve_tenant(tenant_key)
+        tenant = tenant_for_request(secret, tenant_key)
         session = await get_session_store().get(session_id)
         guard_session(session.tenant_id, tenant)
     except (TenancyError, HTTPException, SessionNotFoundError):
@@ -818,56 +800,6 @@ async def demo_run(
 ) -> dict[str, Any]:
     """Run the sample application inside the caller's own organisation."""
     return await _run_demo(tenant, persona, f"web_{persona}_{int(time.time())}")
-
-
-# ---------------------------------------------------------------------------
-# The public demo. No shared secret, no tenant key, its own organisation.
-# See api/public_demo.py for why this is isolation rather than a hole.
-# ---------------------------------------------------------------------------
-
-
-@app.post("/demo/public")
-async def demo_public() -> dict[str, Any]:
-    """Start, or re-serve, the demo anyone can watch.
-
-    Cached deliberately: a page load must not be able to trigger a 32-field
-    interview and a PDF write, or the public link becomes a way to exhaust a
-    free instance from a browser tab.
-    """
-    async with public_demo._lock:
-        existing = public_demo.cached()
-        if existing is not None:
-            try:
-                await get_session_store().get(existing)
-                return {"session_id": existing, "reused": True}
-            except SessionNotFoundError:
-                # The process restarted and took its sessions with it.
-                public_demo.forget()
-
-        session_id = public_demo.new_session_id()
-        result = await _run_demo(
-            public_demo.PUBLIC_TENANT,
-            "maria",
-            session_id,
-            caller_id=public_demo.DEMO_CALLER,
-        )
-        public_demo.remember(session_id)
-        return {**result, "reused": False}
-
-
-@app.get("/demo/public/{session_id}/values")
-async def demo_public_values(session_id: str) -> dict[str, Any]:
-    """The demo session's answers. Public sessions only."""
-    await public_demo.guard_public(session_id)
-    return await _values_for(session_id)
-
-
-@app.get("/demo/public/{session_id}/memory")
-async def demo_public_memory(session_id: str) -> dict[str, Any]:
-    """The demo caller's three memory tiers. Public sessions only."""
-    await public_demo.guard_public(session_id)
-    session = await get_session_store().get(session_id)
-    return await _memory_for(session, public_demo.PUBLIC_TENANT)
 
 
 def _display_value(field_id: str, value: str, schema: Any) -> str:
@@ -1425,6 +1357,11 @@ async def client_config() -> dict[str, Any]:
     return {
         "elevenlabs_agent_id": os.environ.get("ELEVENLABS_AGENT_ID", ""),
         "default_form_id": DEFAULT_FORM_ID,
+        # The public demo credential, served to any browser on purpose. It is
+        # not the deployment's shared secret: it authenticates as one sandbox
+        # organisation and cannot resolve to a real one. Absent when the public
+        # demo is switched off, and the dashboard then asks for credentials.
+        "public_demo": public_demo.demo_secret() if public_demo.is_enabled() else "",
     }
 
 

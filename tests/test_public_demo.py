@@ -1,11 +1,13 @@
-"""The public link has to be a demo, not a way in.
+"""The public demo is a whole organisation, not a restricted view.
 
-The dashboard needed the deployment-wide shared secret in a query string to show
-anything, so the live link was useless to anyone who did not already hold the
-key that protects every real applicant's filing. Publishing that key was never
-an option, so the public path runs as its own organisation instead.
+The live link has to work -- open a session, switch forms, fill them, generate
+the PDF, read the memory, run the agents. A read-only replay demonstrates that
+we can render a screenshot, which is not the claim being made.
 
-Every test here is an attempt to reach a real tenant's data through it.
+So these tests come in two halves. The first says a visitor with no credentials
+of their own can do everything. The second says none of it reaches a real
+organisation. Both halves have to hold, or the feature is either useless or a
+hole.
 """
 
 from __future__ import annotations
@@ -19,7 +21,8 @@ from fastapi.testclient import TestClient
 from api import memory, public_demo, session_store, tenancy
 from api.tenancy import TENANT_HEADER
 
-SECRET = "test-secret"
+SECRET = "deployment-secret"
+DEMO = "public-demo-secret"
 KEY_A = "tenant-key-a"
 
 
@@ -41,6 +44,7 @@ def client(tmp_path, monkeypatch):
         encoding="utf-8",
     )
     monkeypatch.setenv("ZUZU_SHARED_SECRET", SECRET)
+    monkeypatch.setenv("ZUZU_DEMO_SECRET", DEMO)
     monkeypatch.setenv("STORE_BACKEND", "memory")
     monkeypatch.setenv("TOKENROUTER_API_KEY", "")
 
@@ -48,7 +52,7 @@ def client(tmp_path, monkeypatch):
     monkeypatch.setattr(tenancy, "_registry", tenancy.TenantRegistry(registry))
     session_store.reset_session_store()
     memory.reset_memory()
-    public_demo.forget()
+    public_demo.reset_budget()
 
     from api.main import app
 
@@ -58,159 +62,281 @@ def client(tmp_path, monkeypatch):
     tenancy.reset_registry()
     session_store.reset_session_store()
     memory.reset_memory()
-    public_demo.forget()
+    public_demo.reset_budget()
 
 
-def _auth(key: str | None = KEY_A) -> dict[str, str]:
-    headers = {"X-Zuzu-Secret": SECRET, "Content-Type": "application/json"}
-    if key:
-        headers[TENANT_HEADER] = key
-    return headers
+def visitor() -> dict[str, str]:
+    """What the browser sends after reading /config. No tenant key at all."""
+    return {"X-Zuzu-Secret": DEMO, "Content-Type": "application/json"}
 
 
-# ---------------------------------------------------------------------------
-# It works with nothing at all
-# ---------------------------------------------------------------------------
+def operator(key: str = KEY_A) -> dict[str, str]:
+    return {
+        "X-Zuzu-Secret": SECRET,
+        TENANT_HEADER: key,
+        "Content-Type": "application/json",
+    }
 
 
-def test_a_visitor_with_no_credentials_can_watch_the_demo(client):
-    """The whole point: a link somebody can open."""
-    started = client.post("/demo/public")
-    assert started.status_code == 200, started.text
-    sid = started.json()["session_id"]
-    assert sid.startswith(public_demo.PUBLIC_PREFIX)
+def _answers() -> dict[str, str]:
+    import pathlib
 
-    values = client.get(f"/demo/public/{sid}/values")
-    assert values.status_code == 200, values.text
-    body = values.json()
-    assert body["form_id"] == "I-765"
-    assert body["known_count"] > 20, "the demo must actually fill the form in"
-    assert body["values"]["given_name"] == "Maria"
-
-    mem = client.get(f"/demo/public/{sid}/memory")
-    assert mem.status_code == 200, mem.text
-    assert mem.json()["semantic"], "and it must show real memory, not an empty panel"
-
-
-def test_the_demo_is_cached_rather_than_rebuilt_on_every_page_load(client):
-    """Otherwise a public link is a way to run a 32-field interview and a PDF
-    write from a browser tab, as fast as the tab can reload."""
-    first = client.post("/demo/public").json()
-    second = client.post("/demo/public").json()
-    assert second["session_id"] == first["session_id"]
-    assert second["reused"] is True
-
-
-def test_the_public_demo_can_be_watched_live(client):
-    """The field-by-field fill is the demo. A snapshot is not."""
-    sid = client.post("/demo/public").json()["session_id"]
-    with client.websocket_connect(f"/ws/{sid}") as ws:
-        from api.contract import SessionEvent
-
-        # Anything published for this session reaches an anonymous watcher.
-        client.post("/demo/public")  # no-op, cached
-        assert ws is not None
-        assert SessionEvent is not None
+    return json.loads(
+        (pathlib.Path(__file__).resolve().parent.parent / "data" / "demo_personas.json").read_text()
+    )["personas"]["maria"]["answers"]
 
 
 # ---------------------------------------------------------------------------
-# And it is not a way in
+# Half one: it actually works
 # ---------------------------------------------------------------------------
 
 
-def test_the_public_route_refuses_a_real_tenants_session(client):
-    """The attack this design exists to stop."""
-    client.post(
-        "/session/init",
-        json={"conversation_id": "clinic-session", "caller_id": "+14155550142"},
-        headers=_auth(),
-    )
-    for path in ("values", "memory"):
-        r = client.get(f"/demo/public/clinic-session/{path}")
-        assert r.status_code == 404, f"{path}: {r.text}"
+def test_the_browser_is_handed_a_credential(client):
+    """The page needs no query string. /config gives it what to authenticate
+    with, and that credential is deliberately public."""
+    cfg = client.get("/config").json()
+    assert cfg["public_demo"] == DEMO
+    assert cfg["public_demo"] != SECRET, "the deployment secret is never served"
 
 
-def test_naming_a_session_pubdemo_does_not_make_it_public(client):
-    """The prefix is what the caller claims. The session's tenant_id is what is
-    true. Checking only the prefix would let any tenant open a session called
-    `pubdemo_...` and then read it back with no credentials at all.
-    """
-    forged = f"{public_demo.PUBLIC_PREFIX}forged"
+def test_the_public_demo_is_off_unless_it_is_configured(client, monkeypatch):
+    monkeypatch.delenv("ZUZU_DEMO_SECRET", raising=False)
+    assert client.get("/config").json()["public_demo"] == ""
+    assert client.get("/sessions/anything/values", headers=visitor()).status_code == 401
+
+
+def test_a_visitor_can_run_a_whole_filing(client):
+    """Open, fill, generate, download. The entire product, no credentials."""
+    sid = "visitor-filing"
     opened = client.post(
         "/session/init",
-        json={"conversation_id": forged, "caller_id": "+14155550142"},
-        headers=_auth(),
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
     )
     assert opened.status_code == 200, opened.text
 
-    assert client.get(f"/demo/public/{forged}/values").status_code == 404
-    assert client.get(f"/demo/public/{forged}/memory").status_code == 404
+    for field_id, value in _answers().items():
+        r = client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": field_id, "value": value},
+            headers=visitor(),
+        )
+        assert r.status_code == 200, f"{field_id}: {r.text}"
 
-    from starlette.websockets import WebSocketDisconnect
+    gen = client.post("/tools/generate_form", json={"session_id": sid}, headers=visitor())
+    assert gen.status_code == 200, gen.text
+    assert gen.json()["status"] == "complete"
 
-    with pytest.raises(WebSocketDisconnect):
-        with client.websocket_connect(f"/ws/{forged}") as ws:
-            ws.receive_text()
-
-
-def test_the_public_demo_has_no_write_path(client):
-    """A visitor may watch. They may not change anything."""
-    sid = client.post("/demo/public").json()["session_id"]
-    for path, body in (
-        ("/tools/save_field", {"session_id": sid, "field_id": "given_name", "value": "ATTACKER"}),
-        ("/session/set_form", {"session_id": sid, "form_id": "N-400"}),
-    ):
-        r = client.post(path, json=body)
-        assert r.status_code == 401, f"{path} -> {r.status_code}"
-
-    values = client.get(f"/demo/public/{sid}/values").json()["values"]
-    assert values["given_name"] == "Maria"
+    pdf = client.get(f"/forms/{sid}.pdf", headers=visitor())
+    assert pdf.status_code == 200
+    assert pdf.content[:4] == b"%PDF"
+    assert len(pdf.content) > 20000
 
 
-def test_a_real_tenant_cannot_reach_the_demo_either(client):
-    """Isolation runs both ways, or it is not isolation. clinic-a holding a
-    valid key is still a different organisation from the public demo."""
-    sid = client.post("/demo/public").json()["session_id"]
-    assert client.get(f"/sessions/{sid}/values", headers=_auth()).status_code == 404
+def test_a_visitor_can_switch_forms_mid_call(client):
+    """A form is data. The demo has to be able to show that."""
+    sid = "visitor-switch"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    client.post(
+        "/tools/save_field",
+        json={"session_id": sid, "field_id": "given_name", "value": "Maria"},
+        headers=visitor(),
+    )
+
+    switched = client.post(
+        "/session/set_form", json={"session_id": sid, "form_id": "N-400"}, headers=visitor()
+    )
+    assert switched.status_code == 200, switched.text
+
+    state = client.get(f"/sessions/{sid}/values", headers=visitor()).json()
+    assert state["form_id"] == "N-400"
+    assert state["values"].get("given_name") == "Maria", "answers carry across the switch"
 
 
-def test_the_demo_tenant_never_persists_an_identifier(client):
-    """The persona has an A-number and a passport number in it. Even synthetic
-    identifiers should not be the thing this deployment demonstrates it is
-    willing to keep."""
+def test_a_visitor_gets_the_interview_and_the_checklist(client):
+    sid = "visitor-interview"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    nxt = client.post(
+        "/tools/get_missing_fields", json={"session_id": sid, "form_id": "I-765"}, headers=visitor()
+    )
+    assert nxt.status_code == 200, nxt.text
+    assert nxt.json()["next_field"]["id"]
+
+    assert client.get(f"/sessions/{sid}/checklist", headers=visitor()).status_code == 200
+
+
+def test_a_visitor_sees_all_three_memory_tiers(client):
+    sid = "visitor-memory"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    for field_id, value in _answers().items():
+        client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": field_id, "value": value},
+            headers=visitor(),
+        )
+    client.post(
+        "/session/complete",
+        json={"conversation_id": sid, "collected": {}},
+        headers=visitor(),
+    )
+
+    mem = client.get(f"/sessions/{sid}/memory", headers=visitor())
+    assert mem.status_code == 200, mem.text
+    body = mem.json()
+    for tier in ("semantic", "episodic", "procedural"):
+        assert tier in body, tier
+    assert body["semantic"], "the demo must show real recall, not an empty panel"
+    assert body["caller_key"], "and say which key it is scoped to"
+
+
+def test_a_visitor_can_watch_their_own_call_live(client):
+    sid = "visitor-ws"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    with client.websocket_connect(f"/ws/{sid}?secret={DEMO}") as ws:
+        client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": "given_name", "value": "Maria"},
+            headers=visitor(),
+        )
+        event = json.loads(ws.receive_text())
+        assert event["session_id"] == sid
+
+
+def test_a_visitor_can_run_the_sample_application(client):
+    r = client.post("/demo/run", headers=visitor())
+    assert r.status_code == 200, r.text
+    assert r.json()["status"] == "complete"
+
+
+def test_the_demo_tenant_may_file_every_registered_form(client):
+    """Restricting the demo to two forms would demonstrate the opposite of the
+    claim the demo exists to make."""
+    from api.form_registry import list_forms
+
+    for form_id in list_forms():
+        assert public_demo.PUBLIC_TENANT.may_file(form_id), form_id
+
+
+# ---------------------------------------------------------------------------
+# Half two: and it is not a way in
+# ---------------------------------------------------------------------------
+
+
+def test_the_demo_credential_cannot_reach_a_real_organisation(client):
+    """The attack this whole design exists to stop."""
+    client.post(
+        "/session/init",
+        json={"conversation_id": "clinic-session", "caller_id": "+14155550142"},
+        headers=operator(),
+    )
+    for path in ("values", "memory", "audit", "checklist"):
+        r = client.get(f"/sessions/clinic-session/{path}", headers=visitor())
+        assert r.status_code == 404, f"{path}: {r.status_code}"
+
+    assert (
+        client.post(
+            "/tools/save_field",
+            json={"session_id": "clinic-session", "field_id": "given_name", "value": "ATTACKER"},
+            headers=visitor(),
+        ).status_code
+        == 404
+    )
+    owner = client.get("/sessions/clinic-session/values", headers=operator()).json()
+    assert owner["values"].get("given_name") != "ATTACKER"
+
+
+def test_presenting_a_real_tenant_key_with_the_demo_secret_still_lands_in_the_demo(client):
+    """The credential decides which organisation you are, not the header that
+    happens to accompany it. Otherwise the demo secret plus a leaked tenant key
+    would be a full compromise of that tenant."""
+    client.post(
+        "/session/init",
+        json={"conversation_id": "clinic-session-2", "caller_id": "+14155550142"},
+        headers=operator(),
+    )
+    headers = {"X-Zuzu-Secret": DEMO, TENANT_HEADER: KEY_A, "Content-Type": "application/json"}
+    assert client.get("/sessions/clinic-session-2/values", headers=headers).status_code == 404
+
+
+def test_a_real_tenant_cannot_read_the_demo_either(client):
+    """Isolation runs both ways or it is not isolation."""
+    sid = "demo-private"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    assert client.get(f"/sessions/{sid}/values", headers=operator()).status_code == 404
+
+
+def test_the_demo_never_persists_an_identifier(client):
+    """A visitor may speak an A-number into the demo. It belongs on the page and
+    in the PDF, not in a store that outlives the session."""
     assert public_demo.PUBLIC_TENANT.store_sensitive is False
 
-    sid = client.post("/demo/public").json()["session_id"]
-    mem = client.get(f"/demo/public/{sid}/memory").json()
-    kept = {row["field_id"] for row in mem["semantic"]}
+    sid = "demo-sensitive"
+    client.post(
+        "/session/init",
+        json={"conversation_id": sid, "caller_id": "+14155550142"},
+        headers=visitor(),
+    )
+    for field_id, value in _answers().items():
+        client.post(
+            "/tools/save_field",
+            json={"session_id": sid, "field_id": field_id, "value": value},
+            headers=visitor(),
+        )
+    kept = {
+        row["field_id"]
+        for row in client.get(f"/sessions/{sid}/memory", headers=visitor()).json()["semantic"]
+    }
     for identifier in ("a_number", "ssn", "passport_number", "sevis_number", "i94_number"):
         assert identifier not in kept, f"{identifier} was persisted by the public demo"
 
 
-def test_the_demo_scope_key_is_not_any_real_tenants(client):
-    """Memory isolation is derived, not enforced by a check somebody could
-    forget: a different tenant id hashes to a different scope."""
+def test_the_demo_memory_namespace_is_nobody_elses(client):
+    """Derived, not checked: a different tenant id hashes to a different scope,
+    so the same caller in the demo and at a clinic are two separate files."""
     from api.tenancy import DEFAULT_TENANT, scope_key
 
-    caller = public_demo.DEMO_CALLER
-    public = scope_key(public_demo.PUBLIC_TENANT.id, caller)
-    assert public != scope_key("clinic-a", caller)
-    assert public != scope_key(DEFAULT_TENANT.id, caller)
+    caller = "+14155550142"
+    demo = scope_key(public_demo.PUBLIC_TENANT.id, caller)
+    assert demo != scope_key("clinic-a", caller)
+    assert demo != scope_key(DEFAULT_TENANT.id, caller)
 
 
-def test_the_demo_is_restricted_to_the_forms_it_shows(client):
-    assert public_demo.PUBLIC_TENANT.may_file("I-765") is True
-    assert public_demo.PUBLIC_TENANT.may_file("N-400") is True
-    assert public_demo.PUBLIC_TENANT.may_file("I-130") is False
+def test_the_demo_secret_is_not_the_deployment_secret(client):
+    """They authenticate different things. If they were ever the same value the
+    public page would be handing out full access."""
+    from api.security import verify_secret
+
+    assert verify_secret(DEMO) is True
+    assert verify_secret(SECRET) is True
+    assert verify_secret("neither") is False
+    assert public_demo.is_demo_secret(SECRET) is False
+    assert public_demo.is_demo_secret(DEMO) is True
 
 
-def test_a_restarted_process_rebuilds_rather_than_serving_a_dead_id(client):
-    """Sessions are in-process. A cached id that no longer resolves would leave
-    the public page pointing at a 404 until the cache expired."""
-    sid = client.post("/demo/public").json()["session_id"]
-    session_store.reset_session_store()
-
-    again = client.post("/demo/public").json()
-    assert again["session_id"] != sid
-    assert again["reused"] is False
-    assert client.get(f"/demo/public/{again['session_id']}/values").status_code == 200
+def test_the_public_budget_is_finite(client):
+    """The credential is public, so the expensive paths behind it are reachable
+    by anyone with a browser and a held-down refresh key."""
+    public_demo.reset_budget()
+    allowed = sum(1 for _ in range(public_demo.BUDGET + 5) if public_demo.take_budget())
+    assert allowed == public_demo.BUDGET
+    assert public_demo.take_budget() is False

@@ -91,9 +91,7 @@ def _tool(
     # The tenant key says which organisation this call belongs to. On a
     # single-organisation install the header is ignored; once a registry exists
     # every request needs it, and the voice agent is a request like any other.
-    headers = {"X-Zuzu-Secret": secret}
-    if tenant_key := os.environ.get("ZUZU_TENANT_KEY", ""):
-        headers["X-Zuzu-Tenant-Key"] = tenant_key
+    headers = _webhook_headers(secret)
     return {
         "type": "webhook",
         "name": name,
@@ -202,6 +200,21 @@ def build_tools(base: str, secret: str) -> list[dict[str, Any]]:
 
 
 def _webhook_headers(secret: str) -> dict[str, str]:
+    """What every server tool call carries.
+
+    When ZUZU_DEMO_SECRET is set this agent is the PUBLIC one, and it
+    authenticates as the public demo: that credential names its own
+    organisation, so it carries no tenant key and cannot resolve to a real
+    clinic. This is what puts a voice call and the public dashboard in the same
+    organisation -- without it the widget would open a session the page has no
+    right to watch, and the demo would appear to do nothing.
+
+    A tenant-scoped agent is the same script run in an environment that has a
+    real ZUZU_TENANT_KEY and no demo secret.
+    """
+    demo = os.environ.get("ZUZU_DEMO_SECRET", "").strip()
+    if demo:
+        return {"X-Zuzu-Secret": demo}
     headers = {"X-Zuzu-Secret": secret}
     if tenant_key := os.environ.get("ZUZU_TENANT_KEY", ""):
         headers["X-Zuzu-Tenant-Key"] = tenant_key

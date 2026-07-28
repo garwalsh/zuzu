@@ -349,16 +349,22 @@ const SECRET = qs.get('secret') || '';
 // The tenant key names the organisation. Absent on a single-organisation
 // install, where the server resolves to its own tenant and ignores it.
 const TENANT_KEY = qs.get('tenant') || '';
-const H = {'X-Zuzu-Secret': SECRET, 'Content-Type': 'application/json',
-  ...(TENANT_KEY ? {'X-Zuzu-Tenant-Key': TENANT_KEY} : {})};
-
-// Opened with no credentials -> the public demo. It runs as its own tenant on
-// the server holding one synthetic applicant, so a visitor sees the real thing
-// without anyone handing out the key that protects real filings. Everything
-// below routes through these two helpers so there is one place that decides.
-const PUBLIC = !SECRET;
-const valuesUrl = id => PUBLIC ? `/demo/public/${id}/values` : `/sessions/${id}/values`;
-const memoryUrl = id => PUBLIC ? `/demo/public/${id}/memory` : `/sessions/${id}/memory`;
+// Credentials, in order of preference: what the operator put in the query
+// string, else the public demo credential that /config hands to any browser.
+// The public one authenticates as one sandbox organisation and cannot resolve
+// to a real clinic, so the page is fully functional either way -- there is no
+// reduced mode, because a read-only demo demonstrates rendering, not the
+// product.
+let SECRET_IN_USE = SECRET;
+let PUBLIC = false;
+const H = {'Content-Type': 'application/json'};
+function useCredential(secret, tenantKey, isPublic){
+  SECRET_IN_USE = secret;
+  PUBLIC = !!isPublic;
+  H['X-Zuzu-Secret'] = secret;
+  if (tenantKey) H['X-Zuzu-Tenant-Key'] = tenantKey; else delete H['X-Zuzu-Tenant-Key'];
+}
+useCredential(SECRET, TENANT_KEY, false);
 const SKIP = '__skip__';
 const RING = 2 * Math.PI * 48;
 
@@ -544,7 +550,7 @@ function resetGrid(){
 
 async function loadMemory(id){
   try{
-    const r = await fetch(memoryUrl(id), {headers: PUBLIC ? {} : H});
+    const r = await fetch(`/sessions/${id}/memory`, {headers:H});
     if (!r.ok) throw new Error(`memory ${r.status}`);
     const m = await r.json();
     const sem = m.semantic || [], epi = m.episodic || [], pro = m.procedural || [];
@@ -588,7 +594,7 @@ async function loadMemory(id){
 }
 
 async function hydrate(id){
-  const r = await fetch(valuesUrl(id), {headers: PUBLIC ? {} : H});
+  const r = await fetch(`/sessions/${id}/values`, {headers:H});
   if (!r.ok) return;
   const d = await r.json();
   // Follow the session's form: the applicant may have asked for something other
@@ -642,11 +648,12 @@ function openSocket(id){
   // The tenant key rides as a WebSocket subprotocol, not a query parameter:
   // the browser sends it as a header, so it stays out of proxy logs, browser
   // history and Referer. The socket is refused without it.
-  const url = `${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET)}`;
-  // A public-demo session needs no credential at all; the server recognises it
-  // by its own tenant, not by anything the browser claims.
-  const sock = PUBLIC ? new WebSocket(url)
-    : TENANT_KEY ? new WebSocket(url, ['zuzu-tenant', TENANT_KEY])
+  const url = `${location.protocol==='https:'?'wss':'ws'}://${location.host}/ws/${id}?secret=${encodeURIComponent(SECRET_IN_USE)}`;
+  // The tenant key rides as a subprotocol -- a header the browser will actually
+  // send -- so a credential never lands in a URL. The public demo needs none:
+  // its secret already names its organisation.
+  const sock = H['X-Zuzu-Tenant-Key']
+    ? new WebSocket(url, ['zuzu-tenant', H['X-Zuzu-Tenant-Key']])
     : new WebSocket(url);
   ws = sock;
   sock.onopen = () => { wsRetry = 0; el('p-session').classList.add('live'); };
@@ -695,8 +702,22 @@ el('attach').onclick = async () => {
   connect(d.sessions[0].session_id); hydrate(d.sessions[0].session_id);
 };
 
-async function mountVoice(){
+// /config is fetched before anything that needs a credential, because on the
+// public link it is where the credential comes from.
+async function loadConfig(){
   const cfg = await (await fetch('/config')).json();
+  if (!SECRET && cfg.public_demo){
+    useCredential(cfg.public_demo, '', true);
+    const badge = el('publicnote');
+    badge.style.display = '';
+    badge.textContent = 'Public demo';
+    badge.title = 'A shared sandbox organisation. Everything works; no real ' +
+      'filing is reachable from here, and identifiers are never stored.';
+  }
+  return cfg;
+}
+
+async function mountVoice(cfg){
   if (!cfg.elevenlabs_agent_id){
     el('vstate').textContent = 'Not configured';
     el('vdot').style.background = 'var(--warn)';
@@ -718,22 +739,6 @@ async function mountVoice(){
 // which returns early when no agent id is configured -- so on any deployment
 // without the widget the page never attached to a session at all, and every
 // panel including memory sat on its placeholder looking broken.
-// The public path. One request, then the same rendering everything else uses.
-async function startPublicDemo(){
-  el('run').style.display = 'none';
-  el('attach').style.display = 'none';
-  el('statusq').textContent = 'Starting the sample application…';
-  try{
-    const d = await (await fetch('/demo/public', {method:'POST'})).json();
-    if (!d.session_id) throw new Error('no session');
-    connect(d.session_id);
-    await hydrate(d.session_id);
-    el('publicnote').style.display = '';
-  } catch(e){
-    el('statusq').textContent = 'The demo could not start: ' + e.message;
-  }
-}
-
 function followNewestSession(){
   setInterval(async () => {
     try{
@@ -797,16 +802,19 @@ async function present(){
   // Every step stands alone: one rejection here (a cold instance answering 502 to
   // /forms) used to kill the IIFE before followNewestSession() ever ran, and the
   // page then never attached to a call for the rest of its life.
+  let cfg = {};
+  try{ cfg = await loadConfig(); }
+  catch(e){ console.error('config unavailable:', e); }
   try{ await loadSchema(qs.get('form') || 'I-765'); }
   catch(e){ console.error('schema unavailable:', e); }
   try{ await loadForms(); }
   catch(e){ console.error('form list unavailable:', e); }
-  mountVoice().catch(e => {
+  mountVoice(cfg).catch(e => {
     el('vstate').textContent = 'Unavailable';
     el('vdot').style.background = 'var(--warn)';
     el('widgethint').textContent = `Could not reach /config: ${e.message}`;
   });
-  if (PUBLIC) startPublicDemo(); else followNewestSession();
+  followNewestSession();
   if (qs.get('present') === '1') present();
 })();
 </script>

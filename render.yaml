@@ -32,6 +32,16 @@ services:
       # sync:false means "prompt me, do not read from the blueprint".
       - key: ZUZU_SHARED_SECRET
         sync: false
+
+      # --- The public demo -----------------------------------------------
+      # Set this and https://<service>/dashboard works for anyone, with every
+      # feature: voice, form switching, the agents, memory, the PDF. It is a
+      # SEPARATE credential from ZUZU_SHARED_SECRET and is served to browsers
+      # by /config on purpose -- it authenticates as one sandbox organisation
+      # (`public-demo`) and cannot resolve to a real tenant. Unset it and the
+      # dashboard asks for credentials again.
+      - key: ZUZU_DEMO_SECRET
+        sync: false
       - key: ELEVENLABS_API_KEY
         sync: false
 

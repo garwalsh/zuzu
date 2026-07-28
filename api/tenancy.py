@@ -274,6 +274,27 @@ def resolve_tenant(tenant_key: str | None, tenant_id: str | None = None) -> Tena
     return DEFAULT_TENANT
 
 
+def tenant_for_request(secret: str | None, tenant_key: str | None) -> Tenant:
+    """Which organisation a credentialed request belongs to.
+
+    The one place that decides. Three entry points need this -- the ordinary
+    dependency, the PDF download, and the websocket -- and each used to resolve
+    tenancy on its own. That is how a rule ends up enforced in two of the three
+    places somebody remembers to look.
+
+    The public demo credential names its own organisation and cannot name any
+    other. That check runs BEFORE the tenant key is read, so presenting the demo
+    secret alongside a real clinic's key resolves to the demo, not the clinic:
+    the credential decides which organisation you are, not the header that
+    happens to accompany it.
+    """
+    from api.public_demo import PUBLIC_TENANT, is_demo_secret
+
+    if is_demo_secret(secret):
+        return PUBLIC_TENANT
+    return resolve_tenant(tenant_key)
+
+
 def principal_for(
     user_id: str,
     tenant_key: str | None = None,
@@ -289,6 +310,7 @@ TENANT_HEADER = "X-Zuzu-Tenant-Key"
 
 async def require_tenant(
     x_zuzu_tenant_key: str | None = Header(default=None, alias=TENANT_HEADER),
+    x_zuzu_secret: str | None = Header(default=None, alias="X-Zuzu-Secret"),
 ) -> Tenant:
     """The organisation this request belongs to.
 
@@ -299,7 +321,7 @@ async def require_tenant(
     guessing it wrong discloses somebody's immigration file.
     """
     try:
-        return resolve_tenant(x_zuzu_tenant_key)
+        return tenant_for_request(x_zuzu_secret, x_zuzu_tenant_key)
     except TenancyError as exc:
         raise HTTPException(status_code=401, detail=str(exc)) from exc
 

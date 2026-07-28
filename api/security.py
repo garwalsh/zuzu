@@ -23,14 +23,23 @@ def _get_configured_secret() -> str:
 
 
 def verify_secret(supplied: str | None) -> bool:
+    """Whether this request carries a credential this deployment accepts.
+
+    Two are accepted, and they are not equivalent. The shared secret speaks for
+    the whole deployment. The public demo secret speaks for exactly one
+    organisation -- `require_tenant` maps it to the public tenant before it
+    looks at any tenant key, so presenting it can never resolve to a real
+    clinic. That mapping is the security property; this function only decides
+    whether the caller gets past the door at all.
+    """
+    from api.public_demo import is_demo_secret
+
     configured = _get_configured_secret()
     if not supplied:
         return False
-
-    return hmac.compare_digest(
-        supplied.encode("utf-8"),
-        configured.encode("utf-8"),
-    )
+    if hmac.compare_digest(supplied.encode("utf-8"), configured.encode("utf-8")):
+        return True
+    return is_demo_secret(supplied)
 
 
 async def require_shared_secret(
