@@ -40,6 +40,7 @@ from api.pdf_engine import fill_form, missing_required
 
 logger = logging.getLogger(__name__)
 
+
 def _band_agents() -> dict[str, str]:
     """The agent id for each stage, taken from the fleet that actually runs.
 

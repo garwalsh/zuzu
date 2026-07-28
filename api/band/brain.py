@@ -66,9 +66,9 @@ class Decision:
     #: Agent role names it wants to address. Resolved to ids by the caller,
     #: which is what stops the model inventing a participant.
     to: list[str] = field(default_factory=list)
-    #: Tool calls it wants run. Names are checked against a whitelist before
-    #: anything executes.
-    calls: list[dict[str, Any]] = field(default_factory=list)
+    #: Tool results already gathered this turn. The agent has seen these; they
+    #: are here so the audit trail can show what it looked at before deciding.
+    ran: list[dict[str, Any]] = field(default_factory=list)
     #: Whether this agent considers its part done.
     done: bool = False
     #: Free-text reason, kept for the audit trail.
@@ -143,7 +143,6 @@ DECISION_SCHEMA = """Reply with ONE JSON object and nothing else:
 {
   "say":     "what you want the other agents to read, one or two sentences",
   "to":      ["role names you are addressing, from the roster you were given"],
-  "calls":   [{"tool": "<tool name>", "args": {...}}],
   "done":    true or false,
   "because": "one short sentence on why you decided this"
 }
@@ -151,7 +150,7 @@ DECISION_SCHEMA = """Reply with ONE JSON object and nothing else:
 Rules that do not bend:
 - Address someone real. Only use role names from the roster.
 - Never state an applicant's answer as fact unless a tool result gave it to you.
-- If a tool can establish something, call the tool rather than assuming it.
+- Call tools directly when you need a fact; do not describe calling them.
 - Set done to true only when your own part is genuinely finished."""
 
 
@@ -176,10 +175,16 @@ def fallback_decision(
     return Decision(
         say=f"{role_key} acted without the model; deterministic hand-off.",
         to=[next_role] if next_role else [],
-        calls=[{"tool": name} for name in tool_names],
         done=next_role is None,
         because="the model was unavailable, so the fixed pipeline order was used",
     )
+
+
+#: How many times an agent may call tools before it has to commit to a decision.
+#: Each round is a model round trip, and an agent that has looked twice
+#: and still cannot say what it wants is not going to on the third, and each
+#: round is a round trip the applicant is not waiting on but the room is.
+MAX_TOOL_ROUNDS = 3
 
 
 async def decide(
@@ -188,21 +193,87 @@ async def decide(
     *,
     roster: list[str],
     tools: list[dict[str, Any]] | None = None,
+    execute: Any = None,
 ) -> Decision:
-    """Ask an agent what it wants to do, and refuse anything malformed.
+    """Let an agent look things up, then commit to what it wants to do.
 
-    A model that answers with prose instead of JSON, or addresses an agent that
-    is not in the room, is treated as having decided nothing. Silence is a safe
-    failure here: the orchestrator moves on deterministically.
+    MiniMax answers a tool-bearing prompt the OpenAI way: `content` holds only
+    the reasoning block and the real intent is in `tool_calls`. Reading `content`
+    alone therefore saw an agent that had decided nothing, when in fact it had
+    asked two perfectly sensible questions -- so the room stalled on its first
+    turn and timed out.
+
+    The loop is the fix and it is also what makes these agents worth calling
+    agents: look, get answers back, then decide in light of them. Tool results
+    are appended as `tool` messages, which is how the model sees what it learned.
+
+    Anything malformed at the end is treated as having decided nothing. Silence
+    is a safe failure here -- the caller falls back to the fixed pipeline order,
+    and no applicant's answer depends on this.
     """
     prompt = f"{context}\n\nThe agents you can address: {', '.join(roster)}\n\n{DECISION_SCHEMA}"
-    message = await think(system, [{"role": "user", "content": prompt}], tools=tools)
+    messages: list[dict[str, Any]] = [{"role": "user", "content": prompt}]
+    ran: list[dict[str, Any]] = []
+
+    for round_number in range(MAX_TOOL_ROUNDS):
+        last_round = round_number == MAX_TOOL_ROUNDS - 1
+        message = await think(system, messages, tools=tools)
+        calls = message.get("tool_calls") or []
+
+        if not calls:
+            break
+
+        # Record the assistant turn verbatim: an OpenAI-shaped exchange is only
+        # valid if every tool result answers a call the assistant actually made.
+        messages.append(
+            {
+                "role": "assistant",
+                "content": message.get("content") or "",
+                "tool_calls": calls,
+            }
+        )
+        for call in calls[:4]:
+            name = (call.get("function") or {}).get("name", "")
+            try:
+                args = json.loads((call.get("function") or {}).get("arguments") or "{}")
+            except json.JSONDecodeError:
+                args = {}
+            if execute is None:
+                result: dict[str, Any] = {"error": "no tool runner available"}
+            else:
+                result = await execute(name, args)
+            ran.append({"tool": name, **result})
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": call.get("id", ""),
+                    "content": json.dumps(result, default=str)[:2000],
+                }
+            )
+        # Only push for a decision on the final round. Nudging after every round
+        # is what made an agent's first tool call also its last: the Extractor
+        # looked at the collected values and was then told to stop, so it never
+        # got to keep any of them. Multi-step work needs a second turn.
+        messages.append(
+            {
+                "role": "user",
+                "content": (
+                    "You have the tool results above. Now reply with ONLY the decision "
+                    "JSON described earlier. Do not call any more tools."
+                    if last_round
+                    else "You have the tool results above. Call another tool if your job "
+                    "needs one, otherwise reply with the decision JSON."
+                ),
+            }
+        )
+    else:
+        message = await think(system, messages, tools=None)
 
     raw = strip_reasoning(message.get("content") or "")
     parsed = _extract_json(raw)
     if parsed is None:
         logger.info("agent returned no usable decision: %r", raw[:160])
-        return Decision(because="the model did not answer in the required shape")
+        return Decision(ran=ran, because="the model did not answer in the required shape")
 
     # Only names actually in the room survive. This is the guard that keeps a
     # hallucinated peer from becoming a dropped message.
@@ -212,14 +283,10 @@ async def decide(
     known = {r.lower(): r for r in roster}
     addressed = [known[str(w).lower()] for w in wanted if str(w).lower() in known]
 
-    calls = parsed.get("calls") or []
-    if not isinstance(calls, list):
-        calls = []
-
     return Decision(
         say=str(parsed.get("say") or "").strip(),
         to=addressed,
-        calls=[c for c in calls if isinstance(c, dict) and c.get("tool")],
+        ran=ran,
         done=bool(parsed.get("done")),
         because=str(parsed.get("because") or "").strip(),
     )

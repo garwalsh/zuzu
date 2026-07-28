@@ -218,6 +218,107 @@ class SessionTools:
             "pdf": bool(session.pdf_path),
         }
 
+    # ---- memory: the tiers, as things an agent does --------------------
+
+    async def remember_fact(self, field_id: str = "", note: str = "") -> dict[str, Any]:
+        """SEMANTIC. A stable fact about this applicant, for the next form.
+
+        The value is read from the session rather than taken from the agent, so
+        a model cannot write an applicant's date of birth by asserting one. It
+        may decide *that* something is worth keeping; it never decides what it is.
+        """
+        from api.memory_store import Record, get_backend
+
+        session = await self._session()
+        schema = await self._schema()
+        stored = session.values.get(field_id)
+        form_field = schema.get_field(field_id)
+        if stored is None or form_field is None:
+            return {"stored": False, "reason": f"{field_id!r} is not an answer on this form"}
+        if stored.value == SKIP_SENTINEL:
+            return {"stored": False, "reason": "the applicant skipped this"}
+        if form_field.sensitive and not self.principal.tenant.store_sensitive:
+            return {
+                "stored": False,
+                "reason": "sensitive, and this organisation has not opted in to persisting those",
+            }
+        ok = await get_backend().put(
+            self.principal.scope_key,
+            Record(
+                tier="semantic",
+                key=field_id,
+                value=stored.value,
+                meta={"form_id": schema.form_id, "note": note, "source": stored.source},
+            ),
+        )
+        return {"stored": ok, "field_id": field_id, "tier": "semantic"}
+
+    async def recall_profile(self) -> dict[str, Any]:
+        """All three tiers for this applicant, as they stand now."""
+        from api.memory_store import get_backend
+
+        schema = await self._schema()
+        records = await get_backend().all(self.principal.scope_key)
+        tiers: dict[str, list[dict[str, Any]]] = {"semantic": [], "episodic": [], "procedural": []}
+        for r in records:
+            if r.tier not in tiers:
+                continue
+            form_field = schema.get_field(r.key) if r.tier == "semantic" else None
+            sensitive = bool(form_field and form_field.sensitive)
+            tiers[r.tier].append(
+                {"key": r.key, "value": "[withheld]" if sensitive else r.value, "meta": r.meta}
+            )
+        return {
+            "is_returning": bool(records),
+            "counts": {k: len(v) for k, v in tiers.items()},
+            **tiers,
+        }
+
+    async def record_episode(self, outcome: str = "") -> dict[str, Any]:
+        """EPISODIC. That this call happened, and how it went."""
+        from api.memory_store import Record, get_backend
+
+        session = await self._session()
+        schema = await self._schema()
+        ok = await get_backend().put(
+            self.principal.scope_key,
+            Record(
+                tier="episodic",
+                key=self.session_id,
+                value=outcome or ("completed" if session.pdf_path else "did not finish"),
+                meta={
+                    "form_id": schema.form_id,
+                    "answers": len(session.values),
+                    "completed": bool(session.pdf_path),
+                    "findings": len(self._findings),
+                },
+            ),
+        )
+        return {"stored": ok, "tier": "episodic", "session_id": self.session_id}
+
+    async def learn_rule(self, rule: str = "", about: str = "applicant") -> dict[str, Any]:
+        """PROCEDURAL. Something worth applying on every later call.
+
+        "Speaks Spanish." "Has no SSN, stop asking." Unlike the other two this
+        is the agent's own words, because a rule is a judgement rather than a
+        fact -- so it is stored as a rule and never as an answer to a field.
+        """
+        from api.memory_store import Record, get_backend
+
+        rule = (rule or "").strip()
+        if not 4 <= len(rule) <= 240:
+            return {"stored": False, "reason": "a rule must be a short sentence"}
+        ok = await get_backend().put(
+            self.principal.scope_key,
+            Record(
+                tier="procedural",
+                key=rule.lower()[:60],
+                value=rule,
+                meta={"kind": about, "session_id": self.session_id},
+            ),
+        )
+        return {"stored": ok, "tier": "procedural", "rule": rule}
+
     # ---- dispatch --------------------------------------------------------
 
     #: Name to bound method. An agent's whitelist is checked against this, so a
@@ -232,6 +333,10 @@ class SessionTools:
             "cross_check": self.cross_check,
             "write_form": self.write_form,
             "seal_record": self.seal_record,
+            "remember_fact": self.remember_fact,
+            "recall_profile": self.recall_profile,
+            "record_episode": self.record_episode,
+            "learn_rule": self.learn_rule,
         }
 
     async def call(self, name: str, allowed: tuple[str, ...], **kwargs: Any) -> dict[str, Any]:
@@ -242,7 +347,12 @@ class SessionTools:
         if fn is None:
             raise ToolDenied(f"no such tool: {name}")
         try:
-            return await fn(**kwargs)
+            # Models pass plausible-but-wrong argument names. Dropping the ones
+            # a tool does not take is kinder than failing the turn over it.
+            import inspect
+
+            accepted = set(inspect.signature(fn).parameters)
+            return await fn(**{k: v for k, v in kwargs.items() if k in accepted})
         except Exception as exc:
             logger.warning("tool %s failed for %s: %s", name, self.principal.describe(), exc)
             raise ToolFailed(f"{name}: {type(exc).__name__}: {exc}") from exc
@@ -288,8 +398,76 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
             "answer will not fit the page."
         ),
     },
+    "remember_fact": {
+        "description": (
+            "Keep one collected answer as a lasting fact about this applicant, so "
+            "the next form does not ask for it again. Pass the field_id. The value "
+            "is read from the session; you cannot supply one."
+        ),
+    },
+    "recall_profile": {
+        "description": (
+            "Everything already remembered about this applicant across all three "
+            "tiers: facts, past calls, and learned rules. Call this before deciding "
+            "whether they are a returning caller."
+        ),
+    },
+    "record_episode": {
+        "description": (
+            "Record that this call happened and how it ended, so a later call can "
+            "refer to it rather than greeting them as a stranger."
+        ),
+    },
+    "learn_rule": {
+        "description": (
+            "Store a rule worth applying on every future call, in your own words: "
+            "'speaks Spanish', 'has no SSN, stop asking'. For judgements about how "
+            "to serve this person, never for an answer to a form field."
+        ),
+    },
     "seal_record": {
         "description": ("Close the governance record for this filing and return its summary."),
+    },
+}
+
+
+#: Arguments each tool takes. Everything absent here takes none, and a tool whose
+#: parameters are not declared cannot be called correctly -- the model has no
+#: other way to learn the argument exists.
+TOOL_PARAMS: dict[str, dict[str, Any]] = {
+    "remember_fact": {
+        "type": "object",
+        "properties": {
+            "field_id": {
+                "type": "string",
+                "description": "The id of the collected answer to keep, from collected_values.",
+            },
+            "note": {"type": "string", "description": "Optional: why it is worth keeping."},
+        },
+        "required": ["field_id"],
+    },
+    "record_episode": {
+        "type": "object",
+        "properties": {
+            "outcome": {
+                "type": "string",
+                "description": "One short phrase for how the call ended.",
+            }
+        },
+    },
+    "learn_rule": {
+        "type": "object",
+        "properties": {
+            "rule": {
+                "type": "string",
+                "description": "The rule in one short sentence, e.g. 'speaks Spanish'.",
+            },
+            "about": {
+                "type": "string",
+                "description": "'applicant' for a personal rule, 'process' for one about the form.",
+            },
+        },
+        "required": ["rule"],
     },
 }
 
@@ -302,7 +480,7 @@ def schemas_for(allowed: tuple[str, ...]) -> list[dict[str, Any]]:
             "function": {
                 "name": name,
                 "description": TOOL_SCHEMAS[name]["description"],
-                "parameters": {"type": "object", "properties": {}},
+                "parameters": TOOL_PARAMS.get(name, {"type": "object", "properties": {}}),
             },
         }
         for name in allowed

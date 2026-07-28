@@ -49,7 +49,7 @@ logger = logging.getLogger(__name__)
 MAX_TURNS = 18
 #: Wall-clock ceiling. The applicant has hung up, but a room held open forever
 #: is a leak.
-MAX_SECONDS = 180.0
+MAX_SECONDS = 300.0
 
 
 @dataclass
@@ -106,8 +106,6 @@ class Collaboration:
             "seconds": round(time.time() - self.started, 2),
             "finished": self.finished.is_set(),
         }
-
-
 
 
 class RoleAgent:
@@ -174,6 +172,16 @@ class RoleAgent:
             f"What has been said so far:\n{transcript}"
         )
 
+        async def run_tool(name: str, args: dict[str, Any]) -> dict[str, Any]:
+            """Whatever the model asked for, if this agent is allowed it."""
+            try:
+                return {
+                    "ok": True,
+                    "result": await collab.tools.call(name, self.role.tools, **args),
+                }
+            except (ToolDenied, ToolFailed) as exc:
+                return {"ok": False, "error": str(exc)}
+
         reasoner = brain.REASONER_MODEL
         try:
             decision = await brain.decide(
@@ -181,7 +189,9 @@ class RoleAgent:
                 context,
                 roster=roster(),
                 tools=schemas_for(self.role.tools),
+                execute=run_tool,
             )
+            results = decision.ran
         except brain.BrainUnavailable as exc:
             # The model is judgement, not capability. Losing it costs the room
             # its reasoning and nothing else: the agent still runs its own tools
@@ -191,15 +201,7 @@ class RoleAgent:
             nxt = self._fleet.next_after(self.role.key)
             nxt_display = role_for(nxt).display if nxt else None
             decision = brain.fallback_decision(self.role.key, nxt_display, self.role.tools)
-
-        results: list[dict[str, Any]] = []
-        for call in decision.calls[:3]:
-            name = str(call.get("tool", ""))
-            try:
-                result = await collab.tools.call(name, self.role.tools)
-                results.append({"tool": name, "ok": True, "result": result})
-            except (ToolDenied, ToolFailed) as exc:
-                results.append({"tool": name, "ok": False, "error": str(exc)})
+            results = [{"tool": name, **await run_tool(name, {})} for name in self.role.tools]
 
         said = decision.say or f"{self.role.display} acted."
         if results:
@@ -226,16 +228,25 @@ class RoleAgent:
                 await self._fleet.close(room_id, "a message could not be delivered")
             return
 
-        if decision.done and self.role.key == "auditor":
-            await self._fleet.close(room_id, "auditor sealed the record")
-        elif decision.done:
-            # Somebody finished their part without naming a successor. The
-            # pipeline order is the fallback, so the work does not simply stop.
-            nxt = self._fleet.next_after(self.role.key)
-            if nxt is None:
-                await self._fleet.close(room_id, "no agent left to act")
-            else:
-                await self.client.say(room_id, said, [self._fleet.agents[nxt].agent_id])
+        # Either the agent said it was finished, or it named nobody -- which
+        # amounts to the same thing, because a turn that addresses no one ends
+        # the conversation. Both used to leave the room open until it timed out:
+        # the Auditor ran its tool, failed to answer in the required shape, and
+        # everyone waited three minutes for a deadline instead of closing.
+        nxt = self._fleet.next_after(self.role.key)
+        if nxt is None:
+            await self._fleet.close(
+                room_id,
+                "auditor sealed the record"
+                if self.role.key == "auditor"
+                else "no agent left to act",
+            )
+            return
+        try:
+            await self.client.say(room_id, said, [self._fleet.agents[nxt].agent_id])
+        except protocol.BandError as exc:
+            logger.warning("%s could not hand on: %s", self.role.key, exc)
+            await self._fleet.close(room_id, "a hand-off could not be delivered")
 
 
 class Fleet:

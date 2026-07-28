@@ -42,3 +42,6 @@ dashboard/.vite/
 
 # per-agent Band credentials; each one can act as that agent
 .band-agents.json
+
+# local memory backend
+out/memory.db

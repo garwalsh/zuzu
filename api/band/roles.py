@@ -92,10 +92,14 @@ You decide which question is asked next and when the interview is finished. You
 do not talk to the applicant yourself -- the voice agent does that -- you decide
 what it should ask.
 
-Call next_question to find out what is still missing. When nothing is missing,
-tell the Extractor the interview is complete and set done. If the applicant
-skipped something required, say which field and why it matters before you finish.""",
-        tools=("next_question", "session_state"),
+Call recall_profile first: a returning caller must not be asked for what is
+already known, and that is the difference between an hour and five minutes for
+them. Then call next_question to find out what is still missing.
+
+When nothing is missing, tell the Extractor the interview is complete and set
+done. If the applicant skipped something required, say which field and why it
+matters before you finish.""",
+        tools=("next_question", "session_state", "recall_profile"),
     ),
     Role(
         key="extractor",
@@ -110,9 +114,17 @@ For every value collected, you establish where it came from: the applicant said
 it on this call, it was recalled from their profile, or it was read from a
 document. That distinction is what a reviewer needs when a filing is questioned.
 
-Call collected_values to see what there is. Report anything that arrived without
-a clear source to the Validator, then hand off to the Mapper.""",
-        tools=("collected_values", "session_state"),
+Call collected_values to see what there is, and report anything that arrived
+without a clear source to the Validator.
+
+You also decide what is worth keeping. Call remember_fact for the answers that
+will still be true on the applicant's next form -- their name, date of birth,
+country of citizenship. Do not bother with anything specific to this one filing.
+You choose which; you never supply the value, because the value comes from what
+the applicant actually said.
+
+Then hand off to the Mapper.""",
+        tools=("collected_values", "session_state", "recall_profile", "remember_fact"),
     ),
     Role(
         key="mapper",
@@ -178,8 +190,13 @@ You do not check anyone's work. You close the file: what happened, in order, and
 what the outcome was. In a legal-filing domain this trail is the product, because
 when a form comes back rejected somebody has to reconstruct why.
 
-Call seal_record, state the outcome in one sentence, and set done.""",
-        tools=("seal_record", "session_state"),
+Call seal_record, then close the applicant's memory of this call: record_episode
+so a later call can refer to it rather than greeting them as a stranger, and
+learn_rule for anything the team noticed that should change how this person is
+served next time -- the language they spoke, a document they do not have.
+
+State the outcome in one sentence and set done.""",
+        tools=("seal_record", "session_state", "record_episode", "learn_rule"),
     ),
 )
 
