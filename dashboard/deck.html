@@ -50,15 +50,19 @@ html,body{margin:0;padding:0;height:100%}
 body{
   background:var(--paper); color:var(--ink); font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
-  scroll-snap-type:y mandatory; overflow-y:scroll; scroll-behavior:smooth;
+  scroll-snap-type:y proximity; overflow-y:scroll;
 }
-@media (prefers-reduced-motion:reduce){ body{scroll-behavior:auto} }
 
 .slide{
-  scroll-snap-align:start; scroll-snap-stop:always;
+  scroll-snap-align:start;
   min-height:100vh; display:flex; flex-direction:column;
   padding:clamp(22px,3.4vw,54px) clamp(24px,5vw,92px);
   gap:clamp(14px,1.8vw,26px);
+}
+/* Short screen: let the slide scroll instead of cutting the bottom off. */
+@media (max-height:760px){
+  .slide{padding-top:clamp(14px,2vw,28px); padding-bottom:clamp(14px,2vw,28px); gap:clamp(10px,1.2vw,16px)}
+  h1{font-size:clamp(30px,5.4vw,64px)}
 }
 
 /* ---- the section band, straight off the form ---- */
@@ -653,8 +657,11 @@ a{color:var(--accent)}
   // `scroll-snap-type: mandatory` container is cancelled by the snap the moment
   // it starts, so the arrow keys silently did nothing -- on a deck, whose only
   // job is to advance when you press the arrow key.
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const goto = el => window.scrollTo({top: el.offsetTop, behavior: calm ? 'auto' : 'smooth'});
+  // Instant. A smooth scroll inside `scroll-snap-type: mandatory` is cancelled
+  // by the snap the moment it starts in some engines, and a deck that will not
+  // advance is a far worse failure than one that does not animate. The snap
+  // makes it read as a slide change either way.
+  const goto = el => window.scrollTo({top: el.offsetTop, behavior: 'auto'});
 
   slides.forEach((s, i) => {
     const d = document.createElement('i');
@@ -668,6 +675,13 @@ a{color:var(--accent)}
 
   // Which slide is on screen drives both the dots and the page number, so the
   // footer can never disagree with what is actually being shown.
+  // ?slide=5 opens on that slide. Useful for linking someone at one point of
+  // the argument rather than "scroll down five times".
+  const wanted = parseInt(new URLSearchParams(location.search).get('slide') || '', 10);
+  if (wanted >= 1 && wanted <= slides.length) {
+    requestAnimationFrame(() => window.scrollTo({top: slides[wanted - 1].offsetTop, behavior: 'auto'}));
+  }
+
   const marks = [...dots.children];
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
