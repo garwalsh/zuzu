@@ -26,11 +26,17 @@ page — it needs your session:
 
 - All six `Zuzu-v2-*` agents are listed: Intake, Extractor, Mapper, Validator,
   Filler, Auditor.
-- Three older ones are also on the account and will be visible:
-  **Zuzu-Probe-Sender**, **Zuzu-Probe-Connect**, **Zuzu-Intake**. They are
-  leftovers from working out the API. Either delete them first, or say "those
-  three are from when I was figuring out your API" — do not leave them
-  unexplained.
+- Three older ones are also on the account and cannot be removed:
+  **Zuzu-Probe-Sender**, **Zuzu-Probe-Connect**, **Zuzu-Intake**. Band refuses to
+  delete an agent with execution history — `422 cannot delete agent that has
+  execution history` — so their descriptions now say what they are ("Retired.
+  Early probe…", "Superseded by Zuzu-v2-Intake…"). If he asks, that answer is
+  actually a compliment to the platform:
+
+  > "Those three are from working out your API. I can't delete them — Band
+  > won't remove an agent that has execution history, which is right, because
+  > that id is in trails that have to stay resolvable. So I versioned the real
+  > ones to `v2` and labelled these as retired."
 - If the room list on tab 2 is empty, the free plan may be gating that view. If
   so, skip tab 2 and use `/band`, which reads the same data through the Agent
   API. **Check this before recording, not during.**
